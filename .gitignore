@@ -8,6 +8,7 @@ Code/cpp_radar_receiver/receiver_cpp
 
 # Third-party RadarSimPy package (install separately)
 Code/radarsimpy/
+Code/radarsimpy.zip
 
 # Local-only material
 Docs/
