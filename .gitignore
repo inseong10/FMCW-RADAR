@@ -1,0 +1,14 @@
+# OS / Python
+.DS_Store
+__pycache__/
+*.pyc
+
+# Build outputs
+Code/cpp_radar_receiver/receiver_cpp
+
+# Third-party RadarSimPy package (install separately)
+Code/radarsimpy/
+
+# Local-only material
+Docs/
+Benchmarks/
