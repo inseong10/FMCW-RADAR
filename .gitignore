@@ -4,11 +4,11 @@ __pycache__/
 *.pyc
 
 # Build outputs
-Code/cpp_radar_receiver/receiver_cpp
+src/PS/receiver/receiver_cpp
 
 # Third-party RadarSimPy package (install separately)
-Code/radarsimpy/
-Code/radarsimpy.zip
+tools/sender/radarsimpy/
+tools/sender/radarsimpy.zip
 
 # Local-only material
 Docs/

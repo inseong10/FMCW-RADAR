@@ -34,10 +34,11 @@ FFTW 자체는 패키지 관리자로 설치하며 이 압축 파일에 포함�
 ./udp_radar_receiver --bind 127.0.0.1 --port 5000 --warmup 5 --repeat 100
 ```
 
-그다음 별도 터미널에서 기존 송신기를 실행하세요.
+그다음 별도 터미널의 저장소 루트에서 송신기를 실행하세요.
+RadarSimPy는 저장소에 포함되지 않으므로 `tools/sender/radarsimpy/`에 두거나 설치해야 합니다.
 
 ```bash
-python radarsimpy/udp_radar_sender.py --ip 127.0.0.1 --port 5000 --pulses 160
+python tools/sender/sender.py --ip 127.0.0.1 --port 5000 --pulses 160
 ```
 
 `--repeat 100`은 수신한 동일 프레임의 처리를 100회 반복하여 단계별 평균을
@@ -175,7 +176,7 @@ rd_shifted = np.fft.fftshift(rd, axes=0)
 
 ```bash
 pip install numpy
-python test_receiver.py
+python reference/test_receiver.py
 ```
 
 검증 범위: 160×160과 홀수 크기 배열의 전체 FFT 결과 NumPy 비교,
