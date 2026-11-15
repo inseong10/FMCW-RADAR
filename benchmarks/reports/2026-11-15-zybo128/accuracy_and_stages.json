@@ -1,0 +1,81 @@
+{
+  "status": "SAME_BOARD_BENCHMARK_VALIDATED",
+  "ps_stage_mean_ms": {
+    "axis_calculation": 0.00777156,
+    "decode": 1.1427593733333332,
+    "doppler_fft": 1.6762711799999999,
+    "doppler_window": 1.24608627,
+    "fft_pipeline": 5.542663170000001,
+    "normalize_output": 0.28519462,
+    "postprocess": 0.5319199099999999,
+    "processing_total": 6.10087266,
+    "range_fft": 1.6714012,
+    "range_window": 0.62997928,
+    "reassembly": 0.7724011633333333
+  },
+  "accuracy_vs_numpy_normalized_fft2_q15_input": {
+    "1": {
+      "ps": {
+        "max_complex_error_q15_lsb": 1.8331451766013172e-12,
+        "rms_complex_error_q15_lsb": 3.705134990033928e-14,
+        "relative_l2_error_percent": 2.90701062686393e-14,
+        "peak_unshifted": [
+          107,
+          20
+        ]
+      },
+      "pl": {
+        "max_complex_error_q15_lsb": 8.749842363453245,
+        "rms_complex_error_q15_lsb": 1.734691375725571,
+        "relative_l2_error_percent": 1.3610209282866828,
+        "peak_unshifted": [
+          107,
+          20
+        ]
+      }
+    },
+    "2": {
+      "ps": {
+        "max_complex_error_q15_lsb": 1.8331451766013172e-12,
+        "rms_complex_error_q15_lsb": 3.705134990033928e-14,
+        "relative_l2_error_percent": 2.90701062686393e-14,
+        "peak_unshifted": [
+          107,
+          20
+        ]
+      },
+      "pl": {
+        "max_complex_error_q15_lsb": 8.749842363453245,
+        "rms_complex_error_q15_lsb": 1.734691375725571,
+        "relative_l2_error_percent": 1.3610209282866828,
+        "peak_unshifted": [
+          107,
+          20
+        ]
+      }
+    },
+    "3": {
+      "ps": {
+        "max_complex_error_q15_lsb": 1.8331451766013172e-12,
+        "rms_complex_error_q15_lsb": 3.705134990033928e-14,
+        "relative_l2_error_percent": 2.90701062686393e-14,
+        "peak_unshifted": [
+          107,
+          20
+        ]
+      },
+      "pl": {
+        "max_complex_error_q15_lsb": 8.749842363453245,
+        "rms_complex_error_q15_lsb": 1.734691375725571,
+        "relative_l2_error_percent": 1.3610209282866828,
+        "peak_unshifted": [
+          107,
+          20
+        ]
+      }
+    }
+  },
+  "pl_median_divided_by_ps_median": 14.677418663184168,
+  "pl_component_timing_status": "Not separately measured: MMIO, FFT core, and PS transpose are combined.",
+  "accuracy_scope": "One simulator frame; PS double and PL fixed-point Q15. Every measured PL iteration checked against integer model."
+}

@@ -1,0 +1,3 @@
+# Preserve captured console/environment text, including its original whitespace.
+*.txt -whitespace
+*.log -whitespace

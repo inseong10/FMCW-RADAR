@@ -1,0 +1,38 @@
+arm-linux-gnueabihf-g++ (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+CXXFLAGS=-O3 -mcpu=cortex-a9 -mfpu=neon -mfloat-abi=hard -std=c++17 
+CFLAGS=-O3 -mcpu=cortex-a9 -mfpu=neon -mfloat-abi=hard
+
+Elf file type is DYN (Shared object file)
+Entry point 0x9115
+There are 10 program headers, starting at offset 52
+
+Program Headers:
+  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
+  EXIDX          0x08da60 0x0008da60 0x0008da60 0x037a8 0x037a8 R   0x4
+  PHDR           0x000034 0x00000034 0x00000034 0x00140 0x00140 R   0x4
+  INTERP         0x000174 0x00000174 0x00000174 0x00019 0x00019 R   0x1
+      [Requesting program interpreter: /lib/ld-linux-armhf.so.3]
+  LOAD           0x000000 0x00000000 0x00000000 0x9120c 0x9120c R E 0x10000
+  LOAD           0x091e38 0x000a1e38 0x000a1e38 0x04274 0x05cbc RW  0x10000
+  DYNAMIC        0x09548c 0x000a548c 0x000a548c 0x00110 0x00110 RW  0x4
+  NOTE           0x000190 0x00000190 0x00000190 0x00044 0x00044 R   0x4
+  TLS            0x091e38 0x000a1e38 0x000a1e38 0x00000 0x0000c R   0x4
+  GNU_STACK      0x000000 0x00000000 0x00000000 0x00000 0x00000 RW  0x10
+  GNU_RELRO      0x091e38 0x000a1e38 0x000a1e38 0x041c8 0x041c8 R   0x1
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     .ARM.exidx 
+   01     
+   02     .interp 
+   03     .interp .note.gnu.build-id .note.ABI-tag .gnu.hash .dynsym .dynstr .gnu.version .gnu.version_r .rel.dyn .rel.plt .init .plt .text .fini .rodata .ARM.extab .ARM.exidx .eh_frame 
+   04     .init_array .fini_array .data.rel.ro .dynamic .got .data .bss 
+   05     .dynamic 
+   06     .note.gnu.build-id .note.ABI-tag 
+   07     .tbss 
+   08     
+   09     .init_array .fini_array .data.rel.ro .dynamic .got 
