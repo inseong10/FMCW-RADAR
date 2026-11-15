@@ -1,0 +1,36 @@
+# 인터페이스
+
+## PC → PS: UDP 프레임 (현재 구현)
+
+chirp 1개를 UDP 데이터그램 1개로 보냅니다.
+
+| 필드 | 형식 | 내용 |
+|---|---|---|
+| magic | 4 bytes | `RSPY` |
+| version | uint8 | 1 |
+| message type | uint8 | 1 (baseband) |
+| channel | uint16 | 채널 번호 |
+| chirp index | uint32 | 프레임 안에서 chirp 번호 |
+| chirp count | uint32 | 프레임의 chirp 수 |
+| sample count | uint32 | chirp당 샘플 수 |
+| sample rate | float64 | 샘플링 주파수 (Hz) |
+| payload | float32 × 2 × sample count | I, Q 순서로 교차 배치 |
+
+헤더는 28바이트이고, 헤더와 payload 모두 big-endian입니다.
+프로토콜에 frame ID가 없으므로 한 번에 프레임 하나만 보냅니다.
+
+## PS → PL: AXI4-Stream 입력 (명세 초안)
+
+128×128 최초 기능 실험은 별도 [AXI4-Lite 계약](../src/PL/fft128_ps/README.md)을 사용합니다.
+한 번에 128포인트 FFT 하나를 호출하며 내부 스트림의 TLAST는 매 128번째 beat입니다.
+아래 전체 프레임 DMA 명세는 향후 통합을 위한 초안입니다.
+
+- **형식:** AXI4-Stream 32비트, 1 beat = 복소 샘플 1개입니다. `TDATA[15:0]`는 I, `TDATA[31:16]`은 Q이고, 각각 int16 2의 보수입니다.
+- **정수 변환:** PS가 고정 계수 S를 곱하고 반올림한 뒤 int16 범위로 포화합니다. 창함수나 정규화는 PS가 적용하지 않습니다.
+- **순서:** chirp 우선입니다. chirp 0의 sample 0부터 N_SAMPLES−1까지 보낸 뒤 chirp 1을 보냅니다. `TLAST`는 프레임의 마지막 beat에서만 1입니다.
+- **프레임 크기:** N_CHIRPS × N_SAMPLES beat, 즉 4 × N_CHIRPS × N_SAMPLES 바이트입니다. DDR 버퍼 1개를 AXI DMA(MM2S) 전송 1회로 보냅니다.
+- **가변 크기:** N_CHIRPS와 N_SAMPLES는 프레임 사이에서만 바뀝니다. PS가 AXI4-Lite 설정 레지스터에 쓰면 다음 프레임부터 적용되며, 비트스트림 재합성 없이 바꿀 수 있어야 합니다.
+- **흐름 제어:** PL은 `TREADY`로 backpressure를 걸 수 있습니다. PL이 이전 프레임을 처리 중이면 PS가 대기하거나 드랍하고 드랍 수를 기록합니다.
+- **미정 사항(OPEN-02):** N_SAMPLES = 160처럼 2의 거듭제곱이 아닌 크기를 어느 쪽에서 zero-padding할지 협의가 필요합니다.
+
+PL 내부 처리, 출력 포맷, 레지스터 맵 세부는 PL 담당이 정합니다.

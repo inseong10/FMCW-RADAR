@@ -1,0 +1,4 @@
+# NumPy for the reference receiver/tests, SciPy for external RadarSimPy imports.
+# Install the OS/Python-specific RadarSimPy distribution separately.
+numpy
+scipy
