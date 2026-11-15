@@ -1,0 +1,11 @@
+{
+  "source": "user-provided fmcw_fft archive, original directory fmcw_fft/fmcw_fft",
+  "sha256_originals": {
+    "butterfly_engine.v": "1fc647f956c4440ea1e5198875181c25d3b967d4ea13d87efd9112cb0440e65e",
+    "fft_working_ram.v": "5464b1b0a57e663a1cdc58406c0fc73f3d27829f1ecd9f267bcd66a5211d9eb0",
+    "address_generator.v": "9757d675e1564a9985a01b08726fae90f6eecd294b7bb10d9e6dd8e55685606d",
+    "doppler_fft.v": "47aa8c4aaaec5147e42941cb1e58259cddb495d332978f2819f20d075b286c2a"
+  },
+  "adapted": "doppler_fft.v -> fft128_stream.v (128 points); generated twiddle ROM; three other modules copied verbatim",
+  "board_source": "https://github.com/Digilent/vivado-boards/tree/master/new/board_files/zybo-z7-10/A.0"
+}
