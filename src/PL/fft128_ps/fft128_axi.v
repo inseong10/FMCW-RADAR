@@ -1,6 +1,6 @@
 // Functional PS/PL bring-up frontend. One outstanding AXI-Lite transaction.
 // No frame-sized storage: PS supplies one 128-word FFT at a time.
-module fft128_axi (
+module fft128_axi #(parameter PIPELINED=0) (
  (* X_INTERFACE_INFO="xilinx.com:signal:clock:1.0 aclk CLK",
     X_INTERFACE_PARAMETER="ASSOCIATED_BUSIF S_AXI, ASSOCIATED_RESET aresetn" *)
  input wire aclk,
@@ -43,6 +43,17 @@ module fft128_axi (
  assign s_axi_wready = !w_pending && !s_axi_bvalid;
  assign s_axi_arready = !s_axi_rvalid;
 
+ generate if (PIPELINED) begin: g_pipeline
+ fft128_pipeline core (
+  .clk(aclk), .rst(!aresetn || soft_reset), .start(start_pulse),
+  .busy(core_busy), .done(core_done), .input_error(core_error),
+  .s_axis_tdata(input_mem[input_count[6:0]]),
+  .s_axis_tvalid(running && input_count < 128), .s_axis_tready(in_ready),
+  .s_axis_tlast(input_count == 127),
+  .m_axis_tdata(out_data), .m_axis_tvalid(out_valid),
+  .m_axis_tready(running), .m_axis_tlast(out_last)
+ );
+ end else begin: g_serial
  fft128_stream core (
   .clk(aclk), .rst(!aresetn || soft_reset), .start(start_pulse),
   .busy(core_busy), .done(core_done), .input_error(core_error),
@@ -52,6 +63,7 @@ module fft128_axi (
   .m_axis_tdata(out_data), .m_axis_tvalid(out_valid),
   .m_axis_tready(running), .m_axis_tlast(out_last)
  );
+ end endgenerate
 
  always @(posedge aclk) begin
   if (!aresetn) begin

@@ -30,6 +30,10 @@ Zynq 기반 FMCW 레이더 신호처리 시스템. RadarSimPy I/Q 데이터를 Z
 
 ## 현재 확인 상태
 
+변경 이유·실패 원인·측정 조건·전후 결과·다음 단계는 [통합 실험 일지](docs/experiment_log.md)에 기록함.
+순차 20 MHz와 파이프라인 50 MHz의 보드 검증·병목 계측·각 300회 비교까지 완료함. 새 중앙값은 PS 5.557 ms / PL 25.259 ms이며, PL은 기존보다 3.225배 개선됐지만 아직 PS보다 4.545배 느림.
+[최신 비교 보고서](benchmarks/reports/2026-11-15-pipeline50-benchmark/README.md)를 참고함.
+
 128 samples × 128 chirps의 PS/PL 기능 실험은
 [실행 절차](src/PL/fft128_ps/README.md)를 참고합니다. 단일 128포인트 복소 FFT를 재사용하고,
 PS DDR에서 전치하며 AXI4-Lite로 전송합니다. RTL·PC UDP 모델 검증,

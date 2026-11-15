@@ -10,6 +10,11 @@ set fft128_load_status [catch {source [file join $fft128_resume_here build.tcl]}
 unset ::fft128_load_only
 if {$fft128_load_status} {return -options $fft128_load_options $fft128_load_message}
 set ::fft128::out $fft128_resume_out
+# Recover the actual open design configuration, including a fast build.
+open_bd_design [get_files system.bd]
+set fft128_resume_pipeline [get_property CONFIG.PIPELINED [get_bd_cells fft]]
+set ::fft128::core_mode [expr {$fft128_resume_pipeline ne "" && $fft128_resume_pipeline ? "pipeline" : "serial"}]
+set ::fft128::clock_mhz [get_property CONFIG.CLKOUT1_REQUESTED_OUT_FREQ [get_bd_cells clock_gen]]
 catch {close_sim}
 if {[catch {
  fft128::check_reset

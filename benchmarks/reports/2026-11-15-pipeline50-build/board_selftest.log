@@ -1,0 +1,6 @@
+MMIO: reading ID at 0x43c00000; waiting here means the AXI access has not returned
+MMIO: ID=0x46543128; reading FFT length
+MMIO: FFT length=128; issuing soft reset
+MMIO: initialization complete
+BACKEND=PL_MMIO implementation=native_C
+SELFTEST_PASS backend=PL_MMIO vectors=4 bins=512

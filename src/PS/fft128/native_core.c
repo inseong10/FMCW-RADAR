@@ -1,8 +1,26 @@
 // Portable framing and numeric reference, shared by the native PS receiver/tests.
+#define _POSIX_C_SOURCE 200809L
 #include "native_core.h"
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <time.h>
+#endif
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+
+uint64_t fft128_now_ns(void) {
+#ifdef _WIN32
+    LARGE_INTEGER ticks, frequency;
+    QueryPerformanceCounter(&ticks); QueryPerformanceFrequency(&frequency);
+    return (uint64_t)((double)ticks.QuadPart*1e9/(double)frequency.QuadPart);
+#else
+    struct timespec ts;
+    if (clock_gettime(CLOCK_MONOTONIC,&ts)) abort();
+    return (uint64_t)ts.tv_sec*1000000000u+(uint64_t)ts.tv_nsec;
+#endif
+}
 
 uint32_t fft128_pack(int real, int imag) {
     return ((uint32_t)real & 65535u) | (((uint32_t)imag & 65535u) << 16);
@@ -80,6 +98,11 @@ int fft128_process(const uint32_t *packed, uint32_t *spectrum,
 }
 int fft128_process_workspace(const uint32_t *packed, uint32_t *spectrum,
                              uint32_t *ranged, fft128_transform transform, void *context) {
+    return fft128_process_profiled(packed,spectrum,ranged,transform,context,NULL);
+}
+int fft128_process_profiled(const uint32_t *packed, uint32_t *spectrum,
+                           uint32_t *ranged, fft128_transform transform,
+                           void *context, fft128_profile *profile) {
     if (!packed || !spectrum || !ranged || !transform) return -1;
     uint32_t column[FFT128_N], result[FFT128_N];
     int rc = 0;
@@ -88,10 +111,14 @@ int fft128_process_workspace(const uint32_t *packed, uint32_t *spectrum,
         if (rc) goto finish;
     }
     for (unsigned r = 0; r < FFT128_N; ++r) {
+        uint64_t started=profile ? fft128_now_ns() : 0;
         for (unsigned ch = 0; ch < FFT128_N; ++ch) column[ch] = ranged[ch*FFT128_N+r];
+        if(profile) profile->gather_ns+=fft128_now_ns()-started;
         rc = transform(column, result, context);
         if (rc) goto finish;
+        started=profile ? fft128_now_ns() : 0;
         for (unsigned d = 0; d < FFT128_N; ++d) spectrum[d*FFT128_N+r] = result[d];
+        if(profile) profile->scatter_ns+=fft128_now_ns()-started;
     }
 finish:
     return rc;

@@ -1,0 +1,48 @@
+{
+  "experiment": "E10",
+  "evidence": "User-pasted board console; individual per-frame profile CSV not collected yet",
+  "reported_on_client_date": "2026-11-15",
+  "board_profile_path": "/opt/fft128/benchmark/profiles/profile_20180309_152650.profile.csv",
+  "backend": "PL_MMIO",
+  "core": "pipeline",
+  "pl_clock_hz_declared": 50000000,
+  "shape": [
+    128,
+    128
+  ],
+  "cpu_affinity": 0,
+  "warmup": 2,
+  "repeats": 20,
+  "cycles_per_fft_min": 861,
+  "cycles_per_fft_max": 861,
+  "pl_internal_ms": 4.40832,
+  "mean_host_ms": {
+    "input_write": 11.526609,
+    "start_wait": 5.054848,
+    "output_read": 8.850965,
+    "gather_scatter": 0.946476
+  },
+  "instrumented_total_ms": {
+    "mean": 27.327809,
+    "median": 27.329907,
+    "min": 27.29103,
+    "max": 27.403428
+  },
+  "bit_exact_bins": 16384,
+  "peak_unshifted": [
+    107,
+    20
+  ],
+  "interpretation": "PL internal interval includes staging and overlaps start_wait; do not add to host stages. Pipeline and AXI/core clocks changed together. Instrumented profile is separate from unprofiled benchmark.",
+  "derived_ms": {
+    "input_plus_output_mmio": 20.377574000000003,
+    "start_wait_minus_pl_internal": 0.646528,
+    "counter_reads_and_unattributed_host": 0.948910999999999
+  },
+  "comparison_to_serial20_profile": {
+    "total_mean_time_ratio_old_over_new": 3.062603994341442,
+    "pl_internal_time_ratio_old_over_new": 8.922764227642277,
+    "mmio_time_ratio_old_over_new": 2.0512900112643435,
+    "mmio_fraction_of_new_total": 0.7456717075269372
+  }
+}

@@ -1,0 +1,14 @@
+sudo sh /opt/fft128/benchmark/profile_board.sh 50000000
+CPU_AFFINITY=0
+MMIO: reading ID at 0x43c00000; waiting here means the AXI access has not returned
+MMIO: ID=0x46543128; reading FFT length
+MMIO: FFT length=128; issuing soft reset
+MMIO: initialization complete
+BACKEND=PL_MMIO implementation=native_C
+BENCHMARK: warmup=2 repeat=20 preallocated buffers; data path=PL_MMIO
+peak_unshifted=(107,20) fft_and_transfer_seconds=0.027328
+MMIO_PROFILE: write_ms=11.526609 start_wait_ms=5.054848 read_ms=8.850965 gather_scatter_ms=0.946476 pl_internal_ms=4.408320 cycles_per_fft=861..861 clock_hz_declared=50000000
+MMIO_PROFILE: PL internal time overlaps start_wait; do not add it to host stages. Instrumented timing is separate from baseline.
+PIPELINE_TIMING backend=PL_MMIO mean_ms=27.327809 median_ms=27.329907 min_ms=27.291030 max_ms=27.403428 repeats=20
+FRAME_PASS backend=PL_MMIO bit_exact_bins=16384
+PROFILE_COMPLETE: /opt/fft128/benchmark/profiles/profile_20180309_152650.profile.csv

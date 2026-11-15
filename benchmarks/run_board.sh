@@ -5,7 +5,7 @@ here=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 repeat=${FFT128_REPEAT:-100}
 warmup=${FFT128_WARMUP:-10}
 trials=${FFT128_TRIALS:-3}
-results="$here/results"
+results=${1:-"$here/results"}
 mkdir -p "$results"
 last_log=
 trap 'status=$?; if test "$status" -ne 0; then printf "BOARD_BENCHMARK_STOPPED: status=%s\n" "$status" >&2; if test -n "$last_log" && test -r "$last_log"; then tail -n 35 "$last_log" >&2; fi; fi' 0

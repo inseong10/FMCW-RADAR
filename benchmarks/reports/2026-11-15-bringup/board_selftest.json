@@ -1,0 +1,13 @@
+{
+  "evidence_source": "user-provided board console",
+  "backend": "PL_MMIO",
+  "implementation": "native_C",
+  "vectors": 4,
+  "bins": 512,
+  "result": "SELFTEST_PASS",
+  "id": "0x46543128",
+  "length": 128,
+  "programming": "FPGA manager success, 70 ms",
+  "firmware_sha256": "e1784f80c8f27225dded47749d0baa98a3d2cc9a108b0f7df2d86afb6239a5db",
+  "full_128x128_frame": "passed subsequently; see board_frame_console_result.json and board_numpy_validation.json"
+}

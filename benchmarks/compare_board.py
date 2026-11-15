@@ -50,6 +50,8 @@ def main():
         report=json.loads((folder/f'pl_{trial}.json').read_text())
         if report['backend']!='PL_MMIO' or report['shape']!=[128,128] or report['mismatched_complex_bins']!=0:
             raise ValueError('PL result must be verified actual PL_MMIO, shape 128x128')
+        if report.get('profiling',False):
+            raise ValueError('Instrumented MMIO profile is diagnostic; use a separate unprofiled benchmark')
         digest=hashlib.sha256((folder/f'pl_{trial}.input.csv').read_bytes()).hexdigest()
         if input_digest is not None and digest!=input_digest:
             raise ValueError('Input differs between trials')

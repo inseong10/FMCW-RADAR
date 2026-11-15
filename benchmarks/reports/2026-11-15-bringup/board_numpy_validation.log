@@ -1,0 +1,2 @@
+backend=PL_MMIO max_error=8.749842 Q15 LSB peak=(107, 20) reference_peak=(107, 20)
+FLOAT_REFERENCE_PASS; hardware evidence only when backend=PL_MMIO

@@ -1,0 +1,16 @@
+{
+  "axi_vectors": 272,
+  "exact_complex_bins": 34816,
+  "full_2d_frame_shape": [
+    128,
+    128
+  ],
+  "independent_numpy_max_error_q15_lsb": 5.109735109344928,
+  "known_tone_peak_unshifted": [
+    121,
+    11
+  ],
+  "tested": "Serial and pipelined RTL simulation; new pipeline implementation timing and board behavior unverified",
+  "serial_cycles": 3073,
+  "pipeline_cycles": 861
+}

@@ -1,0 +1,10 @@
+CPU_AFFINITY=0
+MMIO: reading ID at 0x43c00000; waiting here means the AXI access has not returned
+MMIO: ID=0x46543128; reading FFT length
+MMIO: FFT length=128; issuing soft reset
+MMIO: initialization complete
+BACKEND=PL_MMIO implementation=native_C
+BENCHMARK: warmup=10 repeat=100 preallocated buffers; data path=PL_MMIO
+peak_unshifted=(107,20) fft_and_transfer_seconds=0.025263
+PIPELINE_TIMING backend=PL_MMIO mean_ms=25.263327 median_ms=25.260438 min_ms=25.236121 max_ms=25.425432 repeats=100
+FRAME_PASS backend=PL_MMIO bit_exact_bins=16384

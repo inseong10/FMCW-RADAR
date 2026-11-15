@@ -1,0 +1,2 @@
+STREAM_PASS vectors=16 stalls_and_TLAST_and_reset
+C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\stream_tb.v:50: $finish called at 228140000 (1ps)

@@ -1,0 +1,37 @@
+{
+  "evidence_source": "user-provided Ubuntu sender and board console outputs",
+  "result": "FRAME_PASS",
+  "backend": "PL_MMIO",
+  "shape": [
+    128,
+    128
+  ],
+  "pipeline": "actual Windows RadarSimPy input record -> Ubuntu UDP -> PS Q15 -> PL range FFT -> PS DDR transpose -> PL Doppler FFT -> PS validation",
+  "fft_calls": 256,
+  "bit_exact_bins": 16384,
+  "mismatched_complex_bins": 0,
+  "peak_unshifted_doppler_range": [
+    107,
+    20
+  ],
+  "fft_and_transfer_seconds": 0.082024044,
+  "timing_includes": [
+    "PS/PL MMIO transfers",
+    "both FFT axes",
+    "PS frame transpose"
+  ],
+  "timing_excludes": [
+    "UDP reception",
+    "Q15 quantization",
+    "software reference verification",
+    "output files"
+  ],
+  "udp_packets": 128,
+  "udp_bytes": 134656,
+  "sample_rate_hz": 1600000,
+  "firmware_sha256": "e1784f80c8f27225dded47749d0baa98a3d2cc9a108b0f7df2d86afb6239a5db",
+  "board_output_prefix": "/opt/fft128/rd128",
+  "ubuntu_nfs_output_prefix": "/nfsroot/opt/fft128/rd128",
+  "independent_numpy_check": "FLOAT_REFERENCE_PASS; actual board files collected; see board_numpy_validation.json",
+  "scope": "one recorded simulator frame; no DMA or sustained frame-rate measurement"
+}

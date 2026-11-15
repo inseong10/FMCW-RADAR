@@ -1,5 +1,8 @@
 # Reproducible receiver experiments
 
+See [the experiment log](../docs/experiment_log.md) for the chronological
+problem/change/result history and links to captured evidence, including failed runs.
+
 Run commands from the repository root. Shared procedures and scripts are tracked;
 `data/` (raw/packet input) and `results/` (CSV/plots) are local and ignored by Git.
 Record OS, CPU, compiler and flags, FFTW version, window, dimensions, warmup,
@@ -28,6 +31,13 @@ queue wait, processing time and drops separately. The verified fixed-size MMIO
 experiment is described below; continuous-frame and DMA measurements remain work.
 
 ## Zybo Z7-10: optimized PS FFTW versus verified 128x128 PL
+
+For separate MMIO/cycle/transpose profiling and the experimental pipelined 50 MHz
+core, see [FFT128 optimization procedure](../docs/fft128_optimization.md).
+The published report below remains the original serial 20 MHz measurement.
+The [validated pipeline/50 MHz results](reports/2026-11-15-pipeline50-benchmark/README.md)
+give medians of PS 5.557 ms and PL 25.259 ms. PL improved by 3.225x over its
+serial baseline and remains 4.545x slower than PS; MMIO transfer is now dominant.
 
 This experiment uses the already-validated V3 bitstream; no Vivado rebuild is
 needed. Both programs run on the same board using the same recorded RadarSimPy
