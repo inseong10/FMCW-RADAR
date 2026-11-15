@@ -1,0 +1,2 @@
+/home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_host_dt_v2/fft128_e11a.dts:21.21-46: Warning (interrupts_property): /fragment@1/__overlay__/dma@40400000:interrupt-parent: Bad phandle
+/home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_host_dt_v2/fft128_e11a.dts:21.21-46: Warning (interrupts_property): /fragment@1/__overlay__/dma@40400000:interrupt-parent: Bad phandle

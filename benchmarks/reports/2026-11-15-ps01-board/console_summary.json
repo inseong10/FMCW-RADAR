@@ -1,0 +1,79 @@
+{
+  "status": "BOARD_CONSOLE_PASS_RAW_TIMINGS_PENDING",
+  "evidence": "User-provided PetaLinux console; values transcribed, not original raw timing CSVs",
+  "date": "2026-11-15",
+  "shape": [
+    128,
+    128
+  ],
+  "warmup_configured": 10,
+  "trials": 3,
+  "repeats_per_trial": 100,
+  "variant_order": [
+    [
+      "double",
+      "float_scalar",
+      "float_neon"
+    ],
+    [
+      "float_scalar",
+      "float_neon",
+      "double"
+    ],
+    [
+      "float_neon",
+      "double",
+      "float_scalar"
+    ]
+  ],
+  "result_path_board": "/opt/fft128/ps_precision/results_ps01",
+  "raw_results_collected": false,
+  "completed_marker": "PS_PRECISION_COMPLETE",
+  "precision": {
+    "double": {
+      "verified_repeats": 300,
+      "bins_per_repeat": 16384,
+      "max_complex_error_q15_lsb": 1.83315e-12,
+      "worst_rms_q15_lsb": 3.736e-14,
+      "worst_relative_l2": 2.9e-16,
+      "fft_only_trial_means_ms": [
+        3.357966959999999,
+        3.359689330000001,
+        3.3659069799999997
+      ],
+      "fft_only_combined_mean_ms_from_console": 3.3611877566666664
+    },
+    "float_scalar": {
+      "verified_repeats": 300,
+      "bins_per_repeat": 16384,
+      "max_complex_error_q15_lsb": 0.00047041270604699,
+      "worst_rms_q15_lsb": 1.469865517317e-05,
+      "worst_relative_l2": 1.1532412963e-07,
+      "fft_only_trial_means_ms": [
+        2.722420440000001,
+        2.7179566199999994,
+        2.72327634
+      ],
+      "fft_only_combined_mean_ms_from_console": 2.7212178000000002
+    },
+    "float_neon": {
+      "verified_repeats": 300,
+      "bins_per_repeat": 16384,
+      "max_complex_error_q15_lsb": 0.00042680867292,
+      "worst_rms_q15_lsb": 1.380469694028e-05,
+      "worst_relative_l2": 1.0831022571e-07,
+      "fft_only_trial_means_ms": [
+        1.9982304100000006,
+        1.9994328600000006,
+        1.9965204199999997
+      ],
+      "fft_only_combined_mean_ms_from_console": 1.9980612300000002
+    }
+  },
+  "scope": "FFT only = range_fft + doppler_fft; excludes copy/transpose/normalization. Main fft_pipeline statistics unavailable.",
+  "compiler": "arm-linux-gnueabihf-g++ 9.4.0 Ubuntu 20.04",
+  "build_manifest_independently_validated": true,
+  "receiver_source_sha256_lf": "5ff77242f69f8418a7bd3a2f2f4a1d22805ccd29bef917a92b9e4e0fc5b1fadb",
+  "board_artifact_check_file_collected": false,
+  "pl_changes": false
+}

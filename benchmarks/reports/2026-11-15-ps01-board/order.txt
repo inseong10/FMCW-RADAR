@@ -1,0 +1,3 @@
+trial=1 order=double float_scalar float_neon
+trial=2 order=float_scalar float_neon double
+trial=3 order=float_neon double float_scalar

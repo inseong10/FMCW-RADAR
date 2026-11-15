@@ -1,0 +1,254 @@
+{
+  "status": "E11A_PAIRED_SAME_BOARD_VALIDATED",
+  "results": {
+    "double": {
+      "timing": {
+        "count": 300,
+        "mean_ms": 5.737376476666666,
+        "median_ms": 5.748488999999999,
+        "p05_ms": 5.6776905,
+        "p95_ms": 5.800609199999999,
+        "min_ms": 5.661,
+        "max_ms": 5.996922
+      },
+      "trials": [
+        {
+          "trial": 1,
+          "timing": {
+            "count": 100,
+            "mean_ms": 5.73727973,
+            "median_ms": 5.745396,
+            "p05_ms": 5.6751686999999995,
+            "p95_ms": 5.7915213,
+            "min_ms": 5.661,
+            "max_ms": 5.996922
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 1.8331451766013172e-12,
+            "rms_q15_lsb": 3.705134990033928e-14,
+            "relative_l2": 2.90701062686393e-16
+          }
+        },
+        {
+          "trial": 2,
+          "timing": {
+            "count": 100,
+            "mean_ms": 5.732862299999999,
+            "median_ms": 5.744439,
+            "p05_ms": 5.67606665,
+            "p95_ms": 5.7987678,
+            "min_ms": 5.661546,
+            "max_ms": 5.839632
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 1.8331451766013172e-12,
+            "rms_q15_lsb": 3.705134990033928e-14,
+            "relative_l2": 2.90701062686393e-16
+          }
+        },
+        {
+          "trial": 3,
+          "timing": {
+            "count": 100,
+            "mean_ms": 5.7419874,
+            "median_ms": 5.757996,
+            "p05_ms": 5.682819,
+            "p95_ms": 5.8017606,
+            "min_ms": 5.673762,
+            "max_ms": 5.911644
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 1.8331451766013172e-12,
+            "rms_q15_lsb": 3.705134990033928e-14,
+            "relative_l2": 2.90701062686393e-16
+          }
+        }
+      ]
+    },
+    "float_neon": {
+      "timing": {
+        "count": 300,
+        "mean_ms": 3.72693234,
+        "median_ms": 3.7152335,
+        "p05_ms": 3.6709836,
+        "p95_ms": 3.7961172,
+        "min_ms": 3.610962,
+        "max_ms": 3.920172
+      },
+      "trials": [
+        {
+          "trial": 1,
+          "timing": {
+            "count": 100,
+            "mean_ms": 3.724907489999999,
+            "median_ms": 3.714375,
+            "p05_ms": 3.670962,
+            "p95_ms": 3.7900524,
+            "min_ms": 3.610962,
+            "max_ms": 3.885498
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 0.00042680867197479784,
+            "rms_q15_lsb": 1.3804696940779287e-05,
+            "relative_l2": 1.0831022571491762e-07
+          }
+        },
+        {
+          "trial": 2,
+          "timing": {
+            "count": 100,
+            "mean_ms": 3.7264541799999993,
+            "median_ms": 3.715944,
+            "p05_ms": 3.6703449,
+            "p95_ms": 3.7962911999999998,
+            "min_ms": 3.61155,
+            "max_ms": 3.863694
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 0.00042680867197479784,
+            "rms_q15_lsb": 1.3804696940779287e-05,
+            "relative_l2": 1.0831022571491762e-07
+          }
+        },
+        {
+          "trial": 3,
+          "timing": {
+            "count": 100,
+            "mean_ms": 3.7294353499999993,
+            "median_ms": 3.7157910000000003,
+            "p05_ms": 3.673209,
+            "p95_ms": 3.79667315,
+            "min_ms": 3.66276,
+            "max_ms": 3.920172
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 0.00042680867197479784,
+            "rms_q15_lsb": 1.3804696940779287e-05,
+            "relative_l2": 1.0831022571491762e-07
+          }
+        }
+      ]
+    },
+    "pl": {
+      "timing": {
+        "count": 300,
+        "mean_ms": 15.415091446666665,
+        "median_ms": 15.411639000000001,
+        "p05_ms": 15.29584505,
+        "p95_ms": 15.547105199999999,
+        "min_ms": 15.255816,
+        "max_ms": 15.599466
+      },
+      "trials": [
+        {
+          "trial": 1,
+          "timing": {
+            "count": 100,
+            "mean_ms": 15.36653185,
+            "median_ms": 15.367163999999999,
+            "p05_ms": 15.280386,
+            "p95_ms": 15.454502999999999,
+            "min_ms": 15.255816,
+            "max_ms": 15.474924
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 8.749842363453245,
+            "rms_q15_lsb": 1.734691375725571,
+            "relative_l2": 0.013610209282866829
+          }
+        },
+        {
+          "trial": 2,
+          "timing": {
+            "count": 100,
+            "mean_ms": 15.486763000000005,
+            "median_ms": 15.5045885,
+            "p05_ms": 15.382463450000001,
+            "p95_ms": 15.5656815,
+            "min_ms": 15.351691,
+            "max_ms": 15.599466
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 8.749842363453245,
+            "rms_q15_lsb": 1.734691375725571,
+            "relative_l2": 0.013610209282866829
+          }
+        },
+        {
+          "trial": 3,
+          "timing": {
+            "count": 100,
+            "mean_ms": 15.39197949,
+            "median_ms": 15.388965500000001,
+            "p05_ms": 15.2990265,
+            "p95_ms": 15.48631625,
+            "min_ms": 15.28098,
+            "max_ms": 15.500448
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 8.749842363453245,
+            "rms_q15_lsb": 1.734691375725571,
+            "relative_l2": 0.013610209282866829
+          }
+        }
+      ]
+    }
+  },
+  "double_over_pl": 0.372996603411227,
+  "float_neon_over_pl": 0.24106673534203596,
+  "fixture_sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+  "dma_artifacts": {
+    "fft128_e11a.bin": "7804aa92507ea2f065d3eff8906078950b2eee259b68938e06683e64bbda0944",
+    "fft128_e11a.dtbo": "99c9d79079da2456bdebcbb1704805b0ffc881245f856227f4876883ced1cfd7",
+    "fft128_e11a.json": "5b1505c203b38ffa2c8d292d7e7d1cf26b873649ddb3b1f408af1ba046289a84",
+    "fft128_dma.ko": "8e6551c6c89feb032e66210996a1c245b7233dc14e5838364d541f4fac1873fd",
+    "fft128-receiver": "2478cc6cb8fd1dcd03bbcc1b675cc052868fdb51e1b09fdb37f306a3bf076d26",
+    "test-dma-client": "61cd243238645ba598c3f56c704bf87bd9cff466b968293ad235dc4b85a4224a",
+    "frame.rspb": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "kernelrelease.txt": "b1fc844b1ee87f48cd89d857eb48ae13b9a1e5bd6d366112a8cb8972fc01034d",
+    "gic_phandle.bin": "1bc5d0e3df0ea12c4d0078668d14924f95106bbe173e196de50fe13a900b0937",
+    "gic_path.txt": "1c6c83c7ef115c7a7d6bd02696ca4f5a64e2ae24beabac820da66ff111b90faa",
+    "dma_config.json": "53ecd9ef7aa1b984bb84ee4f139c9b73082047e1be7d963ae89a05d0fc66105f",
+    "build_config.json": "f6deb3dc3241203c31af50f730ffe5b20510623a0ba6f642c34185a7a615f37c",
+    "clock_source.txt": "9f749a74cea4bfbe43d7d176174f2ea808fd87b5bb56b631d5fdfeac82e52597",
+    "pl_source.sha256": "e1c3a46ac0c41b894b21806a61217451cb2178bd3ea512b5d073bef528f0bb83",
+    "host_source.sha256": "a04186072871a161246366a4c04d20fc7e9e4bbff8731ad6e9944f62fcfad334",
+    "module_source.sha256": "85cdf43be0a7a33a358a20f41ff59f15a0c9a337a8fc59a86e08eb34f7bb2e54",
+    "module_build_environment.txt": "0dbf78863f5729435c576329919464d6c0dc97068c7c63c199d00bfec7237da1",
+    "load_board.sh": "a6befb65c0601a4b12a5f0d8316a23ab73fd27844413e1efdcaf5f8f6e231f8e",
+    "profile_board.sh": "12823c764c147ba9862931b03a72c88c440f0a12fb3b6d2e320228a202b495e9",
+    "run_board.sh": "df884cdf11e98750968b7f6d07fb52fbe1d183f62a98ea80b9dd34d802080a39",
+    "retry_overlay_board.sh": "5ac71cffaf4053cc7caac647010b7c900bf095afd4c7a921a0a654a9efb24092"
+  },
+  "ps_artifacts": {
+    "frame.rspb": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "reference.csv": "3de9c2b73979b89ece211543d0b13da9eb7192a2c7a00e73b7fbc05d6668f553",
+    "reference.json": "b5b41a758ed8f7dcbc02f9253085f7118d426371bd5ed0803ab71a280e67521b",
+    "run_board.sh": "5f2ddb5096efdb23b5083977c840153c96736b61f7b91f64078d0a762c903433",
+    "double/bin/receiver": "a238b98b8d43b4f26bf1c8bf1bac43050bbde26a5b2a71be196837db50f24e85",
+    "double/lib/libfftw3.so.3": "182f6f5317bf1480aeee92d9a93958c5c5cc24fdccf36217d3ce253b01cb3c6b",
+    "double/build_environment.txt": "60091ff3a3a81c3399821febf8f34179c9f6558bda56644269a9159df14ee282",
+    "double/fftw_build_environment.txt": "6877a0cbbef7cfd027b27e52fe101086485657c20de2c6c8dc1ebb7db9de6d85",
+    "float_scalar/bin/receiver": "e9dce02870b541a2028ec01cea38dd219da2c1b6a860cf86a4b49f359ccf06a4",
+    "float_scalar/lib/libfftw3f.so.3": "bfb57f35aab07931c3932ab7918f7fd0e390310d0434585f23a013194dd719fa",
+    "float_scalar/build_environment.txt": "a11ca79e697ad050f16e046ef44ad764bffafcdd5a666c483f031cea57902e7d",
+    "float_scalar/fftw_build_environment.txt": "8e249f92cbec400d773f360ab64a3502bc27d4eb1fbeff0bdbb58f8785d5a132",
+    "float_neon/bin/receiver": "1feda3b947f5e2421b30179c0183fdce3fcf540050d19e88ac9ef7c8a09451e4",
+    "float_neon/lib/libfftw3f.so.3": "9c06dfa6f7e6f686b5eabda0845b75d38c5f05b852234364edfd84c423315653",
+    "float_neon/build_environment.txt": "64cce6a4db6b36b166b4184c80c70806d5f7a848c8cd09f23e70f82546a3a013",
+    "float_neon/fftw_build_environment.txt": "77c2cd82f944d6ba0fe68491cc0068e51f87872f8039833d3803f4acf127f429"
+  },
+  "scope": "Q15 input to CPU-available 2D FFT output; required copies, DMA, IRQ wait, transpose and normalization included; IO/planning/validation excluded",
+  "limitation": "Same recorded warm-cache frame, CPU0, one ioctl/FFT, coherent HP0 bounce buffers; no continuous-stream throughput claim",
+  "environment": "Linux Petalinux-2022 5.15.19-xilinx #1 SMP PREEMPT Wed Aug 26 11:47:56 KST 2026 armv7l GNU/Linux\nprocessor\t: 0\nmodel name\t: ARMv7 Processor rev 0 (v7l)\nBogoMIPS\t: 333.33\nFeatures\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 \nCPU implementer\t: 0x41\nCPU architecture: 7\nCPU variant\t: 0x3\nCPU part\t: 0xc09\nCPU revision\t: 0\n\nprocessor\t: 1\nmodel name\t: ARMv7 Processor rev 0 (v7l)\nBogoMIPS\t: 333.33\nFeatures\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 \nCPU implementer\t: 0x41\nCPU architecture: 7\nCPU variant\t: 0x3\nCPU part\t: 0xc09\nCPU revision\t: 0\n\nHardware\t: Xilinx Zynq Platform\nRevision\t: 0003\nSerial\t\t: 0000000000000000\nE11a CPU0 warmup=10 repeats=100 trials=3, coherent bounce buffers, HP0, 50MHz\n{\"experiment\":\"E11a\",\"core\":\"pipeline\",\"clock_hz\":50000000,\"fft_control_base\":\"0x43c60000\",\"dma_base\":\"0x40400000\",\"irq_f2p_bits\":[6,7],\"dt_spi\":[35,36],\"memory_port\":\"HP0\",\"memory_width\":64,\"stream_width\":32,\"sg\":false,\"dre\":false,\"burst\":16,\"length_width\":17,\"fft_per_request\":1,\"bytes_per_direction\":512,\"board_verified\":false}\n7804aa92507ea2f065d3eff8906078950b2eee259b68938e06683e64bbda0944  /opt/fft128/e11a/fft128_e11a.bin\n8e6551c6c89feb032e66210996a1c245b7233dc14e5838364d541f4fac1873fd  /opt/fft128/e11a/fft128_dma.ko\n2478cc6cb8fd1dcd03bbcc1b675cc052868fdb51e1b09fdb37f306a3bf076d26  /opt/fft128/e11a/fft128-receiver\naa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976  /opt/fft128/e11a/frame.rspb\n",
+  "irq_delta": {
+    "67": [
+      84480,
+      0
+    ],
+    "68": [
+      84480,
+      0
+    ]
+  }
+}

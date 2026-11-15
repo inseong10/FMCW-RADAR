@@ -1,0 +1,30 @@
+Linux Petalinux-2022 5.15.19-xilinx #1 SMP PREEMPT Wed Aug 26 11:47:56 KST 2026 armv7l GNU/Linux
+processor	: 0
+model name	: ARMv7 Processor rev 0 (v7l)
+BogoMIPS	: 333.33
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x3
+CPU part	: 0xc09
+CPU revision	: 0
+
+processor	: 1
+model name	: ARMv7 Processor rev 0 (v7l)
+BogoMIPS	: 333.33
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x3
+CPU part	: 0xc09
+CPU revision	: 0
+
+Hardware	: Xilinx Zynq Platform
+Revision	: 0003
+Serial		: 0000000000000000
+E11a CPU0 warmup=10 repeats=100 trials=3, coherent bounce buffers, HP0, 50MHz
+{"experiment":"E11a","core":"pipeline","clock_hz":50000000,"fft_control_base":"0x43c60000","dma_base":"0x40400000","irq_f2p_bits":[6,7],"dt_spi":[35,36],"memory_port":"HP0","memory_width":64,"stream_width":32,"sg":false,"dre":false,"burst":16,"length_width":17,"fft_per_request":1,"bytes_per_direction":512,"board_verified":false}
+7804aa92507ea2f065d3eff8906078950b2eee259b68938e06683e64bbda0944  /opt/fft128/e11a/fft128_e11a.bin
+8e6551c6c89feb032e66210996a1c245b7233dc14e5838364d541f4fac1873fd  /opt/fft128/e11a/fft128_dma.ko
+2478cc6cb8fd1dcd03bbcc1b675cc052868fdb51e1b09fdb37f306a3bf076d26  /opt/fft128/e11a/fft128-receiver
+aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976  /opt/fft128/e11a/frame.rspb

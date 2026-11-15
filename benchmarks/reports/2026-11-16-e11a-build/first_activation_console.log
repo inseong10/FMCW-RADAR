@@ -1,0 +1,10 @@
+Evidence: user-supplied PetaLinux console, 2026-11-16 client date.
+Command: sudo sh /opt/fft128/e11a/load_board.sh
+All 20 artifact manifest checks reported OK.
+HP0 read/write control before activation: 0x00000000 0x00000F00
+fpga_manager fpga0: writing fft128_e11a.bin to Xilinx Zynq FPGA Manager
+Time taken to load BIN is 51.000000 Milli Seconds
+BIN FILE loaded through FPGA manager successfully
+OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/fft128_e11a_clock
+OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/fft128_e11a_dma
+DMA client did not bind; inspect dmesg. Do not start a benchmark.

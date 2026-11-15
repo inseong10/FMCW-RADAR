@@ -11,9 +11,15 @@ See the [implementation report](../benchmarks/reports/2026-11-15-pipeline50-buil
 Do not report the cycle-derived estimates below as measured board latency.
 
 The [experiment log](experiment_log.md) records the motivation and progression.
-The [staged DMA plan](fft128_dma_plan.md) defines E11a/E11b transfer granularity,
-buffer ownership, measurement boundaries and E12-E14 gates. These stages are planned,
-not implemented or measured; E10 remains the latest verified hardware.
+The [staged acceleration plan](fft128_dma_plan.md) starts with a PS float/NEON
+baseline, then defines E11a/E11b DMA granularity, an independent E11c output-rate
+change, buffer/cache risks, conditional time budgets and profile-driven E12/E13
+ordering. PS01 raw-data validation is complete: full-pipeline medians are double
+5.502540 ms, float scalar 4.341573 ms, float+NEON 3.615852 ms.
+E11a DMA is also board-validated: paired medians are PS double 5.748489 ms,
+PS NEON 3.715234 ms and PL DMA 15.411639 ms. E11b-E14 remain planned.
+See the [PS01 report](../benchmarks/reports/2026-11-15-ps01-board/README.md) and
+[E11a report](../benchmarks/reports/2026-11-16-e11a-board/README.md).
 E09 profiling has now completed on the serial 20 MHz board: input writes 23.429884 ms,
 start/wait 39.927098 ms, output reads 18.370430 ms, gather/scatter 0.947203 ms,
 and 3,073 hardware cycles/FFT (39.334400 ms internal per frame). Instrumented mean

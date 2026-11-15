@@ -1,0 +1,98 @@
+{
+  "artifacts.sha256": {
+    "sha256": "8554fc88d3d769062d04ea6e5ed108d4c2be0352282da924ca7e3c4040eb4d9e",
+    "bytes": 1744
+  },
+  "build_config.json": {
+    "sha256": "f6deb3dc3241203c31af50f730ffe5b20510623a0ba6f642c34185a7a615f37c",
+    "bytes": 68
+  },
+  "clock_source.txt": {
+    "sha256": "9f749a74cea4bfbe43d7d176174f2ea808fd87b5bb56b631d5fdfeac82e52597",
+    "bytes": 264
+  },
+  "dma_config.json": {
+    "sha256": "53ecd9ef7aa1b984bb84ee4f139c9b73082047e1be7d963ae89a05d0fc66105f",
+    "bytes": 331
+  },
+  "fft128-receiver": {
+    "sha256": "2478cc6cb8fd1dcd03bbcc1b675cc052868fdb51e1b09fdb37f306a3bf076d26",
+    "bytes": 465156
+  },
+  "fft128_dma.ko": {
+    "sha256": "8e6551c6c89feb032e66210996a1c245b7233dc14e5838364d541f4fac1873fd",
+    "bytes": 13508
+  },
+  "fft128_e11a.bin": {
+    "sha256": "7804aa92507ea2f065d3eff8906078950b2eee259b68938e06683e64bbda0944",
+    "bytes": 2083744
+  },
+  "fft128_e11a.dtbo": {
+    "sha256": "99c9d79079da2456bdebcbb1704805b0ffc881245f856227f4876883ced1cfd7",
+    "bytes": 1441
+  },
+  "fft128_e11a.json": {
+    "sha256": "5b1505c203b38ffa2c8d292d7e7d1cf26b873649ddb3b1f408af1ba046289a84",
+    "bytes": 386
+  },
+  "frame.rspb": {
+    "sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "bytes": 135176
+  },
+  "gic_path.txt": {
+    "sha256": "1c6c83c7ef115c7a7d6bd02696ca4f5a64e2ae24beabac820da66ff111b90faa",
+    "bytes": 35
+  },
+  "gic_phandle.bin": {
+    "sha256": "1bc5d0e3df0ea12c4d0078668d14924f95106bbe173e196de50fe13a900b0937",
+    "bytes": 4
+  },
+  "host_source.sha256": {
+    "sha256": "a04186072871a161246366a4c04d20fc7e9e4bbff8731ad6e9944f62fcfad334",
+    "bytes": 784
+  },
+  "kernelrelease.txt": {
+    "sha256": "b1fc844b1ee87f48cd89d857eb48ae13b9a1e5bd6d366112a8cb8972fc01034d",
+    "bytes": 15
+  },
+  "load_board.sh": {
+    "sha256": "a6befb65c0601a4b12a5f0d8316a23ab73fd27844413e1efdcaf5f8f6e231f8e",
+    "bytes": 2687
+  },
+  "module_build_environment.txt": {
+    "sha256": "0dbf78863f5729435c576329919464d6c0dc97068c7c63c199d00bfec7237da1",
+    "bytes": 1299
+  },
+  "module_source.sha256": {
+    "sha256": "85cdf43be0a7a33a358a20f41ff59f15a0c9a337a8fc59a86e08eb34f7bb2e54",
+    "bytes": 238
+  },
+  "pl_source.sha256": {
+    "sha256": "e1c3a46ac0c41b894b21806a61217451cb2178bd3ea512b5d073bef528f0bb83",
+    "bytes": 1498
+  },
+  "profile_board.sh": {
+    "sha256": "12823c764c147ba9862931b03a72c88c440f0a12fb3b6d2e320228a202b495e9",
+    "bytes": 657
+  },
+  "retry_overlay_board.sh": {
+    "sha256": "5ac71cffaf4053cc7caac647010b7c900bf095afd4c7a921a0a654a9efb24092",
+    "bytes": 1224
+  },
+  "run_board.sh": {
+    "sha256": "df884cdf11e98750968b7f6d07fb52fbe1d183f62a98ea80b9dd34d802080a39",
+    "bytes": 3755
+  },
+  "test-dma-client": {
+    "sha256": "61cd243238645ba598c3f56c704bf87bd9cff466b968293ad235dc4b85a4224a",
+    "bytes": 431588
+  },
+  "timing.rpt": {
+    "sha256": "b12a75c9c2c53089b60142040680c1bcc4b6d7ca96db303f0dc3a408c402215e",
+    "bytes": 38311
+  },
+  "utilization.rpt": {
+    "sha256": "79f21cb71f1e5df81b522a254cc46dc0de3ec9ab8a87fa7057ab235d52cb87c2",
+    "bytes": 11984
+  }
+}

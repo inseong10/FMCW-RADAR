@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-16",
+  "change": "runtime OF node population; existing /amba_pl instead of new nested simple-bus",
+  "tests": 12,
+  "board_verified": false,
+  "sha256": {
+    "src/PS/fft128/dma/make_overlay.py": "16c8dc163b3b24e4a4e7b271744df21c0442fcc03803e752a917ed1a599aefb7",
+    "src/PS/fft128/dma/prepare_host.sh": "1ea9e4305e6073c1e51686b153f3c37c109f67b015b9b45e9314790eee2aea30",
+    "src/PS/fft128/dma/prepare_bundle.sh": "4811db460ec12dbff4fbb636e6cad9e414ecb627de97b9bde9403267dcc71cd4",
+    "src/PS/fft128/dma/deploy.sh": "213841269d97da28c91c545d30ea92c09e5249abd9e22a1407c64d978310d888",
+    "src/PS/fft128/dma/load_board.sh": "a6befb65c0601a4b12a5f0d8316a23ab73fd27844413e1efdcaf5f8f6e231f8e",
+    "src/PS/fft128/dma/retry_overlay_board.sh": "5ac71cffaf4053cc7caac647010b7c900bf095afd4c7a921a0a654a9efb24092",
+    "src/PS/fft128/dma/repair_overlay_host.sh": "ef7cf0e751d6df79f3a149604e40792ae3601619c2370c6a9b294973eaf819a6",
+    "src/PS/fft128/dma/test_tools.py": "a7a22cd06419efc3eee94e56833fa7739f42dc5d80f4b541c9d7233e26a243b1"
+  }
+}

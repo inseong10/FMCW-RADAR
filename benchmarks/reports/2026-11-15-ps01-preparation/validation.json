@@ -1,0 +1,30 @@
+{
+  "status": "PS01_PREPARATION_VALIDATED_BOARD_PENDING",
+  "date": "2026-11-15",
+  "precision_tests_passed": 7,
+  "packet_reference_tests_passed": 8,
+  "linux_cpp_tests_skipped": 3,
+  "shell_syntax": "PASS",
+  "host_processing": {
+    "status": "HOST_PROCESSING_SMOKE_PASS",
+    "precision": {
+      "double": {
+        "max_complex_q15_lsb": 1.8749713606747085e-12,
+        "rms_q15_lsb": 3.751494330217785e-14,
+        "relative_l2": 2.943383686126648e-16
+      },
+      "float": {
+        "max_complex_q15_lsb": 0.00042680867197479784,
+        "rms_q15_lsb": 1.3804696940779287e-05,
+        "relative_l2": 1.0831022571491762e-07
+      }
+    },
+    "dll_archive_sha256": "cfd88dc0e8d7001115ea79e069a2c695d52c8947f5b4f3b7ac54a192756f439f",
+    "fftw_version": "3.3.5 Windows x86-64",
+    "scope": "Actual receiver processing/replay/FFTW ABI; Windows loader bridge, no sockets/main affinity",
+    "limitation": "No ARM/Linux/NEON/3.3.11 validation; no host timings used for board comparison"
+  },
+  "arm_build": "NOT_RUN",
+  "board_measurement": "NOT_RUN",
+  "pl_changes": false
+}

@@ -1,0 +1,17 @@
+{
+  "base_commit": "34b94281ce01a1340a7f23721f885e7e3b0def3c",
+  "normalization": "UTF-8 source with CRLF normalized to LF; implementation in working tree",
+  "files": {
+    "CMakeLists.txt": "5819938ac56664f0109bb0f11f3d6cf43acad74b0736379d993ff65f028b1db4",
+    "benchmarks/build_fftw_arm.sh": "2062178a570d5d76fb171ba2b3dc67584aee569ff858f7c48fa3f3fe78be3d8f",
+    "benchmarks/ps_precision/README.md": "16a1153e3f94a9206476238824314435804c0c172188d654ccc73308de6bfea1",
+    "benchmarks/ps_precision/analyze.py": "06d4d9f4ead39b9c9b88c6de81b9d34de36536560ea330ced213b44d30a632d7",
+    "benchmarks/ps_precision/build_arm.sh": "e32f5afdb6c4de8d3a8238d6241d34305ce84641da685484f1f08be2312b4fcb",
+    "benchmarks/ps_precision/deploy.sh": "2baa1503724e6e3fd4ade35be15eeac1c1c66b2e749c60f230bf60822ada408e",
+    "benchmarks/ps_precision/host_smoke.py": "eac79c169e48fa823ebf34d9d13019ca3178b0ccdc000b81aa8b886d659de884",
+    "benchmarks/ps_precision/prepare_reference.py": "5ad2023a586a86cf42adaa4ecbb76a27d9aa2f2ff4677fe330cbd1ce09aacef5",
+    "benchmarks/ps_precision/run_board.sh": "5f2ddb5096efdb23b5083977c840153c96736b61f7b91f64078d0a762c903433",
+    "benchmarks/ps_precision/test_precision.py": "84832c914a495d9bab4950a2b3e11d046ebcf03b5707c13e877ca98478a99ca6",
+    "src/PS/receiver/udp_radar_receiver.cpp": "5ff77242f69f8418a7bd3a2f2f4a1d22805ccd29bef917a92b9e4e0fc5b1fadb"
+  }
+}

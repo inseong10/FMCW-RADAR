@@ -11,6 +11,13 @@
 실제 보드 프레임 검사·861사이클 확인과 각 300회 PS–PL 비교·NumPy 검증도 완료됐습니다.
 기본 `build.tcl`은 기존 순차 20 MHz, `build_fast.tcl`은 새 파이프라인 50 MHz를 선택합니다.
 
+2026-11-16 E11a: `build_dma.tcl`과 control/AXIS 앞단을 추가했습니다. 기존 산술·50 MHz는
+유지하고 샘플 입출력만 DMA로 바꿉니다. RTL 272벡터/34,816 bin과 스트림 정지·abort 검사는
+통과했고 실제 Vivado 50 MHz 구현·보드 DMA ABI/4벡터 자체 검사도 통과했습니다.
+전체 프레임·각 300회 비교도 완료했습니다. 중앙값은 PL DMA 15.412 ms / PS NEON 3.715 ms입니다.
+[E11a 보드 결과](../../../benchmarks/reports/2026-11-16-e11a-board/README.md)를 참고하세요.
+[DMA 드라이버·전용 배치·측정 순서](../../PS/fft128/dma/README.md)를 따릅니다.
+
 PC RadarSimPy → UDP → PS → PL Range FFT → PS DDR 전치 → PL Doppler FFT → PS 저장입니다.
 **FFT 두 축의 산술 연산은 PL**이 하고, PS는 수신·Q15 변환·전송·전치·검증을 합니다.
 한 개의 128포인트 복소 FFT를 256회 재사용합니다. 프레임 크기는 고정 128×128입니다.
@@ -23,7 +30,7 @@ Python 수신기와 NumPy 비교 도구는 PC 참조 또는 선택 실행 경로
 원본 파일 해시는 `provenance.json`에 기록했습니다.
 
 현재 보드 self-test, UDP 프레임 처리 및 동일 보드 PS–PL 반복 비교는 완료됐습니다.
-PS C++/FFTW 중앙값 5.550 ms, PL MMIO 중앙값 81.460 ms(각 300회)이며 DMA는 미구현입니다.
+최초 순차/20 MHz 결과는 PS C++/FFTW 중앙값 5.550 ms, PL MMIO 중앙값 81.460 ms(각 300회)입니다.
 [최신 측정 보고서](../../../benchmarks/reports/2026-11-15-zybo128/README.md)를 참고하세요.
 아래 날짜·버전별 기록에는 수정 전 실패와 당시의 미확인 상태도 포함됩니다.
 

@@ -1,0 +1,7 @@
+make: Entering directory '/home/user/fft128_kernel_e11a/build'
+  CC [M]  /home/user/fft128_dma_module.96L9Nl/fft128_dma.o
+  MODPOST /home/user/fft128_dma_module.96L9Nl/Module.symvers
+  CC [M]  /home/user/fft128_dma_module.96L9Nl/fft128_dma.mod.o
+  LD [M]  /home/user/fft128_dma_module.96L9Nl/fft128_dma.ko
+make: Leaving directory '/home/user/fft128_kernel_e11a/build'
+DMA_MODULE_BUILD_READY: /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_module

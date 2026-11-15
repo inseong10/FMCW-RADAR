@@ -1,0 +1,17 @@
+Evidence: user-pasted PetaLinux console, received 2026-11-16 Asia/Seoul.
+Excerpt: artifact list reported OK twice by retry wrapper and loader (21 entries each).
+Command: sudo sh /opt/fft128/e11a/retry_overlay_board.sh
+
+HP0 read/write control before activation: 0x00000000 0x00000F00
+fpga_manager fpga0: writing fft128_e11a.bin to Xilinx Zynq FPGA Manager
+Time taken to load BIN is 49.000000 Milli Seconds
+BIN FILE loaded through FPGA manager successfully
+OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/fft128_e11a_clock
+OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/fft128_e11a_dma
+xilinx-vdma 40400000.dma: Xilinx AXI DMA Engine Driver Probed!!
+fft128-dma 43c60000.fft: E11a ready: one FFT/ioctl, coherent bounce buffers, 512B each direction
+DMA_CLIENT_PASS exclusive_owner invalid_ABI timeout flags unknown_ioctl valid_impulse
+DMA: kernel-owned control registers, HP0, coherent bounce buffers; 512 B per direction/FFT
+BACKEND=PL_DMA implementation=native_C
+SELFTEST_PASS backend=PL_DMA vectors=4 bins=512
+DMA_E11A_SELFTEST_READY: next run full frame/profile before benchmarking

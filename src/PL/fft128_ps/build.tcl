@@ -5,6 +5,7 @@ namespace eval fft128 {
  variable core_mode [expr {[info exists ::fft128_build_core] ? $::fft128_build_core : "serial"}]
  variable clock_mhz [expr {[info exists ::fft128_build_mhz] ? $::fft128_build_mhz : 20.0}]
  variable out [file join $root build vivado fft128_ps_${core_mode}_[clock format [clock seconds] -format %Y%m%d_%H%M%S]]
+ variable latest_file fft128_latest.txt
 }
 proc fft128::main {} {
  variable here; variable root; variable out; variable core_mode; variable clock_mhz
@@ -71,21 +72,21 @@ proc fft128::main {} {
  fft128::check_reset
  fft128::finish_build
 }
-proc fft128::check_reset {} {
+proc fft128::check_reset {{bench reset_axi_tb}} {
  variable here; variable out
  source [file join $here reset_sim_sources.tcl]
  fft128::attach_reset_sim_sources $out
  # Exercise the real generated reset IP, not a hand-written reset model.
  # Fail before synthesis if either AXI reset remains asserted after MMCM lock.
- add_files -fileset sim_1 -norecurse [file join $here reset_axi_tb.v]
- set_property top reset_axi_tb [get_filesets sim_1]
+ add_files -fileset sim_1 -norecurse [file join $here ${bench}.v]
+ set_property top $bench [get_filesets sim_1]
  set_property xsim.simulate.runtime 0ns [get_filesets sim_1]
  update_compile_order -fileset sim_1
  puts "FFT128_RESET_SIM_START: generated reset IP, AXI ID and lock-loss recovery"
  launch_simulation
  run 100 us
- set done [get_value -radix unsigned /reset_axi_tb/done]
- set passed [get_value -radix unsigned /reset_axi_tb/passed]
+ set done [get_value -radix unsigned /${bench}/done]
+ set passed [get_value -radix unsigned /${bench}/passed]
  set f [open [file join $out reset_simulation.txt] w]
  puts $f "done=$done passed=$passed; generated reset IP; AXI ID/length; lock-loss recovery"
  close $f
@@ -94,7 +95,7 @@ proc fft128::check_reset {} {
  puts "FFT128_RESET_SIM_PASS: AXI ID responds after reset release and lock-loss recovery"
 }
 proc fft128::finish_build {} {
- variable out; variable root; variable core_mode; variable clock_mhz
+ variable out; variable root; variable core_mode; variable clock_mhz; variable latest_file
  launch_runs synth_1 -jobs 2
  wait_on_run synth_1
  if {[get_property PROGRESS [get_runs synth_1]] ne "100%"} {error "Synthesis failed: [get_property STATUS [get_runs synth_1]]"}
@@ -124,7 +125,7 @@ proc fft128::finish_build {} {
  set f [open [file join $out build_config.json] w]
  puts $f [format { {"core":"%s","pl_clock_hz":%d,"board_verified":false} } $core_mode $actual_hz]
  close $f
- set f [open [file join $root build fft128_latest.txt] w]; puts $f $out; close $f
+ set f [open [file join $root build $latest_file] w]; puts $f $out; close $f
  puts "FFT128_BUILD_PASS: $out"
  puts "Next: prepare_firmware.sh converts this bitstream for the existing NFS/fpgautil workflow."
 }

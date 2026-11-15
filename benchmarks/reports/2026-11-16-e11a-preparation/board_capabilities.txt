@@ -1,0 +1,56 @@
+drwxr-xr-x    3 root     root          4096 Sep  1  2026 /lib/modules/5.15.19-xilinx
+drwxr-xr-x    3 root     root          4096 Mar  9 12:34 /lib/modules/5.15.19-xilinx-v2022.1
+gpio-xilinx
+xilinx-axipmon
+xilinx-cfa
+xilinx-cresample
+xilinx-frmbuf
+xilinx-pcie
+xilinx-remapper
+xilinx-rgb2yuv
+xilinx-scaler
+xilinx-switch
+xilinx-tpg
+xilinx-trafgen
+xilinx-udc
+xilinx-vdma
+xilinx-video
+xilinx-vtc
+xilinx_axienet
+xilinx_can
+xilinx_emaclite
+xilinx_spi
+CONFIG_MODULES_USE_ELF_REL=y
+CONFIG_MODULES=y
+CONFIG_MODULE_UNLOAD=y
+CONFIG_MODVERSIONS=y
+CONFIG_MODULES_TREE_LOOKUP=y
+CONFIG_CMA=y
+# CONFIG_CMA_DEBUG is not set
+# CONFIG_CMA_SYSFS is not set
+CONFIG_CMA_AREAS=7
+CONFIG_OF_OVERLAY=y
+CONFIG_OF_CONFIGFS=y
+CONFIG_DMA_ENGINE=y
+CONFIG_XILINX_DMA=y
+# CONFIG_XILINX_DMATEST is not set
+CONFIG_FPGA=y
+# CONFIG_FPGA_MGR_DEBUG_FS is not set
+# CONFIG_FPGA_MGR_ALTERA_PS_SPI is not set
+# CONFIG_FPGA_MGR_ALTERA_CVP is not set
+CONFIG_FPGA_MGR_ZYNQ_FPGA=y
+# CONFIG_FPGA_MGR_XILINX_SPI is not set
+# CONFIG_FPGA_MGR_ICE40_SPI is not set
+# CONFIG_FPGA_MGR_MACHXO2_SPI is not set
+CONFIG_FPGA_MGR_ZYNQ_AFI_FPGA=y
+CONFIG_FPGA_BRIDGE=y
+CONFIG_FPGA_REGION=y
+# CONFIG_FPGA_DFL is not set
+CONFIG_CONFIGFS_FS=y
+CONFIG_DMA_CMA=y
+CONFIG_CMA_SIZE_MBYTES=16
+CONFIG_CMA_SIZE_SEL_MBYTES=y
+# CONFIG_CMA_SIZE_SEL_PERCENTAGE is not set
+# CONFIG_CMA_SIZE_SEL_MIN is not set
+# CONFIG_CMA_SIZE_SEL_MAX is not set
+CONFIG_CMA_ALIGNMENT=8

@@ -8,13 +8,19 @@
 
 ## 현재 위치
 
-- 보드에서 검증된 구성: **기존 순차/20 MHz와 새 파이프라인/50 MHz, AXI4-Lite MMIO, 128×128**.
+- 보드에서 검증된 구성: **순차/20 MHz MMIO, 파이프라인/50 MHz MMIO 및 E11a DMA, 128×128**.
 - E08에서 같은 보드의 PS C++/FFTW와 비교 완료. E09에서 연산·전송·전치 분해 계측 완료.
 - E10의 새 파이프라인은 **RTL·구현·보드 프로파일·각 300회 PS–PL 비교·NumPy 검증 완료**.
-- 다음 단계: E10의 새 기준선을 보존하고 [단계별 DMA 가속 계획](fft128_dma_plan.md)에 따라
-  E11a DMA → E11b 묶음 제출 → E12 겹치기 → E13 연산 구조 → 선택 E14 전치를 검증한다.
-  계획만 수립했으며 E11 이후 구현·측정은 아직 없다.
-- DMA·여러 FFT 코어·연속 프레임·크기 스윕·PS float/NEON 비교는 아직 실시하지 않았다.
+- 다음 단계: E10의 새 기준선을 보존하고 [단계별 가속 계획](fft128_dma_plan.md)에 따라
+  PS01 float/NEON 기준 측정 → E11a DMA → E11b 묶음 제출을 진행한다. 독립 출력 개선 E11c와
+  E12 겹치기/E13 연산 구조의 실행 순서는 E11b 프로파일로 정한다. E14 전치는 선택 사항이다.
+  PS01 세 변형의 원본 수집·독립 검증도 완료했다(2026-11-16). 전체 중앙값은 double
+  5.502540 / float scalar 4.341573 / float+NEON 3.615852 ms다.
+  E11a 소스와 계측 도구를 구현하고 RTL·ARM 수신기·DT 오프라인 검증을 통과했다.
+  ARM 모듈/실제 커널 CRC와 Vivado 통합·50 MHz 구현 타이밍까지 통과했다.
+  E11a 보드 DMA 프레임·계측·각 300회 paired 비교도 완료했다. 중앙값은 PS double
+  5.748489 / NEON 3.715234 / PL DMA 15.411639 ms다. [E11a 완료 보고서](../benchmarks/reports/2026-11-16-e11a-board/README.md).
+- 다음은 E11b 묶음 제출이다. 여러 FFT 코어·연속 프레임·크기 스윕은 아직 실시하지 않았다.
 
 ## 실험 색인
 
@@ -29,6 +35,8 @@
 | E08 | 11-15 | 최적화 PS 대비 현 PL은 빠른가 | 입력·정규화·측정 범위 정렬, CPU0, 반복 측정 | 중앙값 PS 5.550 ms / PL 81.460 ms; PL 경로가 14.677배 느림 |
 | E09 | 11-15 | 81 ms 중 연산·전송·전치 비중은? | 0x010 사이클 읽기와 호스트 단계 계측 | 3,073 cycles/FFT; PL 내부 39.334 ms, 입출력 41.800 ms |
 | E10 | 11-15 완료 | 순차 연산과 낮은 클록을 개선할 수 있는가 | 파이프라인·stage ping-pong RAM·50 MHz 빌드 | RTL 861 cycles/FFT; 50 MHz 타이밍·보드 프레임 PASS; 프로파일 평균 27.328 ms; 각 300회 중앙값 PS 5.557 / PL 25.259 ms; 기존 PL보다 3.225배 개선 |
+| PS01 | 11-15~16 완료 | DMA 설계 전에 PS 목표 성능을 먼저 정할 수 있는가 | double/float scalar/float+NEON 변형, 같은 입력·전치·반복 검증 | 원본 검증 PASS; 각 300회 전체 중앙값 5.502540/4.341573/3.615852 ms; NEON 변형은 double 대비 1.522배 개선 |
+| E11a | 11-16 완료 | FFT당 작은 DMA 제출의 전송/고정 비용은? | 산술/50 MHz 유지, Simple DMA/HP0·제어 앞단·coherent bounce·ioctl/계측 | 보드 프레임·독립 정수 검증 PASS; 각 300회 중앙값 PS double 5.748489 / NEON 3.715234 / PL DMA 15.411639 ms; 별도 계측 평균 18.136318 ms |
 
 ## 공통 조건과 해석 규칙
 
@@ -235,15 +243,177 @@
   [빌드·배치·실행 절차](fft128_optimization.md). 소스는 기준 커밋 이후 작업 트리 변경이며
   해당 시점의 파일 SHA256을 스냅샷으로 보존했다.
 
+## PS01 — PS 정밀도·NEON 기준선: 원본 분석 완료 (2026-11-16)
+
+- **선행 관찰/가설:** E10 PL 25.259 ms는 PS double 5.557 ms보다 느리다. 하드웨어를 더
+  바꾸기 전에 float·NEON을 쓰는 PS 기준을 측정해 목표를 정한다. 2~3 ms는 미검증 예시이며
+  보드 수치로 취급하지 않는다. 기존 double 결과와 E10 펌웨어는 보존한다.
+- **처리 변경:** `udp_radar_receiver.cpp`는 compile-time Real로 float64/float32를 선택한다.
+  작업 버퍼·창/전치·정규화가 선택한 정밀도를 사용하며 Q15 스케일 산정은 double로 유지한다.
+  원래 32×32 전치·contiguous Doppler·단일 스레드·CPU0·계측 범위는 유지한다.
+- **변형 분리:** `build_fftw_arm.sh`의 기본 double 경로를 유지하고 single scalar/NEON을
+  추가했다. float 두 라이브러리·수신기는 compiler 자동 벡터화를 모두 끄고 FFTW의 명시적
+  NEON codelet만 달리한다. 세 변형은 별도 라이브러리·실행 파일·보드 wisdom을 쓴다.
+- **측정 계약:** [PS01 절차](../benchmarks/ps_precision/README.md)의 별도 빌드/배치/실행 도구.
+  워밍업 10회, 100회씩 3 trial, 순서를 회전한다. 주 비교는 fft_pipeline이며 UDP/파일/할당/
+  양자화/계획/수치 검증은 제외한다. 검증이 캐시에 미치는 영향을 맞추려고 새 double도 재측정한다.
+- **정확도:** pinned RadarSimPy 프레임의 NumPy 기준을 PC에서 생성하고 매 반복 C++에서
+  16,384 bin을 비교한다. 최대 복소 오차/상대 L2 허용값은 double 1e-7/1e-12,
+  float 0.01/1e-5다. 단위는 정규화된 Q15 LSB이며 PL과 float의 bit-exact는 요구하지 않는다.
+  검증 실패·NEON plan 미선택·입력/실행 artifact 불일치 시 비교를 중단한다.
+- **로컬 확인:** oracle이 기존 보드 double 출력과 일치함을 확인했고, 분석기의 누락·틀린
+  NEON 표시·변경 metadata 거부, 실제 C++ 검증기의 float/double·오류·NaN·잘못된 bin 처리를
+  포함한 7개 테스트가 통과했다. 이는 ARM FFTW의 수치/성능 검증을 뜻하지 않는다.
+- **실제 처리 코드의 추가 수치 확인:** 별도 Windows harness에서 실제 수신기의 FFTW ABI·
+  replay·전치·FFT·검증 코드를 사용했다. 공식 FFTW 3.3.5 DLL의 double/float 출력이 NumPy
+  기준을 통과했고 MEASURE wisdom 저장·재사용도 확인했다. 최대 복소 오차는 각각
+  1.874971e-12 / 0.000426809 Q15 LSB, 상대 L2는 2.943384e-16 / 1.083102e-7이다.
+  소켓·CPU affinity와 ARM용 FFTW 3.3.11/NEON은 검증하지 않았고 PC 시간을 보드와 비교하지 않는다.
+- **미확인/다음:** Ubuntu ARM 전체 빌드 → 보드 preflight/세 변형 반복 측정 → 원본 회수 후
+  분석이 남았다. PL/DMA·클록 변경은 없고 아직 PS01 속도·새 가속비는 없다.
+  [준비 단계 근거](../benchmarks/reports/2026-11-15-ps01-preparation/README.md).
+- **후속 보드 확인:** 사용자 콘솔에서 preflight 3개, 순서를 회전한 3 trial, 각 100회 및
+  `PS_PRECISION_COMPLETE`를 확인했다. 각 변형 300회 모두 16,384 bin 정확도 PASS다.
+  최대 복소 오차는 double 1.83315e-12 / float scalar 0.000470413 / NEON 0.000426809,
+  상대 L2는 각각 2.9e-16 / 1.1532413e-7 / 1.0831023e-7이다.
+- **콘솔 시간의 범위:** FFT only의 300회 평균은 double 3.361187757 / float scalar
+  2.721217800 / NEON 1.998061230 ms다. FFT 두 축만의 NEON 개선은 double 대비
+  약 1.682배, scalar 대비 약 1.362배다. 전치·복사·정규화 포함 시간이 아니므로
+  PS 전체가 2 ms라는 결론이나 E10 PL 전체 시간과의 가속비를 만들지 않는다.
+- **빌드 확인·남은 작업:** 공유 폴더의 16개 artifact 해시와 source identity를 대조했다.
+  ARM 빌드·보드 실행은 진행됐으며 현재 남은 것은 결과 폴더 회수와 전체 fft_pipeline
+  분포·정확도·plan·환경·보드 artifact check의 독립 확인이다. 원시 표본이 없으므로
+  중앙값·분위수는 미확인이다. [보드 콘솔 근거](../benchmarks/reports/2026-11-15-ps01-board/README.md).
+- **원본 수집 후 최종값:** 각 300회 전체 fft_pipeline 중앙값은 double 5.502540 / scalar
+  4.341573 / NEON 3.615852 ms, 평균은 5.498577 / 4.350084 / 3.622898 ms다.
+  p05~p95는 double 5.442966~5.566529 / scalar 4.293004~4.409682 /
+  NEON 3.563816~3.691539 ms다. 새 double 대비 NEON 변형은 중앙값 1.521782배,
+  scalar 대비 1.200705배 빠르다. 기존 E10 double을 이번 비교의 분모로 쓰지 않았다.
+- **독립 정확도·설정 확인:** 출력 CSV 9개를 pinned 입력의 NumPy 기준과 비교했다.
+  최대 복소 오차는 double 1.833145e-12 / scalar 0.000470412707 / NEON 0.000426808672,
+  상대 L2는 2.907011e-16 / 1.1532413e-7 / 1.0831023e-7이며 피크는 모두 (107,20)이다.
+  매 반복 로그·전체 표본 수·CPU0·정규화·scale·회전 순서·wisdom과 보드 artifact 16개 OK를
+  확인했다. NEON의 preflight/모든 trial 두 축에 실제 NEON codelet이 있고 scalar에는 없다.
+- **시간 분해:** NEON 평균은 FFT 두 축 1.998061 + 입력 복사 0.339761 + 전치 0.705625 +
+  정규화 0.547702 + 내부 타이머 bookkeeping 약 0.031748 = 3.622898 ms다.
+  float 정규화는 double 0.288676 ms보다 길게 관찰됐지만 원인은 아직 분리하지 않았다.
+  double→float는 정밀도·버퍼 폭·compiler 자동 벡터화 정책 차이가 포함된 결과다.
+- **다음 목표 갱신:** PS 기준은 중앙값 3.615852 ms다. 기존 PL 내부 4.408320 ms만으로도
+  이보다 0.792468 ms 길다. 코어/50 MHz/256회 순차 실행을 유지하는 E11 DMA는 전송 비용
+  검증 단계이며, PS를 이기려면 이후 연산 또는 겹치기 개선이 필요하다. E10 PL을 이번에
+  교차 실행한 것은 아니므로 과거 PL 대비 비율을 새 paired benchmark로 주장하지 않는다.
+- **원본 보존:** 전체 결과는 `build/fft128_ps_precision/results_ps01/`, 시간 CSV·로그·wisdom·
+  환경·검증 요약·전체 파일 해시는 [완료 보고서](../benchmarks/reports/2026-11-15-ps01-board/README.md)에
+  보존했다. 앞선 미확인/대기 문구는 당시 상태이며 이번 분석으로 해소했다. FPGA 변경은 없다.
+
+## E11a — FFT당 Simple DMA 전환 준비
+
+- **질문/관찰:** E10 프로파일의 샘플 MMIO 입출력은 평균 20.377574 ms로 전체의 약 75%다.
+  PS01 NEON 목표는 전체 중앙값 3.615852 ms이며, 기존 PL 내부 4.408320 ms보다 짧다.
+  DMA만으로 PS를 이긴다고 가정하지 않고 FFT당 DMA 고정 비용과 병목 이동을 먼저 측정한다.
+- **선택/고정:** 단일 `fft128_pipeline`과 butterfly/RAM/주소/ROM, Q15 산술·포화·정규화,
+  50 MHz, 출력 2클록/sample, FFT당 순차 처리, PS cached gather/scatter를 그대로 둔다.
+  코어 파일의 LF 정규화 SHA를 E10 보드 검증 소스와 대조한다.
+- **변경:** `fft128_dma_ctrl.v`, `build_dma.tcl`은 Simple AXI DMA(MM2S/S2MM)를 HP0 64-bit에,
+  32-bit AXIS를 기존 FFT에 연결한다. SG/DRE off, burst 16, length width 17이다.
+  제어 MMIO는 유지하고 payload 창은 제거한다. 기존 BSP의 영상 주소/IRQ와 겹치지 않게
+  FFT `0x43c60000`/ID `0x46544480`, DMA `0x40400000`, F2P[6:7]/SPI35:36을 사용한다.
+- **버퍼/호출:** `src/PS/fft128/dma/fft128_dma.c`가 DMAengine 채널과 coherent 512 B TX/RX
+  bounce buffer를 소유한다. 한 ioctl에 FFT 하나, 프레임 256회/양방향 총 256 KiB다.
+  전치는 기존 cached 배열에서 수행하고 추가 CPU↔coherent 복사를 시간에 포함한다.
+  포인터 없는 고정 폭 ABI, 단일 소유권, 완료/개수/오류 검사와 중단 시 동기 종료를 둔다.
+- **기존 경로 보존:** 기존 MMIO frontend/펌웨어·배치 경로는 유지한다. DMA 빌드/수신기·
+  커널 모듈·DT·배치와 결과 디렉터리를 분리한다. 모델 fallback은 없다.
+- **측정 범위:** 준비된 Q15 입력부터 CPU에서 두 축 결과를 사용할 때까지 복사·ioctl·
+  DMA·FFT·PS 전치를 포함한다. 할당·UDP/파일·양자화·검증은 제외한다. 별도 계측은 host
+  copy/ioctl/전치와 nested kernel copy/submit/wait/check를 기록한다. 내부 시간은 중복 합산하지 않는다.
+  `cycles`는 DMA 정지를 포함하는 active 구간으로 정의하고 input/output stall 카운터를 추가한다.
+- **로컬 RTL 확인:** `python src/PL/fft128_ps/verify_dma.py` 및 추가 counter 검사에서
+  272벡터/34,816 bin 정수 모델 일치, 입력 공백/출력 backpressure, payload 유지,
+  잘못된 TLAST/TKEEP, 부분 입력·계산 중 abort 후 복구, AW/W 순서·응답 지연이 통과했다.
+  active에서 스트림 정지를 빼면 **861 cycles/FFT**로 일정했다. 이는 RTL 확인이며 보드 실측이 아니다.
+  기존 serial/pipeline 회귀도 통과했고 산술 코어를 바꾸지 않았다.
+- **소프트웨어 확인:** 기존 native 회귀 9개와 새 CLI/DT 충돌·nested 계측 분석 검사 11개가
+  개발 PC에서 통과했다. 사용자 Ubuntu의 ARM hard-float 정적 수신기 빌드 및
+  `dtc`/`fdtoverlay`의 기록 DT 적용도 통과했다. 새 보드 ABI 검사기는 실제 실행 전이다.
+- **보드 조회 근거:** 현재 5.15.19-xilinx는 DMAengine/Xilinx DMA/CMA, 모듈/심볼 CRC,
+  OF configfs overlay가 활성화돼 있다. CMA 총 16 MiB, 조회 시 free 16,096 KiB다.
+  이 조회는 버퍼 할당·DMA 전송 PASS를 뜻하지 않는다. 일치하는 커널 빌드 산출물이 없어
+  BSP가 지정한 Digilent 5.15.19 소스와 기록 설정으로 후보 빌드 트리를 준비한다.
+  원래 커널 소스의 정확한 provenance는 미확인이며 정상 모듈 로딩의 CRC 수락이 필요하다.
+  후보 full kernel/Module.symvers 및 ARM 모듈 빌드는 완료했다. 이 커널을 설치하지 않았고
+  사용자 보드 콘솔에서 대응 DT 없는 정상 로드/언로드 및 실제 CRC 수락을 확인했다.
+  FPGA 레지스터 접근이나 DMA 전송은 이 검사에서 수행하지 않았다.
+  새 Vivado run `fft128_dma_e11a_20261116_005936`의 실제 generated reset IP 검사에서도
+  ID/length·lock-loss recovery가 done=1 passed=1로 통과했다. 합성/route 결과는 대기 중이다.
+  이후 같은 run의 bitstream/XSA 생성과 post-route 보고서를 확인했다. 50 MHz에서
+  WNS 10.607 ns/WHS 0.021 ns, setup/hold 위반 및 미제약 내부 endpoint는 0이다.
+  LUT 3,210/17,600, FF 3,987/35,200, BRAM tile 5/60, DSP 4/80이다.
+  실제 BD의 HP0/DDR·AXIS·제어 주소·F2P6/7 IRQ와 DMA 설정을 대조했고 PL/host/module
+  source SHA가 현재 공유 소스와 일치했다. 이전 대기 문구는 이 확인으로 해소됐다.
+  [구현 보고서와 원본/해시](../benchmarks/reports/2026-11-16-e11a-build/README.md).
+  보드 DMA 자체 검사·전체 프레임·새 시간 측정은 아직 남아 있다.
+  최초 보드 적용에서 manifest 20개 OK, HP0 read/write 64-bit와 BIN 로드(51 ms)는
+  확인했지만 overlay/module 뒤 DMA client가 bind하지 않아 자체 검사 전에 중단했다.
+  원인은 아직 미확인이다. 이 실패를 보존하고 platform device/커널 로그를 확인한다.
+  FPGA Manager 로드 성공을 DMA 검증 PASS로 취급하지 않는다.
+  후속 사용자 조회에서 `fft128-e11a-bus`, `fft128-e11a-clock`만 있고 DMA/FFT platform
+  device가 없음을 확인했다. 현재 커널의 동적 OF 알림은 부모가 OF_POPULATED_BUS인
+  장치를 생성하는데 새 simple-bus 아래 자식은 생성되지 않는 구조였다. 기존 `/amba_pl`
+  아래 DMA/FFT를 직접 추가하는 overlay v2로 수정했다. 클록·주소·IRQ·DMA 파라미터·
+  FPGA firmware·커널 모듈은 그대로 유지한다. PC 검사 12개가 통과했고 새 bundle의
+  raw BIN이 최초 bundle과 같아야 배치하도록 했다. 보드 재적용·DMA 자체 검사는 대기 중이다.
+  이후 사용자 보드 재적용 콘솔에서 21개 artifact OK, AXI DMA 및 FFT client probe,
+  `DMA_CLIENT_PASS`와 실제 `PL_DMA` 4벡터/512 bin `SELFTEST_PASS`를 확인했다.
+  v2 DT 외 BIN·모듈·수신기·ABI 검사기는 최초 bundle과 byte 단위로 같았다.
+  앞선 등록·자체 검사 대기는 해소됐다. FPGA 로드 49 ms는 FFT 측정이 아니다.
+  전체 128×128 프레임·20회 profile·비계측 paired 비교는 아직 남아 있다.
+  [v2 보드 근거](../benchmarks/reports/2026-11-16-e11a-build/dt_v2_selftest_console.log).
+  이어 `profile_e11a_01` 사용자 콘솔에서 CPU0/warmup 2/repeat 20, 실제 PL_DMA의
+  16,384 bin 정수 모델 검증과 peak (107,20)을 확인했다. 계측 포함 평균 18.136317 ms,
+  중앙값 18.129750 ms, 최소 18.071028/최대 18.224922 ms다.
+  host ioctl 15.199543 ms 안에 kernel copies 1.004211 ms와 wait 9.406124 ms가 포함된다.
+  PS gather/scatter 1.002013 ms, 스트림 정지를 포함한 PL active 4.482577 ms다.
+  중첩 구간은 합산하지 않으며 wait를 순수 DMA 전송 시간으로 보지 않는다.
+  [최초 프레임 콘솔](../benchmarks/reports/2026-11-16-e11a-build/first_frame_profile_console.log).
+  원시 CSV·카운터 관계 확인과 별도 비계측 PS double/NEON/PL 각 300회 비교는 대기 중이다.
+  **원본 회수 후 완료:** CPU0/warmup 10/100회×3 회전 trial의 원시 CSV·로그·artifact/입력
+  신원을 확인했다. 전체 중앙값은 double 5.748489 / NEON 3.715234 / PL DMA 15.411639 ms,
+  평균은 5.737376 / 3.726932 / 15.415091 ms다. PL은 이번 NEON보다 약 4.15배 느리다.
+  과거 E10 MMIO 중앙값 25.259173 ms 대비 약 1.639배 개선/지연 39.0% 감소지만 과거 실행과의
+  비교임을 구분한다. 이번 PS 대신 PS01 과거 시간을 분모로 사용하지 않는다.
+  PL 마지막 출력 3개와 profile 출력은 독립 Python Q15 모델에 전부 일치했고 매 반복 보드
+  정수 검증도 통과했다. PL NumPy 최대 오차 8.749842363 LSB/상대 L2 1.361%로 기존 산술을 유지했다.
+  두 DMA IRQ는 CPU0에서 각각 84,480회 증가해 330프레임×256회와 맞았다.
+  원시 profile 20행 모두 active−input/output stall=861 cycles/FFT이며, PL nonstall 환산
+  4.408320 ms와 stream stall 평균 0.074257 ms를 확인했다. output stall은 0이다.
+  ioctl 내부 submit/start 2.939423 / wait 9.406124 / copy 합 1.004211 / check 0.654666 /
+  잔여 1.195118 ms다. wait와 PL active는 중첩되며 순수 DMA 전송 시간으로 보지 않는다.
+  다음은 E11b에서 코어·클록·출력 스케줄을 유지한 채 제출/완료 단위를 묶어 고정 비용을 줄이는
+  실험이다. 단순히 ioctl만 묶고 내부 DMA/IRQ 횟수를 유지하는 구현과 구분해야 한다.
+  [원시 시간·프로파일·해시·분석 보고서](../benchmarks/reports/2026-11-16-e11a-board/README.md).
+- **미확인/다음:** 모듈 빌드 → 대응 DT 없이 모듈 로드/언로드로 CRC 확인 →
+  Vivado 통합/생성 reset IP·route 타이밍/자원 → 새 펌웨어/overlay 적용·ABI/self-test →
+  전체 프레임 → 별도 20회 profile → PS double/NEON/PL 각 300회 비교다.
+  이 순서의 검증을 모두 완료했다. 앞선 처리 시간·가속비 대기는 이후 원본 분석으로
+  해소됐다. 다음은 E11b이며 묶음 제출은 아직 적용하지 않았다.
+- **원본/신원:** [E11a 준비 보고서](../benchmarks/reports/2026-11-16-e11a-preparation/README.md)에
+  소스 SHA, 입력/조회 근거 SHA와 RTL·테스트 결과를 보존한다. 큰 빌드/펌웨어는 `build/`에 둔다.
+
 ## 이후 기록할 실험
 
 1. **E10 완료값 보존:** E08/E09 원본을 유지하고 새 구현·프로파일·비계측 비교 결과를 기준선으로 삼는다.
 2. **클록/구조 분리 실험:** 필요 시 serial/pipeline × 20/50 MHz, 같은 입력·동일 측정 조건.
-3. **E11~E14 계획:** [단계별 가속 계획](fft128_dma_plan.md)에 고정 조건·전송 단위·버퍼/cache
-   정합성·전체 측정 경계·통과 조건을 명시했다. E11a는 기존 코어/50 MHz와 FFT당 순차 호출을
-   유지한 DMA 전환, E11b는 축당 묶음 제출이며 이후 겹치기·연산 구조·전치를 각각 분리한다.
-   **전부 계획 상태**이며 실제 변경·측정 결과와 구분한다.
-4. **PS 기준선 확장:** float+NEON 또는 Q15 비교는 별도 정확도·정규화 조건과 함께 추가한다.
+3. **PS01 선행 계획:** 하드웨어 변경 전 double/float scalar/float+NEON을 같은 보드에서
+   비교 완료했다. 원본·정확도·설정 검증 PASS이며 목표는 NEON 전체 중앙값 3.615852 ms다.
+4. **E11~E14 계획:** [단계별 가속 계획](fft128_dma_plan.md)에 전송 단위·버퍼/cache 위험,
+   ACP 별도 비교, 측정 경계·통과 조건·사전 수치 가설을 명시했다. E11a는 기존 코어/50 MHz와
+   FFT당 순차 호출을 유지한 DMA 전환, E11b는 축당 묶음 제출이다. E11c는 2사이클 출력의
+   독립 개선으로 이상적 절감 약 0.65 ms이며, E12/E13 순서는 E11b 병목으로 선택한다.
+   E11b의 5.5~6 ms는 추가 비용이 작은 조건의 가설이며 실측값이 아니다.
+   계획서 작성 당시 E11 이후는 전부 계획 상태였다. 2026-11-16에는 E11a 소스 구현과
+   FPGA 통합과 보드 DMA 자체 검사까지 진행했고 상세는 위 E11a 항목에 기록했다.
+   이후 E11a 보드 프레임 성능·원본 검증도 완료했다. E11b~E14는 계획이며 실행 환경 수정은 실험으로 기록하지 않는다.
 
 ## 다음 실험에 사용할 기록 양식
 

@@ -1,0 +1,42 @@
+{
+  "evidence": "read-only board snapshot, not a DMA transfer",
+  "date_on_client": "2026-11-16",
+  "kernelrelease": "5.15.19-xilinx",
+  "original_kernel_compiler": "arm-xilinx-linux-gnueabi-gcc.real GCC 11.2.0",
+  "gic_path": "/axi/interrupt-controller@f8f01000",
+  "gic_phandle": 4,
+  "root_address_size_cells": [
+    1,
+    1
+  ],
+  "legacy_resources": {
+    "vtc_base": "0x43c00000",
+    "legacy_dt_spi": [
+      29,
+      30,
+      31,
+      32,
+      33,
+      34
+    ]
+  },
+  "e11a_resources": {
+    "fft_base": "0x43c60000",
+    "dma_base": "0x40400000",
+    "dt_spi": [
+      35,
+      36
+    ],
+    "irq_f2p": [
+      6,
+      7
+    ]
+  },
+  "sha256": {
+    "kernel.config": "96c12ad6b9e39e6e27b69c67f79b5b640f2d52ab090e5720ff9b576037ef6a18",
+    "live_dt.tar": "a6d514ad3a47f85f32ebda23a27f841e33f80da2e6ebaeec0ab50d157397076e",
+    "running.dtb": "1ee4df3dfc5d93e581016dcf29cbf6c6862263e40aee65058b68e24c206c13d3",
+    "capabilities.txt": "af1422f7fa946dff38054f848f58394040503396bc50113844915e5642270baa",
+    "memory.txt": "73f0785e0d5624ec38439c58e7099df2fbb32ef4eb000078abea4c5c7b56eaf1"
+  }
+}

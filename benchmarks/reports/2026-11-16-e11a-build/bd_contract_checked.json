@@ -1,0 +1,140 @@
+{
+  "parameters": {
+    "c_include_mm2s": "1",
+    "c_include_mm2s_dre": "0",
+    "c_include_s2mm": "1",
+    "c_include_s2mm_dre": "0",
+    "c_include_sg": "0",
+    "c_m_axi_mm2s_data_width": "64",
+    "c_m_axi_s2mm_data_width": "64",
+    "c_m_axis_mm2s_tdata_width": "32",
+    "c_mm2s_burst_size": "16",
+    "c_s2mm_burst_size": "16",
+    "c_s_axis_s2mm_tdata_width": "32",
+    "c_sg_length_width": "17"
+  },
+  "interfaces": {
+    "axi_M00_AXI": {
+      "interface_ports": [
+        "axi/M00_AXI",
+        "fft/S_AXI"
+      ]
+    },
+    "axi_M01_AXI": {
+      "interface_ports": [
+        "axi/M01_AXI",
+        "dma/S_AXI_LITE"
+      ]
+    },
+    "dma_M_AXIS_MM2S": {
+      "interface_ports": [
+        "dma/M_AXIS_MM2S",
+        "fft/S_AXIS"
+      ]
+    },
+    "dma_M_AXI_MM2S": {
+      "interface_ports": [
+        "dma/M_AXI_MM2S",
+        "mem/S00_AXI"
+      ]
+    },
+    "dma_M_AXI_S2MM": {
+      "interface_ports": [
+        "dma/M_AXI_S2MM",
+        "mem/S01_AXI"
+      ]
+    },
+    "fft_M_AXIS": {
+      "interface_ports": [
+        "fft/M_AXIS",
+        "dma/S_AXIS_S2MM"
+      ]
+    },
+    "mem_M00_AXI": {
+      "interface_ports": [
+        "mem/M00_AXI",
+        "ps7/S_AXI_HP0"
+      ]
+    },
+    "ps7_DDR": {
+      "interface_ports": [
+        "DDR",
+        "ps7/DDR"
+      ]
+    },
+    "ps7_FIXED_IO": {
+      "interface_ports": [
+        "FIXED_IO",
+        "ps7/FIXED_IO"
+      ]
+    },
+    "ps7_M_AXI_GP0": {
+      "interface_ports": [
+        "ps7/M_AXI_GP0",
+        "axi/S00_AXI"
+      ]
+    }
+  },
+  "irq_nets": {
+    "dma_mm2s_introut": {
+      "ports": [
+        "dma/mm2s_introut",
+        "irq/In6"
+      ]
+    },
+    "dma_s2mm_introut": {
+      "ports": [
+        "dma/s2mm_introut",
+        "irq/In7"
+      ]
+    },
+    "irq_dout": {
+      "ports": [
+        "irq/dout",
+        "ps7/IRQ_F2P"
+      ]
+    }
+  },
+  "addressing": {
+    "/ps7": {
+      "address_spaces": {
+        "Data": {
+          "segments": {
+            "SEG_dma_Reg": {
+              "address_block": "/dma/S_AXI_LITE/Reg",
+              "offset": "0x40400000",
+              "range": "64K"
+            },
+            "SEG_fft_reg0": {
+              "address_block": "/fft/S_AXI/reg0",
+              "offset": "0x43C60000",
+              "range": "4K"
+            }
+          }
+        }
+      }
+    },
+    "/dma": {
+      "address_spaces": {
+        "Data_MM2S": {
+          "segments": {
+            "SEG_ps7_HP0_DDR_LOWOCM": {
+              "address_block": "/ps7/S_AXI_HP0/HP0_DDR_LOWOCM",
+              "offset": "0x00000000",
+              "range": "1G"
+            }
+          }
+        },
+        "Data_S2MM": {
+          "segments": {
+            "SEG_ps7_HP0_DDR_LOWOCM": {
+              "address_block": "/ps7/S_AXI_HP0/HP0_DDR_LOWOCM",
+              "offset": "0x00000000",
+              "range": "1G"
+            }
+          }
+        }
+      }
+    }
+  }
+}
