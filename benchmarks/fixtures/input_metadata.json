@@ -1,0 +1,13 @@
+{
+  "source": "actual Windows RadarSimPy 15.5.0 simulation",
+  "shape": [
+    1,
+    128,
+    128
+  ],
+  "sample_rate_hz": 1600000.0,
+  "target_range_m": 30.0,
+  "target_speed_mps": -10.0,
+  "record_sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+  "transport": "recorded input datagrams; Ubuntu UDP replay; no FFT precomputed"
+}

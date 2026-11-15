@@ -1,0 +1,13 @@
+SOURCE=https://www.fftw.org/fftw-3.3.11.tar.gz
+SOURCE_SHA256=5630c24cdeb33b131612f7eb4b1a9934234754f9f388ff8617458d0be6f239a1
+CC=arm-linux-gnueabihf-gcc
+CFLAGS=-O3 -mcpu=cortex-a9 -mfpu=neon -mfloat-abi=hard -fPIC
+arm-linux-gnueabihf-gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Double precision; no FFTW threads/OpenMP/MPI.
+ARMv7 NEON has no double-precision SIMD; FFTW --enable-neon is not used.
+Slow timer is used only for planning measurements; no privileged ARM PMU instructions.
+182f6f5317bf1480aeee92d9a93958c5c5cc24fdccf36217d3ce253b01cb3c6b  /home/user/fmcw_share/FMCW-FFT-test/build/fft128_board_benchmark/lib/libfftw3.so.3
