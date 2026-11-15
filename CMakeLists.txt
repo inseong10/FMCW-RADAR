@@ -8,6 +8,10 @@ enable_language(CXX)
 
 add_executable(udp_radar_receiver src/PS/receiver/udp_radar_receiver.cpp)
 target_compile_features(udp_radar_receiver PRIVATE cxx_std_17)
+option(RADAR_RECEIVER_SINGLE "Use float32 FFTW (requires libfftw3f)" OFF)
+if(RADAR_RECEIVER_SINGLE)
+    target_compile_definitions(udp_radar_receiver PRIVATE FFT128_SINGLE=1)
+endif()
 target_compile_options(udp_radar_receiver PRIVATE -Wall -Wextra)
 target_link_libraries(udp_radar_receiver PRIVATE ${CMAKE_DL_LIBS})
 set_target_properties(udp_radar_receiver PROPERTIES

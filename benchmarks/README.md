@@ -3,6 +3,18 @@
 See [the experiment log](../docs/experiment_log.md) for the chronological
 problem/change/result history and links to captured evidence, including failed runs.
 
+Before the next DMA hardware change, [PS01](ps_precision/README.md) prepares the
+same-board double / float scalar / float+NEON comparison. Raw 300-run-per-variant
+timings, accuracy and configuration checks passed: full-pipeline medians are
+5.502540 / 4.341573 / 3.615852 ms. See the [PS01 report](reports/2026-11-15-ps01-board/README.md).
+It uses no PL MMIO or FPGA rebuild; PL was not rerun during PS01.
+
+[E11a DMA](reports/2026-11-16-e11a-board/README.md) is now board-validated, including
+an independent integer oracle and 300 unprofiled paired runs per path. Medians:
+PS double 5.748489 / PS NEON 3.715234 / PL DMA 15.411639 ms. Recalculate with
+`python3 benchmarks/compare_dma_board.py build/fft128_dma_measurements/results_e11a_01`.
+The separate 20-frame instrumented profile is diagnostic, not part of those samples.
+
 Run commands from the repository root. Shared procedures and scripts are tracked;
 `data/` (raw/packet input) and `results/` (CSV/plots) are local and ignored by Git.
 Record OS, CPU, compiler and flags, FFTW version, window, dimensions, warmup,

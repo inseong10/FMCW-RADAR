@@ -3,7 +3,14 @@
 set -euo pipefail
 here=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 root=$(cd -- "$here/../../.." && pwd)
-out=${FFT128_OUT:-"$root/build/fft128_native"}
+backend=${FFT128_IO_BACKEND:-mmio}
+extra=()
+case $backend in
+    mmio) transport="$here/mmio.c"; default_out="$root/build/fft128_native";;
+    dma) transport="$here/dma/dma_backend.c"; extra=(-DFFT128_DMA_BACKEND); default_out="$root/build/fft128_dma_native";;
+    *) echo 'FFT128_IO_BACKEND must be mmio or dma' >&2; exit 1;;
+esac
+out=${FFT128_OUT:-"$default_out"}
 compiler=()
 is_arm_linux() {
     local triple
@@ -41,10 +48,15 @@ esac
 mkdir -p -- "$out"
 printf 'COMPILER: %s\n' "${compiler[*]}"
 "${compiler[@]}" -O2 -std=c11 -Wall -Wextra "${cflags[@]}" \
-    "$here/native_core.c" "$here/native_receiver.c" "$here/mmio.c" \
+    "${extra[@]}" "$here/native_core.c" "$here/native_receiver.c" "$transport" \
     "${linkmode[@]}" "${ldflags[@]}" -lm -o "$out/fft128-receiver"
 if command -v file >/dev/null 2>&1; then file "$out/fft128-receiver"; fi
 printf 'NATIVE_BUILD_PASS: %s\n' "$out/fft128-receiver"
-printf '%s\n' 'Copy this ARM32 Linux executable into /nfsroot/opt/fft128 on Ubuntu.' \
-    'On the board it will appear at /opt/fft128/fft128-receiver. Python is not required.' \
-    'The new FFT bitstream and FCLK/reset must be ready before using the default MMIO backend.'
+if [[ $backend == dma ]]; then
+    printf '%s\n' 'E11a build only. Use dma/prepare_bundle.sh and dma/deploy.sh; baseline deployment stays intact.' \
+        'DMA requires the E11a bitstream, DT overlay and matching fft128_dma module.'
+else
+    printf '%s\n' 'Copy this ARM32 Linux executable into /nfsroot/opt/fft128 on Ubuntu.' \
+        'On the board it will appear at /opt/fft128/fft128-receiver. Python is not required.' \
+        'The new FFT bitstream and clock/reset must be ready before using the default MMIO backend.'
+fi

@@ -1,0 +1,22 @@
+{
+  "fft128_e11a.bin": {
+    "sha256": "7804aa92507ea2f065d3eff8906078950b2eee259b68938e06683e64bbda0944",
+    "bytes": 2083744
+  },
+  "fft128_e11a.dtbo": {
+    "sha256": "fcdbb65ae4c83130bdffdfe27efa5bcb655ae8471d71882196fc2f04d7fc623a",
+    "bytes": 1516
+  },
+  "fft128_dma.ko": {
+    "sha256": "8e6551c6c89feb032e66210996a1c245b7233dc14e5838364d541f4fac1873fd",
+    "bytes": 13508
+  },
+  "fft128-receiver": {
+    "sha256": "2478cc6cb8fd1dcd03bbcc1b675cc052868fdb51e1b09fdb37f306a3bf076d26",
+    "bytes": 465156
+  },
+  "test-dma-client": {
+    "sha256": "61cd243238645ba598c3f56c704bf87bd9cff466b968293ad235dc4b85a4224a",
+    "bytes": 431588
+  }
+}

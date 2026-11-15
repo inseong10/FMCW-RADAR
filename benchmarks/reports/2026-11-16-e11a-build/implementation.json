@@ -1,0 +1,61 @@
+{
+  "experiment": "E11a",
+  "date_on_client": "2026-11-16",
+  "evidence": "actual shared Vivado post-route reports and generated artifacts",
+  "vivado_run": "/home/user/fmcw_share/FMCW-FFT-test/build/vivado/fft128_dma_e11a_20261116_005936",
+  "part": "xc7z010clg400-1",
+  "pl_clock_hz": 50000000,
+  "wns_ns": 10.607,
+  "whs_ns": 0.021,
+  "tns_failing_endpoints": 0,
+  "ths_failing_endpoints": 0,
+  "unconstrained_internal_endpoints": 0,
+  "resources": {
+    "Slice LUTs": {
+      "used": 3210.0,
+      "available": 17600
+    },
+    "Slice Registers": {
+      "used": 3987.0,
+      "available": 35200
+    },
+    "Block RAM Tile": {
+      "used": 5.0,
+      "available": 60
+    },
+    "DSPs": {
+      "used": 4.0,
+      "available": 80
+    }
+  },
+  "bd_contract": "actual BD configuration/AXIS/HP0/IRQ routing checked",
+  "artifacts": {
+    "fft128_ps.runs/impl_1/system_wrapper.bit": {
+      "sha256": "818a8c785e8503d4b6ed7aa32218e8dedb0e7ab9f8e39671b30d838f3f9f63f2",
+      "bytes": 2083850
+    },
+    "system.xsa": {
+      "sha256": "23f6cfef226a690139fa274da2e3822cd6352d6cbba72e6234177b1b9262e9e7",
+      "bytes": 455844
+    },
+    "timing.rpt": {
+      "sha256": "b12a75c9c2c53089b60142040680c1bcc4b6d7ca96db303f0dc3a408c402215e",
+      "bytes": 38311
+    },
+    "utilization.rpt": {
+      "sha256": "79f21cb71f1e5df81b522a254cc46dc0de3ec9ab8a87fa7057ab235d52cb87c2",
+      "bytes": 11984
+    },
+    "source.sha256": {
+      "sha256": "e1c3a46ac0c41b894b21806a61217451cb2178bd3ea512b5d073bef528f0bb83",
+      "bytes": 1498
+    },
+    "fft128_ps.srcs/sources_1/bd/system/system.bd": {
+      "sha256": "c9086b9807efd0d19ebc9d7aac4c636655c5fc6e639394379d9b4137117e3732",
+      "bytes": 80987
+    }
+  },
+  "board_dma_verified": false,
+  "performance": "not measured",
+  "kernel_crc": "accepted in previous module-only preflight; no DMA transfer yet"
+}

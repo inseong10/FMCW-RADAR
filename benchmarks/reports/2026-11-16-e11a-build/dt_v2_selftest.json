@@ -1,0 +1,16 @@
+{
+  "date_received": "2026-11-16",
+  "evidence": "user-pasted board console; excerpt in dt_v2_selftest_console.log",
+  "status": "DMA_ABI_AND_FOUR_VECTOR_SELFTEST_PASS",
+  "overlay_layout": "existing_amba_pl_v2",
+  "backend": "PL_DMA",
+  "vectors": 4,
+  "bins": 512,
+  "abi_checks": ["exclusive_owner", "invalid_ABI", "timeout", "flags", "unknown_ioctl", "valid_impulse"],
+  "artifact_manifest_sha256": "8554fc88d3d769062d04ea6e5ed108d4c2be0352282da924ca7e3c4040eb4d9e",
+  "artifact_identities": "dt_v2_artifacts.json",
+  "unchanged_from_initial_bundle": ["fft128_e11a.bin", "fft128_dma.ko", "fft128-receiver", "test-dma-client"],
+  "frame_128x128_verified": false,
+  "performance_measured": false,
+  "next": "20-repeat full-frame profile, then separate unprofiled paired benchmark"
+}

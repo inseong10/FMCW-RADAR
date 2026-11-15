@@ -1,0 +1,3 @@
+DMA_COUNTER_PASS active_minus_stream_stalls=861 cycles
+DMA_CTRL_PASS vectors=272 bins=34816 AXIS_stalls malformed_packets abort_recovery independent_AW_W
+src/PL/fft128_ps/dma_ctrl_tb.v:158: $finish called at 3590850000 (1ps)

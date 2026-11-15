@@ -1,0 +1,119 @@
+{
+  "status": "PS01_FULL_PIPELINE_AND_ACCURACY_VALIDATED",
+  "analysis_date": "2026-11-16",
+  "raw_directory": "build/fft128_ps_precision/results_ps01",
+  "report_directory": "benchmarks/reports/2026-11-15-ps01-board",
+  "copy_checks": "Every shared raw file matched its local copy SHA256",
+  "reference": "Pinned input independently reconstructed; NumPy float64 fft2/16384; all 9 saved spectra validated",
+  "plan_checks": "Both axes in all four logs use NEON for float_neon, and no NEON for float_scalar",
+  "per_repeat_checks": "Each variant 3x100 iterations, 16384 bins/iteration, log tolerances passed",
+  "board_artifact_checks": "All 16 manifest entries report OK; runtime build environments match hashes",
+  "stage_statistics": {
+    "double": {
+      "count_per_stage": {
+        "axis_calculation": 300,
+        "decode": 300,
+        "doppler_fft": 300,
+        "doppler_window": 300,
+        "fft_pipeline": 300,
+        "normalize_output": 300,
+        "postprocess": 300,
+        "processing_total": 300,
+        "range_fft": 300,
+        "range_window": 300,
+        "reassembly": 300
+      },
+      "mean_ms": {
+        "axis_calculation": 0.00802234,
+        "decode": 1.1424740666666666,
+        "doppler_fft": 1.6970611566666667,
+        "doppler_window": 1.2342837899999999,
+        "fft_pipeline": 5.498577213333334,
+        "normalize_output": 0.2886758633333333,
+        "postprocess": 0.53238421,
+        "processing_total": 6.062654103333332,
+        "range_fft": 1.6641266000000001,
+        "range_window": 0.5799430033333334,
+        "reassembly": 0.7788583099999999
+      },
+      "fft_only_mean_ms": 3.3611877566666664,
+      "non_fft_pipeline_mean_ms": 2.1373894566666665,
+      "pipeline_timer_bookkeeping_mean_ms": 0.034486799999999984,
+      "coefficient_of_variation_percent": 0.8281636537491249
+    },
+    "float_scalar": {
+      "count_per_stage": {
+        "axis_calculation": 300,
+        "decode": 300,
+        "doppler_fft": 300,
+        "doppler_window": 300,
+        "fft_pipeline": 300,
+        "normalize_output": 300,
+        "postprocess": 300,
+        "processing_total": 300,
+        "range_fft": 300,
+        "range_window": 300,
+        "reassembly": 300
+      },
+      "mean_ms": {
+        "axis_calculation": 0.008143260000000001,
+        "decode": 1.0958259366666667,
+        "doppler_fft": 1.35979299,
+        "doppler_window": 0.7298360233333333,
+        "fft_pipeline": 4.350084066666667,
+        "normalize_output": 0.5449653799999999,
+        "postprocess": 0.6282185233333333,
+        "processing_total": 5.0092830699999995,
+        "range_fft": 1.36142481,
+        "range_window": 0.32219386,
+        "reassembly": 0.297326
+      },
+      "fft_only_mean_ms": 2.7212178000000002,
+      "non_fft_pipeline_mean_ms": 1.6288662666666665,
+      "pipeline_timer_bookkeeping_mean_ms": 0.031871003333333314,
+      "coefficient_of_variation_percent": 0.9796592714502349
+    },
+    "float_neon": {
+      "count_per_stage": {
+        "axis_calculation": 300,
+        "decode": 300,
+        "doppler_fft": 300,
+        "doppler_window": 300,
+        "fft_pipeline": 300,
+        "normalize_output": 300,
+        "postprocess": 300,
+        "processing_total": 300,
+        "range_fft": 300,
+        "range_window": 300,
+        "reassembly": 300
+      },
+      "mean_ms": {
+        "axis_calculation": 0.00811992,
+        "decode": 1.09940861,
+        "doppler_fft": 1.0028719666666666,
+        "doppler_window": 0.7056253833333334,
+        "fft_pipeline": 3.6228981033333336,
+        "normalize_output": 0.5477024033333333,
+        "postprocess": 0.6288588633333333,
+        "processing_total": 4.283978266666667,
+        "range_fft": 0.9951892633333334,
+        "range_window": 0.33976140666666665,
+        "reassembly": 0.29573748666666666
+      },
+      "fft_only_mean_ms": 1.99806123,
+      "non_fft_pipeline_mean_ms": 1.6248368733333332,
+      "pipeline_timer_bookkeeping_mean_ms": 0.03174767999999999,
+      "coefficient_of_variation_percent": 1.1366689964517058
+    }
+  },
+  "pl_target": {
+    "ps_float_neon_median_ms": 3.615852,
+    "current_pl_internal_ms_at_50mhz": 4.40832,
+    "current_internal_exceeds_target_ms": 0.792468,
+    "e11b_reference_internal_plus_ps_gather_ms": 5.3547959999999994,
+    "e10_pl_median_ms_historical": 25.2591725,
+    "e10_pl_over_ps01_neon_median_historical_ratio": 6.985676543177099,
+    "comparison_limit": "PL was not rerun in PS01; E10-to-PS01 ratio is historical context, not an interleaved PS/PL trial",
+    "implication": "Unchanged single core at 50MHz with 256 sequential FFTs needs compute/overlap improvement as well as DMA to beat PS01 target"
+  }
+}

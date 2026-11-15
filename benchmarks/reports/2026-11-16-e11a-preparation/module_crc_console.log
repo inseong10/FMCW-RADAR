@@ -1,0 +1,7 @@
+Evidence: user-supplied PetaLinux console, 2026-11-16 client date.
+Command: sudo sh /opt/fft128/e11a/module_probe/check_module_board.sh
+fft128_dma.ko: OK
+check_module_board.sh: OK
+kernelrelease.txt: OK
+fft128_dma: loading out-of-tree module taints kernel.
+DMA_MODULE_CRC_PASS: normal load/unload accepted by running kernel; no FPGA/DT change or DMA transfer

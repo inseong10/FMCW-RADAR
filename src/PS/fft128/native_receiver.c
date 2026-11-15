@@ -35,6 +35,22 @@ typedef socklen_t radar_socklen;
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef FFT128_DMA_BACKEND
+#define HARDWARE_NAME "DMA"
+#define HARDWARE_BACKEND "dma"
+#define HARDWARE_LABEL "PL_DMA"
+#define PROFILE_OPTION "--profile-dma"
+#define DEFAULT_BASE 0x43c60000
+#define TIMING_NOTE "Repeated same frame; includes host copies, ioctl, coherent bounce copies, DMA, FFT and PS transpose. Preallocated buffers. Excludes input IO, quantization, validation and files. Kernel nested stages overlap host ioctl; coherent HP0, no streaming sync."
+#else
+#define HARDWARE_NAME "MMIO"
+#define HARDWARE_BACKEND "mmio"
+#define HARDWARE_LABEL "PL_MMIO"
+#define PROFILE_OPTION "--profile-mmio"
+#define DEFAULT_BASE 0x43c00000
+#define TIMING_NOTE "Repeated same frame; average time includes MMIO, FFT, PS transpose; work buffers preallocated. Excludes input IO, quantization, validation, files. No DMA."
+#endif
+
 typedef struct {
     const char *bind, *prefix, *input;
     unsigned port, channel, warmup, repeat;
@@ -74,26 +90,26 @@ static unsigned number(const char *s, unsigned long limit) {
     return (unsigned)value;
 }
 static void usage(const char *name) {
-    printf("Usage: %s [--self-test] [--backend mmio|model] [--bind IPv4]\n"
-           "  [--port 5000] [--channel 0] [--timeout 120] [--base 0x43c00000]\n"
+    printf("Usage: %s [--self-test] [--backend " HARDWARE_BACKEND "|model] [--bind IPv4]\n"
+           "  [--port 5000] [--channel 0] [--timeout 120] [--base address]\n"
            "  [--output /tmp/fft128_result] [--input frame.rspb] [--warmup 0] [--repeat 1]\n"
            "Fixed 128 samples x 128 chirps, one frame, no window, Q1.15.\n"
            "  [--cpu0] pins this Linux process to PS CPU0 without taskset.\n"
-           "  [--profile-mmio --pl-clock-hz HZ] separate instrumented run; clock must match firmware.\n"
-           "Default mmio accesses the FPGA; model is explicit software only.\n",name);
+           "  [" PROFILE_OPTION " --pl-clock-hz HZ] separate instrumented run; clock must match firmware.\n"
+           "Default " HARDWARE_BACKEND " accesses the FPGA; model is explicit software only.\n",name);
 }
 static options parse(int argc, char **argv) {
-    options o = {"0.0.0.0","fft128_result",NULL,5000,0,0,1,0x43c00000,120,0,0,0,0,0};
+    options o = {"0.0.0.0","fft128_result",NULL,5000,0,0,1,DEFAULT_BASE,120,0,0,0,0,0};
     for (int k=1; k<argc; ++k) {
         const char *a = argv[k];
         if (!strcmp(a,"--help")) { usage(argv[0]); exit(0); }
         if (!strcmp(a,"--self-test")) { o.self_test=1; continue; }
         if (!strcmp(a,"--cpu0")) { o.cpu0=1; continue; }
-        if (!strcmp(a,"--profile-mmio")) { o.profile=1; continue; }
+        if (!strcmp(a,PROFILE_OPTION)) { o.profile=1; continue; }
         if (++k==argc) { fprintf(stderr,"Missing value: %s\n",a); exit(2); }
         const char *v=argv[k];
         if (!strcmp(a,"--backend")) {
-            if (strcmp(v,"model") && strcmp(v,"mmio")) { fprintf(stderr,"Invalid backend\n"); exit(2); }
+            if (strcmp(v,"model") && strcmp(v,HARDWARE_BACKEND)) { fprintf(stderr,"Invalid backend\n"); exit(2); }
             o.model=!strcmp(v,"model");
         } else if (!strcmp(a,"--bind")) o.bind=v;
         else if (!strcmp(a,"--output")) o.prefix=v;
@@ -114,7 +130,7 @@ static options parse(int argc, char **argv) {
     }
     if (!o.port || !o.repeat || (o.base & 4095)) { fprintf(stderr,"Invalid port/repeat/base alignment\n"); exit(2); }
     if ((o.profile && (o.model || o.self_test || !o.pl_clock_hz)) || (!o.profile && o.pl_clock_hz)) {
-        fprintf(stderr,"Profiling requires MMIO frame mode and explicit --pl-clock-hz matching firmware\n"); exit(2);
+        fprintf(stderr,"Profiling requires " HARDWARE_NAME " frame mode and explicit --pl-clock-hz matching firmware\n"); exit(2);
     }
     return o;
 }
@@ -286,9 +302,10 @@ static int save(const options *o, const collector *c, const uint32_t *spectrum,
               "  \"peak_unshifted\": [%u, %u],\n"
               "  \"dropped_packets\": %u,\n  \"duplicate_packets\": %u,\n"
               "  \"profiling\": %s,\n  \"pl_clock_hz_declared\": %u,\n"
-              "  \"note\": \"Repeated same frame; average time includes MMIO, FFT, PS transpose; work buffers preallocated. Excludes input IO, quantization, validation, files. No DMA.\"\n}\n",
+              "  \"note\": \"%s\"\n}\n",
               label,c->fs,scale,elapsed,o->warmup,o->repeat,peak/128,peak%128,c->dropped,c->duplicates,
-              o->profile ? "true" : "false",o->pl_clock_hz);
+              o->profile ? "true" : "false",o->pl_clock_hz,
+              o->model ? "Software Q15 model; no FPGA or DMA. Same frame, preallocated workspace; excludes input IO, quantization, verification and files." : TIMING_NOTE);
     if (checked_close(f)) return -1;
     f=output_file(o->prefix,".timings.csv");
     if (!f) return -1;
@@ -301,6 +318,28 @@ static int save(const options *o, const collector *c, const uint32_t *spectrum,
 static int save_profiles(const options *o, const fft128_profile *profiles, const double *times) {
     FILE *f=output_file(o->prefix,".profile.csv");
     if(!f) return -1;
+#ifdef FFT128_DMA_BACKEND
+    fprintf(f,"iteration,wall_ms,host_input_copy_ms,ioctl_ms,host_output_copy_ms,gather_ms,scatter_ms,kernel_copy_in_ms,kernel_submit_ms,kernel_wait_ms,kernel_check_ms,kernel_copy_out_ms,pl_active_cycles,pl_active_ms,input_stall_cycles,output_stall_cycles,fft_calls,min_active_cycles,max_active_cycles,pl_clock_hz_declared,bytes_each_direction_per_fft\n");
+    double ioctl_ms=0,active_ms=0,copy_ms=0,wait_ms=0,transpose_ms=0;
+    for(unsigned k=0;k<o->repeat;++k) {
+        const fft128_profile *p=profiles+k;
+        double active=p->pl_cycles*1000.0/o->pl_clock_hz;
+        fprintf(f,"%u,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%llu,%.9g,%llu,%llu,%u,%u,%u,%u,512\n",
+                k+1,times[k]*1000,p->input_write_ns/1e6,p->start_wait_ns/1e6,
+                p->output_read_ns/1e6,p->gather_ns/1e6,p->scatter_ns/1e6,
+                p->dma_copy_in_ns/1e6,p->dma_submit_ns/1e6,p->dma_wait_ns/1e6,
+                p->dma_check_ns/1e6,p->dma_copy_out_ns/1e6,
+                (unsigned long long)p->pl_cycles,active,(unsigned long long)p->dma_input_stalls,
+                (unsigned long long)p->dma_output_stalls,p->calls,p->min_cycles,p->max_cycles,o->pl_clock_hz);
+        ioctl_ms+=p->start_wait_ns/1e6;active_ms+=active;
+        copy_ms+=(p->dma_copy_in_ns+p->dma_copy_out_ns)/1e6;wait_ms+=p->dma_wait_ns/1e6;
+        transpose_ms+=(p->gather_ns+p->scatter_ns)/1e6;
+    }
+    if(checked_close(f)) return -1;
+    printf("DMA_PROFILE: ioctl_ms=%.6f kernel_copies_ms=%.6f kernel_wait_ms=%.6f PS_transpose_ms=%.6f pl_active_ms=%.6f\n",
+           ioctl_ms/o->repeat,copy_ms/o->repeat,wait_ms/o->repeat,transpose_ms/o->repeat,active_ms/o->repeat);
+    printf("DMA_PROFILE: nested kernel and PL intervals overlap ioctl; active cycles INCLUDE stream stalls. Separate instrumented run.\n");
+#else
     fprintf(f,"iteration,wall_ms,input_write_ms,start_wait_ms,counter_read_ms,output_read_ms,gather_ms,scatter_ms,pl_cycles,pl_internal_ms,fft_calls,min_cycles,max_cycles,pl_clock_hz_declared\n");
     double core_ms=0, write_ms=0, wait_ms=0, read_ms=0, transpose_ms=0;
     for(unsigned k=0;k<o->repeat;++k) {
@@ -318,6 +357,7 @@ static int save_profiles(const options *o, const fft128_profile *profiles, const
            write_ms/o->repeat,wait_ms/o->repeat,read_ms/o->repeat,transpose_ms/o->repeat,
            core_ms/o->repeat,profiles[0].min_cycles,profiles[0].max_cycles,o->pl_clock_hz);
     printf("MMIO_PROFILE: PL internal time overlaps start_wait; do not add it to host stages. Instrumented timing is separate from baseline.\n");
+#endif
     return 0;
 }
 int main(int argc, char **argv) {
@@ -331,7 +371,7 @@ int main(int argc, char **argv) {
         fprintf(stderr,"--cpu0 requires Linux\n"); return 1;
 #endif
     }
-    const char *label=o.model ? "SOFTWARE_MODEL (no FPGA access)" : "PL_MMIO";
+    const char *label=o.model ? "SOFTWARE_MODEL (no FPGA access)" : HARDWARE_LABEL;
     fft128_transform transform=o.model ? fft128_model : hardware;
     int result=1, opened=0;
     fft128_sample *frame=NULL;
@@ -341,10 +381,10 @@ int main(int argc, char **argv) {
     fft128_profile *profiles=NULL;
     if (!o.model) {
 #ifdef _WIN32
-        fprintf(stderr,"MMIO backend requires Linux on the board; no software fallback.\n"); return 1;
+        fprintf(stderr,HARDWARE_NAME " backend requires Linux on the board; no software fallback.\n"); return 1;
 #else
         int rc=fft128_open(o.base);
-        if (rc) { fprintf(stderr,"MMIO open failed (%d); verify bitstream, FCLK/reset and root access.\n",rc); return 1; }
+        if (rc) { fprintf(stderr,HARDWARE_NAME " open failed (%d); verify firmware, driver/DT, clock/reset and root access.\n",rc); return 1; }
         opened=1;
 #endif
     }

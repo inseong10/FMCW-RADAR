@@ -1,0 +1,10 @@
+{
+  "analysis_date": "2026-11-16",
+  "normalization": "CRLF to LF",
+  "files": {
+    "benchmarks/ps_precision/analyze.py": "06d4d9f4ead39b9c9b88c6de81b9d34de36536560ea330ced213b44d30a632d7",
+    "benchmarks/ps_precision/prepare_reference.py": "5ad2023a586a86cf42adaa4ecbb76a27d9aa2f2ff4677fe330cbd1ce09aacef5",
+    "benchmarks/compare_board.py": "a80b452cc4c41c9cffaee679ab70b3bada3cf6a2750ec2bfa98edf3454716277",
+    "src/PS/receiver/udp_radar_receiver.cpp": "5ff77242f69f8418a7bd3a2f2f4a1d22805ccd29bef917a92b9e4e0fc5b1fadb"
+  }
+}

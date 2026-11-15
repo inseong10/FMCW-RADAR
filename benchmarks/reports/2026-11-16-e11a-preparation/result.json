@@ -1,0 +1,26 @@
+{
+  "axi_vectors": 272,
+  "exact_complex_bins": 34816,
+  "full_2d_frame_shape": [
+    128,
+    128
+  ],
+  "independent_numpy_max_error_q15_lsb": 5.109735109344928,
+  "known_tone_peak_unshifted": [
+    121,
+    11
+  ],
+  "tested": "Unchanged serial/pipeline baseline plus E11a DMA AXIS/control frontend; no AXI DMA IP, DDR, IRQ, kernel or board validation",
+  "serial_cycles": 3073,
+  "pipeline_cycles": 861,
+  "dma_checks": [
+    "bit-exact 272 vectors",
+    "AXIS input gaps/output backpressure",
+    "stable stalled payload",
+    "malformed TLAST/TKEEP flags",
+    "partial-load and compute abort/recovery",
+    "independent AW/W",
+    "AXI response backpressure and forbidden payload windows",
+    "active - input/output stream stalls = 861 cycles/FFT with/without injected stalls"
+  ]
+}

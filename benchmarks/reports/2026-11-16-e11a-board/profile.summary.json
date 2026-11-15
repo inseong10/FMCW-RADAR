@@ -1,0 +1,34 @@
+{
+  "status": "E11A_DMA_DIAGNOSTIC_ONLY",
+  "frames": 20,
+  "mean_ms": {
+    "wall_ms": 18.1363175,
+    "pl_active_ms": 4.482577,
+    "host_input_copy_ms": 0.5299836,
+    "ioctl_ms": 15.1995428,
+    "host_output_copy_ms": 0.7227945,
+    "gather_ms": 0.5438061,
+    "scatter_ms": 0.45820679999999997,
+    "kernel_copy_in_ms": 0.28301645,
+    "kernel_submit_ms": 2.93942315,
+    "kernel_wait_ms": 9.4061245,
+    "kernel_check_ms": 0.6546657,
+    "kernel_copy_out_ms": 0.7211946
+  },
+  "wall_median_ms": 18.12975,
+  "host_residual_ms": 0.6819837,
+  "ioctl_residual_ms": 1.1951183999999984,
+  "active_minus_stream_stalls_cycles_per_fft": {
+    "min": 861.0,
+    "max": 861.0
+  },
+  "payload_bytes_per_frame": 262144,
+  "interpretation": "Kernel stages and PL active time overlap ioctl. Do not sum them with host stages. Active cycles include AXIS stalls; subtracting stalls is a diagnostic RTL interval, not a measured end-to-end saving. Coherent HP0 bounce copies included; no streaming sync. Separate unprofiled paired trials are required for performance comparisons.",
+  "accuracy": {
+    "max_complex_q15_lsb": 8.749842363453245,
+    "rms_q15_lsb": 1.734691375725571,
+    "relative_l2": 0.013610209282866829
+  },
+  "pl_nonstall_ms": 4.408320000000001,
+  "pl_stream_stall_ms": 0.07425699999999935
+}

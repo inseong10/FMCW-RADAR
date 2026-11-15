@@ -1,0 +1,10 @@
+[
+  {
+    "mutation": "profiled data presented as baseline",
+    "rejected": "Actual unprofiled PL_DMA required"
+  },
+  {
+    "mutation": "one PL output component changed by 1 LSB",
+    "rejected": "PL result differs from independent Python integer model"
+  }
+]

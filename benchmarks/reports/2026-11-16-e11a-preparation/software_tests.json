@@ -1,0 +1,20 @@
+{
+  "evidence": "observed PC tool executions; not board DMA validation",
+  "date": "2026-11-16",
+  "native_regression": {
+    "command": "python src/PS/fft128/test_native.py -v",
+    "tests": 9,
+    "status": "PASS"
+  },
+  "dma_tools": {
+    "command": "python src/PS/fft128/dma/test_tools.py -v",
+    "tests": 11,
+    "status": "PASS"
+  },
+  "compiler": "MSYS2 UCRT64 GCC, -O2 -std=c11 -Wall -Wextra -Werror",
+  "rtl_command": "python src/PL/fft128_ps/verify_dma.py; final counter TB rerun with Icarus after test extension",
+  "kernel_module": "ARM .ko built; normal load/unload accepted by actual board kernel per user console; no matching DT/FPGA access",
+  "ubuntu_userspace": "Final ARM32 static receiver + ABI checker built, overlay compiled/applied offline, built-source hashes match current checkout",
+  "vivado_and_board_dma": "Vivado generated reset IP/AXI ID/length/lock recovery simulation PASS; synthesis/route/bitstream and board DMA pending",
+  "vivado_run": "/home/user/fmcw_share/FMCW-FFT-test/build/vivado/fft128_dma_e11a_20261116_005936"
+}

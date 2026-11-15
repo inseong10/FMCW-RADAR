@@ -47,6 +47,8 @@ class Profile(ctypes.Structure):
     _fields_ = [(n,ctypes.c_uint64) for n in ('input_write_ns','start_wait_ns',
         'counter_read_ns','output_read_ns','gather_ns','scatter_ns','pl_cycles')]
     _fields_ += [(n,ctypes.c_uint32) for n in ('calls','min_cycles','max_cycles')]
+    _fields_ += [(n,ctypes.c_uint64) for n in ('dma_copy_in_ns','dma_submit_ns',
+        'dma_wait_ns','dma_check_ns','dma_copy_out_ns','dma_input_stalls','dma_output_stalls')]
 
 class NativeTests(unittest.TestCase):
     @classmethod
