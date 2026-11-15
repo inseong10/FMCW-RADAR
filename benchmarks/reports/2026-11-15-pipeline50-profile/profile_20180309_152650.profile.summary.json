@@ -1,0 +1,21 @@
+{
+  "status": "MMIO_DIAGNOSTIC_PROFILE",
+  "frames": 20,
+  "pl_clock_hz_declared": 50000000,
+  "mean_ms": {
+    "wall_ms": 27.32780935,
+    "input_write_ms": 11.526609,
+    "start_wait_ms": 5.05484795,
+    "counter_read_ms": 0.3580974,
+    "output_read_ms": 8.850965,
+    "gather_ms": 0.5187252,
+    "scatter_ms": 0.4277511,
+    "pl_internal_ms": 4.40832
+  },
+  "wall_median_ms": 27.329907499999997,
+  "cycles_per_fft_min": 861,
+  "cycles_per_fft_max": 861,
+  "unattributed_host_mean_ms": 0.5908136999999982,
+  "wall_minus_pl_internal_mean_ms": 22.91948935,
+  "interpretation": "PL internal interval includes load/compute/output and overlaps start_wait_ms. Never add PL internal time to host stages. Clock is declared from firmware, not independently measured. Diagnostic instrumentation adds overhead; use separate unprofiled runs for PS/PL speed comparisons."
+}

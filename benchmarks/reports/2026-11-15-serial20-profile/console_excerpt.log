@@ -1,0 +1,13 @@
+sudo sh /opt/fft128/benchmark/profile_board.sh 20000000
+CPU_AFFINITY=0
+MMIO: ID=0x46543128; reading FFT length
+MMIO: FFT length=128; issuing soft reset
+MMIO: initialization complete
+BACKEND=PL_MMIO implementation=native_C
+BENCHMARK: warmup=2 repeat=20 preallocated buffers; data path=PL_MMIO
+peak_unshifted=(107,20) fft_and_transfer_seconds=0.083694
+MMIO_PROFILE: write_ms=23.429884 start_wait_ms=39.927098 read_ms=18.370430 gather_scatter_ms=0.947203 pl_internal_ms=39.334400 cycles_per_fft=3073..3073 clock_hz_declared=20000000
+MMIO_PROFILE: PL internal time overlaps start_wait; do not add it to host stages. Instrumented timing is separate from baseline.
+PIPELINE_TIMING backend=PL_MMIO mean_ms=83.694257 median_ms=83.623717 min_ms=83.532463 max_ms=83.902585 repeats=20
+FRAME_PASS backend=PL_MMIO bit_exact_bins=16384
+PROFILE_COMPLETE: /opt/fft128/benchmark/profiles/profile_20180309_150010.profile.csv

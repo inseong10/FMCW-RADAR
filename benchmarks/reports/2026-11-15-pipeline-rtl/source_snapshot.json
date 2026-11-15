@@ -1,0 +1,28 @@
+{
+  "recorded_on_client_date": "2026-11-15",
+  "base_commit": "14e8cb1e4142728ba8abff7ae5547cc4e9ab0600",
+  "working_tree_status": "Optimization sources not committed at capture; hashes identify working files, not the base commit implementation.",
+  "validation_scope": "Pipeline RTL simulation and software unit tests only; 50 MHz routed timing/resources and pipeline board operation pending.",
+  "sha256_working_files": {
+    "src/PL/fft128_ps/fft128_axi.v": "4dffea7e9f4f69ef389667f852b819840fde5daffd53581b6ab74cbf430ec266",
+    "src/PL/fft128_ps/fft128_pipeline.v": "7fb0fd12a15fae339ca391eeb6485b71b64a697f3b6a1fe3aa643f6a3d6b37f4",
+    "src/PL/fft128_ps/butterfly_pipeline.v": "8152035a94ef0a7761e463c18a0011def3c7f239572ee9f928c6305287546297",
+    "src/PL/fft128_ps/fft128_stream.v": "8fd0023ba057d5cfffb4901ad122659e401bc4373276fa4ad3c5d9fa9e8cfeca",
+    "src/PL/fft128_ps/fft128_twiddle.v": "26c81c3038907f29cffa17a6d066c84613ebdcd22b0e5770765ea4dedb48f874",
+    "src/PL/fft128_ps/fft_working_ram.v": "5464b1b0a57e663a1cdc58406c0fc73f3d27829f1ecd9f267bcd66a5211d9eb0",
+    "src/PL/fft128_ps/address_generator.v": "9757d675e1564a9985a01b08726fae90f6eecd294b7bb10d9e6dd8e55685606d",
+    "src/PL/fft128_ps/build.tcl": "6c6a17c80c888a2ebb736f48db71d3ad72cc6f622236a7eed7dc236f65428f4c",
+    "src/PL/fft128_ps/build_fast.tcl": "51427c4c93fdda7b29aaaee5d973fefc00d65df914238cba954784386f76f362",
+    "src/PL/fft128_ps/axi_tb.v": "d7055045f20137f8dd60fcd24b6591af17d06811702b70ccabb78f774d1852f0",
+    "src/PL/fft128_ps/stream_tb.v": "7267e1ec3b8d3073bff0a12c6bea75cfba43520310a31e88fe29607da7815715",
+    "src/PL/fft128_ps/verify.py": "ba7410afa24db56d1ea7d70c716d748d136a8b90d4f074b9d57e78de8f6e0da9",
+    "src/PS/fft128/mmio.c": "a1ccc9ed1a609a712370494b86cff8cd7c002bdaba7d7ef5b630c3d3cedb86f6",
+    "src/PS/fft128/native_receiver.c": "f84851d85ce12ff0e07f9acf1ae1490659d61dde28496add1153f0ed2b007ab7",
+    "src/PS/fft128/native_core.c": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+    "src/PS/fft128/native_core.h": "d9035edd84aa30fb318806154d92cbe870e7e6e1637b6b2ac14427bdb82b9053",
+    "src/PS/fft128/test_native.py": "ab54d6374a73cf22be49f3b527bc08e7959517a6f81121cbad15d316315e979f",
+    "benchmarks/analyze_profile.py": "16ec29b4a206ab6022be836a336c7f21f40515bd42636b1ec2d746754255e397",
+    "benchmarks/profile_board.sh": "0a817e860f46f9f1ed614e005c329c4b44b6b21c7dc47ac814b6ab995a2df788",
+    "benchmarks/test_profile.py": "9657e318f6f7642bcec1873edad0eff427589a05051afd60f0590f864d5c42cb"
+  }
+}

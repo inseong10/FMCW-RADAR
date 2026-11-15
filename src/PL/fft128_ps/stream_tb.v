@@ -5,7 +5,12 @@ module stream_tb;
  reg [31:0] idata=0;
  wire busy,done,error,ir,ov,ol;
  wire [31:0] od;
- fft128_stream dut(.clk(clk),.rst(rst),.start(start),.busy(busy),.done(done),.input_error(error),
+ `ifdef FFT128_PIPELINE
+ fft128_pipeline dut(
+ `else
+ fft128_stream dut(
+ `endif
+  .clk(clk),.rst(rst),.start(start),.busy(busy),.done(done),.input_error(error),
   .s_axis_tdata(idata),.s_axis_tvalid(iv),.s_axis_tready(ir),.s_axis_tlast(il),
   .m_axis_tdata(od),.m_axis_tvalid(ov),.m_axis_tready(ready),.m_axis_tlast(ol));
  reg [31:0] inputs[0:2047],expected[0:2047],held;

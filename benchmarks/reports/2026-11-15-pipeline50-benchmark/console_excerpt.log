@@ -1,0 +1,15 @@
+PS preflight: prepare target-specific 128x128 FFTW MEASURE wisdom (excluded from timing)
+Trial 1/3: PS optimized C++/FFTW
+Trial 1/3: PL FFT + AXI4-Lite + PS transpose
+PIPELINE_TIMING backend=PL_MMIO mean_ms=25.260099 median_ms=25.256604 min_ms=25.222806 max_ms=25.429465 repeats=100
+FRAME_PASS backend=PL_MMIO bit_exact_bins=16384
+Trial 2/3: PS optimized C++/FFTW
+Trial 2/3: PL FFT + AXI4-Lite + PS transpose
+PIPELINE_TIMING backend=PL_MMIO mean_ms=25.260553 median_ms=25.259575 min_ms=25.224594 max_ms=25.392523 repeats=100
+FRAME_PASS backend=PL_MMIO bit_exact_bins=16384
+Trial 3/3: PS optimized C++/FFTW
+Trial 3/3: PL FFT + AXI4-Lite + PS transpose
+PIPELINE_TIMING backend=PL_MMIO mean_ms=25.263327 median_ms=25.260438 min_ms=25.236121 max_ms=25.425432 repeats=100
+FRAME_PASS backend=PL_MMIO bit_exact_bins=16384
+BOARD_BENCHMARK_COMPLETE: /opt/fft128/benchmark/results_pipeline50
+Same recorded frame, same board. No UDP, no DMA. Compare fft_pipeline stage only.

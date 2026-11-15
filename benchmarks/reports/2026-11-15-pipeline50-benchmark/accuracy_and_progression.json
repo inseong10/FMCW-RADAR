@@ -1,0 +1,90 @@
+{
+  "status": "PIPELINE50_SAME_BOARD_VALIDATED",
+  "configuration": "pipeline/50MHz; AXI4-Lite MMIO; no DMA",
+  "ps_median_ms": 5.557368,
+  "pl_median_ms": 25.2591725,
+  "pl_over_ps_median": 4.545168234315237,
+  "old_pl_over_new_pl_median": 3.2249768277246615,
+  "old_pl_over_new_pl_mean": 3.2272679862490885,
+  "coefficient_of_variation_sample_percent": {
+    "ps": 0.76593079689174,
+    "pl": 0.0925421894534055
+  },
+  "all_trial_spectra_bit_identical_to_serial_baseline": true,
+  "accuracy_vs_numpy": {
+    "1": {
+      "ps": {
+        "max_complex_error_q15_lsb": 1.8331451766013172e-12,
+        "rms_complex_error_q15_lsb": 3.705134990033928e-14,
+        "relative_l2_error_percent": 2.90701062686393e-14,
+        "peak_unshifted": [
+          107,
+          20
+        ]
+      },
+      "pl": {
+        "max_complex_error_q15_lsb": 8.749842363453245,
+        "rms_complex_error_q15_lsb": 1.734691375725571,
+        "relative_l2_error_percent": 1.3610209282866828,
+        "peak_unshifted": [
+          107,
+          20
+        ]
+      }
+    },
+    "2": {
+      "ps": {
+        "max_complex_error_q15_lsb": 1.8331451766013172e-12,
+        "rms_complex_error_q15_lsb": 3.705134990033928e-14,
+        "relative_l2_error_percent": 2.90701062686393e-14,
+        "peak_unshifted": [
+          107,
+          20
+        ]
+      },
+      "pl": {
+        "max_complex_error_q15_lsb": 8.749842363453245,
+        "rms_complex_error_q15_lsb": 1.734691375725571,
+        "relative_l2_error_percent": 1.3610209282866828,
+        "peak_unshifted": [
+          107,
+          20
+        ]
+      }
+    },
+    "3": {
+      "ps": {
+        "max_complex_error_q15_lsb": 1.8331451766013172e-12,
+        "rms_complex_error_q15_lsb": 3.705134990033928e-14,
+        "relative_l2_error_percent": 2.90701062686393e-14,
+        "peak_unshifted": [
+          107,
+          20
+        ]
+      },
+      "pl": {
+        "max_complex_error_q15_lsb": 8.749842363453245,
+        "rms_complex_error_q15_lsb": 1.734691375725571,
+        "relative_l2_error_percent": 1.3610209282866828,
+        "peak_unshifted": [
+          107,
+          20
+        ]
+      }
+    }
+  },
+  "ps_stage_mean_ms": {
+    "axis_calculation": 0.0078024999999999995,
+    "decode": 1.1400945566666665,
+    "doppler_fft": 1.69506444,
+    "doppler_window": 1.22416125,
+    "fft_pipeline": 5.5473645366666675,
+    "normalize_output": 0.28950654,
+    "postprocess": 0.5325736433333332,
+    "processing_total": 6.106126839999999,
+    "range_fft": 1.6690044599999998,
+    "range_window": 0.6359321866666666,
+    "reassembly": 0.7744869433333335
+  },
+  "interpretation": "Combined pipeline and core/AXI clock change. Unprofiled comparison excludes UDP/IO/allocation/verification. Profiling results kept separate. PS double versus PL Q15."
+}

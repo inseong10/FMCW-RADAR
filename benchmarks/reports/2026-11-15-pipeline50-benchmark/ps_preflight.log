@@ -1,0 +1,41 @@
+CPU_AFFINITY=0
+FFTW version: fftw-3.3.11
+Range plan (128x128):
+(dft-vrank>=1-x128/1
+  (dft-ct-dit/8
+    (dftw-direct-8/14 "t1_8")
+    (dft-direct-16-x8 "n1_16")))
+Doppler plan (128x128):
+(dft-vrank>=1-x128/1
+  (dft-ct-dit/8
+    (dftw-direct-8/14 "t1_8")
+    (dft-direct-16-x8 "n1_16")))
+FFT: double precision, single thread, FFTW MEASURE
+Plan creation: 2043.166274 ms (excluded)
+Warmup: 0, repeats of SAME frame: 1
+Peak bins: range=20, doppler_unshifted=107, doppler_shifted=43
+Beat=250000.000000 Hz, Doppler=-1640.625000 Hz
+Apparent signed range=29.979246 m, signed velocity=-10.225509 m/s
+Input: Q15-quantized integers, scale=16522040.94941790029406548, output normalization=1/(pulses*samples)
+
+Input timing (offline: per-frame; UDP: per-call; CPU% uses summed times)
+Stage                     Wall avg(ms)    CPU avg(ms)     CPU(%)     Calls
+decode                 1.828487999999999891.8147599999999997199.24921574546837633         1
+reassembly             1.465260000000000011.4561279999999996499.37676589820233630         1
+
+Processing timing (per-frame averages)
+Stage                     Wall avg(ms)    CPU avg(ms)     CPU(%)     Calls
+range_window           0.543246000000000010.5363219999999273698.72543930372746956         1
+range_fft              1.759463999999999921.7504460000000108399.48745754388897922         1
+doppler_window         1.247028000000000031.2401999999997315299.45245816451046039         1
+doppler_fft            1.657721999999999921.6508039999998800399.58268032878130782         1
+normalize_output       0.291671999999999990.2858639999999468398.00872212620575397         1
+fft_pipeline           5.541305999999999625.5365660000002208199.91446059828172110         1
+postprocess            0.529187999999999990.5241719999999077199.05213270140436066         1
+axis_calculation       0.008730000000000000.0043620000001283249.96563574030147237         1
+processing_total       6.104747999999999846.0963180000003376399.86191076192396565         1
+
+FFT only: wall=3.41718600000000006 ms, CPU=3.40124999999989086 ms, CPU usage=99.53365137279301678%
+CPU scope: whole receiver process. 100% = one logical core. Total rows overlap child rows.
+Planning, allocation, window creation, warmup, printing and saving are excluded from processing_total.
+Repeated-frame measurements reflect warm-cache throughput, not network frame rate.

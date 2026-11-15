@@ -1,0 +1,31 @@
+{
+  "result": "FLOAT_REFERENCE_PASS",
+  "backend": "PL_MMIO",
+  "shape": [
+    128,
+    128
+  ],
+  "complex_bins": 16384,
+  "board_input_matches_original_radarsimpy_record": true,
+  "integer_reference_mismatched_bins": 0,
+  "max_complex_error_q15_lsb": 8.749842363453245,
+  "rms_complex_error_q15_lsb": 1.734691375725571,
+  "allowed_max_error_q15_lsb": 12,
+  "pl_peak_unshifted_doppler_range": [
+    107,
+    20
+  ],
+  "numpy_peak_unshifted_doppler_range": [
+    107,
+    20
+  ],
+  "fft_and_transfer_seconds": 0.082024044,
+  "dropped_packets": 0,
+  "duplicate_packets": 0,
+  "files_sha256": {
+    "rd128.input.csv": "2cddb4ec024ed1153c0fc722eb6630c5147d66644120f03f410e645901a0cea1",
+    "rd128.csv": "b2afc7f8f6dbba50df8d7d0cc5b180ba67a9754e059d797bd4e5e2a863d57bf0",
+    "rd128.json": "135d024133d5774cc0dec21a09e8d1af68679e0e521b02a6b4798d140a6c6d0e"
+  },
+  "scope": "one recorded RadarSimPy input frame processed on actual PL; no sustained throughput claim"
+}

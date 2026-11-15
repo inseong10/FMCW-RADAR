@@ -1,0 +1,21 @@
+{
+  "backend": "PL_MMIO",
+  "implementation": "native C",
+  "shape": [128, 128],
+  "fft_calls": 256,
+  "sample_rate_hz": 1600000,
+  "input_to_q15_scale": 16522040.9494179,
+  "window": "none",
+  "per_fft_normalization": "1/128",
+  "total_normalization": "1/16384",
+  "fft_and_transfer_seconds": 0.0836942573,
+  "warmup": 2,
+  "repeats": 20,
+  "mismatched_complex_bins": 0,
+  "peak_unshifted": [107, 20],
+  "dropped_packets": 0,
+  "duplicate_packets": 0,
+  "profiling": true,
+  "pl_clock_hz_declared": 20000000,
+  "note": "Repeated same frame; average time includes MMIO, FFT, PS transpose; work buffers preallocated. Excludes input IO, quantization, validation, files. No DMA."
+}

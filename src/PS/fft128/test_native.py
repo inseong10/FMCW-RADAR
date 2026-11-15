@@ -43,6 +43,10 @@ def replay(path, packets):
 class Sample(ctypes.Structure):
     _fields_ = [('real',ctypes.c_double),('imag',ctypes.c_double)]
 
+class Profile(ctypes.Structure):
+    _fields_ = [(n,ctypes.c_uint64) for n in ('input_write_ns','start_wait_ns',
+        'counter_read_ns','output_read_ns','gather_ns','scatter_ns','pl_cycles')]
+    _fields_ += [(n,ctypes.c_uint32) for n in ('calls','min_cycles','max_cycles')]
 
 class NativeTests(unittest.TestCase):
     @classmethod
@@ -68,9 +72,36 @@ class NativeTests(unittest.TestCase):
         cls.lib.fft128_quantize.restype = ctypes.c_int
         cls.lib.fft128_process.argtypes = [PTR,PTR,CALLBACK,ctypes.c_void_p]
         cls.lib.fft128_process.restype = ctypes.c_int
+        cls.lib.fft128_process_profiled.argtypes = [PTR,PTR,PTR,CALLBACK,ctypes.c_void_p,ctypes.POINTER(Profile)]
+        cls.lib.fft128_process_profiled.restype = ctypes.c_int
 
     def run_cli(self, *args):
         return subprocess.run([str(self.exe),*map(str,args)],capture_output=True,text=True,timeout=20)
+
+    def test_profile_context_and_transpose_preserve_result(self):
+        packed=(U32*16384)(); plain=(U32*16384)(); profiled=(U32*16384)(); workspace=(U32*16384)()
+        packed[0]=0x10002000
+        model=CALLBACK(lambda src,dst,ctx: self.lib.fft128_model(src,dst,None))
+        self.assertEqual(self.lib.fft128_process(packed,plain,model,None),0)
+        profile=Profile()
+        def mocked_hardware(src,dst,ctx):
+            p=ctypes.cast(ctx,ctypes.POINTER(Profile)).contents
+            p.calls+=1; p.pl_cycles+=861; p.input_write_ns+=100
+            return self.lib.fft128_model(src,dst,None)
+        callback=CALLBACK(mocked_hardware)
+        self.assertEqual(self.lib.fft128_process_profiled(packed,profiled,workspace,callback,
+                         ctypes.byref(profile),ctypes.byref(profile)),0)
+        self.assertEqual(bytes(plain),bytes(profiled))
+        self.assertEqual((profile.calls,profile.pl_cycles,profile.input_write_ns),(256,256*861,25600))
+        self.assertGreater(profile.gather_ns,0)
+        self.assertGreater(profile.scatter_ns,0)
+
+    def test_profile_requires_explicit_hardware_clock(self):
+        for args in (('--profile-mmio',),('--backend','model','--profile-mmio','--pl-clock-hz','20000000'),
+                     ('--pl-clock-hz','50000000'),('--self-test','--profile-mmio','--pl-clock-hz','20000000')):
+            result=self.run_cli(*args)
+            self.assertEqual(result.returncode,2,result.stderr)
+            self.assertIn('Profiling requires',result.stderr)
 
     def test_repeated_frame_timing_excludes_warmup_and_preserves_result(self):
         with tempfile.TemporaryDirectory() as td:

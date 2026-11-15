@@ -1,0 +1,15 @@
+{
+  "status": "ORIGINAL_PROFILE_COLLECTED_AND_VALIDATED",
+  "source_board_prefix": "profile_20180309_152650",
+  "input_matches_baseline": true,
+  "all_16384_outputs_match_serial_and_pipeline_benchmark": true,
+  "per_frame_cycles_match_expected": 861,
+  "artifact_sha256_original_bytes": {
+    "profile_20180309_152650.csv": "b2afc7f8f6dbba50df8d7d0cc5b180ba67a9754e059d797bd4e5e2a863d57bf0",
+    "profile_20180309_152650.input.csv": "2cddb4ec024ed1153c0fc722eb6630c5147d66644120f03f410e645901a0cea1",
+    "profile_20180309_152650.json": "a229067fd3d70bab38fa1ce16e72f88457c028539f22971808f1ca0162490050",
+    "profile_20180309_152650.profile.csv": "93b561b49becf0d86c07070f6c2311fcca2feb3e831f8761bc3eb9439a027bcf",
+    "profile_20180309_152650.profile.summary.json": "73a3840e5251742b1529edc939bd83c602471d1a57ab4a187703e0853133cfd4",
+    "profile_20180309_152650.timings.csv": "86b9f4899ac1a842ee753809e3c052bd3eb169ce77a8adb84c3f2b8dc925efb1"
+  }
+}

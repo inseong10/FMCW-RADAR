@@ -1,0 +1,3 @@
+OLD_AUX_BUG_REPRODUCED: locked=1 aux=0 both AXI resets remain asserted
+RESET_AXI_PASS: generated reset IP, ID/length reads, lock-loss recovery
+C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\reset_axi_tb.v:77: $finish called at 36600000 (1ps)

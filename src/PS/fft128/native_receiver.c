@@ -40,7 +40,8 @@ typedef struct {
     unsigned port, channel, warmup, repeat;
     uint32_t base;
     double timeout;
-    int model, self_test, cpu0;
+    int model, self_test, cpu0, profile;
+    uint32_t pl_clock_hz;
 } options;
 
 static double now(void) {
@@ -60,7 +61,7 @@ static int hardware(const uint32_t *in, uint32_t *out, void *context) {
     (void)in; (void)out;
     return -99;
 #else
-    return fft128_run(in, out, 1000);
+    return fft128_run_profiled(in, out, 1000, (fft128_profile *)context);
 #endif
 }
 static unsigned number(const char *s, unsigned long limit) {
@@ -78,15 +79,17 @@ static void usage(const char *name) {
            "  [--output /tmp/fft128_result] [--input frame.rspb] [--warmup 0] [--repeat 1]\n"
            "Fixed 128 samples x 128 chirps, one frame, no window, Q1.15.\n"
            "  [--cpu0] pins this Linux process to PS CPU0 without taskset.\n"
+           "  [--profile-mmio --pl-clock-hz HZ] separate instrumented run; clock must match firmware.\n"
            "Default mmio accesses the FPGA; model is explicit software only.\n",name);
 }
 static options parse(int argc, char **argv) {
-    options o = {"0.0.0.0","fft128_result",NULL,5000,0,0,1,0x43c00000,120,0,0,0};
+    options o = {"0.0.0.0","fft128_result",NULL,5000,0,0,1,0x43c00000,120,0,0,0,0,0};
     for (int k=1; k<argc; ++k) {
         const char *a = argv[k];
         if (!strcmp(a,"--help")) { usage(argv[0]); exit(0); }
         if (!strcmp(a,"--self-test")) { o.self_test=1; continue; }
         if (!strcmp(a,"--cpu0")) { o.cpu0=1; continue; }
+        if (!strcmp(a,"--profile-mmio")) { o.profile=1; continue; }
         if (++k==argc) { fprintf(stderr,"Missing value: %s\n",a); exit(2); }
         const char *v=argv[k];
         if (!strcmp(a,"--backend")) {
@@ -100,6 +103,7 @@ static options parse(int argc, char **argv) {
         else if (!strcmp(a,"--warmup")) o.warmup=number(v,100000);
         else if (!strcmp(a,"--repeat")) o.repeat=number(v,1000000);
         else if (!strcmp(a,"--base")) o.base=number(v,UINT32_MAX);
+        else if (!strcmp(a,"--pl-clock-hz")) o.pl_clock_hz=number(v,1000000000);
         else if (!strcmp(a,"--timeout")) {
             char *end;
             o.timeout=strtod(v,&end);
@@ -109,6 +113,9 @@ static options parse(int argc, char **argv) {
         } else { fprintf(stderr,"Unknown option: %s\n",a); exit(2); }
     }
     if (!o.port || !o.repeat || (o.base & 4095)) { fprintf(stderr,"Invalid port/repeat/base alignment\n"); exit(2); }
+    if ((o.profile && (o.model || o.self_test || !o.pl_clock_hz)) || (!o.profile && o.pl_clock_hz)) {
+        fprintf(stderr,"Profiling requires MMIO frame mode and explicit --pl-clock-hz matching firmware\n"); exit(2);
+    }
     return o;
 }
 static int self_test(fft128_transform transform) {
@@ -278,8 +285,10 @@ static int save(const options *o, const collector *c, const uint32_t *spectrum,
               "  \"fft_and_transfer_seconds\": %.9g,\n  \"warmup\": %u,\n  \"repeats\": %u,\n  \"mismatched_complex_bins\": 0,\n"
               "  \"peak_unshifted\": [%u, %u],\n"
               "  \"dropped_packets\": %u,\n  \"duplicate_packets\": %u,\n"
+              "  \"profiling\": %s,\n  \"pl_clock_hz_declared\": %u,\n"
               "  \"note\": \"Repeated same frame; average time includes MMIO, FFT, PS transpose; work buffers preallocated. Excludes input IO, quantization, validation, files. No DMA.\"\n}\n",
-              label,c->fs,scale,elapsed,o->warmup,o->repeat,peak/128,peak%128,c->dropped,c->duplicates);
+              label,c->fs,scale,elapsed,o->warmup,o->repeat,peak/128,peak%128,c->dropped,c->duplicates,
+              o->profile ? "true" : "false",o->pl_clock_hz);
     if (checked_close(f)) return -1;
     f=output_file(o->prefix,".timings.csv");
     if (!f) return -1;
@@ -287,6 +296,28 @@ static int save(const options *o, const collector *c, const uint32_t *spectrum,
     for (unsigned k=0;k<o->repeat;++k) fprintf(f,"fft_pipeline,%u,%.9g\n",k+1,times[k]*1000);
     if (checked_close(f)) return -1;
     printf("peak_unshifted=(%u,%u) fft_and_transfer_seconds=%.6f\n",peak/128,peak%128,elapsed);
+    return 0;
+}
+static int save_profiles(const options *o, const fft128_profile *profiles, const double *times) {
+    FILE *f=output_file(o->prefix,".profile.csv");
+    if(!f) return -1;
+    fprintf(f,"iteration,wall_ms,input_write_ms,start_wait_ms,counter_read_ms,output_read_ms,gather_ms,scatter_ms,pl_cycles,pl_internal_ms,fft_calls,min_cycles,max_cycles,pl_clock_hz_declared\n");
+    double core_ms=0, write_ms=0, wait_ms=0, read_ms=0, transpose_ms=0;
+    for(unsigned k=0;k<o->repeat;++k) {
+        const fft128_profile *p=profiles+k;
+        double internal=p->pl_cycles*1000.0/o->pl_clock_hz;
+        fprintf(f,"%u,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%llu,%.9g,%u,%u,%u,%u\n",
+                k+1,times[k]*1000,p->input_write_ns/1e6,p->start_wait_ns/1e6,
+                p->counter_read_ns/1e6,p->output_read_ns/1e6,p->gather_ns/1e6,p->scatter_ns/1e6,
+                (unsigned long long)p->pl_cycles,internal,p->calls,p->min_cycles,p->max_cycles,o->pl_clock_hz);
+        core_ms+=internal; write_ms+=p->input_write_ns/1e6; wait_ms+=p->start_wait_ns/1e6;
+        read_ms+=p->output_read_ns/1e6; transpose_ms+=(p->gather_ns+p->scatter_ns)/1e6;
+    }
+    if(checked_close(f)) return -1;
+    printf("MMIO_PROFILE: write_ms=%.6f start_wait_ms=%.6f read_ms=%.6f gather_scatter_ms=%.6f pl_internal_ms=%.6f cycles_per_fft=%u..%u clock_hz_declared=%u\n",
+           write_ms/o->repeat,wait_ms/o->repeat,read_ms/o->repeat,transpose_ms/o->repeat,
+           core_ms/o->repeat,profiles[0].min_cycles,profiles[0].max_cycles,o->pl_clock_hz);
+    printf("MMIO_PROFILE: PL internal time overlaps start_wait; do not add it to host stages. Instrumented timing is separate from baseline.\n");
     return 0;
 }
 int main(int argc, char **argv) {
@@ -307,6 +338,7 @@ int main(int argc, char **argv) {
     uint32_t *packed=NULL, *spectrum=NULL, *expected=NULL;
     uint32_t *workspace=NULL;
     double *times=NULL;
+    fft128_profile *profiles=NULL;
     if (!o.model) {
 #ifdef _WIN32
         fprintf(stderr,"MMIO backend requires Linux on the board; no software fallback.\n"); return 1;
@@ -327,7 +359,8 @@ int main(int argc, char **argv) {
     expected=malloc(FFT128_BINS*sizeof(*expected));
     workspace=malloc(FFT128_BINS*sizeof(*workspace));
     times=malloc((size_t)o.repeat*sizeof(*times));
-    if (!frame || !packed || !spectrum || !expected || !workspace || !times) { fprintf(stderr,"Out of memory\n"); goto finish; }
+    if(o.profile) profiles=calloc(o.repeat,sizeof(*profiles));
+    if (!frame || !packed || !spectrum || !expected || !workspace || !times || (o.profile && !profiles)) { fprintf(stderr,"Out of memory\n"); goto finish; }
     collector c={{0},0,0,0,0,frame};
     if ((o.input ? offline(&o,&c) : receive(&o,&c))) goto finish;
     double scale;
@@ -336,17 +369,26 @@ int main(int argc, char **argv) {
     printf("BENCHMARK: warmup=%u repeat=%u preallocated buffers; data path=%s\n",o.warmup,o.repeat,label); fflush(stdout);
     double elapsed=0;
     for (unsigned k=0;k<o.warmup+o.repeat;++k) {
+        fft128_profile current={0};
+        fft128_profile *profile=o.profile ? &current : NULL;
         double started=now();
-        int rc=fft128_process_workspace(packed,spectrum,workspace,transform,NULL);
+        int rc=fft128_process_profiled(packed,spectrum,workspace,transform,profile,profile);
         double duration=now()-started;
         if (rc) { fprintf(stderr,"FFT processing failed (%d); frame aborted\n",rc); goto finish; }
+        if(profile && (current.calls!=256 || !current.min_cycles)) {
+            fprintf(stderr,"Invalid hardware profile counter data\n"); goto finish;
+        }
         unsigned errors=0;
         for (unsigned bin=0;bin<FFT128_BINS;++bin) if(spectrum[bin]!=expected[bin]) ++errors;
         if (errors) { fprintf(stderr,"BIT_EXACT_FAIL iteration=%u: %u/16384 complex bins\n",k,errors); goto finish; }
-        if (k>=o.warmup) { times[k-o.warmup]=duration; elapsed+=duration; }
+        if (k>=o.warmup) {
+            times[k-o.warmup]=duration; elapsed+=duration;
+            if(profiles) profiles[k-o.warmup]=current;
+        }
     }
     elapsed/=o.repeat;
     if (save(&o,&c,spectrum,scale,elapsed,label,times)) { fprintf(stderr,"Output write failed\n"); goto finish; }
+    if(profiles && save_profiles(&o,profiles,times)) { fprintf(stderr,"Profile output write failed\n"); goto finish; }
     qsort(times,o.repeat,sizeof(*times),compare_double);
     double median=o.repeat%2 ? times[o.repeat/2] : (times[o.repeat/2-1]+times[o.repeat/2])/2;
     printf("PIPELINE_TIMING backend=%s mean_ms=%.6f median_ms=%.6f min_ms=%.6f max_ms=%.6f repeats=%u\n",
@@ -354,7 +396,7 @@ int main(int argc, char **argv) {
     printf("FRAME_PASS backend=%s bit_exact_bins=16384\n",label);
     result=0;
 finish:
-    free(frame); free(packed); free(spectrum); free(expected); free(workspace); free(times);
+    free(frame); free(packed); free(spectrum); free(expected); free(workspace); free(times); free(profiles);
 #ifndef _WIN32
     if (opened) fft128_close();
 #else

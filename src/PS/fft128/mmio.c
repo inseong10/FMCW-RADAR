@@ -7,6 +7,7 @@
 #include <sys/mman.h>
 #include <time.h>
 #include <stdio.h>
+#include "native_core.h"
 
 static volatile uint32_t *regs;
 static int device_fd = -1;
@@ -54,9 +55,15 @@ static uint64_t millis(void) {
     return (uint64_t)ts.tv_sec*1000 + ts.tv_nsec/1000000;
 }
 int fft128_run(const uint32_t *input, uint32_t *output, uint32_t timeout_ms) {
+    return fft128_run_profiled(input,output,timeout_ms,NULL);
+}
+int fft128_run_profiled(const uint32_t *input, uint32_t *output, uint32_t timeout_ms,
+                       fft128_profile *profile) {
     if (!regs || !input || !output) return -1;
+    uint64_t started=profile ? fft128_now_ns() : 0;
     if (read32(8) & 1) return -2;
     for (unsigned k=0; k<128; ++k) write32(0x100+4*k, input[k]);
+    if(profile) { uint64_t end=fft128_now_ns(); profile->input_write_ns+=end-started; started=end; }
     write32(4, 1);
     uint64_t deadline = millis()+timeout_ms;
     for (;;) {
@@ -65,6 +72,16 @@ int fft128_run(const uint32_t *input, uint32_t *output, uint32_t timeout_ms) {
         if ((status & 3) == 2) break;
         if (millis() >= deadline) { write32(4, 2); return -4; }
     }
+    if(profile) {
+        uint64_t end=fft128_now_ns();
+        profile->start_wait_ns+=end-started; started=end;
+        uint32_t cycles=read32(0x10);
+        end=fft128_now_ns(); profile->counter_read_ns+=end-started; started=end;
+        if(!profile->calls || cycles<profile->min_cycles) profile->min_cycles=cycles;
+        if(cycles>profile->max_cycles) profile->max_cycles=cycles;
+        profile->pl_cycles+=cycles; ++profile->calls;
+    }
     for (unsigned k=0; k<128; ++k) output[k] = read32(0x800+4*k);
+    if(profile) profile->output_read_ns+=fft128_now_ns()-started;
     return 0;
 }

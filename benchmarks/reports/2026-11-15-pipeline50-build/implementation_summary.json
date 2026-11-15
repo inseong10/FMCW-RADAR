@@ -1,0 +1,36 @@
+{
+  "experiment": "E10",
+  "phase": "Implementation, board self-test, profile and 300-frame same-board benchmark validated",
+  "run": "fft128_ps_pipeline_20261115_224343",
+  "core": "pipeline",
+  "clock_hz": 50000000,
+  "setup_wns_ns": 9.807,
+  "hold_whs_ns": 0.034,
+  "setup_failing_endpoints": 0,
+  "hold_failing_endpoints": 0,
+  "reset_simulation": "done=1 passed=1; actual generated reset IP, AXI ID/length and lock-loss recovery",
+  "resources": {
+    "dsp": 4,
+    "slice_luts": 1364,
+    "slice_registers": 1048,
+    "bram_tiles": 2.5
+  },
+  "board_verified": true,
+  "measured_pipeline_time_ms": 25.2591725,
+  "raw_bin_sha256": "c0f3a5614eb3ec3b86d3775d51b3ae0b854fdeb23a592f29e35e9cc6c520c27c",
+  "artifact_sha256_original_bytes": {
+    "clock_source.txt": "9f749a74cea4bfbe43d7d176174f2ea808fd87b5bb56b631d5fdfeac82e52597",
+    "build_config.json": "f6deb3dc3241203c31af50f730ffe5b20510623a0ba6f642c34185a7a615f37c",
+    "reset_simulation.txt": "476fa9a32143d214772f4533a51aff5ea0a7671f936a953f089362db544573b3",
+    "timing.rpt": "ed187bbb39fd21dcd3500c9f78c9f86c871bad530076551002786fe6fc1f883d",
+    "utilization.rpt": "436ecdb250bca296dd5a9dca98b8603cc148ccfc56fe217bf68dfa79b3c9b6cc",
+    "system_wrapper.bit": "f634113c1b6630fd8fb5fd133b278cf2475e7304814f6a3603e79c384fa18398",
+    "system.xsa": "37188b0c36f1cdff754515b2786b75dffeb77e8be985d64b0eb5a96de5004222"
+  },
+  "board_selftest_verified": true,
+  "board_cycles_per_fft": 861,
+  "instrumented_profile_mean_ms": 27.327809,
+  "measured_pipeline_time_statistic": "median of 300 unprofiled frames",
+  "ps_median_ms": 5.557368,
+  "pl_over_ps_median": 4.545168234315237
+}

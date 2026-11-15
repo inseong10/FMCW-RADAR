@@ -1,0 +1,41 @@
+{
+  "experiment": "E10",
+  "evidence": "User-pasted board benchmark console; raw PS/PL output files not collected yet",
+  "configuration": "pipeline/50MHz, AXI4-Lite MMIO, no DMA",
+  "board_results_path": "/opt/fft128/benchmark/results_pipeline50",
+  "warmup_per_trial": 10,
+  "measured_frames_per_trial": 100,
+  "trial_pairs": 3,
+  "instrumented": false,
+  "pl_trials": [
+    {
+      "trial": 1,
+      "mean_ms": 25.260099,
+      "median_ms": 25.256604,
+      "min_ms": 25.222806,
+      "max_ms": 25.429465
+    },
+    {
+      "trial": 2,
+      "mean_ms": 25.260553,
+      "median_ms": 25.259575,
+      "min_ms": 25.224594,
+      "max_ms": 25.392523
+    },
+    {
+      "trial": 3,
+      "mean_ms": 25.263327,
+      "median_ms": 25.260438,
+      "min_ms": 25.236121,
+      "max_ms": 25.425432
+    }
+  ],
+  "all_pl_trials_bit_exact_bins": 16384,
+  "pl_pooled_mean_ms_derived_from_rounded_trial_means": 25.261326333333333,
+  "pl_pooled_median_ms": null,
+  "new_ps_statistics": null,
+  "new_numpy_validation": null,
+  "old_pl_pooled_mean_ms": 81.52506987333334,
+  "old_over_new_mean_ratio_approx": 3.227267990507598,
+  "limitations": "No pooled median, percentiles, CV, current PS/PL speedup or independent output validation until raw artifacts are collected."
+}

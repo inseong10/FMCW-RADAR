@@ -2,10 +2,13 @@
 namespace eval fft128 {
  variable here [file dirname [file normalize [info script]]]
  variable root [file normalize [file join $here .. .. ..]]
- variable out [file join $root build vivado fft128_ps_[clock format [clock seconds] -format %Y%m%d_%H%M%S]]
+ variable core_mode [expr {[info exists ::fft128_build_core] ? $::fft128_build_core : "serial"}]
+ variable clock_mhz [expr {[info exists ::fft128_build_mhz] ? $::fft128_build_mhz : 20.0}]
+ variable out [file join $root build vivado fft128_ps_${core_mode}_[clock format [clock seconds] -format %Y%m%d_%H%M%S]]
 }
 proc fft128::main {} {
- variable here; variable root; variable out
+ variable here; variable root; variable out; variable core_mode; variable clock_mhz
+ if {$core_mode ni {serial pipeline} || $clock_mhz ni {20 20.0 50 50.0}} {error "Supported build: serial/pipeline at 20 or 50 MHz"}
  file mkdir $out
  if {[llength [get_projects -quiet]]} {close_project}
  set_param board.repoPaths [concat [list [file join $here board_files]] [get_param board.repoPaths]]
@@ -14,7 +17,7 @@ proc fft128::main {} {
  if {[llength $boards]!=1} {error "Bundled Digilent Zybo Z7-10 board files were not loaded"}
  set_property board_part [lindex $boards 0] [current_project]
  set_property target_language Verilog [current_project]
- foreach name {fft128_axi.v fft128_stream.v fft128_twiddle.v butterfly_engine.v fft_working_ram.v address_generator.v} {
+ foreach name {fft128_axi.v fft128_stream.v fft128_pipeline.v fft128_twiddle.v butterfly_engine.v butterfly_pipeline.v fft_working_ram.v address_generator.v} {
   add_files [file join $here $name]
  }
  add_files -fileset constrs_1 [file join $here zybo_sysclk.xdc]
@@ -26,11 +29,12 @@ proc fft128::main {} {
  # Use the board clock and MMCM lock for both clock and reset independence.
  set_property -dict [list CONFIG.PCW_USE_M_AXI_GP0 {1} CONFIG.PCW_EN_CLK0_PORT {0} CONFIG.PCW_EN_RST0_PORT {0}] $ps
  set clk [create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clock_gen]
- set_property -dict [list CONFIG.PRIM_IN_FREQ {125.000} CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {20.000} CONFIG.USE_LOCKED {true} CONFIG.USE_RESET {true} CONFIG.RESET_TYPE {ACTIVE_HIGH}] $clk
+ set_property -dict [list CONFIG.PRIM_IN_FREQ {125.000} CONFIG.CLKOUT1_REQUESTED_OUT_FREQ $clock_mhz CONFIG.USE_LOCKED {true} CONFIG.USE_RESET {true} CONFIG.RESET_TYPE {ACTIVE_HIGH}] $clk
  set sysclk [create_bd_port -dir I -type clk sysclk]
  set_property CONFIG.FREQ_HZ {125000000} $sysclk
  connect_bd_net $sysclk [get_bd_pins clock_gen/clk_in1]
  set fft [create_bd_cell -type module -reference fft128_axi fft]
+ set_property CONFIG.PIPELINED [expr {$core_mode eq "pipeline"}] $fft
  set axi [create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 axi]
  set_property -dict [list CONFIG.NUM_SI {1} CONFIG.NUM_MI {1}] $axi
  set rst [create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 reset]
@@ -90,7 +94,7 @@ proc fft128::check_reset {} {
  puts "FFT128_RESET_SIM_PASS: AXI ID responds after reset release and lock-loss recovery"
 }
 proc fft128::finish_build {} {
- variable out; variable root
+ variable out; variable root; variable core_mode; variable clock_mhz
  launch_runs synth_1 -jobs 2
  wait_on_run synth_1
  if {[get_property PROGRESS [get_runs synth_1]] ne "100%"} {error "Synthesis failed: [get_property STATUS [get_runs synth_1]]"}
@@ -104,13 +108,21 @@ proc fft128::finish_build {} {
  set hold [get_timing_paths -delay_type min -max_paths 1]
  if {![llength $setup] || ![llength $hold]} {error "No constrained setup/hold path; inspect timing.rpt"}
  if {[get_property SLACK $setup]<0 || [get_property SLACK $hold]<0} {error "Timing violation; inspect timing.rpt"}
+ set fft_clocks [get_clocks -quiet clk_out1*]
+ if {[llength $fft_clocks]!=1} {error "Expected one generated AXI/FFT clock"}
+ set actual_hz [expr {round(1000000000.0/[get_property PERIOD $fft_clocks])}]
+ if {abs($actual_hz-$clock_mhz*1000000)>1000} {error "FFT clock does not match requested frequency"}
  launch_runs impl_1 -to_step write_bitstream -jobs 2
  wait_on_run impl_1
  if {[get_property PROGRESS [get_runs impl_1]] ne "100%"} {error "Bitstream failed"}
  write_hw_platform -fixed -include_bit -force -file [file join $out system.xsa]
  set f [open [file join $out clock_source.txt] w]
- puts $f "board K17 125 MHz -> Clocking Wizard 20 MHz -> PS GP0 ACLK, AXI and FFT; FCLK0 not used"
+ puts $f "board K17 125 MHz -> Clocking Wizard $clock_mhz MHz -> PS GP0 ACLK, AXI and FFT; FCLK0 not used"
+ puts $f "FFT_CORE=$core_mode; FFT_CLOCK_HZ=$actual_hz; PIPELINED=[expr {$core_mode eq "pipeline"}]"
  puts $f "RESET_SCHEME=BOARD_MMCM_LOCK_V3_AUX_HIGH; FCLK_RESET0_N not used; ext_reset_in=1 active-low; aux_reset_in=0 active-high"
+ close $f
+ set f [open [file join $out build_config.json] w]
+ puts $f [format { {"core":"%s","pl_clock_hz":%d,"board_verified":false} } $core_mode $actual_hz]
  close $f
  set f [open [file join $root build fft128_latest.txt] w]; puts $f $out; close $f
  puts "FFT128_BUILD_PASS: $out"

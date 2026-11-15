@@ -1,3 +1,5 @@
 # Preserve captured console/environment text, including its original whitespace.
 *.txt -whitespace
 *.log -whitespace
+*.rpt -whitespace
+build_config.json -whitespace

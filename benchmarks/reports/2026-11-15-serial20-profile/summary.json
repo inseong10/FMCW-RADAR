@@ -1,0 +1,37 @@
+{
+  "evidence": "User-reported board console; individual profile CSV not yet copied from NFS",
+  "reported_on_client_date": "2026-11-15",
+  "board_profile_path": "/opt/fft128/benchmark/profiles/profile_20180309_150010.profile.csv",
+  "backend": "PL_MMIO",
+  "core": "serial",
+  "pl_clock_hz_declared": 20000000,
+  "shape": [
+    128,
+    128
+  ],
+  "warmup": 2,
+  "repeats": 20,
+  "cpu_affinity": 0,
+  "cycles_per_fft_min": 3073,
+  "cycles_per_fft_max": 3073,
+  "pl_internal_ms": 39.3344,
+  "mean_host_ms": {
+    "input_write": 23.429884,
+    "start_wait": 39.927098,
+    "output_read": 18.37043,
+    "gather_scatter": 0.947203
+  },
+  "instrumented_total_ms": {
+    "mean": 83.694257,
+    "median": 83.623717,
+    "min": 83.532463,
+    "max": 83.902585
+  },
+  "bit_exact_bins": 16384,
+  "interpretation": "PL internal time overlaps host start_wait. Diagnostic timings include instrumentation and are separate from unprofiled performance results.",
+  "derived_ms": {
+    "input_plus_output_mmio": 41.800314,
+    "start_wait_minus_pl_internal": 0.5926979999999986,
+    "counter_reads_and_unattributed_host": 1.0196419999999904
+  }
+}

@@ -1,0 +1,2 @@
+FATAL: C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\reset_axi_tb.v:51: Reset stuck: interconnect=0 peripheral=0 aux=0
+       Time: 11000000  Scope: reset_axi_tb.check_released

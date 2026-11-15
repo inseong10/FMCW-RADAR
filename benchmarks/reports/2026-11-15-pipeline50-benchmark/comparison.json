@@ -1,0 +1,104 @@
+{
+  "status": "SAME_BOARD_BENCHMARK_VALIDATED",
+  "shape": [
+    128,
+    128
+  ],
+  "ps_implementation": "existing optimized C++/FFTW double, 32x32 tiled transpose",
+  "pl_implementation": "Q15 iterative FFT + AXI4-Lite MMIO + PS transpose; no DMA",
+  "input": "same Q15-quantized simulator frame; window none; normalization 1/16384",
+  "scope": "fft_pipeline only; buffers/plans/input preparation/IO/postprocessing excluded",
+  "layout": "PS FFTW output internally range-major; PL result row-major; CSV serialization excluded",
+  "ps": {
+    "count": 300,
+    "mean_ms": 5.5473645366666675,
+    "median_ms": 5.557368,
+    "p05_ms": 5.4931185000000005,
+    "p95_ms": 5.6052552,
+    "min_ms": 5.468268,
+    "max_ms": 5.781822
+  },
+  "pl": {
+    "count": 300,
+    "mean_ms": 25.261326366666665,
+    "median_ms": 25.2591725,
+    "p05_ms": 25.2371262,
+    "p95_ms": 25.2841369,
+    "min_ms": 25.222806,
+    "max_ms": 25.429465
+  },
+  "speedup_ps_median_over_pl_median": 0.22001385833205742,
+  "trials": [
+    {
+      "trial": 1,
+      "ps": {
+        "count": 100,
+        "mean_ms": 5.549731200000001,
+        "median_ms": 5.561579999999999,
+        "p05_ms": 5.50025795,
+        "p95_ms": 5.602620000000001,
+        "min_ms": 5.482644,
+        "max_ms": 5.646798
+      },
+      "pl": {
+        "count": 100,
+        "mean_ms": 25.260099359999998,
+        "median_ms": 25.256604,
+        "p05_ms": 25.238650800000002,
+        "p95_ms": 25.2868056,
+        "min_ms": 25.222806,
+        "max_ms": 25.429465
+      },
+      "ps_max_error_q15_lsb": 1.8331451766013172e-12,
+      "pl_max_error_q15_lsb": 8.749842363453245
+    },
+    {
+      "trial": 2,
+      "ps": {
+        "count": 100,
+        "mean_ms": 5.55082235,
+        "median_ms": 5.562315,
+        "p05_ms": 5.4951969,
+        "p95_ms": 5.6072144999999995,
+        "min_ms": 5.486845,
+        "max_ms": 5.781822
+      },
+      "pl": {
+        "count": 100,
+        "mean_ms": 25.26055303,
+        "median_ms": 25.2595745,
+        "p05_ms": 25.2331773,
+        "p95_ms": 25.2809886,
+        "min_ms": 25.224594,
+        "max_ms": 25.392523
+      },
+      "ps_max_error_q15_lsb": 1.8331451766013172e-12,
+      "pl_max_error_q15_lsb": 8.749842363453245
+    },
+    {
+      "trial": 3,
+      "ps": {
+        "count": 100,
+        "mean_ms": 5.54154006,
+        "median_ms": 5.552592000000001,
+        "p05_ms": 5.48983385,
+        "p95_ms": 5.6033979,
+        "min_ms": 5.468268,
+        "max_ms": 5.641206
+      },
+      "pl": {
+        "count": 100,
+        "mean_ms": 25.26332671,
+        "median_ms": 25.260438,
+        "p05_ms": 25.2411435,
+        "p95_ms": 25.282752350000003,
+        "min_ms": 25.236121,
+        "max_ms": 25.425432
+      },
+      "ps_max_error_q15_lsb": 1.8331451766013172e-12,
+      "pl_max_error_q15_lsb": 8.749842363453245
+    }
+  ],
+  "input_csv_sha256": "2cddb4ec024ed1153c0fc722eb6630c5147d66644120f03f410e645901a0cea1",
+  "environment": "Linux Petalinux-2022 5.15.19-xilinx #1 SMP PREEMPT Wed Aug 26 11:47:56 KST 2026 armv7l GNU/Linux\nprocessor\t: 0\nmodel name\t: ARMv7 Processor rev 0 (v7l)\nBogoMIPS\t: 333.33\nFeatures\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 \nCPU implementer\t: 0x41\nCPU architecture: 7\nCPU variant\t: 0x3\nCPU part\t: 0xc09\nCPU revision\t: 0\n\nprocessor\t: 1\nmodel name\t: ARMv7 Processor rev 0 (v7l)\nBogoMIPS\t: 333.33\nFeatures\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 \nCPU implementer\t: 0x41\nCPU architecture: 7\nCPU variant\t: 0x3\nCPU part\t: 0xc09\nCPU revision\t: 0\n\nHardware\t: Xilinx Zynq Platform\nRevision\t: 0003\nSerial\t\t: 0000000000000000\nrepeat=100 warmup=10 trials=3\naa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976  /opt/fft128/benchmark/frame.rspb\ncpu0_affinity=required; both programs use sched_setaffinity via --cpu0\n"
+}

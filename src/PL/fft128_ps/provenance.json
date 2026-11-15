@@ -7,5 +7,6 @@
     "doppler_fft.v": "47aa8c4aaaec5147e42941cb1e58259cddb495d332978f2819f20d075b286c2a"
   },
   "adapted": "doppler_fft.v -> fft128_stream.v (128 points); generated twiddle ROM; three other modules copied verbatim",
-  "board_source": "https://github.com/Digilent/vivado-boards/tree/master/new/board_files/zybo-z7-10/A.0"
+  "board_source": "https://github.com/Digilent/vivado-boards/tree/master/new/board_files/zybo-z7-10/A.0",
+  "new_pipeline": "fft128_pipeline.v and butterfly_pipeline.v: stage ping-pong memory and registered arithmetic; same Q15 numeric contract; original sequential modules retained"
 }

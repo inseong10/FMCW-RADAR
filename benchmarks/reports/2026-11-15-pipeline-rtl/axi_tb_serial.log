@@ -1,0 +1,8 @@
+CYCLE_PASS pipeline=0 cycles=3073
+AXI checked vectors=1
+AXI checked vectors=65
+AXI checked vectors=129
+AXI checked vectors=193
+AXI checked vectors=257
+AXI_PASS vectors=272 bins=34816 independent_AW_W_and_response_stalls
+C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\axi_tb.v:114: $finish called at 13688430000 (1ps)

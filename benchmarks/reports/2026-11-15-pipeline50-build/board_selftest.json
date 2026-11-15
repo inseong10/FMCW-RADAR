@@ -1,0 +1,16 @@
+{
+  "experiment": "E10",
+  "evidence": "User-pasted board console; firmware identity based on preceding deployment workflow, board-side hash not provided",
+  "board_selftest": "PASS",
+  "backend": "PL_MMIO",
+  "vectors": 4,
+  "complex_bins": 512,
+  "id_hex": "0x46543128",
+  "fft_length": 128,
+  "expected_configuration": "pipeline/50MHz",
+  "generated_raw_bin_sha256": "c0f3a5614eb3ec3b86d3775d51b3ae0b854fdeb23a592f29e35e9cc6c520c27c",
+  "board_deployed_bin_sha256": null,
+  "full_frame_verified": false,
+  "board_cycles_per_fft": null,
+  "measured_pipeline_time_ms": null
+}

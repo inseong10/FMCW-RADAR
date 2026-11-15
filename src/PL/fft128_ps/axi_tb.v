@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-module axi_tb;
+module axi_tb #(parameter PIPELINED=0);
  reg clk=0; always #5 clk=~clk;
  reg resetn=0;
  reg [11:0] awaddr=0, araddr=0;
@@ -9,7 +9,7 @@ module axi_tb;
  wire awready,wready,bvalid,arready,rvalid;
  wire [31:0] rdata;
  wire [1:0] bresp,rresp;
- fft128_axi dut(.aclk(clk),.aresetn(resetn),
+ fft128_axi #(.PIPELINED(PIPELINED)) dut(.aclk(clk),.aresetn(resetn),
   .s_axi_awaddr(awaddr),.s_axi_awprot(3'b0),.s_axi_awvalid(awvalid),.s_axi_awready(awready),
   .s_axi_wdata(wdata),.s_axi_wstrb(wstrb),.s_axi_wvalid(wvalid),.s_axi_wready(wready),
   .s_axi_bresp(bresp),.s_axi_bvalid(bvalid),.s_axi_bready(bready),
@@ -80,6 +80,9 @@ module axi_tb;
     if(polls>1000) $fatal(1,"FFT timeout");
    end
    if(value!==2) $fatal(1,"STATUS %h",value);
+   read_word(12'h010,value,0);
+   if(value !== (PIPELINED ? 861 : 3073)) $fatal(1,"CYCLES pipeline=%0d actual=%0d",PIPELINED,value);
+   if(testno==0) $display("CYCLE_PASS pipeline=%0d cycles=%0d",PIPELINED,value);
    for(k=0;k<128;k=k+1) begin
     read_word(12'h800+k*4,value,0);
     if(value!==expected[testno*128+k])
@@ -89,10 +92,24 @@ module axi_tb;
   end
   // Reset aborts in-flight work, clears initialization and completed status.
   write_word(4,1,0,15,0);
+  repeat(200) @(negedge clk); // abort during computation with pipeline tags in flight
   write_word(4,2,1,15,0);
   repeat(5) @(negedge clk);
   read_word(8,value,0); if(value!==0) $fatal(1,"RESET status");
   write_word(4,1,2,15,2);
+  // Reload and recompute after abort: no stale pipeline data or addresses.
+  for(k=0;k<128;k=k+1) write_word(12'h100+k*4,inputs[k],k%3,15,0);
+  write_word(4,1,0,15,0);
+  polls=0; value=1;
+  while(value[0]) begin
+   read_word(8,value,0); polls=polls+1;
+   if(polls>1000) $fatal(1,"Post-abort timeout");
+  end
+  if(value!==2) $fatal(1,"Post-abort status");
+  for(k=0;k<128;k=k+1) begin
+   read_word(12'h800+k*4,value,0);
+   if(value!==expected[k]) $fatal(1,"Post-abort stale output bin=%0d",k);
+  end
   $display("AXI_PASS vectors=%0d bins=%0d independent_AW_W_and_response_stalls",cases,cases*128);
   $finish;
  end
