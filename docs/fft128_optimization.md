@@ -11,6 +11,9 @@ See the [implementation report](../benchmarks/reports/2026-11-15-pipeline50-buil
 Do not report the cycle-derived estimates below as measured board latency.
 
 The [experiment log](experiment_log.md) records the motivation and progression.
+The [staged DMA plan](fft128_dma_plan.md) defines E11a/E11b transfer granularity,
+buffer ownership, measurement boundaries and E12-E14 gates. These stages are planned,
+not implemented or measured; E10 remains the latest verified hardware.
 E09 profiling has now completed on the serial 20 MHz board: input writes 23.429884 ms,
 start/wait 39.927098 ms, output reads 18.370430 ms, gather/scatter 0.947203 ms,
 and 3,073 hardware cycles/FFT (39.334400 ms internal per frame). Instrumented mean
