@@ -1,0 +1,23 @@
+#ifndef FFT128_NATIVE_CORE_H
+#define FFT128_NATIVE_CORE_H
+#include <stddef.h>
+#include <stdint.h>
+#define FFT128_N 128
+#define FFT128_BINS (FFT128_N * FFT128_N)
+typedef struct { double real, imag; } fft128_sample;
+typedef int (*fft128_transform)(const uint32_t *, uint32_t *, void *);
+uint32_t fft128_pack(int real, int imag);
+int fft128_real(uint32_t word);
+int fft128_imag(uint32_t word);
+int fft128_model(const uint32_t *input, uint32_t *output, void *context);
+int fft128_quantize(const fft128_sample *frame, uint32_t *packed, double *scale);
+int fft128_process(const uint32_t *packed, uint32_t *spectrum,
+                   fft128_transform transform, void *context);
+int fft128_process_workspace(const uint32_t *packed, uint32_t *spectrum,
+                             uint32_t *ranged, fft128_transform transform, void *context);
+int fft128_decode(const unsigned char *packet, size_t length, unsigned *channel,
+                  unsigned *index, double *fs, fft128_sample *row);
+int fft128_open(uint32_t base);
+int fft128_run(const uint32_t *input, uint32_t *output, uint32_t timeout_ms);
+void fft128_close(void);
+#endif
