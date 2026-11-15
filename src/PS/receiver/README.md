@@ -6,36 +6,35 @@ Windows에서는 WSL Ubuntu를 사용하세요. 네이티브 Windows 빌드는 �
 
 ## 빌드
 
-### macOS
+아래 명령은 모두 저장소 루트에서 실행합니다. Python 코드에는 `requirements.txt`를 사용합니다.
 
 ```bash
-brew install fftw
-clang++ -O3 -std=c++17 -Wall -Wextra udp_radar_receiver.cpp -o udp_radar_receiver
+python -m pip install -r requirements.txt
 ```
 
-### Ubuntu / Debian / WSL
+macOS에서는 `brew install cmake fftw`, Ubuntu/WSL에서는
+`sudo apt install cmake g++ libfftw3-double3`로 빌드 도구와 런타임을 준비합니다.
 
 ```bash
-sudo apt update
-sudo apt install g++ libfftw3-double3
- g++ -O3 -std=c++17 -Wall -Wextra udp_radar_receiver.cpp -o udp_radar_receiver -ldl
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
 ```
 
-FFTW는 실행 시 동적으로 불러옵니다. 개발용 헤더는 필요하지 않습니다.
-기본 경로에서 찾지 못한다면 `--fftw-lib /absolute/path/to/libfftw3.dylib`
-또는 `--fftw-lib /absolute/path/to/libfftw3.so.3`을 추가하세요.
-FFTW 자체는 패키지 관리자로 설치하며 이 압축 파일에 포함되지 않습니다.
+실행 파일은 `build/udp_radar_receiver`로 통일합니다. FFTW는 실행 시 동적으로 불러오므로
+개발용 헤더는 필요하지 않습니다. 기본 경로에서 찾지 못한다면
+`--fftw-lib /absolute/path/to/libfftw3.dylib` 또는
+`--fftw-lib /absolute/path/to/libfftw3.so.3`을 추가하세요.
 
 ## 실행
 
 먼저 수신기를 실행하세요.
 
 ```bash
-./udp_radar_receiver --bind 127.0.0.1 --port 5000 --warmup 5 --repeat 100
+./build/udp_radar_receiver --bind 127.0.0.1 --port 5000 --warmup 5 --repeat 100
 ```
 
 그다음 별도 터미널의 저장소 루트에서 송신기를 실행하세요.
-RadarSimPy는 저장소에 포함되지 않으므로 `tools/sender/radarsimpy/`에 두거나 설치해야 합니다.
+RadarSimPy의 운영체제별 외부 경로 설정은 [송신기 설명](../../../tools/sender/README.md)을 참고하세요.
 
 ```bash
 python tools/sender/sender.py --ip 127.0.0.1 --port 5000 --pulses 160
@@ -47,7 +46,7 @@ python tools/sender/sender.py --ip 127.0.0.1 --port 5000 --pulses 160
 반복 처리 수치는 캐시가 데워진 상태의 처리량에 가깝습니다.
 
 ```bash
-./udp_radar_receiver --bind 127.0.0.1 --port 5000 --warmup 5 --repeat 1
+./build/udp_radar_receiver --bind 127.0.0.1 --port 5000 --warmup 5 --repeat 1
 ```
 
 더 많은 초기 계획 탐색을 허용하려면 `--measure-plan`을 추가하세요.
@@ -60,7 +59,7 @@ FFTW_MEASURE는 실행할 때마다 다른 계획을 고를 수 있습니다.
 저장해 둔 wisdom을 쓰면 실행마다 같은 계획을 쓰고, 시작 시 측정도 하지 않습니다.
 
 ```bash
-./receiver_cpp --wisdom-in wisdom/wisdom_160x160.wis --bind 127.0.0.1 --port 5000
+./build/udp_radar_receiver --wisdom-in build/wisdom/linux-armv7l/wisdom_160x160.wis --bind 127.0.0.1 --port 5000
 ```
 
 wisdom 파일은 프레임 크기(`chirps x samples`)별로 하나씩 사용합니다.
@@ -71,11 +70,13 @@ wisdom 파일은 프레임 크기(`chirps x samples`)별로 하나씩 사용합�
 `select_wisdom.py`는 후보 wisdom을 만든 뒤 새 프로세스에서 다시 측정해 가장 빠른 것을 저장합니다.
 
 ```bash
-python select_wisdom.py --input frame.bin --candidates 10 --rounds 5
+python src/PS/receiver/select_wisdom.py --input benchmarks/data/frame.bin --candidates 10 --rounds 5
 ```
 
-`wisdom/`의 파일은 이 PC의 FFTW 3.3.11로 만들었습니다.
-PC나 FFTW 빌드, 프레임 크기가 바뀌면 다시 만드세요.
+`wisdom/legacy-fftw-3.3.11/`의 기존 파일은 생성 CPU·OS 정보가 없어 참고용으로 보관합니다.
+새 wisdom과 JSON 환경 정보는 `build/wisdom/<os>-<architecture>/`에 생성합니다.
+위 `--wisdom-in` 경로는 해당 ARM 환경에서 직접 생성한 파일이 있을 때만 사용하세요.
+PC나 FFTW 빌드, 프레임 크기가 바뀌면 다시 만드세요. [상세 기준](wisdom/README.md)
 
 ## 처리 구조와 비교 조건
 
@@ -112,6 +113,8 @@ CPU(%): 누적 CPU 시간 / 누적 경과 시간 × 100.
 - CPU 100%는 논리 코어 1개입니다. 시스템 전체 평균 사용률이 아닙니다.
 - total 행은 하위 행과 중첩되므로 더하지 마세요.
 - FFT only는 두 FFT 실행 구간의 합계이며, 윈도우 적용은 제외합니다.
+- `fft_pipeline`은 입력 복사·Range FFT·타일 전치·Doppler FFT 및 선택적 정규화를 포함하며,
+  피크 탐색과 좌표 계산은 제외합니다. PS/PL 처리 경로 비교에는 이 구간을 사용합니다.
 - allocation, window 생성, 계획 생성, warmup, 출력, 파일 저장은 processing_total에서 제외합니다.
 - receive_total에는 첫 패킷 대기가 포함됩니다.
 - 매우 짧은 단계는 타이머 호출 비용 및 CPU clock 해상도의 영향을 받습니다.
@@ -134,6 +137,10 @@ CPU(%): 누적 CPU 시간 / 누적 경과 시간 × 100.
 --wisdom-in PATH      저장된 FFTW wisdom을 불러와 계획 고정
 --wisdom-out PATH     계획 생성 후 FFTW wisdom 저장
 --thread-cpu          현재 스레드 CPU clock 사용
+--q15-input           측정 전 입력을 PL과 동일한 Q15 정수 값으로 양자화
+--normalize-output    FFT 결과를 pulses×samples로 나눔; fft_pipeline 시간에 포함
+--cpu0                Linux sched_setaffinity로 CPU 0에 고정; taskset 불필요
+--plan-time-limit SEC FFTW 계획 탐색 시간의 대략적인 상한(계획별)
 --fftw-lib PATH       FFTW 동적 라이브러리 경로
 --bandwidth-mhz 100   주파수 스윕 대역폭
 --chirp-us 80         chirp 길이
@@ -153,12 +160,14 @@ max-frame-mb는 전체 프로세스 메모리 제한이 아닙니다.
 ## CSV 출력
 
 ```bash
-./udp_radar_receiver --bind 127.0.0.1 --output spectrum.csv
+./build/udp_radar_receiver --bind 127.0.0.1 --output spectrum.csv
 ```
 
 CSV 열: `doppler_bin_unshifted,range_bin,real,imag`
 내부 Doppler 버퍼는 전치되어 있지만 CSV는 기존과 같은 chirp 우선 순서로 저장합니다.
 FFTW forward FFT의 정규화 없는 복소수 출력이며 Doppler 축은 fftshift 이전 순서입니다.
+`--normalize-output`을 지정한 경우에는 pulses×samples로 정규화된 출력입니다.
+`--q15-input`은 입력 준비만 Q15로 맞추며 FFTW 산술은 여전히 double입니다.
 Python에서 다음처럼 읽습니다.
 
 ```python
@@ -170,18 +179,27 @@ rd = (rows[:, 2] + 1j*rows[:, 3]).reshape(pulses, samples)
 rd_shifted = np.fft.fftshift(rd, axes=0)
 ```
 
-## 검증
+## Python 참조 수신기
 
-빌드 후 실행하세요. RadarSimPy는 필요하지 않습니다.
+`reference/receiver_numpy.py`는 UDP 프레임을 받아 NumPy로 처리하는 실행 프로그램입니다.
+Windows 네이티브에서도 사용할 수 있으며 C++ 실행 파일이나 RadarSimPy는 필요하지 않습니다.
+송신기는 별도 터미널에서 실행하세요. `--plot`을 쓸 때는 matplotlib도 설치합니다.
 
 ```bash
-pip install numpy
-python reference/test_receiver.py
+python src/PS/receiver/reference/receiver_numpy.py --bind 127.0.0.1 --warmup 0 --repeat 1
 ```
 
-검증 범위: 160×160과 홀수 크기 배열의 전체 FFT 결과 NumPy 비교,
-Hann/none, FFTW_ESTIMATE/MEASURE, 패킷 재정렬·중복·잘못된 데이터·다른 채널,
-알려진 거리/Doppler bin, 누락 timeout.
-이 결과는 정확성 검증이며 다른 PC의 NumPy 실행보다 빠르다는 보장은 아닙니다.
+## 자동 검증
+
+```bash
+python -m unittest discover -s src/PS/receiver/tests -v
+```
+
+기본 검증은 송신 패킷의 I/Q·엔디언 round-trip, 잘못된 패킷 거부,
+알려진 tone의 거리/Doppler bin과 작은 배열의 직접 DFT 비교입니다.
+C++ 실행 파일이 있으면 160×160과 홀수 배열, Hann/none 및 ESTIMATE/MEASURE의
+오프라인 재생 결과를 NumPy와 비교합니다. 없으면 C++ 검증만 skip됩니다.
+실제 UDP 전송, 시뮬레이터 라이선스, 보드 성능은 이 테스트와 별도로 확인해야 합니다.
+다른 위치의 C++ 실행 파일은 `RADAR_RECEIVER_BINARY` 환경변수로 지정합니다.
 
 FFTW API 참고: https://www.fftw.org/doc/Advanced-Complex-DFTs.html

@@ -5,9 +5,10 @@ plan is fast. Each candidate is measured in fresh processes; the lowest median w
 Wisdom depends on the FFTW build and the machine: regenerate it when either changes.
 """
 from pathlib import Path
-import argparse, csv, random, re, shutil, statistics, subprocess, tempfile
+import argparse, csv, json, platform, random, re, shutil, statistics, subprocess, tempfile
 
 HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
 
 
 def median_total(binary, packets, wisdom, flags, repeat, workdir):
@@ -25,13 +26,16 @@ def median_total(binary, packets, wisdom, flags, repeat, workdir):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", required=True, help="Packet file (RSPB0001) of the target frame size")
-    parser.add_argument("--output-dir", default=str(HERE / "wisdom"))
-    parser.add_argument("--binary", default=str(HERE / "receiver_cpp"))
+    environment = f"{platform.system().lower()}-{platform.machine().lower()}"
+    parser.add_argument("--output-dir", default=str(ROOT / "build" / "wisdom" / environment))
+    parser.add_argument("--binary", default=str(ROOT / "build" / "udp_radar_receiver"))
     parser.add_argument("--candidates", type=int, default=10)
     parser.add_argument("--rounds", type=int, default=5)
     parser.add_argument("--repeat", type=int, default=100)
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
+    if min(args.candidates, args.rounds, args.repeat) < 1:
+        parser.error("candidates, rounds and repeat must be positive")
 
     rng = random.Random(args.seed)
     with tempfile.TemporaryDirectory() as workdir:
@@ -60,6 +64,22 @@ def main():
         target = output / f"wisdom_{size}.wis"
         shutil.copy2(best, target)
         medians = [statistics.median(scores[w]) for w in ranked]
+        metadata = {
+            "platform": platform.platform(),
+            "machine": platform.machine(),
+            "processor": platform.processor(),
+            "host": platform.node(),
+            "binary": str(Path(args.binary).resolve()),
+            "input": str(Path(args.input).resolve()),
+            "fftw_version": re.search(r"^FFTW version: (.+)$", stdout, re.MULTILINE)[1],
+            "frame_size": size,
+            "candidates": args.candidates,
+            "rounds": args.rounds,
+            "repeat": args.repeat,
+            "seed": args.seed,
+            "best_median_ms": medians[0],
+        }
+        target.with_suffix(".json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
         print(f"{size}: best {medians[0]:.3f} ms, worst {medians[-1]:.3f} ms, saved {target}")
 
 

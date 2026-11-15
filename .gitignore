@@ -1,15 +1,22 @@
 # OS / Python
 .DS_Store
+__MACOSX/
 __pycache__/
 *.pyc
 
 # Build outputs
+/build/
 src/PS/receiver/receiver_cpp
+src/PS/receiver/udp_radar_receiver
+src/PS/receiver/udp_radar_receiver.exe
 
-# Third-party RadarSimPy package (install separately)
+# Third-party RadarSimPy binaries and machine-local configuration
 tools/sender/radarsimpy/
 tools/sender/radarsimpy.zip
+tools/radarsimpy/
+tools/radarsimpy.zip
+tools/sender/radarsimpy.local.json
 
-# Local-only material
-Docs/
-Benchmarks/
+# Local measurements; shared docs and benchmark procedures remain tracked.
+/benchmarks/results/
+/benchmarks/data/

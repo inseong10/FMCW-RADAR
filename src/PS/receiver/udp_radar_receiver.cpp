@@ -1,5 +1,8 @@
 // C++17, Linux/macOS. FFTW3 double-precision runtime is loaded dynamically.
 // No FFTW headers are required. Public FFTW3 C ABI declarations below.
+#if defined(__linux__) && !defined(_GNU_SOURCE)
+#define _GNU_SOURCE
+#endif
 #include <algorithm>
 #include <array>
 #include <cerrno>
@@ -25,6 +28,9 @@
 #include <sys/socket.h>
 #include <time.h>
 #include <unistd.h>
+#if defined(__linux__)
+#include <sched.h>
+#endif
 
 using Steady = std::chrono::steady_clock;
 using Complex = std::complex<double>;
@@ -46,6 +52,7 @@ struct FFTW {
     void (*print_plan)(Plan) = nullptr;
     int (*import_wisdom)(const char*) = nullptr;
     int (*export_wisdom)(const char*) = nullptr;
+    void (*set_timelimit)(double) = nullptr;
     template<class T> void symbol(T& target, const char* name) {
         target = reinterpret_cast<T>(dlsym(lib, name));
         if (!target) throw std::runtime_error(std::string("Missing FFTW symbol: ")+name);
@@ -63,6 +70,7 @@ struct FFTW {
             symbol(print_plan,"fftw_print_plan");
             symbol(import_wisdom,"fftw_import_wisdom_from_filename");
             symbol(export_wisdom,"fftw_export_wisdom_to_filename");
+            symbol(set_timelimit,"fftw_set_timelimit");
         } catch (...) { dlclose(lib); lib=nullptr; throw; }
     }
     ~FFTW() { if(lib) dlclose(lib); }
@@ -107,8 +115,8 @@ struct Plans {
 struct Options {
     std::string bind="0.0.0.0",source,output,fftw_lib,window="hann",input,timings,wisdom_in,wisdom_out;
     int port=5000,channel=0,warmup=5,repeat=1;
-    double timeout=15,max_frame_mb=128,bandwidth=100,chirp=80,prp=100,fc=24.05;
-    bool thread_cpu=false,measure_plan=false;
+    double timeout=15,max_frame_mb=128,bandwidth=100,chirp=80,prp=100,fc=24.05,plan_time_limit=-1;
+    bool thread_cpu=false,measure_plan=false,q15_input=false,normalize_output=false,cpu0=false;
 };
 long integer(const std::string& s) {
     size_t n; long v=std::stol(s,&n);
@@ -131,11 +139,16 @@ Options parse(int argc,char** argv) {
             "--bandwidth-mhz 100 --chirp-us 80 --prp-us 100 --fc-ghz 24.05\n"
             "--output spectrum.csv --thread-cpu --measure-plan --fftw-lib PATH\n"
             "--input frame.bin --timings timings.csv (offline replay)\n"
-            "--wisdom-in plan.wis --wisdom-out plan.wis\n";
+            "--wisdom-in plan.wis --wisdom-out plan.wis\n"
+            "--q15-input --normalize-output --cpu0 (PS/PL comparison; preparation excluded)\n"
+            "--plan-time-limit SECONDS (per FFTW plan; optional)\n";
             std::exit(0);
         }
         if(k=="--thread-cpu") {o.thread_cpu=true;continue;}
         if(k=="--measure-plan") {o.measure_plan=true;continue;}
+        if(k=="--q15-input") {o.q15_input=true;continue;}
+        if(k=="--normalize-output") {o.normalize_output=true;continue;}
+        if(k=="--cpu0") {o.cpu0=true;continue;}
         if(i+1>=argc) throw std::runtime_error("Missing value for "+k);
         std::string v=argv[++i];
         auto bounded=[&](long low,long high) {long x=integer(v); if(x<low || x>high) throw std::runtime_error("Out of range: "+k);return int(x);};
@@ -158,6 +171,7 @@ Options parse(int argc,char** argv) {
         else if(k=="--timings") o.timings=v;
         else if(k=="--wisdom-in") o.wisdom_in=v;
         else if(k=="--wisdom-out") o.wisdom_out=v;
+        else if(k=="--plan-time-limit") o.plan_time_limit=positive(v);
         else throw std::runtime_error("Unknown option: "+k);
     }
     if(o.window!="hann" && o.window!="none") throw std::runtime_error("window must be hann or none");
@@ -370,11 +384,27 @@ std::vector<double> window(int n,bool hann) {
 }
 void process(const Frame& f,const Options& o,Profiler& prof,FFTW& api) {
     size_t n=f.data.size();
+    // Match the PL input quantizer outside the timed FFT pipeline. FFTW still
+    // performs double-precision arithmetic on these integer-valued samples.
+    std::vector<Complex> prepared;
+    const auto* frame_data=&f.data;
+    double input_scale=1;
+    if(o.q15_input) {
+        double peak=0;
+        for(const auto& z:f.data) peak=std::max(peak,std::hypot(z.real(),z.imag()));
+        input_scale=peak?16384/peak:1;
+        if(!std::isfinite(input_scale)) throw std::runtime_error("Invalid Q15 input scale");
+        prepared.reserve(n);
+        for(const auto& z:f.data)
+            prepared.emplace_back(std::nearbyint(z.real()*input_scale),std::nearbyint(z.imag()*input_scale));
+        frame_data=&prepared;
+    }
     auto wr=window(f.samples,o.window=="hann"),wd=window(f.pulses,o.window=="hann");
     Buffer input(api,n),range(api,n),doppler_input(api,n),output(api,n);
     if(!o.wisdom_in.empty() && !api.import_wisdom(o.wisdom_in.c_str()))
         throw std::runtime_error("Cannot import FFTW wisdom: "+o.wisdom_in);
     auto plan_start=Steady::now();
+    if(o.plan_time_limit>0) api.set_timelimit(o.plan_time_limit);
     Plans plans(api,f.pulses,f.samples,input.p,range.p,doppler_input.p,output.p,o.measure_plan,!o.wisdom_in.empty());
     double planning=std::chrono::duration<double,std::milli>(Steady::now()-plan_start).count();
     if(!o.wisdom_in.empty() && !plans.from_wisdom)
@@ -389,21 +419,29 @@ void process(const Frame& f,const Options& o,Profiler& prof,FFTW& api) {
     show_plan("Range",plans.range);
     show_plan("Doppler",plans.doppler);
     auto range_window=[&]{for(int p=0;p<f.pulses;++p){size_t off=size_t(p)*f.samples;
-        for(int s=0;s<f.samples;++s){size_t i=off+s;double w=wr[s];input.p[i][0]=f.data[i].real()*w;input.p[i][1]=f.data[i].imag()*w;}}};
+        for(int s=0;s<f.samples;++s){size_t i=off+s;double w=wr[s];input.p[i][0]=(*frame_data)[i].real()*w;input.p[i][1]=(*frame_data)[i].imag()*w;}}};
     // Windows and transposes in tiles: doppler_input[s*pulses+p] = range[p*samples+s]*wd[p].
     auto doppler_window=[&]{for(int sb=0;sb<f.samples;sb+=DOPPLER_TILE)for(int pb=0;pb<f.pulses;pb+=DOPPLER_TILE){
         int se=std::min(f.samples,sb+DOPPLER_TILE),pe=std::min(f.pulses,pb+DOPPLER_TILE);
         for(int s=sb;s<se;++s){size_t col=size_t(s)*f.pulses;
             for(int p=pb;p<pe;++p){size_t i=size_t(p)*f.samples+s;double w=wd[p];
                 doppler_input.p[col+p][0]=range.p[i][0]*w;doppler_input.p[col+p][1]=range.p[i][1]*w;}}}};
-    for(int i=0;i<o.warmup;++i){range_window();api.execute(plans.range);doppler_window();api.execute(plans.doppler);}
+    auto normalize_output=[&]{double factor=1.0/double(n);for(size_t i=0;i<n;++i){output.p[i][0]*=factor;output.p[i][1]*=factor;}};
+    for(int i=0;i<o.warmup;++i){range_window();api.execute(plans.range);doppler_window();api.execute(plans.doppler);if(o.normalize_output) normalize_output();}
     size_t peak=0;double peak_power=0,beat=0,doppler=0,meters=0,velocity=0;
+    // Reserve profiling storage before timed processing. fft_pipeline excludes
+    // peak/axis calculations and includes the optimized Doppler transpose.
+    for(const auto* name:{"processing_total","fft_pipeline","range_window","range_fft","doppler_window","doppler_fft","normalize_output","postprocess","axis_calculation"})
+        prof.rows[name].samples.reserve(o.repeat);
     for(int iteration=0;iteration<o.repeat;++iteration) {
         prof.run("processing_total",[&]{
+          prof.run("fft_pipeline",[&]{
             prof.run("range_window",range_window);
             prof.run("range_fft",[&]{api.execute(plans.range);});
             prof.run("doppler_window",doppler_window);
             prof.run("doppler_fft",[&]{api.execute(plans.doppler);});
+            if(o.normalize_output) prof.run("normalize_output",normalize_output);
+          });
             prof.run("postprocess",[&]{
                 peak=0;peak_power=-1;
                 for(size_t i=0;i<n;++i){double power=output.p[i][0]*output.p[i][0]+output.p[i][1]*output.p[i][1];
@@ -424,6 +462,9 @@ void process(const Frame& f,const Options& o,Profiler& prof,FFTW& api) {
              <<"\nPeak bins: range="<<r<<", doppler_unshifted="<<d<<", doppler_shifted="<<(d+f.pulses/2)%f.pulses
              <<"\nBeat="<<beat<<" Hz, Doppler="<<doppler<<" Hz\nApparent signed range="<<meters
              <<" m, signed velocity="<<velocity<<" m/s\n";
+    std::cout<<"Input: "<<(o.q15_input?"Q15-quantized integers":"original IQ")
+             <<", scale="<<std::setprecision(17)<<input_scale
+             <<", output normalization="<<(o.normalize_output?"1/(pulses*samples)":"none")<<'\n';
     if(!o.output.empty()) {
         std::ofstream out(o.output);if(!out)throw std::runtime_error("Cannot open output file");
         out<<"doppler_bin_unshifted,range_bin,real,imag\n"<<std::setprecision(17);
@@ -437,7 +478,17 @@ int main(int argc,char** argv) {
     try {
         static_assert(sizeof(float)==4 && sizeof(double)==8,"Requires IEEE float32/float64");
         static_assert(std::numeric_limits<float>::is_iec559 && std::numeric_limits<double>::is_iec559,"Requires IEEE754");
-        auto o=parse(argc,argv);FFTW api(o.fftw_lib);Profiler prof(o.thread_cpu);
+        auto o=parse(argc,argv);
+        if(o.cpu0) {
+#if defined(__linux__)
+            cpu_set_t set;CPU_ZERO(&set);CPU_SET(0,&set);
+            if(sched_setaffinity(0,sizeof(set),&set)) throw std::runtime_error(std::string("CPU0 affinity failed: ")+strerror(errno));
+            std::cout<<"CPU_AFFINITY=0\n";
+#else
+            throw std::runtime_error("--cpu0 requires Linux");
+#endif
+        }
+        FFTW api(o.fftw_lib);Profiler prof(o.thread_cpu);
         const auto* version=static_cast<const char*>(dlsym(api.lib,"fftw_version"));
         std::cout<<"FFTW version: "<<(version?version:"unknown")<<'\n';
         std::cout<<std::fixed<<std::setprecision(6);
@@ -454,7 +505,7 @@ int main(int argc,char** argv) {
         std::cout<<"\nInput timing (offline: per-frame; UDP: per-call; CPU% uses summed times)\n";
         prof.report({"receive_total","socket_wait","decode","reassembly"});
         std::cout<<"\nProcessing timing (per-frame averages)\n";
-        prof.report({"range_window","range_fft","doppler_window","doppler_fft","postprocess","axis_calculation","processing_total"});
+        prof.report({"range_window","range_fft","doppler_window","doppler_fft","normalize_output","fft_pipeline","postprocess","axis_calculation","processing_total"});
         auto a=prof.rows.at("range_fft"),b=prof.rows.at("doppler_fft");
         std::cout<<"\nFFT only: wall="<<(a.wall+b.wall)/o.repeat<<" ms, CPU="<<(a.cpu+b.cpu)/o.repeat
                  <<" ms, CPU usage="<<100*(a.cpu+b.cpu)/(a.wall+b.wall)<<"%\n"
