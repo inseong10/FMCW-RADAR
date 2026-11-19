@@ -1,0 +1,7 @@
+{
+  "benchmarks/compare_dma_batch_board.py": "1729db8b3ad389a367c98e6274ad46c21f44a5ee1860a93ce150dcd43f1a76fc",
+  "benchmarks/compare_board.py": "667c395f02eae9f3921764a9fd64e30e640e7b314854ba5eb22f2151f5403e08",
+  "benchmarks/ps_precision/prepare_reference.py": "5ad2023a586a86cf42adaa4ecbb76a27d9aa2f2ff4677fe330cbd1ce09aacef5",
+  "src/PS/fft128/dma_batch/analyze_profile.py": "3c3fec1bea9a38dc14d5add58f36b93e3c4f52300986b3b191c9c4bfe62753b6",
+  "src/PS/fft128/receiver.py": "4a08a9d3c08f5b3af68cca2e37eb549d3c71251c68e38b03e15bb3f3892015fe"
+}

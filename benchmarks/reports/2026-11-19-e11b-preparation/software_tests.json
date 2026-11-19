@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-19",
+  "host_batch_tests": 3,
+  "existing_native_tests": 9,
+  "shell_syntax_scripts": 9,
+  "full_frame_model_cli": "PASS; explicit software only, not hardware timing",
+  "live_dt_overlay_source": "PASS recorded-tree parser; dtc/fdtoverlay pending",
+  "ARM_build": "pending",
+  "Vivado_build": "pending",
+  "board": "pending",
+  "unchanged_processing_files": 6
+}

@@ -1,0 +1,15 @@
+{
+  "e11a_historical_median_ms": 15.411639000000001,
+  "e11b_median_ms": 6.433026,
+  "historical_e11a_over_e11b": 2.3957060021209307,
+  "historical_latency_reduction_percent": 58.25865114021942,
+  "paired_pl_over_double": 1.1251710574921083,
+  "paired_pl_over_neon": 1.807955590742113,
+  "profile_mean_ms": 6.47364485,
+  "profile_all_copies_ms": 1.2630084,
+  "profile_ps_transpose_ms": 0.6703743,
+  "profile_pl_active_ms": 4.408947,
+  "profile_pl_active_percent": 68.10609945647543,
+  "profile_stream_stall_ms": 0.0006270000000005993,
+  "continuous_stream_verified": false
+}

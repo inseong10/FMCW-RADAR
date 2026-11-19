@@ -1,0 +1,14 @@
+BATCH_COUNTER_PASS count=1 active_minus_stalls=861
+BATCH_COUNTER_PASS count=2 active_minus_stalls=1722
+BATCH_COUNTER_PASS count=128 active_minus_stalls=110208
+BATCH_COUNTER_PASS count=128 active_minus_stalls=110208
+BATCH_COUNTER_PASS count=128 active_minus_stalls=110208
+BATCH_COUNTER_PASS count=128 active_minus_stalls=110208
+BATCH_COUNTER_PASS count=128 active_minus_stalls=110208
+BATCH_COUNTER_PASS count=128 active_minus_stalls=110208
+BATCH_COUNTER_PASS count=128 active_minus_stalls=110208
+BATCH_COUNTER_PASS count=128 active_minus_stalls=110208
+BATCH_COUNTER_PASS count=128 active_minus_stalls=110208
+BATCH_COUNTER_PASS count=128 active_minus_stalls=110208
+DMA_BATCH_CTRL_PASS numeric_vectors=272 full_axis_packets malformed_TLAST_TKEEP abort_recovery no_vector_overlap
+C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\dma_batch_ctrl_tb.v:174: $finish called at 15464040000 (1ps)

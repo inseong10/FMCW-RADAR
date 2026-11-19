@@ -1,0 +1,17 @@
+kernel_build=/home/user/fft128_kernel_e11a/build
+module_build=/home/user/fft128_dma_batch_module.Pu21a5
+arm-linux-gnueabihf-gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+98e32b9d425156aabf2b3c63c1be28e643fc57b36583926f3eee5e0b6b6bf0f6  /home/user/fft128_kernel_e11a/build/.config
+7b326f16445ba64893a5aefcf3ec560dfb6d2ca96081c77bd51e1235c828b3a7  /home/user/fft128_kernel_e11a/build/Module.symvers
+96c12ad6b9e39e6e27b69c67f79b5b640f2d52ab090e5720ff9b576037ef6a18  /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_probe/probe_board/kernel.config
+9e83122cc13535e2bd926aa5f36cbf5d347b32a6c14a0c18ead19eca4ad30a1d  /home/user/fmcw_share/FMCW-FFT-test/src/PS/fft128/dma_batch/fft128_dma_batch.c
+7d30955944bf95cb8a01e6c947464d1dec039eea7ccc8682c8cb8908016b2199  /home/user/fmcw_share/FMCW-FFT-test/src/PS/fft128/dma_batch/fft128_dma_batch_uapi.h
+filename:       /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_batch_module/fft128_dma_batch.ko
+description:    FMCW E11b axis-batched 128-point FFT DMAengine client
+license:        GPL
+alias:          of:N*T*Cfmcw,fft128-dma-batch-v2C*
+alias:          of:N*T*Cfmcw,fft128-dma-batch-v2
+depends:        
+name:           fft128_dma_batch
+vermagic:       5.15.19-xilinx SMP preempt mod_unload modversions ARMv7 p2v8 
+Matching release is necessary, not sufficient. Board insmod must accept all MODVERSIONS CRCs. Never use --force.

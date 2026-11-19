@@ -1,0 +1,68 @@
+{
+  "date_on_client": "2026-11-19",
+  "evidence": "user-supplied PetaLinux console; wrapped lines rejoined in board_selftest_console.log",
+  "status": "E11B_BOARD_SELFTEST_PASS",
+  "module_normal_load": "accepted by running kernel; no forced loading",
+  "dma_client_bind": true,
+  "hp0_control": {
+    "read": "0x00000000",
+    "write": "0x00000F00"
+  },
+  "packets": [
+    {
+      "fft_count": 1,
+      "bytes_each_direction": 512,
+      "completed": 1
+    },
+    {
+      "fft_count": 128,
+      "bytes_each_direction": 65536,
+      "completed": 128
+    },
+    {
+      "fft_count": 128,
+      "bytes_each_direction": 65536,
+      "completed": 128
+    }
+  ],
+  "checks": [
+    "exclusive ownership",
+    "invalid ABI",
+    "invalid timeout",
+    "invalid flags",
+    "invalid FFT count",
+    "1 FFT numeric comparison",
+    "128 FFT numeric comparison",
+    "repeated full-axis numeric comparison",
+    "4-vector 512-bin receiver self-test"
+  ],
+  "firmware_load_ms": 63,
+  "firmware_load_time_is_fft_benchmark": false,
+  "full_128x128_frame": false,
+  "profile_20_frames": false,
+  "paired_300_samples": false,
+  "local_bundle_manifest_independently_checked": true,
+  "local_bundle_artifacts": {
+    "fft128_e11b.bin": "6f0a210bdbd23fd7861430b58e2636d6cbcb72d7bf523ca2a8d30365021e15f3",
+    "fft128_e11b.dtbo": "981f7655f8ad9589ffec8250f4bd017601a299bd9a1fb56275875b05743d0076",
+    "fft128_e11b.json": "cdd51344fbdb2caed9b6f4477ea5269a2af9cf8e6b1dd107881d52b272b49797",
+    "fft128_dma_batch.ko": "2fe98f43c3cd5fae940ab74d2a59b034d7f218335644fb9bd86faa521ea853bb",
+    "fft128-receiver": "e196f6b1e586a4d616a564cef2a377b08c315c6345c20bf1172276e2df3e0a99",
+    "test-dma-batch-client": "e30ed9d0f3de60a9eb6211c3f086b2784434f676ecd7d3e0050e57badb358cbe",
+    "frame.rspb": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "kernelrelease.txt": "b1fc844b1ee87f48cd89d857eb48ae13b9a1e5bd6d366112a8cb8972fc01034d",
+    "gic_phandle.bin": "1bc5d0e3df0ea12c4d0078668d14924f95106bbe173e196de50fe13a900b0937",
+    "gic_path.txt": "1c6c83c7ef115c7a7d6bd02696ca4f5a64e2ae24beabac820da66ff111b90faa",
+    "dma_config.json": "0fb2078db02e73e3393f90c5bb45097472327053fd289b3c2a7d7bd546d4534e",
+    "build_config.json": "f6deb3dc3241203c31af50f730ffe5b20510623a0ba6f642c34185a7a615f37c",
+    "clock_source.txt": "9f749a74cea4bfbe43d7d176174f2ea808fd87b5bb56b631d5fdfeac82e52597",
+    "pl_source.sha256": "a615637f04b4532065c723c87cf9af7d331c2a93704b5c5189dfd55b7161baf9",
+    "host_source.sha256": "0ae077b741bf66f91b6e2339fd7fc67fa3fbd0a2e8e079c3c907d40a6a19c10c",
+    "module_source.sha256": "7d6750b01f516e4e93bb798cffa26db3c6eab7c12b525335735e7fabb74c1d89",
+    "module_build_environment.txt": "05196881fc2839f7335f8ddb6eb8d9684ea33314674464b605ba3f41b4eb4d91",
+    "load_board.sh": "2d1bebe8f6664133a0c5d65aaa821734c1490f02f3949c2d0abb1643d007eac6",
+    "profile_board.sh": "e69bffca121dab40fcc3fcc07b06feab2911e6122126bd9de1792c80806a6458",
+    "run_board.sh": "d3413354fbb112f9e4b2ef938a19e366bef11c4fe5c56638cd12c2248f7a1b0c"
+  },
+  "scope_note": "Console confirms live device operation; no full frame or performance claim. Build-time board_verified:false in original configuration remains unchanged."
+}

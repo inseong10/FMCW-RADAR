@@ -1,0 +1,20 @@
+Evidence: user-supplied PetaLinux console, client date 2026-11-19.
+Command requested: sudo sh /opt/fft128/e11b/load_board.sh
+
+HP0 read/write control before activation: 0x00000000 0x00000F00
+fpga_manager fpga0: writing fft128_e11b.bin to Xilinx Zynq FPGA Manager
+Time taken to load BIN is 63.000000 Milli Seconds
+BIN FILE loaded through FPGA manager successfully
+OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/fft128_e11b_clock
+OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/fft128_e11b_dma
+xilinx-vdma 40400000.dma: Xilinx AXI DMA Engine Driver Probed!!
+fft128_dma_batch: loading out-of-tree module taints kernel.
+fft128-dma-batch 43c60000.fft: E11b ready: up to 128 FFT/ioctl, coherent bounce buffers, 64KiB each direction
+BATCH_PACKET_PASS fft_count=1 bytes_each_direction=512 completed=1
+BATCH_PACKET_PASS fft_count=128 bytes_each_direction=65536 completed=128
+BATCH_PACKET_PASS fft_count=128 bytes_each_direction=65536 completed=128
+DMA_BATCH_CLIENT_PASS exclusive_owner invalid_ABI timeout flags count full_axis repeated_packets
+DMA: kernel-owned control registers, HP0, coherent bounce buffers; 64 KiB per direction/axis, 128 sequential FFTs
+BACKEND=PL_DMA_BATCH implementation=native_C
+SELFTEST_PASS backend=PL_DMA_BATCH vectors=4 bins=512
+DMA_E11B_SELFTEST_READY: next run full frame/profile before benchmarking

@@ -1,0 +1,9 @@
+CPU_AFFINITY=0
+DMA: kernel-owned control registers, HP0, coherent bounce buffers; 64 KiB per direction/axis, 128 sequential FFTs
+BACKEND=PL_DMA_BATCH implementation=native_C
+BENCHMARK: warmup=2 repeat=20 preallocated buffers; data path=PL_DMA_BATCH
+peak_unshifted=(107,20) fft_and_transfer_seconds=0.006474
+DMA_PROFILE: ioctl_ms=5.360488 kernel_copies_ms=0.829799 kernel_wait_ms=4.461962 PS_transpose_ms=0.670374 pl_active_ms=4.408947
+DMA_PROFILE: nested kernel and PL intervals overlap ioctl; active cycles INCLUDE stream stalls. Separate instrumented run.
+PIPELINE_TIMING backend=PL_DMA_BATCH mean_ms=6.473645 median_ms=6.464940 min_ms=6.435594 max_ms=6.524694 repeats=20
+FRAME_PASS backend=PL_DMA_BATCH bit_exact_bins=16384

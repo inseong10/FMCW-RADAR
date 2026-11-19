@@ -1,0 +1,36 @@
+{
+  "experiment": "E11a",
+  "verified_as_of": "2026-11-16",
+  "board_verified": true,
+  "scope": "Only the artifact hashes below; not future builds or continuous UDP operation",
+  "backend": "PL_DMA",
+  "shape": [128, 128],
+  "evidence_commit": "1fad1e1fa3e7031edcc74157693e59e6df0fb7f1",
+  "artifacts_sha256": {
+    "dma_config.json": "53ecd9ef7aa1b984bb84ee4f139c9b73082047e1be7d963ae89a05d0fc66105f",
+    "fft128_e11a.bin": "7804aa92507ea2f065d3eff8906078950b2eee259b68938e06683e64bbda0944",
+    "fft128_e11a.dtbo": "99c9d79079da2456bdebcbb1704805b0ffc881245f856227f4876883ced1cfd7",
+    "fft128_dma.ko": "8e6551c6c89feb032e66210996a1c245b7233dc14e5838364d541f4fac1873fd",
+    "fft128-receiver": "2478cc6cb8fd1dcd03bbcc1b675cc052868fdb51e1b09fdb37f306a3bf076d26"
+  },
+  "checks": {
+    "module_crc_normal_load": true,
+    "dma_client_abi": true,
+    "selftest_vectors": 4,
+    "selftest_bins": 512,
+    "frame_bins": 16384,
+    "independent_python_integer_match": true,
+    "profile_frames": 20,
+    "unprofiled_trials": 3,
+    "unprofiled_repeats_per_trial": 100,
+    "dma_irqs_each_channel_cpu0": 84480
+  },
+  "evidence": [
+    "comparison.json",
+    "profile.summary.json",
+    "../2026-11-16-e11a-build/dt_v2_selftest_console.log",
+    "../2026-11-16-e11a-preparation/module_crc_console.log"
+  ],
+  "raw_build_metadata_policy": "Preserve original dma_config.json with board_verified=false and its artifact hashes. This file records subsequent board validation without mutating the measured bundle.",
+  "not_verified": ["continuous UDP throughput", "E11b batching", "PS02 normalization fusion"]
+}

@@ -1,0 +1,12 @@
+{
+  "compared_to": "E10 validated_source_sha256.json",
+  "convention": "CRLF normalized to LF",
+  "unchanged": {
+    "src/PL/fft128_ps/fft128_pipeline.v": "7fb0fd12a15fae339ca391eeb6485b71b64a697f3b6a1fe3aa643f6a3d6b37f4",
+    "src/PL/fft128_ps/butterfly_pipeline.v": "8152035a94ef0a7761e463c18a0011def3c7f239572ee9f928c6305287546297",
+    "src/PL/fft128_ps/fft128_twiddle.v": "0b5d76b62c7c0239262cf09fcdc67d7e2e5ca5622c644ef0d6e22f2c306f161b",
+    "src/PL/fft128_ps/fft_working_ram.v": "2346601c1feb600adc10158b2fe6af6fb26cd65341f1732d43d7c5466c004f01",
+    "src/PL/fft128_ps/address_generator.v": "27161ae63c9a417611b6919e0567df2bb10d02bdf66fef147154aea9c042ac9e",
+    "src/PS/fft128/native_core.c": "adc8cbd4c24a9511e3ed3a6a435af1338d0f9fb88dc53258f94be45e84ef861f"
+  }
+}

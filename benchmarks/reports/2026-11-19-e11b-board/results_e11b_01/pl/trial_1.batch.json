@@ -1,0 +1,1 @@
+{"experiment":"E11b","hardware":true,"dma_requests_per_frame":2,"dma_channel_submissions_per_frame":4,"fft_per_request":128,"bytes_per_direction_per_request":65536,"transfer_compute_overlap":false}
