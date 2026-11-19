@@ -1,0 +1,8 @@
+{
+  "profiled_trial_rejected": true,
+  "one_lsb_pl_output_change_rejected": true,
+  "profile_output_independent_integer_match": true,
+  "profile_and_benchmark_bundle_manifest_match": true,
+  "all_20_deployed_artifact_hashes_match_checked_local_bundle": true,
+  "method": "Independent Windows re-analysis of raw CSV/log/metadata. Negative fixtures in isolated build/fft128_dma_batch_analysis_guards; original files unmodified."
+}

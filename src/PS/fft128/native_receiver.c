@@ -35,10 +35,18 @@ typedef socklen_t radar_socklen;
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef FFT128_DMA_BATCH_BACKEND
+#include "dma_batch/batch_process.h"
+#endif
 #ifdef FFT128_DMA_BACKEND
 #define HARDWARE_NAME "DMA"
+#ifdef FFT128_DMA_BATCH_BACKEND
+#define HARDWARE_BACKEND "dma_batch"
+#define HARDWARE_LABEL "PL_DMA_BATCH"
+#else
 #define HARDWARE_BACKEND "dma"
 #define HARDWARE_LABEL "PL_DMA"
+#endif
 #define PROFILE_OPTION "--profile-dma"
 #define DEFAULT_BASE 0x43c60000
 #define TIMING_NOTE "Repeated same frame; includes host copies, ioctl, coherent bounce copies, DMA, FFT and PS transpose. Preallocated buffers. Excludes input IO, quantization, validation and files. Kernel nested stages overlap host ioctl; coherent HP0, no streaming sync."
@@ -307,6 +315,12 @@ static int save(const options *o, const collector *c, const uint32_t *spectrum,
               o->profile ? "true" : "false",o->pl_clock_hz,
               o->model ? "Software Q15 model; no FPGA or DMA. Same frame, preallocated workspace; excludes input IO, quantization, verification and files." : TIMING_NOTE);
     if (checked_close(f)) return -1;
+#ifdef FFT128_DMA_BATCH_BACKEND
+    f=output_file(o->prefix,".batch.json");
+    if(!f) return -1;
+    fprintf(f,"{\"experiment\":\"E11b\",\"hardware\":%s,\"dma_requests_per_frame\":2,\"dma_channel_submissions_per_frame\":4,\"fft_per_request\":128,\"bytes_per_direction_per_request\":65536,\"transfer_compute_overlap\":false}\n",o->model ? "false" : "true");
+    if(checked_close(f)) return -1;
+#endif
     f=output_file(o->prefix,".timings.csv");
     if (!f) return -1;
     fprintf(f,"stage,iteration,wall_ms\n");
@@ -319,18 +333,32 @@ static int save_profiles(const options *o, const fft128_profile *profiles, const
     FILE *f=output_file(o->prefix,".profile.csv");
     if(!f) return -1;
 #ifdef FFT128_DMA_BACKEND
-    fprintf(f,"iteration,wall_ms,host_input_copy_ms,ioctl_ms,host_output_copy_ms,gather_ms,scatter_ms,kernel_copy_in_ms,kernel_submit_ms,kernel_wait_ms,kernel_check_ms,kernel_copy_out_ms,pl_active_cycles,pl_active_ms,input_stall_cycles,output_stall_cycles,fft_calls,min_active_cycles,max_active_cycles,pl_clock_hz_declared,bytes_each_direction_per_fft\n");
+    fprintf(f,"iteration,wall_ms,host_input_copy_ms,ioctl_ms,host_output_copy_ms,gather_ms,scatter_ms,kernel_copy_in_ms,kernel_submit_ms,kernel_wait_ms,kernel_check_ms,kernel_copy_out_ms,pl_active_cycles,pl_active_ms,input_stall_cycles,output_stall_cycles,fft_calls,min_active_cycles,max_active_cycles,pl_clock_hz_declared,bytes_each_direction_per_fft"
+#ifdef FFT128_DMA_BATCH_BACKEND
+                ",dma_requests,dma_channel_submissions,fft_per_request,bytes_each_direction_per_request"
+#endif
+                "\n");
     double ioctl_ms=0,active_ms=0,copy_ms=0,wait_ms=0,transpose_ms=0;
     for(unsigned k=0;k<o->repeat;++k) {
         const fft128_profile *p=profiles+k;
         double active=p->pl_cycles*1000.0/o->pl_clock_hz;
-        fprintf(f,"%u,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%llu,%.9g,%llu,%llu,%u,%u,%u,%u,512\n",
+        fprintf(f,"%u,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%llu,%.9g,%llu,%llu,%u,%u,%u,%u,512",
                 k+1,times[k]*1000,p->input_write_ns/1e6,p->start_wait_ns/1e6,
                 p->output_read_ns/1e6,p->gather_ns/1e6,p->scatter_ns/1e6,
                 p->dma_copy_in_ns/1e6,p->dma_submit_ns/1e6,p->dma_wait_ns/1e6,
                 p->dma_check_ns/1e6,p->dma_copy_out_ns/1e6,
                 (unsigned long long)p->pl_cycles,active,(unsigned long long)p->dma_input_stalls,
-                (unsigned long long)p->dma_output_stalls,p->calls,p->min_cycles,p->max_cycles,o->pl_clock_hz);
+                (unsigned long long)p->dma_output_stalls,
+#ifdef FFT128_DMA_BATCH_BACKEND
+                256u,
+#else
+                p->calls,
+#endif
+                p->min_cycles,p->max_cycles,o->pl_clock_hz);
+#ifdef FFT128_DMA_BATCH_BACKEND
+        fprintf(f,",%u,%u,128,65536",p->calls,p->calls*2);
+#endif
+        fputc('\n',f);
         ioctl_ms+=p->start_wait_ns/1e6;active_ms+=active;
         copy_ms+=(p->dma_copy_in_ns+p->dma_copy_out_ns)/1e6;wait_ms+=p->dma_wait_ns/1e6;
         transpose_ms+=(p->gather_ns+p->scatter_ns)/1e6;
@@ -377,6 +405,9 @@ int main(int argc, char **argv) {
     fft128_sample *frame=NULL;
     uint32_t *packed=NULL, *spectrum=NULL, *expected=NULL;
     uint32_t *workspace=NULL;
+#ifdef FFT128_DMA_BATCH_BACKEND
+    uint32_t *axis_in=NULL, *axis_out=NULL;
+#endif
     double *times=NULL;
     fft128_profile *profiles=NULL;
     if (!o.model) {
@@ -398,6 +429,13 @@ int main(int argc, char **argv) {
     spectrum=malloc(FFT128_BINS*sizeof(*spectrum));
     expected=malloc(FFT128_BINS*sizeof(*expected));
     workspace=malloc(FFT128_BINS*sizeof(*workspace));
+#ifdef FFT128_DMA_BATCH_BACKEND
+    if(!o.model) {
+        axis_in=malloc(FFT128_BINS*sizeof(*axis_in));
+        axis_out=malloc(FFT128_BINS*sizeof(*axis_out));
+        if(!axis_in || !axis_out) { fprintf(stderr,"Out of batch workspace memory\n"); goto finish; }
+    }
+#endif
     times=malloc((size_t)o.repeat*sizeof(*times));
     if(o.profile) profiles=calloc(o.repeat,sizeof(*profiles));
     if (!frame || !packed || !spectrum || !expected || !workspace || !times || (o.profile && !profiles)) { fprintf(stderr,"Out of memory\n"); goto finish; }
@@ -412,10 +450,20 @@ int main(int argc, char **argv) {
         fft128_profile current={0};
         fft128_profile *profile=o.profile ? &current : NULL;
         double started=now();
-        int rc=fft128_process_profiled(packed,spectrum,workspace,transform,profile,profile);
+        int rc;
+#ifdef FFT128_DMA_BATCH_BACKEND
+        if(!o.model) rc=fft128_process_batch(packed,spectrum,workspace,axis_in,axis_out,profile);
+        else
+#endif
+        rc=fft128_process_profiled(packed,spectrum,workspace,transform,profile,profile);
         double duration=now()-started;
         if (rc) { fprintf(stderr,"FFT processing failed (%d); frame aborted\n",rc); goto finish; }
-        if(profile && (current.calls!=256 || !current.min_cycles)) {
+#ifdef FFT128_DMA_BATCH_BACKEND
+        const unsigned expected_calls=2;
+#else
+        const unsigned expected_calls=256;
+#endif
+        if(profile && (current.calls!=expected_calls || !current.min_cycles)) {
             fprintf(stderr,"Invalid hardware profile counter data\n"); goto finish;
         }
         unsigned errors=0;
@@ -436,6 +484,9 @@ int main(int argc, char **argv) {
     printf("FRAME_PASS backend=%s bit_exact_bins=16384\n",label);
     result=0;
 finish:
+#ifdef FFT128_DMA_BATCH_BACKEND
+    free(axis_in); free(axis_out);
+#endif
     free(frame); free(packed); free(spectrum); free(expected); free(workspace); free(times); free(profiles);
 #ifndef _WIN32
     if (opened) fft128_close();

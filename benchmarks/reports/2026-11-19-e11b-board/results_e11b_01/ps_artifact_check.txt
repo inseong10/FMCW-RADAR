@@ -1,0 +1,16 @@
+frame.rspb: OK
+reference.csv: OK
+reference.json: OK
+run_board.sh: OK
+double/bin/receiver: OK
+double/lib/libfftw3.so.3: OK
+double/build_environment.txt: OK
+double/fftw_build_environment.txt: OK
+float_scalar/bin/receiver: OK
+float_scalar/lib/libfftw3f.so.3: OK
+float_scalar/build_environment.txt: OK
+float_scalar/fftw_build_environment.txt: OK
+float_neon/bin/receiver: OK
+float_neon/lib/libfftw3f.so.3: OK
+float_neon/build_environment.txt: OK
+float_neon/fftw_build_environment.txt: OK

@@ -8,7 +8,7 @@
 
 ## 현재 위치
 
-- 보드에서 검증된 구성: **순차/20 MHz MMIO, 파이프라인/50 MHz MMIO 및 E11a DMA, 128×128**.
+- 보드에서 검증된 구성: **순차/20 MHz MMIO, 파이프라인/50 MHz MMIO 및 E11a/E11b DMA, 128×128**.
 - E08에서 같은 보드의 PS C++/FFTW와 비교 완료. E09에서 연산·전송·전치 분해 계측 완료.
 - E10의 새 파이프라인은 **RTL·구현·보드 프로파일·각 300회 PS–PL 비교·NumPy 검증 완료**.
 - 다음 단계: E10의 새 기준선을 보존하고 [단계별 가속 계획](fft128_dma_plan.md)에 따라
@@ -20,7 +20,10 @@
   ARM 모듈/실제 커널 CRC와 Vivado 통합·50 MHz 구현 타이밍까지 통과했다.
   E11a 보드 DMA 프레임·계측·각 300회 paired 비교도 완료했다. 중앙값은 PS double
   5.748489 / NEON 3.715234 / PL DMA 15.411639 ms다. [E11a 완료 보고서](../benchmarks/reports/2026-11-16-e11a-board/README.md).
-- 다음은 E11b 묶음 제출이다. 여러 FFT 코어·연속 프레임·크기 스윕은 아직 실시하지 않았다.
+- **E11b 완료:** 전체 프레임·별도 profile·각 300회 paired 비교·원본 신원/정확도/IRQ 독립 검증 PASS.
+  중앙값 PS double 5.717376 / NEON 3.558177 / PL 6.433026 ms.
+  [완료 보고서](../benchmarks/reports/2026-11-19-e11b-board/README.md).
+  여러 FFT 코어·연속 프레임·크기 스윕은 아직 실시하지 않았다.
 
 ## 실험 색인
 
@@ -37,6 +40,7 @@
 | E10 | 11-15 완료 | 순차 연산과 낮은 클록을 개선할 수 있는가 | 파이프라인·stage ping-pong RAM·50 MHz 빌드 | RTL 861 cycles/FFT; 50 MHz 타이밍·보드 프레임 PASS; 프로파일 평균 27.328 ms; 각 300회 중앙값 PS 5.557 / PL 25.259 ms; 기존 PL보다 3.225배 개선 |
 | PS01 | 11-15~16 완료 | DMA 설계 전에 PS 목표 성능을 먼저 정할 수 있는가 | double/float scalar/float+NEON 변형, 같은 입력·전치·반복 검증 | 원본 검증 PASS; 각 300회 전체 중앙값 5.502540/4.341573/3.615852 ms; NEON 변형은 double 대비 1.522배 개선 |
 | E11a | 11-16 완료 | FFT당 작은 DMA 제출의 전송/고정 비용은? | 산술/50 MHz 유지, Simple DMA/HP0·제어 앞단·coherent bounce·ioctl/계측 | 보드 프레임·독립 정수 검증 PASS; 각 300회 중앙값 PS double 5.748489 / NEON 3.715234 / PL DMA 15.411639 ms; 별도 계측 평균 18.136318 ms |
+| E11b | 11-19 완료 | 256번의 작은 DMA 요청 비용을 줄일 수 있는가 | 축당 128 FFT/64 KiB, 2 ioctl/4 채널 제출 | 각 300회 중앙값 PS double 5.717376 / NEON 3.558177 / PL 6.433026 ms; 두 IRQ 각각660; [완료 보고서](../benchmarks/reports/2026-11-19-e11b-board/README.md) |
 
 ## 공통 조건과 해석 규칙
 
@@ -399,6 +403,72 @@
   해소됐다. 다음은 E11b이며 묶음 제출은 아직 적용하지 않았다.
 - **원본/신원:** [E11a 준비 보고서](../benchmarks/reports/2026-11-16-e11a-preparation/README.md)에
   소스 SHA, 입력/조회 근거 SHA와 RTL·테스트 결과를 보존한다. 큰 빌드/펌웨어는 `build/`에 둔다.
+- **후속 검토 반영(계획, 새 측정 아님):** E11a 계측에서 복사 합은 2.256989 ms다.
+  nonstall 4.408320 + stream stall 0.074257 + 복사 + 전치 1.002013의 단순 합은
+  7.741579 ms이며, E11b의 초기 5.5~6 ms 가설보다 큰 비용을 관찰했다.
+  새 예산은 약 8 ms 수준의 조건부 가설로 갱신하고 실제 64 KiB 복사·제출을 다시 잰다.
+  E11b에서는 coherent/cached 정책을 고정하고 TLAST를 축 경계로 변환한다.
+  약 41.86 us/FFT 잔여를 순수 SW/IRQ 비용으로 단정하지 않는다. E11c 출력 개선과
+  E11d 버퍼 정책을 분리하고 E12/E13 순서는 E11b 프로파일 후 정한다.
+  PS02 전치·정규화 결합은 별도 계획이다. PS01 평균에서 정규화만 제거한 계산은
+  3.075196 ms이며 2.7~3.0 ms는 추가 개선 목표다. 기존 PS01을 함께 재측정한다.
+  빌드 원본의 board_verified=false는 유지하고 실제 검증한 artifact 해시별 완료 상태를
+  [별도 검증 기록](../benchmarks/reports/2026-11-16-e11a-board/board_verification.json)으로 명시했다.
+
+## E11b — 축당 128 FFT 묶음 제출 (2026-11-19)
+
+- **문제/가설:** E11a의 프레임당 256 ioctl/512 DMA 채널 제출 비용을 축당 하나로 줄인다.
+  약 8 ms는 작업 가설이며 아직 측정값이 아니다.
+- **고정:** 단일 fft128_pipeline/50 MHz/Q15/출력 2클록/sample, cached PS 전치 및
+  사용자·커널·coherent 복사 단계. 전송/연산 겹치기·새 버퍼 정책·PS02는 섞지 않는다.
+- **변경:** 별도 fft128_dma_batch_ctrl/빌드, DMA batch ABI2/드라이버/수신기/배치 경로.
+  프레임당 2 ioctl/4 DMA 채널 제출, 축당 방향별 64 KiB, FFT 256회다.
+  외부 TLAST는 축 마지막에만 내보내고 내부 FFT별 경계를 생성한다.
+- **로컬 검증:** verify_dma_batch.py PASS. 272 독립 벡터와 1/2/128 FFT 패킷,
+  backpressure·입력 공백·오류 TLAST/TKEEP·abort/recovery 및 E11a 회귀 확인.
+  active−stream_stalls = 861*128 cycles/axis. 코어 및 전송/연산 비겹침을 확인했다.
+- **미확인:** ARM 모듈·수신기 빌드, Vivado reset/IP/route/timing, 실제 보드 ABI/전송,
+  full frame/profile/각 300회 paired 비교. 새 속도·자원·보드 PASS는 아직 없다.
+- [준비·검증 기록](../benchmarks/reports/2026-11-19-e11b-preparation/README.md).
+
+- **빌드 확인:** 사용자 완료 후 실제 Vivado run `fft128_dma_e11b_20261119_232506`를 확인했다.
+  generated reset IP/AXI ID·ABI·batch 검사, bitstream/XSA, ARM 정적 수신기·ABI 검사기·모듈 빌드 PASS.
+  50 MHz WNS 10.618 ns/WHS 0.016 ns, setup/hold 위반·미제약 내부 endpoint 0.
+  LUT 3,243/FF 4,017/BRAM tile 5/DSP 4. 실제 BD의 HP0/AXIS/주소/IRQ/길이폭을 확인했다.
+  PL/host/module build 소스와 현재 checkout SHA, ARM artifact manifest를 독립 대조했다.
+  앞선 빌드 미확인 상태는 해소됐고 보드 CRC/자체 검사/프레임/profile/paired 비교는 남아 있다.
+  [빌드 원본·해시](../benchmarks/reports/2026-11-19-e11b-build/README.md).
+
+- **보드 자체 검사 확인:** 사용자 PetaLinux 콘솔에서 HP0 read/write `0x00000000/0x00000F00`,
+  FPGA Manager BIN 로드, AXI DMA probe, E11b client bind와 정상 모듈 로드를 확인했다.
+  1 FFT/512 B와 두 차례 128 FFT/65,536 B 패킷 모두 완료 개수 및 정수 모델 비교 PASS,
+  독점 소유·잘못된 ABI/timeout/flags/count 거부 검사와 4벡터/512 bin 수신기 자체 검사도 PASS다.
+  `DMA_E11B_SELFTEST_READY`까지 도달했으며 로컬 bundle 20개 artifact 해시를 독립 확인했다.
+  FPGA 로드 63 ms는 FFT 성능이 아니다. full frame/profile/각 300회 비교는 남아 있다.
+  [보드 콘솔·검증 범위](../benchmarks/reports/2026-11-19-e11b-build/board_selftest.json).
+
+- **원본 회수 후 완료:** 사용자 Ubuntu 수집 폴더를 복사해 독립 재계산했다.
+  CPU0/warmup10/repeat100×3 회전 trial 각 300회 중앙값은 double 5.717376 / NEON 3.558177 /
+  PL 6.433026 ms, PL p05/p95 6.396787/6.474537 ms, 최대 6.505416 ms다.
+  과거 E11a 15.411639 ms 대비 2.395706배 개선·지연58.258651% 감소이며 과거 실행과의 비교다.
+  이번 paired NEON보다 1.807956배, double보다 1.125171배 느리다.
+  모든 반복 보드 정수 검증과 마지막 출력3개/profile 출력의 독립 Python 정수 일치,
+  NumPy 상대 L2 1.361020928%·피크(107,20), artifact/source/입력/NEON plan을 확인했다.
+  IRQ67/68은 CPU0에서 각각660회 증가해 330프레임×2축과 맞았고 CPU1 증가는0이다.
+- **프로파일/해석:** 별도20회 평균6.473645 ms. PL active4.408947 ms(68.1%), nonstall4.408320 ms,
+  입력 stream stall0.000627 ms/출력stall0, 사용자+커널 복사합1.263008 ms, 전치0.670374 ms다.
+  ioctl5.360488 ms 내부 wait4.461962 ms는 PL active와 겹치므로 합산하지 않는다.
+  submit/start0.035202 ms로 요청·완료 비용은 줄고 내부 LOAD/CALC/OUTPUT 구간이 가장 크다.
+  코어·정밀도·복사단계는 유지했지만 묶음 크기가 메모리 접근 간격도 바꾸어 복사·전치 시간도
+  달라졌다. 과거 프로파일과의 차이를 ioctl 횟수 감소만의 독립 효과로 단정하지 않는다.
+  약8 ms 작업 가설보다 짧았으며, 원시값으로 가설을 대체하지 않고 차이를 보존한다.
+- **후속 선택/범위:** E13 연산 구조 확대를 주 가속 후보로 검토한다. E11c 출력개선은 별도
+  무정지 약0.65 ms 상한을 확인할 수 있다. E12는 내부 LOAD/OUTPUT 겹치기 여지가 있으므로
+  외부stream stall이 작다는 이유만으로 배제하지 않는다. 새 단계는 아직 실행하지 않았다.
+  12.8 ms 미만은 오프라인 지연만이며 연속 UDP/실시간 보장은 미검증이다.
+- **근거:** [E11b 완료·원시 시간·해시·분석](../benchmarks/reports/2026-11-19-e11b-board/README.md).
+  계측trial 혼입/1LSB 변조 출력 거부도 확인했다. 측정 bundle의 board_verified:false를
+  보존하고 검증된 해시별 완료 상태를 별도 board_verification.json에 기록했다.
 
 ## 이후 기록할 실험
 
@@ -413,7 +483,7 @@
    E11b의 5.5~6 ms는 추가 비용이 작은 조건의 가설이며 실측값이 아니다.
    계획서 작성 당시 E11 이후는 전부 계획 상태였다. 2026-11-16에는 E11a 소스 구현과
    FPGA 통합과 보드 DMA 자체 검사까지 진행했고 상세는 위 E11a 항목에 기록했다.
-   이후 E11a 보드 프레임 성능·원본 검증도 완료했다. E11b~E14는 계획이며 실행 환경 수정은 실험으로 기록하지 않는다.
+   이후 E11a 및 E11b 보드 프레임 성능·원본 검증도 완료했다. E11c~E14는 계획이며 실행 환경 수정은 실험으로 기록하지 않는다.
 
 ## 다음 실험에 사용할 기록 양식
 

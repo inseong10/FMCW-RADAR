@@ -6,6 +6,11 @@
 한 ioctl에 FFT 하나, TX/RX 각 512 B, 프레임당 256 ioctl/512 DMA 채널 제출이다.
 coherent bounce buffer를 사용하며 CPU 복사·ioctl·제출·완료 대기·FFT·전치를 모두 측정한다.
 
+**보드 검증 완료 상태:** [board_verification.json](board_verification.json)은 검증한 BIN·DT·모듈·
+수신기 해시와 검사 범위를 연결한다. 원본 `dma_config.json`의 `board_verified:false`는
+보드 실행 전 빌드 시점 상태이며, 측정 bundle/manifest 해시를 보존하기 위해 수정하지 않는다.
+새 빌드까지 검증된 것으로 오해하지 않도록 완료 표시는 이 해시 집합에만 적용한다.
+
 ## 비계측 paired 비교
 
 같은 보드·고정 Q15 입력·창 없음·1/16384 정규화·CPU0·단일 스레드다.

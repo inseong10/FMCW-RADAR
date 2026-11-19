@@ -1,0 +1,45 @@
+{
+  "date_on_client": "2026-11-19",
+  "run": "/home/user/fmcw_share/FMCW-FFT-test/build/vivado/fft128_dma_e11b_20261119_232506",
+  "clock_hz": 50000000,
+  "wns_ns": 10.618,
+  "whs_ns": 0.016,
+  "setup_failing_endpoints": 0,
+  "hold_failing_endpoints": 0,
+  "unconstrained_internal_endpoints": 0,
+  "resources": {
+    "LUT": 3243,
+    "FF": 4017,
+    "BRAM_tiles": 5,
+    "DSP": 4
+  },
+  "reset_generated_ip": "PASS",
+  "ARM_userspace_and_module": "PASS; source and artifact manifests independently checked",
+  "board": "not yet verified",
+  "artifacts": {
+    "build/vivado/fft128_dma_e11b_20261119_232506/fft128_ps.runs/impl_1/system_wrapper.bit": {
+      "bytes": 2083850,
+      "sha256": "fbc966ec279fa91a6e56132adac49e9c37f1d74a4ac30b5862cbd09b6cc238fa"
+    },
+    "build/vivado/fft128_dma_e11b_20261119_232506/system.xsa": {
+      "bytes": 459675,
+      "sha256": "b2c767a2b55fe64b5b161bf08ccbfefd30e70bd13debd2ffb21e4409594b07fc"
+    },
+    "build/fft128_dma_batch_host/bin/fft128-receiver": {
+      "bytes": 465448,
+      "sha256": "e196f6b1e586a4d616a564cef2a377b08c315c6345c20bf1172276e2df3e0a99"
+    },
+    "build/fft128_dma_batch_host/bin/test-dma-batch-client": {
+      "bytes": 431784,
+      "sha256": "e30ed9d0f3de60a9eb6211c3f086b2784434f676ecd7d3e0050e57badb358cbe"
+    },
+    "build/fft128_dma_batch_module/fft128_dma_batch.ko": {
+      "bytes": 13980,
+      "sha256": "2fe98f43c3cd5fae940ab74d2a59b034d7f218335644fb9bd86faa521ea853bb"
+    },
+    "build/fft128_dma_batch_host/fft128_e11b.dtbo": {
+      "bytes": 1449,
+      "sha256": "981f7655f8ad9589ffec8250f4bd017601a299bd9a1fb56275875b05743d0076"
+    }
+  }
+}

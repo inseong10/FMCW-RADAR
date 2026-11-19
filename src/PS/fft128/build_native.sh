@@ -5,10 +5,12 @@ here=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 root=$(cd -- "$here/../../.." && pwd)
 backend=${FFT128_IO_BACKEND:-mmio}
 extra=()
+processing=()
 case $backend in
     mmio) transport="$here/mmio.c"; default_out="$root/build/fft128_native";;
     dma) transport="$here/dma/dma_backend.c"; extra=(-DFFT128_DMA_BACKEND); default_out="$root/build/fft128_dma_native";;
-    *) echo 'FFT128_IO_BACKEND must be mmio or dma' >&2; exit 1;;
+    dma_batch) transport="$here/dma_batch/dma_batch_backend.c"; processing=("$here/dma_batch/batch_process.c"); extra=(-DFFT128_DMA_BACKEND -DFFT128_DMA_BATCH_BACKEND); default_out="$root/build/fft128_dma_batch_native";;
+    *) echo 'FFT128_IO_BACKEND must be mmio, dma or dma_batch' >&2; exit 1;;
 esac
 out=${FFT128_OUT:-"$default_out"}
 compiler=()
@@ -48,11 +50,13 @@ esac
 mkdir -p -- "$out"
 printf 'COMPILER: %s\n' "${compiler[*]}"
 "${compiler[@]}" -O2 -std=c11 -Wall -Wextra "${cflags[@]}" \
-    "${extra[@]}" "$here/native_core.c" "$here/native_receiver.c" "$transport" \
+    "${extra[@]}" "$here/native_core.c" "$here/native_receiver.c" "$transport" "${processing[@]}" \
     "${linkmode[@]}" "${ldflags[@]}" -lm -o "$out/fft128-receiver"
 if command -v file >/dev/null 2>&1; then file "$out/fft128-receiver"; fi
 printf 'NATIVE_BUILD_PASS: %s\n' "$out/fft128-receiver"
-if [[ $backend == dma ]]; then
+if [[ $backend == dma_batch ]]; then
+    printf '%s\n' 'E11b build only: use dma_batch/prepare_host.sh and prepare_bundle.sh; E11a preserved.'
+elif [[ $backend == dma ]]; then
     printf '%s\n' 'E11a build only. Use dma/prepare_bundle.sh and dma/deploy.sh; baseline deployment stays intact.' \
         'DMA requires the E11a bitstream, DT overlay and matching fft128_dma module.'
 else
