@@ -1,0 +1,9 @@
+{
+  "benchmarks/compare_dma_quad_board.py": "8428c9afbff13581d7bf5e38815553323d33c1e18e57c97843ad1c8b785286ff",
+  "benchmarks/compare_board.py": "667c395f02eae9f3921764a9fd64e30e640e7b314854ba5eb22f2151f5403e08",
+  "benchmarks/ps_precision/prepare_reference.py": "5ad2023a586a86cf42adaa4ecbb76a27d9aa2f2ff4677fe330cbd1ce09aacef5",
+  "src/PS/fft128/receiver.py": "4a08a9d3c08f5b3af68cca2e37eb549d3c71251c68e38b03e15bb3f3892015fe",
+  "src/PS/fft128/dma_quad/analyze_profile.py": "a73008d8e0fea2dbf00b4e0da467ab93203aa3b0799cab91afcc33a74cde0d29",
+  "build/validate_e13_quad_measurements.py": "2b3389a65638e2f2560c99c4b240518fe1455ea909dd13760e7d4cf555fc62e7",
+  "benchmarks/reports/2026-11-20-e13-4core-board/validation_driver.py.txt": "2b3389a65638e2f2560c99c4b240518fe1455ea909dd13760e7d4cf555fc62e7"
+}

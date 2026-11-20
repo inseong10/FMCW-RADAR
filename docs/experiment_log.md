@@ -11,13 +11,17 @@
 - 남은 계획은 [단계별 가속 계획](fft128_dma_plan.md), 커밋 해시 대응표는
   [커밋 해시 대응표](commit_hash_map.md)에 있다.
 
-## 현재 상태 (2026-11-19 기준)
+## 현재 상태 (2026-11-21 기준)
 
-- **최신 보드 검증 구성:** 단일 `fft128_pipeline` / 50 MHz / Q15 + 축당 128 FFT 묶음 HP0 Simple DMA (E11b).
-- **최신 paired 비교(각 300회 중앙값):** PS double **5.717376 ms** / PS float+NEON **3.558177 ms** /
-  PL E11b **6.433026 ms**. PL은 아직 NEON보다 1.807956배 느리다. [E11b 보고서](../benchmarks/reports/2026-11-19-e11b-board/README.md).
-- **현재 병목:** PL 코어 active 4.408947 ms(계측 실행의 68.1%). FFT당 DMA 제출·완료 비용은 크게 줄었다.
-- **미실시:** E11c~E14·PS02, 여러 FFT 코어, 연속 프레임/UDP 처리량, 크기 스윕, 보드 CFAR.
+- **최신 보드 검증 구성:** 전용 DIT 7단계의 단일 프레임 스트리밍 FFT / 50 MHz / Q15 / 축당 128 FFT HP0 Simple DMA (E13-stream).
+- **최신 paired 비교(각 300회 중앙값):** PS double **5.826396 ms** / PS float+NEON **3.652869 ms** /
+  PL **2.787411 ms**. 같은 회차 NEON 대비 1.310488배 빠르고 지연은 23.69% 짧다.
+  [완료 보고서](../benchmarks/reports/2026-11-21-e13-stream-board/README.md).
+- **E13 완료 범위:** 2·4코어 복제 → E12 입출력 겹치기 → 코어당 버터플라이 2개 → 전용 7단계 스트리밍을 각각 구현·측정했다.
+  마지막 구성은 4코어에 스트리밍을 더한 것이 아니라 단일 7단계 파이프라인으로 교체한 구조다.
+- **현재 병목:** 별도 20회 계측 평균에서 PL active 0.711424 ms, 복사 1.352026 ms, PS 전치 0.687152 ms.
+  코어 밖 비용이 지배적이다. PL active는 ioctl 대기와 겹치므로 호스트 단계에 더하지 않는다.
+- **미실시:** PS02, 독립 E11c·E11d, E14 PL 전치, 연속 프레임/UDP 처리량·최악 지연·누락, 크기 스윕, 보드 CFAR.
 
 ### PL 경로 성능 추이 (비계측, 각 300회 중앙값, 같은 보드·같은 입력)
 
@@ -28,6 +32,11 @@
 | PS01 | (PL 미실행) | 5.502540 ms | 3.615852 ms | — |
 | E11a | 파이프라인 / 50 MHz / FFT당 DMA | 5.748489 ms | 3.715234 ms | 15.411639 ms |
 | E11b | 파이프라인 / 50 MHz / 축당 묶음 DMA | 5.717376 ms | 3.558177 ms | 6.433026 ms |
+| E13-2core | 기존 코어 2개, pair barrier / 50 MHz | 5.767263 ms | 3.646212 ms | 4.920621 ms |
+| E13-4core | 기존 코어 4개, group barrier / 50 MHz | 5.767911 ms | 3.649998 ms | 4.186353 ms |
+| E12-4core | 4코어, FIFO·독립 스케줄 / 50 MHz | 5.711883 ms | 3.488904 ms | 3.129210 ms |
+| E13-bf2 | 4코어, 코어당 버터플라이 2개 / 50 MHz | 5.708112 ms | 3.520371 ms | 2.841720 ms |
+| E13-stream | 전용 7단계 프레임 스트리밍 / 50 MHz | 5.826396 ms | 3.652869 ms | 2.787411 ms |
 
 실험 사이의 PL 비율은 서로 다른 회차의 비교다. 같은 회차 PS 값도 회차마다 달라졌으며 원인은 확인하지 않았다.
 
@@ -47,6 +56,11 @@
 | [PS01](#ps01--ps-정밀도neon-기준선) | 11-15~16 | PS 목표 성능은 어디인가 | double / float scalar / float+NEON | NEON 3.615852 ms, double 대비 1.522배 |
 | [E11a](#e11a--fft당-simple-dma) | 11-16 | FFT당 작은 DMA의 고정 비용은 | MMIO payload → HP0 Simple DMA, FFT당 ioctl | PL 15.411639 ms, 계측 평균 18.136318 ms |
 | [E11b](#e11b--축당-128-fft-묶음-제출) | 11-19 | 256번의 작은 DMA 요청 비용을 줄일 수 있는가 | 축당 128 FFT/64 KiB, 프레임당 2 ioctl·4 채널 제출 | PL 6.433026 ms (E11a 대비 2.396배), IRQ 각 660회 |
+| [E13-2core](#e13-2core--2코어-병렬-실행) | 11-20 | 두 코어를 겹치면 얼마나 빨라지는가 | 기존 코어 2개, pair barrier | 완료. PL 4.920621 ms, 계측 active 2.857541 ms ([보고서](../benchmarks/reports/2026-11-20-e13-2core-board/README.md)) |
+| [E13-4core](#e13-4core--4코어-확장) | 11-20 | 코어 수를 두 배로 늘린 효과는 | 기존 코어 4개, group barrier | 완료. PL 4.186353 ms, 계측 active 2.081883 ms ([보고서](../benchmarks/reports/2026-11-20-e13-4core-board/README.md)) |
+| [E12-4core](#e12-4core--입출력계산-겹치기) | 11-20 | 공유 입출력·장벽 비용을 숨길 수 있는가 | 4코어, FIFO·독립 스케줄 | 완료. PL 3.129210 ms, 계측 active 1.124590 ms ([보고서](../benchmarks/reports/2026-11-20-e12-4core-board/README.md)) |
+| [E13-bf2](#e13-bf2--버터플라이-확대) | 11-21 | 코어 내부 CALC를 줄일 수 있는가 | 4코어, 코어당 버터플라이 2개 | 완료. PL 2.841720 ms, 계측 active 0.837903 ms ([보고서](../benchmarks/reports/2026-11-21-e13-bf2-board/README.md)) |
+| [E13-stream](#e13-stream--프레임-스트리밍) | 11-21 | 벡터의 단계 처리를 겹칠 수 있는가 | 전용 7단계 프레임 스트리밍 | 완료. PL 2.787411 ms, 계측 active 0.711424 ms ([보고서](../benchmarks/reports/2026-11-21-e13-stream-board/README.md)) |
 
 ## 공통 조건과 해석 규칙
 
@@ -411,6 +425,135 @@
   [보드 콘솔](../benchmarks/reports/2026-11-19-e11b-build/board_selftest.json),
   [완료 보고서](../benchmarks/reports/2026-11-19-e11b-board/README.md).
   측정 bundle의 `board_verified:false`는 유지하고 검증된 해시별 상태는 `board_verification.json`에 적었다.
+
+---
+
+## E13-2core — 2코어 병렬 실행
+
+- **날짜·선행:** 2026-11-20, E11b.
+- **질문:** PL active가 계측 전체의 약 68%인 상황에서 코어 복제가 얼마나 줄여 주는가.
+- **가설:** 내부 전체가 이상적으로 반감되면 2.204160 ms지만, 공유 직렬 입출력 때문에 달성하기 어렵다.
+  구현 전 pair 스케줄 모델은 두 축 2.856960 ms를 예상했다. 둘 다 보드 전체 지연 예측은 아니다.
+- **변경:** 기존 `fft128_pipeline` 2개, pair barrier, ABI3. 입력을 두 코어에 분배하고 두 결과를 배출한 뒤 다음 pair를 시작한다.
+  공유 DMA·50 MHz·Q15·2 clocks/sample 출력·coherent 복사·PS 전치를 유지한다. 다음 pair prefetch나 외부 FIFO는 넣지 않았다.
+  PL `build_dma_parallel.tcl`·`fft128_dma_parallel_ctrl.v`, PS `dma_parallel/`, 공통 native 수신기와 분석기를 추가했다.
+- **검증 경과:** RTL 272벡터/34,816 bin, ARM 수신기·모듈, Vivado 구현·reset·타이밍, 보드 packet/self-test를 통과했다.
+  전체 프레임·별도 20회 profile·각 300회 paired 원본 75파일을 회수하고 정확도·source/artifact SHA·IRQ를 독립 검증했다.
+  `python src/PL/fft128_ps/verify_dma_parallel.py`, 보드·수집 명령은 [실행 절차](../src/PS/fft128/dma_parallel/README.md).
+- **결과:** 중앙값 PS double 5.767263 / NEON 3.646212 / PL 4.920621 ms. 계측 평균 전체 4.974313 / PL active 2.857541 ms.
+  각 저장 출력 16,384 bin이 정수 모델과 완전 일치하고 DMA IRQ는 각각 660회다. 실제 동시 CALC 하한은 44,544 cycles/frame이다.
+  routed DSP 8 / BRAM 7, 50 MHz setup·hold PASS.
+- **해석:** 과거 E11b 대비 전체 지연 23.51% 감소. 이번 double보다 1.172배 빠르지만 NEON보다 1.350배 느리다.
+  내부가 이상적으로 반감되지는 않았고 구현 전 공유 I/O 스케줄 모델과 일치했다. 서로 다른 회차의 전체 차이를 순수 코어 복제 효과로 확정하지 않는다.
+- **다음:** 4코어에서 공유 I/O와 group barrier의 영향을 비교한다. 이후 완료 결과는 E13-4core에 기록했다.
+- **근거:** [준비·RTL·소스](../benchmarks/reports/2026-11-20-e13-2core-preparation/README.md),
+  [실제 빌드·보드 콘솔](../benchmarks/reports/2026-11-20-e13-2core-build/README.md),
+  [원본 검증·분포·시간 분해](../benchmarks/reports/2026-11-20-e13-2core-board/README.md).
+
+---
+
+## E13-4core — 4코어 확장
+
+- **날짜·선행:** 2026-11-20, E13-2core.
+- **질문:** 기존 코어 수를 2→4개로 늘리면 내부·전체 지연이 얼마나 줄어드는가.
+- **가설·변경:** 코어 4개, group barrier, ABI4로 확장했다. 한 그룹은 128샘플 FFT 4개이며 한 축에 32그룹이다.
+  계산은 겹치지만 입력·출력은 공유 경로에서 순서대로 처리한다. 다음 그룹은 네 결과 배출 후 시작한다.
+  무정지 스케줄 모델은 두 축 2.081280 ms다. 기존 산술·클록·출력 cadence·DMA·복사·전치는 유지한다.
+  PL `build_dma_quad.tcl`·`fft128_dma_quad_ctrl.v`, PS `dma_quad/`, native 수신기·분석기를 확장했다.
+- **검증 경과:** RTL 272벡터, host 21개, ARM/Vivado, 보드 자체 검사·전체 프레임·별도 20회 profile·각 300회 paired를 통과했다.
+  75파일의 원본·정수 정확도·입력/소스/artifact·IRQ를 독립 검증했다. 계측 trial 혼입·1 LSB 출력 변조도 거부했다.
+  `python src/PL/fft128_ps/verify_dma_quad.py`, [보드·회수 절차](../src/PS/fft128/dma_quad/README.md).
+- **결과:** 중앙값 double 5.767911 / NEON 3.649998 / PL 4.186353 ms. 계측 평균 전체 4.222976 / PL active 2.081883 ms.
+  실제 4코어 동시 CALC 하한 5,888 cycles/frame, 저장 출력 정수 모델 완전 일치, IRQ 각각 660회다.
+  routed DSP 16 / BRAM 11, 50 MHz setup·hold PASS.
+- **해석:** 과거 2코어 대비 전체 14.92%, PL active 27.14% 감소다. 공유 직렬 입출력·group barrier와 비PL 비용 때문에 코어 수에 비례하지 않는다.
+  코어를 직렬로 계산한 결과가 아니다. 이번 double보다 1.378배 빠르고 NEON보다 1.147배 느리다.
+  trial 2의 지연 증가·다른 부팅은 보존하고 원인을 단정하지 않는다. 겹치는 카운터를 합산하거나 모두 순수 연산 시간으로 쓰지 않는다.
+- **다음:** 코어별 FIFO·독립 스케줄로 그룹 장벽을 없애는 E12를 진행한다. 당시 미실행이었던 결과는 다음 항목에 기록했다.
+- **근거:** [준비·RTL](../benchmarks/reports/2026-11-20-e13-4core-preparation/README.md),
+  [구현·보드 콘솔](../benchmarks/reports/2026-11-20-e13-4core-build/README.md),
+  [원본·시간 분해·해석](../benchmarks/reports/2026-11-20-e13-4core-board/README.md).
+
+---
+
+## E12-4core — 입출력·계산 겹치기
+
+- **날짜·선행:** 2026-11-20, E13-4core.
+- **질문:** 네 코어가 계산 중이어도 남는 공유 I/O·group barrier 비용을 숨길 수 있는가.
+- **가설·변경:** 각 기존 코어 앞뒤에 동기 RAM FIFO(256 words + 등록 출력 1 word)를 두고 독립적으로 시작한다.
+  다음 벡터 입력·현재 CALC·이전 결과 출력을 겹치며 group barrier를 제거한다. 단일 DMA와 공유 32-bit 외부 스트림은 유지한다.
+  4개 결과를 외부로 동시에 4샘플/clock 보내는 구조는 아니다. Q15·50 MHz·기존 산술·2 clocks/sample 코어 출력·복사·PS 전치를 유지한다.
+  `fft128_buffered_lane.v`·`fft128_stream_fifo.v`·`fft128_dma_overlap_ctrl.v`·`build_dma_overlap.tcl`, PS `dma_overlap/`, ABI5를 추가했다.
+- **검증 경과:** RTL·host 28개·ARM/Vivado·보드 packet/self-test·전체 프레임·별도 20회 profile·각 300회 paired를 통과했다.
+  `python src/PL/fft128_ps/verify_dma_overlap.py`, [실행·수집 절차](../src/PS/fft128/dma_overlap/README.md).
+  원본 75파일의 SHA·정수 정확도·IRQ·bundle 신원을 독립 검증했다. 이전 분석기의 알려진 설명 문자열 차이는 원본을 고치지 않고 기록했다.
+- **결과:** 중앙값 double 5.711883 / NEON 3.488904 / PL 3.129210 ms. 계측 평균 전체 3.200291 / active 1.124590 ms.
+  복사 1.263426 / PS 전치 0.674777 ms가 남는다. 실제 입력·CALC·출력 동시 수행 하한 22,516 cycles/frame이다.
+  정수 모델 완전 일치, IRQ 각각 660회, DSP 16 / BRAM 15, 50 MHz setup·hold PASS.
+- **해석:** 과거 E13-4core 대비 전체 25.25% 감소, 이번 NEON 대비 10.31% 감소다. 이 고정 프레임의 오프라인 경로에서 NEON보다 빨라졌다.
+  외부 output stall 0은 내부 직렬 I/O 비용이 없다는 뜻이 아니다. 다른 부팅의 PS 기준도 달라 전체 차이를 모두 스케줄 효과로 단정하지 않는다.
+  work-window의 초기 출력 RAM 읽기를 제외한 보수적 실제 CALC 하한을 사용하며 겹치는 카운터는 더하지 않는다.
+- **다음:** 코어당 버터플라이 확대와 스트리밍을 별도 실험으로 비교한다. 독립 E11c·E11d·PL 전치는 포함하지 않았다.
+- **근거:** [준비·RTL](../benchmarks/reports/2026-11-20-e12-4core-preparation/README.md),
+  [구현·콘솔](../benchmarks/reports/2026-11-20-e12-4core-build/README.md),
+  [원본·정확도·분해](../benchmarks/reports/2026-11-20-e12-4core-board/README.md).
+
+---
+
+## E13-bf2 — 버터플라이 확대
+
+- **날짜·선행:** 준비 2026-11-20, 보드 검증 2026-11-21, E12-4core.
+- **질문·가설:** 코어당 버터플라이를 1→2개로 늘리면 stage당 발행이 64→32 pair가 되고 CALC가 476→252 cycles/FFT로 줄어드는가.
+- **변경:** 4코어 × 2버터플라이, even/odd true-dual-port RAM bank·twiddle ROM 2개, ABI6.
+  E12 FIFO·독립 스케줄·50 MHz·Q15 반올림/포화/단계별 1/2 스케일·출력 cadence·DMA·복사·PS 전치를 유지한다.
+  `fft128_bf2.v`·`fft128_buffered_bf2_lane.v`·`fft128_dma_bf2_ctrl.v`·`build_dma_bf2.tcl`, PS `dma_bf2/`를 추가했다.
+- **검증 경과:** RTL 272벡터·host 35개·ARM/Vivado·보드 packet/self-test·전체 frame·20회 profile·각 300회 paired PASS.
+  `python src/PL/fft128_ps/verify_dma_bf2.py`, [보드·회수 명령](../src/PS/fft128/dma_bf2/README.md).
+  75파일의 입력·정수 정확도·source/artifact·IRQ를 독립 검증했다. 계측 trial·1 LSB 변조·dual-retire 1회 누락을 거부했다.
+- **결과:** 중앙값 double 5.708112 / NEON 3.520371 / PL 2.841720 ms. CALC 252 cycles/FFT로 가설과 일치했다.
+  계측 전체 평균 2.885369 / active 0.837903 / 복사 1.247281 / 전치 0.671572 ms.
+  모든 20행에서 dual issue/retire 각각 57,344 pair/frame, CALC lane 합 64,512 cycles다. 정수 모델 완전 일치·IRQ 각각 660회.
+  DSP 32 / BRAM 23, 50 MHz WNS 5.405 ns / WHS 0.028 ns PASS.
+- **해석:** 과거 E12보다 전체 9.19%·active 25.49% 감소, 이번 NEON보다 전체 19.28% 짧다.
+  CALC가 빨라져 네 코어의 CALC가 모두 겹치지 않는 all-work=0은 예상 결과다. 코어별 두 연산기는 직접 issue/retire로 검증했다.
+  복사·전치가 남고 다른 부팅 세션이므로 전체 개선을 버터플라이 하나의 인과 효과로 확정하지 않는다.
+- **다음:** 요청한 전용 단계 스트리밍을 별도 구성·측정한다.
+- **근거:** [준비·정수 RTL](../benchmarks/reports/2026-11-20-e13-bf2-preparation/README.md),
+  [구현·콘솔](../benchmarks/reports/2026-11-21-e13-bf2-build/README.md),
+  [원본·분포·분해](../benchmarks/reports/2026-11-21-e13-bf2-board/README.md).
+
+---
+
+## E13-stream — 프레임 스트리밍
+
+- **날짜·선행:** 2026-11-21, E13-bf2.
+- **질문·가설:** 7개 FFT 단계를 전용 연산기로 펼쳐 서로 다른 chirp를 겹치면 정상상태에서 128 clocks/FFT를 달성하는가.
+- **변경:** 반복형 4코어/총 8버터플라이를 전용 DIT 7단계/총 7버터플라이의 단일 파이프라인으로 교체했다.
+  단계마다 입력 2개·출력 2개의 128-word frame slot을 사용한다. 완성 블록을 넘기는 프레임 파이프라인이며 sample-delay SDF는 아니다.
+  코어 배치·버퍼·내부 출력 cadence도 바뀌는 구조 비교다. 기존 butterfly/Q15/twiddle·50 MHz·단일 DMA/HP0/AXIS32·복사·PS 전치는 고정했다.
+  `fft128_stream_stage.v`·`fft128_streaming.v`·`fft128_dma_stream_ctrl.v`·`build_dma_stream.tcl`, PS `dma_stream/`, ABI7을 추가했다.
+- **실패·수정:** 초기 malformed TLAST 테스트는 정수 결과가 맞아도 in-flight가 1 남아 empty 검사에 실패했다.
+  TLAST가 아니라 128번째 샘플 handshake에서 벡터 수를 올리도록 수정했다. 테스트벤치의 동시 AXI writer 두 개가 같은 신호를 구동한 실패는
+  단일 writer로 고쳤으며 독립 AW/W 지연 검사는 유지했다. 원래 실패 로그와 경과는 준비 보고서에 보존했다.
+- **검증 경과:** 전체 RTL 회귀·272벡터 정수 일치·host 43개·ARM/Vivado·보드 자체 검사·전체 frame·별도 20회 profile·각 300회 paired PASS.
+  `python src/PL/fft128_ps/verify_dma_stream.py`, [빌드·실행·회수](../src/PS/fft128/dma_stream/README.md).
+  RTL 정상상태 II 128 clocks, 첫 패킷 지연 1,514 cycles로 초기 지연은 늘었다. no-slot-conflict를 확인했다.
+  사용자 자체 검사 콘솔은 probe 중간부터라 programming 시간은 미확보다. 회수 75파일/9,274,530 B는 공유 원본과 byte-identical이다.
+- **결과:** 중앙값 double 5.826396 / NEON 3.652869 / PL 2.787411 ms. 같은 회차 NEON 대비 1.310488배·23.69% 짧다.
+  계측 평균 전체 2.880577 / PL active 0.711424 / 복사 1.352026 / PS 전치 0.687152 ms.
+  모든 20행에서 단계별 issue/retire 각각 16,384회, multi-stage 33,280 / vector-overlap 34,772 cycles/frame이다.
+  저장 출력 정수 모델 완전 일치, NumPy 상대 L2 1.361020928%, IRQ 각각 660회, 검증된 22 artifact SHA 동일.
+  계측 trial 혼입·1 LSB 출력 변조·stage6 retire 1회 누락을 거부했다. Ubuntu JSON 끝자리 차이는 별도 대조에만 허용하며 정수 일치에는 허용치를 두지 않는다.
+  DSP 28 / BRAM 31, 50 MHz WNS 10.401 ns / WHS 0.024 ns, 무클록·무제약 경로 0.
+- **해석:** 과거 bf2 대비 active 15.09% 감소지만 전체 중앙값은 1.91% 감소다. 별도 profile에서 비PL 비용은
+  2.047466→2.169153 ms로 늘어 active 절감 0.126479 ms를 거의 상쇄했다. 증가 원인은 분리하지 않았다.
+  부팅이 다르고 paired PS double +2.07% / NEON +3.76%도 관찰되어 전체 1.9%를 순수 스트리밍 효과로 단정하지 않는다.
+  32-bit/50 MHz 공유 출력의 두 축 payload 하한은 0.655360 ms다. 현 active와의 차이 0.056064 ms는 이론적 여지이며 실현 가능한 절감 예측이 아니다.
+- **다음·범위:** 요청한 E13 코어 복제·버터플라이 확대·스트리밍의 구현/보드 검증은 완료했다. 다음 후보는 복사 정책(E11d) 또는 PL 전치(E14)다.
+  연속 UDP·최악 지연·무손실 실시간, 크기 스윕, PS02는 미검증이다. 기존 build metadata의 미검증 상태는 보존하고 완료는 artifact SHA별로 기록했다.
+- **근거:** [준비·초기 실패·RTL](../benchmarks/reports/2026-11-21-e13-stream-preparation/README.md),
+  [실제 구현·콘솔](../benchmarks/reports/2026-11-21-e13-stream-build/README.md),
+  [원본·정확도·분포·분해·한계](../benchmarks/reports/2026-11-21-e13-stream-board/README.md).
 
 ---
 

@@ -1,0 +1,17 @@
+PARALLEL_COUNTER_PASS count=1 active=881 c0=880 c1=0 both_busy=0 both_work=0 actual_CALC_overlap=0 arbitration=0
+PARALLEL_COUNTER_PASS count=2 active=1136 c0=880 c1=1135 both_busy=880 both_work=349 actual_CALC_overlap=348 arbitration=127
+PARALLEL_COUNTER_PASS count=3 active=1997 c0=1740 c1=1135 both_busy=880 both_work=349 actual_CALC_overlap=348 arbitration=127
+PARALLEL_COUNTER_PASS count=127 active=71189 c0=55060 c1=70265 both_busy=54200 both_work=21987 actual_CALC_overlap=21924 arbitration=8001
+PARALLEL_COUNTER_PASS count=128 active=71444 c0=55060 c1=71380 both_busy=55060 both_work=22336 actual_CALC_overlap=22272 arbitration=8128
+PARALLEL_COUNTER_PASS count=128 active=107989 c0=79573 c1=107925 both_busy=79573 both_work=10048 actual_CALC_overlap=9984 arbitration=8065
+PARALLEL_COUNTER_PASS count=128 active=107989 c0=79573 c1=107925 both_busy=79573 both_work=10048 actual_CALC_overlap=9984 arbitration=8065
+PARALLEL_COUNTER_PASS count=128 active=107989 c0=79573 c1=107925 both_busy=79573 both_work=10048 actual_CALC_overlap=9984 arbitration=8065
+PARALLEL_COUNTER_PASS count=128 active=107989 c0=79573 c1=107925 both_busy=79573 both_work=10048 actual_CALC_overlap=9984 arbitration=8065
+PARALLEL_COUNTER_PASS count=128 active=107989 c0=79573 c1=107925 both_busy=79573 both_work=10048 actual_CALC_overlap=9984 arbitration=8065
+PARALLEL_COUNTER_PASS count=128 active=107989 c0=79573 c1=107925 both_busy=79573 both_work=10048 actual_CALC_overlap=9984 arbitration=8065
+PARALLEL_COUNTER_PASS count=128 active=107989 c0=79573 c1=107925 both_busy=79573 both_work=10048 actual_CALC_overlap=9984 arbitration=8065
+PARALLEL_COUNTER_PASS count=128 active=107989 c0=79573 c1=107925 both_busy=79573 both_work=10048 actual_CALC_overlap=9984 arbitration=8065
+PARALLEL_COUNTER_PASS count=128 active=107989 c0=79573 c1=107925 both_busy=79573 both_work=10048 actual_CALC_overlap=9984 arbitration=8065
+PARALLEL_COUNTER_PASS count=128 active=107989 c0=79573 c1=107925 both_busy=79573 both_work=10048 actual_CALC_overlap=9984 arbitration=8065
+DMA_PARALLEL_CTRL_PASS numeric_vectors=272 full_axis_packets malformed_TLAST_TKEEP abort_recovery actual_CALC_overlap pair_barrier odd_batch
+C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\dma_parallel_ctrl_tb.v:201: $finish called at 12299280000 (1ps)

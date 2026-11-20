@@ -1,0 +1,32 @@
+HP0 read/write control before activation: 0x00000000 0x00000F00
+fpga_manager fpga0: writing fft128_e13_bf2.bin to Xilinx Zynq FPGA Manager
+Time taken to load BIN is 62.000000 Milli Seconds
+BIN FILE loaded through FPGA manager successfully
+OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/ff
+t128_e13_bf2_clock
+OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/ff
+t128_e13_bf2_dma
+xilinx-vdma 40400000.dma: Xilinx AXI DMA Engine Driver Probed!!
+fft128_dma_bf2: loading out-of-tree module taints kernel.
+fft128-dma-bf2 43c60000.fft: E13-bf2 ready: up to 128 FFT/ioctl, 4 cores, 2 butterflies/co
+re, independent buffered lanes, coherent bounce buffers, 64KiB each direction
+BF2_PACKET_PASS fft_count=1 bytes_each_direction=512 completed=1
+BF2_PACKET_PASS fft_count=2 bytes_each_direction=1024 completed=2
+BF2_PACKET_PASS fft_count=3 bytes_each_direction=1536 completed=3
+BF2_PACKET_PASS fft_count=4 bytes_each_direction=2048 completed=4
+BF2_PACKET_PASS fft_count=5 bytes_each_direction=2560 completed=5
+BF2_PACKET_PASS fft_count=127 bytes_each_direction=65024 completed=127
+BF2_PACKET_PASS fft_count=128 bytes_each_direction=65536 completed=128
+BF2_PACKET_PASS fft_count=128 bytes_each_direction=65536 completed=128
+BF2_IO_PASS io=13511 input_work=16097 output_work=16096 three=13482
+BF2_ARITHMETIC_PASS butterflies_per_core=2 dual_issue_events=28672 dual_retire_events=2867
+2 calc_lane_cycles=32256
+BF2_WORK_PASS cores=4 multi_busy_cycles=20542 all_busy_cycles=19782 multi_work_cycles=1200
+0 all_work_cycles=0
+DMA_BF2_CLIENT_PASS exclusive_owner invalid_ABI timeout flags count full_axis repeated_pac
+kets
+DMA: kernel-owned control registers, HP0, coherent bounce buffers; 64 KiB per direction/ax
+is, 128 FFTs, 4 FFT cores, 2 butterflies/core, independent buffered lanes
+BACKEND=PL_DMA_BF2 implementation=native_C
+SELFTEST_PASS backend=PL_DMA_BF2 vectors=4 bins=512
+DMA_E13_BF2_SELFTEST_READY: next run full frame/profile before benchmarking

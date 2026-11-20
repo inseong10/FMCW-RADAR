@@ -1,0 +1,4 @@
+{
+  "profiled_trial_rejected": "Actual unprofiled PL_DMA_OVERLAP required",
+  "one_lsb_output_corruption_rejected": "PL result differs from independent Python integer model"
+}

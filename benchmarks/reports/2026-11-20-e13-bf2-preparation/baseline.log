@@ -1,0 +1,51 @@
+OVERLAP_SCHEDULE_PASS count=1 active=1013 io=0 input_CALC=0 output_CALC=0 three_CALC=0 prefetch=0
+OVERLAP_COUNTER_PASS count=1 stall_mode=0 active=1013 c0=860 c1=0 c2=0 c3=0 any_busy=860 multi_busy=0 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=21 output_stalls=0
+OVERLAP_SCHEDULE_PASS count=2 active=1141 io=0 input_CALC=0 output_CALC=63 three_CALC=0 prefetch=0
+OVERLAP_COUNTER_PASS count=2 stall_mode=0 active=1141 c0=860 c1=860 c2=0 c3=0 any_busy=988 multi_busy=732 all_busy=0 multi_work=349 all_work=0 actual_multi_CALC=348 actual_all_CALC=0 max_CALC_lanes=2 arbitration=127 input_stalls=21 output_stalls=0
+OVERLAP_SCHEDULE_PASS count=3 active=1269 io=0 input_CALC=126 output_CALC=127 three_CALC=0 prefetch=0
+OVERLAP_COUNTER_PASS count=3 stall_mode=0 active=1269 c0=860 c1=860 c2=860 c3=0 any_busy=1116 multi_busy=860 all_busy=0 multi_work=477 all_work=0 actual_multi_CALC=476 actual_all_CALC=0 max_CALC_lanes=3 arbitration=254 input_stalls=21 output_stalls=0
+OVERLAP_SCHEDULE_PASS count=4 active=1397 io=0 input_CALC=254 output_CALC=254 three_CALC=0 prefetch=0
+OVERLAP_COUNTER_PASS count=4 stall_mode=0 active=1397 c0=860 c1=860 c2=860 c3=860 any_busy=1244 multi_busy=988 all_busy=476 multi_work=605 all_work=93 actual_multi_CALC=604 actual_all_CALC=92 max_CALC_lanes=4 arbitration=381 input_stalls=21 output_stalls=0
+OVERLAP_SCHEDULE_PASS count=5 active=1875 io=0 input_CALC=382 output_CALC=510 three_CALC=0 prefetch=1
+OVERLAP_COUNTER_PASS count=5 stall_mode=0 active=1875 c0=1720 c1=860 c2=860 c3=860 any_busy=1722 multi_busy=1116 all_busy=602 multi_work=605 all_work=93 actual_multi_CALC=604 actual_all_CALC=92 max_CALC_lanes=4 arbitration=381 input_stalls=21 output_stalls=0
+OVERLAP_SCHEDULE_PASS count=6 active=2003 io=16 input_CALC=510 output_CALC=573 three_CALC=16 prefetch=1
+OVERLAP_COUNTER_PASS count=6 stall_mode=0 active=2003 c0=1720 c1=1720 c2=860 c3=860 any_busy=1850 multi_busy=1594 all_busy=728 multi_work=954 all_work=93 actual_multi_CALC=952 actual_all_CALC=92 max_CALC_lanes=4 arbitration=508 input_stalls=21 output_stalls=0
+OVERLAP_SCHEDULE_PASS count=7 active=2131 io=80 input_CALC=638 output_CALC=637 three_CALC=80 prefetch=1
+OVERLAP_COUNTER_PASS count=7 stall_mode=0 active=2131 c0=1720 c1=1720 c2=1720 c3=860 any_busy=1978 multi_busy=1722 all_busy=854 multi_work=1082 all_work=93 actual_multi_CALC=1080 actual_all_CALC=92 max_CALC_lanes=4 arbitration=635 input_stalls=21 output_stalls=0
+OVERLAP_SCHEDULE_PASS count=127 active=27991 io=11415 input_CALC=15940 output_CALC=15937 three_CALC=11357 prefetch=1
+OVERLAP_COUNTER_PASS count=127 stall_mode=0 active=27991 c0=27520 c1=27520 c2=27520 c3=26660 any_busy=27838 multi_busy=27582 all_busy=26474 multi_work=19232 all_work=2883 actual_multi_CALC=19200 actual_all_CALC=2852 max_CALC_lanes=4 arbitration=12065 input_stalls=21 output_stalls=0
+OVERLAP_SCHEDULE_PASS count=128 active=28119 io=11415 input_CALC=16068 output_CALC=16064 three_CALC=11357 prefetch=1
+OVERLAP_COUNTER_PASS count=128 stall_mode=0 active=28119 c0=27520 c1=27520 c2=27520 c3=27520 any_busy=27966 multi_busy=27710 all_busy=26950 multi_work=19360 all_work=2976 actual_multi_CALC=19328 actual_all_CALC=2944 max_CALC_lanes=4 arbitration=12192 input_stalls=21 output_stalls=0
+OVERLAP_SCHEDULE_PASS count=4 active=3497 io=192 input_CALC=0 output_CALC=0 three_CALC=0 prefetch=0
+OVERLAP_COUNTER_PASS count=4 stall_mode=2 active=3497 c0=860 c1=860 c2=860 c3=860 any_busy=3344 multi_busy=96 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=2121 output_stalls=0
+OVERLAP_SCHEDULE_PASS count=128 active=41846 io=6416 input_CALC=16204 output_CALC=16256 three_CALC=6416 prefetch=1
+OVERLAP_COUNTER_PASS count=128 stall_mode=1 active=41846 c0=27520 c1=27520 c2=27520 c3=27520 any_busy=41500 multi_busy=40860 all_busy=0 multi_work=19939 all_work=0 actual_multi_CALC=19812 actual_all_CALC=0 max_CALC_lanes=2 arbitration=0 input_stalls=24597 output_stalls=11719
+OVERLAP_SCHEDULE_PASS count=128 active=41846 io=6416 input_CALC=16204 output_CALC=16256 three_CALC=6416 prefetch=1
+OVERLAP_COUNTER_PASS count=128 stall_mode=1 active=41846 c0=27520 c1=27520 c2=27520 c3=27520 any_busy=41500 multi_busy=40860 all_busy=0 multi_work=19939 all_work=0 actual_multi_CALC=19812 actual_all_CALC=0 max_CALC_lanes=2 arbitration=0 input_stalls=24597 output_stalls=11719
+OVERLAP_SCHEDULE_PASS count=128 active=41846 io=6416 input_CALC=16204 output_CALC=16256 three_CALC=6416 prefetch=1
+OVERLAP_COUNTER_PASS count=128 stall_mode=1 active=41846 c0=27520 c1=27520 c2=27520 c3=27520 any_busy=41500 multi_busy=40860 all_busy=0 multi_work=19939 all_work=0 actual_multi_CALC=19812 actual_all_CALC=0 max_CALC_lanes=2 arbitration=0 input_stalls=24597 output_stalls=11719
+OVERLAP_SCHEDULE_PASS count=128 active=41846 io=6416 input_CALC=16204 output_CALC=16256 three_CALC=6416 prefetch=1
+OVERLAP_COUNTER_PASS count=128 stall_mode=1 active=41846 c0=27520 c1=27520 c2=27520 c3=27520 any_busy=41500 multi_busy=40860 all_busy=0 multi_work=19939 all_work=0 actual_multi_CALC=19812 actual_all_CALC=0 max_CALC_lanes=2 arbitration=0 input_stalls=24597 output_stalls=11719
+OVERLAP_SCHEDULE_PASS count=128 active=41846 io=6416 input_CALC=16204 output_CALC=16256 three_CALC=6416 prefetch=1
+OVERLAP_COUNTER_PASS count=128 stall_mode=1 active=41846 c0=27520 c1=27520 c2=27520 c3=27520 any_busy=41500 multi_busy=40860 all_busy=0 multi_work=19939 all_work=0 actual_multi_CALC=19812 actual_all_CALC=0 max_CALC_lanes=2 arbitration=0 input_stalls=24597 output_stalls=11719
+OVERLAP_SCHEDULE_PASS count=128 active=41846 io=6416 input_CALC=16204 output_CALC=16256 three_CALC=6416 prefetch=1
+OVERLAP_COUNTER_PASS count=128 stall_mode=1 active=41846 c0=27520 c1=27520 c2=27520 c3=27520 any_busy=41500 multi_busy=40860 all_busy=0 multi_work=19939 all_work=0 actual_multi_CALC=19812 actual_all_CALC=0 max_CALC_lanes=2 arbitration=0 input_stalls=24597 output_stalls=11719
+OVERLAP_SCHEDULE_PASS count=128 active=41846 io=6416 input_CALC=16204 output_CALC=16256 three_CALC=6416 prefetch=1
+OVERLAP_COUNTER_PASS count=128 stall_mode=1 active=41846 c0=27520 c1=27520 c2=27520 c3=27520 any_busy=41500 multi_busy=40860 all_busy=0 multi_work=19939 all_work=0 actual_multi_CALC=19812 actual_all_CALC=0 max_CALC_lanes=2 arbitration=0 input_stalls=24597 output_stalls=11719
+OVERLAP_SCHEDULE_PASS count=128 active=41846 io=6416 input_CALC=16204 output_CALC=16256 three_CALC=6416 prefetch=1
+OVERLAP_COUNTER_PASS count=128 stall_mode=1 active=41846 c0=27520 c1=27520 c2=27520 c3=27520 any_busy=41500 multi_busy=40860 all_busy=0 multi_work=19939 all_work=0 actual_multi_CALC=19812 actual_all_CALC=0 max_CALC_lanes=2 arbitration=0 input_stalls=24597 output_stalls=11719
+OVERLAP_SCHEDULE_PASS count=128 active=41846 io=6416 input_CALC=16204 output_CALC=16256 three_CALC=6416 prefetch=1
+OVERLAP_COUNTER_PASS count=128 stall_mode=1 active=41846 c0=27520 c1=27520 c2=27520 c3=27520 any_busy=41500 multi_busy=40860 all_busy=0 multi_work=19939 all_work=0 actual_multi_CALC=19812 actual_all_CALC=0 max_CALC_lanes=2 arbitration=0 input_stalls=24597 output_stalls=11719
+OVERLAP_SCHEDULE_PASS count=128 active=41846 io=6416 input_CALC=16204 output_CALC=16256 three_CALC=6416 prefetch=1
+OVERLAP_COUNTER_PASS count=128 stall_mode=1 active=41846 c0=27520 c1=27520 c2=27520 c3=27520 any_busy=41500 multi_busy=40860 all_busy=0 multi_work=19939 all_work=0 actual_multi_CALC=19812 actual_all_CALC=0 max_CALC_lanes=2 arbitration=0 input_stalls=24597 output_stalls=11719
+OVERLAP_SCHEDULE_PASS count=128 active=41846 io=6416 input_CALC=16204 output_CALC=16256 three_CALC=6416 prefetch=1
+OVERLAP_COUNTER_PASS count=128 stall_mode=1 active=41846 c0=27520 c1=27520 c2=27520 c3=27520 any_busy=41500 multi_busy=40860 all_busy=0 multi_work=19939 all_work=0 actual_multi_CALC=19812 actual_all_CALC=0 max_CALC_lanes=2 arbitration=0 input_stalls=24597 output_stalls=11719
+OVERLAP_SCHEDULE_PASS count=128 active=41846 io=6416 input_CALC=16204 output_CALC=16256 three_CALC=6416 prefetch=1
+OVERLAP_COUNTER_PASS count=128 stall_mode=1 active=41846 c0=27520 c1=27520 c2=27520 c3=27520 any_busy=41500 multi_busy=40860 all_busy=0 multi_work=19939 all_work=0 actual_multi_CALC=19812 actual_all_CALC=0 max_CALC_lanes=2 arbitration=0 input_stalls=24597 output_stalls=11719
+OVERLAP_SCHEDULE_PASS count=128 active=28119 io=11415 input_CALC=16068 output_CALC=16064 three_CALC=11357 prefetch=1
+OVERLAP_COUNTER_PASS count=128 stall_mode=0 active=28119 c0=27520 c1=27520 c2=27520 c3=27520 any_busy=27966 multi_busy=27710 all_busy=26950 multi_work=19360 all_work=2976 actual_multi_CALC=19328 actual_all_CALC=2944 max_CALC_lanes=4 arbitration=12192 input_stalls=21 output_stalls=0
+OVERLAP_SCHEDULE_PASS count=128 active=28119 io=11415 input_CALC=16068 output_CALC=16064 three_CALC=11357 prefetch=1
+OVERLAP_COUNTER_PASS count=128 stall_mode=0 active=28119 c0=27520 c1=27520 c2=27520 c3=27520 any_busy=27966 multi_busy=27710 all_busy=26950 multi_work=19360 all_work=2976 actual_multi_CALC=19328 actual_all_CALC=2944 max_CALC_lanes=4 arbitration=12192 input_stalls=21 output_stalls=0
+OVERLAP_ZERO_STALL_PASS fft_count=128 active_cycles=28098 frame_cycles=56196 clock_hz=50000000
+DMA_OVERLAP_CTRL_PASS numeric_vectors=272 full_axis_packets malformed_TLAST_TKEEP abort_recovery lane2_partial_abort lane3_stalled_abort actual_four_CALC_overlap buffered_independent_lanes actual_input_CALC_output_overlap partial_group source_starved
+C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\dma_overlap_ctrl_tb.v:330: $finish called at 7066070000 (1ps)

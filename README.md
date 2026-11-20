@@ -6,20 +6,18 @@ Zynq 기반 FMCW 레이더 신호처리 시스템. RadarSimPy I/Q 데이터를 Z
 
 ### 1. PS-PL 연동
 
-현재 128×128 고정 크기의 PS C++/FFTW 경로와 PS 구동 PL MMIO 경로를 각각 실행해 비교함.
-기존 기준선은 PS DDR → AXI4-Lite MMIO → PL FFT → MMIO → PS DDR로 이동하고,
+128×128 고정 크기의 PS C++/FFTW와 PS 구동 PL FFT를 보드에서 비교함.
+최신 PL 구성은 단일 DMA와 전용 7단계 스트리밍 파이프라인이며, 두 축 사이 전치는 PS에서 처리함.
+초기 MMIO 기준선은 PS DDR → AXI4-Lite MMIO → PL FFT → MMIO → PS DDR로 이동하고,
 두 FFT 축 사이의 전치/gather는 PS에서 처리함. 단일 128-point 코어를 재사용함.
 
-**E11b 완료:** 축당 128 FFT를 묶어 프레임당 2 ioctl/4 DMA 채널 제출로 줄임.
-단일 코어·50 MHz·Q15·coherent 복사 정책을 유지했고 RTL·ARM·Vivado·보드 자체 검사,
-전체 프레임·독립 정수 검증·각 300회 paired 비교를 통과함.
-중앙값은 PL DMA **6.433 ms**, PS double **5.717 ms** / float+NEON **3.558 ms**임.
-과거 E11a 15.412 ms보다 약 2.396배 빨라졌지만 이번 NEON보다 약 1.808배 느림.
-[E11b 시간 분해·정확도·원본](benchmarks/reports/2026-11-19-e11b-board/README.md),
-[실행 계약](src/PS/fft128/dma_batch/README.md).
-이전 [E11a 결과](benchmarks/reports/2026-11-16-e11a-board/README.md)는 이력으로 보존함.
-다음 주 가속 후보는 E13 연산 구조 확대이며, E11c 출력 개선과 E12 전송/연산 겹치기는
-분리 검증함. 가변 크기·연속 통합 경로는 향후 목표임.
+**E12·E13 완료:** 2·4코어 복제, 코어별 FIFO 입출력 겹치기, 코어당 버터플라이 2개,
+전용 7단계 프레임 스트리밍을 순서대로 구현하고 보드 원본 검증을 마침.
+최신 구성의 각 300회 중앙값은 PL **2.787 ms** / 같은 회차 PS double **5.826 ms** /
+NEON **3.653 ms**로, NEON 대비 지연이 **23.69% 짧음**(1.310배).
+복사·PS 전치가 주요 잔여 비용이며 가변 크기·연속 UDP 처리량은 아직 검증하지 않음.
+[최신 결과·정확도·시간 분해](benchmarks/reports/2026-11-21-e13-stream-board/README.md),
+[빌드·보드 실행](src/PS/fft128/dma_stream/README.md), [단계별 이력](docs/experiment_log.md).
 
 - **데이터 경로**: DDR 프레임 버퍼 → AXI DMA(MM2S) → AXI4-Stream → PL FFT → S2MM → DDR
 - **제어 경로 목표**: AXI4-Lite 레지스터로 N_CHIRPS·N_SAMPLES 설정. 비트스트림 재합성 없이 크기 변경
@@ -80,11 +78,16 @@ FFT 두 축·전송·PS 전치를 포함하고 UDP·파일 I/O·할당·검증�
 | 파이프라인/50 MHz + MMIO | 5.557 ms | — | 25.259 ms |
 | E11a 파이프라인/50 MHz + DMA | 5.748 ms | 3.715 ms | 15.412 ms |
 | E11b 파이프라인/50 MHz + 축당 DMA | 5.717 ms | 3.558 ms | 6.433 ms |
+| E13-2core/50 MHz + 축당 DMA | 5.767 ms | 3.646 ms | 4.921 ms |
+| E13-4core/50 MHz + 축당 DMA | 5.768 ms | 3.650 ms | 4.186 ms |
+| E12-4core/50 MHz + FIFO overlap | 5.712 ms | 3.489 ms | 3.129 ms |
+| E13-bf2/50 MHz + 코어당2 butterfly | 5.708 ms | 3.520 ms | 2.842 ms |
+| E13-stream/50 MHz + 전용7단계 | 5.826 ms | 3.653 ms | **2.787 ms** |
 
 E10에서 PL은 이전보다 3.225배 개선됐지만 당시 PS double보다 4.545배 느렸음. 매 반복 16,384 bin이
 정수 모델과 일치했고, 저장 출력의 NumPy 대비 상대 L2 오차는 1.361%임.
 [E10 결과](benchmarks/reports/2026-11-15-pipeline50-benchmark/README.md),
-[최신 E11b 결과·조건·원시 시간 CSV](benchmarks/reports/2026-11-19-e11b-board/README.md),
+[최신 E13-stream 결과·조건·원시 시간 CSV](benchmarks/reports/2026-11-21-e13-stream-board/README.md),
 [변경 이유와 실험 일지](docs/experiment_log.md), [벤치마크 재현 절차](benchmarks/README.md)를 참고함.
 
 ## 코드와 실행 안내

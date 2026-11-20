@@ -1,0 +1,72 @@
+{
+  "experiment": "E13-4core",
+  "verified_as_of": "2026-11-20",
+  "board_verified": true,
+  "scope": "Only these artifact hashes; 128x128 recorded warm-cache frame, CPU0; no continuous UDP/real-time guarantee",
+  "backend": "PL_DMA_QUAD",
+  "parallel_cores": 4,
+  "group_barrier": true,
+  "next_group_prefetch": false,
+  "external_ping_pong": false,
+  "artifacts_sha256": {
+    "fft128_e13_4core.bin": "a602e3c17892bbe3240d5019ecda0946d52bfa7906d938136f32f4d697e0fb92",
+    "fft128_e13_4core.dtbo": "ccfe0b89b58e800cdcd6cab18c1f413f279d8541e548657e5143140d85935642",
+    "fft128_e13_4core.json": "57047996e72698abb133d07b86ac239e59c973233da5ea8299e5744311763a4b",
+    "fft128_dma_quad.ko": "5b70a10a556cd366c007d8efd6d1b5c440b07794eb3a6021dac189d8084077b5",
+    "fft128-receiver": "453c0bfd5532099b75c7100662074c68642efde85ea00b331e2cd2e70fde905a",
+    "test-dma-quad-client": "68fd893023ff88fcabe5c714afcfdb01d08eb097f22dc8bf99dabe860d632823",
+    "frame.rspb": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "kernelrelease.txt": "b1fc844b1ee87f48cd89d857eb48ae13b9a1e5bd6d366112a8cb8972fc01034d",
+    "gic_phandle.bin": "1bc5d0e3df0ea12c4d0078668d14924f95106bbe173e196de50fe13a900b0937",
+    "gic_path.txt": "1c6c83c7ef115c7a7d6bd02696ca4f5a64e2ae24beabac820da66ff111b90faa",
+    "dma_config.json": "2cb8009b35d4a26e30031be1fd2554c23c156f1eeccf9cb335a88e832fd5cf73",
+    "quad_core_check.txt": "c31f0005cc1e53d16ad60b733b5f989fa392fd397190156cfccd8895654453a5",
+    "quad_utilization.rpt": "b0c75b5a69888657384c4e967b69421a9ad76360ed52fe971e3c2db5c97eb05d",
+    "build_config.json": "f6deb3dc3241203c31af50f730ffe5b20510623a0ba6f642c34185a7a615f37c",
+    "clock_source.txt": "9f749a74cea4bfbe43d7d176174f2ea808fd87b5bb56b631d5fdfeac82e52597",
+    "pl_source.sha256": "876ef8677543b557444f6cdd7244de36af85a85525076a2d9c21a2cbabc89c88",
+    "host_source.sha256": "b4cca780724478fced666921904783602bf1b022ce24d0254d4801668a3c4630",
+    "module_source.sha256": "b3ef0c5e3f7db248e4a700d133a45a28e0a8ccfdabae3b50e2a4849fcda56b08",
+    "module_build_environment.txt": "e9fe2ccddc11324679ec1b9bbeb27352d549ddf18d235aa1c60c0f1dc9fa6916",
+    "load_board.sh": "697ea444abfb93309e987501156f3bdd435794322cab627b39dd88d3ffd888f3",
+    "profile_board.sh": "2f2aeddd2f4b5463b350ce680b7cde57dc45ad518cd2de9103c75e7cb84f235a",
+    "run_board.sh": "4416d4f44eba7ee0d0aba5fd1dd311ca53be99fc11860a63630bf81dcbd87748"
+  },
+  "checks": {
+    "module_crc_normal_load": true,
+    "selftest_vectors": 4,
+    "selftest_bins": 512,
+    "frame_bins": 16384,
+    "independent_python_integer_match": true,
+    "profile_frames": 20,
+    "simultaneous_four_calc_cycles_lower_bound_per_frame": 5888,
+    "simultaneous_multi_calc_cycles_lower_bound_per_frame": 38464,
+    "unprofiled_trials": 3,
+    "unprofiled_repeats_per_trial": 100,
+    "unprofiled_repeats_each_backend": 300,
+    "dma_requests_per_frame": 2,
+    "dma_channel_submissions_per_frame": 4,
+    "fft_per_request": 128,
+    "bytes_each_direction_per_request": 65536,
+    "dma_irq_deltas": {
+      "68": [
+        660,
+        0
+      ],
+      "67": [
+        660,
+        0
+      ]
+    }
+  },
+  "evidence": [
+    "comparison.json",
+    "profile.summary.json",
+    "raw_validation.json",
+    "analysis_guards.json",
+    "raw_artifact_sha256.json",
+    "../2026-11-20-e13-4core-build/board_selftest.json",
+    "../2026-11-20-e13-4core-build/implementation.json"
+  ],
+  "original_build_metadata_board_verified": false
+}

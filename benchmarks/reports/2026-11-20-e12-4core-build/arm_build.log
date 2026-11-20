@@ -1,0 +1,14 @@
+COMPILER: arm-linux-gnueabihf-gcc
+/home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_overlap_host/bin/fft128-receiver: ELF 32-bit LSB executable, ARM, EABI5 version 1 (GNU/Linux), statically linked, BuildID[sha1]=b2bf98321b10ecf62d7d8ee944c862b922d55d89, for GNU/Linux 3.2.0, not stripped
+NATIVE_BUILD_PASS: /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_overlap_host/bin/fft128-receiver
+E12-4core build only: use dma_overlap scripts; E13 baselines preserved.
+DMA_OVERLAP_OVERLAY_READY: /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_overlap_host/fft128_e12_4core.dts
+DMA_HOST_BUILD_READY: /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_overlap_host
+make: Entering directory '/home/user/fft128_kernel_e11a/build'
+  CC [M]  /home/user/fft128_dma_overlap_module.F0r7Fg/fft128_dma_overlap.o
+  MODPOST /home/user/fft128_dma_overlap_module.F0r7Fg/Module.symvers
+  CC [M]  /home/user/fft128_dma_overlap_module.F0r7Fg/fft128_dma_overlap.mod.o
+  LD [M]  /home/user/fft128_dma_overlap_module.F0r7Fg/fft128_dma_overlap.ko
+make: Leaving directory '/home/user/fft128_kernel_e11a/build'
+DMA_MODULE_BUILD_READY: /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_overlap_module
+E12_4CORE_ARM_BUILD_PASS

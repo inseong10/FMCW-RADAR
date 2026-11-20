@@ -1,0 +1,1 @@
+done=1 passed=1; generated reset IP; AXI ID/length; lock-loss recovery

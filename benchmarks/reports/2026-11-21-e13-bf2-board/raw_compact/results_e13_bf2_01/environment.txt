@@ -1,0 +1,33 @@
+Linux Petalinux-2022 5.15.19-xilinx #1 SMP PREEMPT Wed Aug 26 11:47:56 KST 2026 armv7l GNU/Linux
+935efb61-b3e6-4792-95cf-1d52ade48245
+processor	: 0
+model name	: ARMv7 Processor rev 0 (v7l)
+BogoMIPS	: 333.33
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x3
+CPU part	: 0xc09
+CPU revision	: 0
+
+processor	: 1
+model name	: ARMv7 Processor rev 0 (v7l)
+BogoMIPS	: 333.33
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x3
+CPU part	: 0xc09
+CPU revision	: 0
+
+Hardware	: Xilinx Zynq Platform
+Revision	: 0003
+Serial		: 0000000000000000
+E13-bf2 CPU0 warmup=10 repeats=100 trials=3, coherent bounce buffers, HP0, 50MHz 4cores 2butterflies/core buffered_lanes
+{"experiment":"E13-bf2","core":"pipeline","clock_hz":50000000,"fft_control_base":"0x43c60000","dma_base":"0x40400000","irq_f2p_bits":[6,7],"dt_spi":[35,36],"memory_port":"HP0","memory_width":64,"stream_width":32,"sg":false,"dre":false,"burst":16,"length_width":17,"register_abi":6,"parallel_cores":4,"butterflies_per_core":2,"total_butterflies":8,"group_barrier":false,"next_group_prefetch":true,"external_ping_pong":false,"external_buffers":true,"buffering":"per_lane_fifos","fifo_ram_words":256,"fifo_output_register_words":1,"fft_per_request":128,"bytes_per_direction":65536,"board_verified":false}
+eb55a20e2f899a7ca643355a834ad94b973bd20674e6de314356e04daa2868d8  /opt/fft128/e13_bf2/fft128_e13_bf2.bin
+1249015a0e731c6cae3029a3659f3573b3a514830451da0fa233f4e836fc0b43  /opt/fft128/e13_bf2/fft128_dma_bf2.ko
+50ab90e6eea63d7efb7bd7f33d102de640d3e0b3c065ace9a2d2b3bdae662335  /opt/fft128/e13_bf2/fft128-receiver
+aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976  /opt/fft128/e13_bf2/frame.rspb
+/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor: unavailable
+/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: unavailable

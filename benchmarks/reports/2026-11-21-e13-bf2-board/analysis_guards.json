@@ -1,0 +1,5 @@
+{
+  "profiled_trial_rejected": "Actual unprofiled PL_DMA_BF2 required",
+  "one_lsb_output_corruption_rejected": "PL result differs from independent Python integer model",
+  "dual_retire_count_corruption_rejected": "Two-butterfly issue/retire/CALC counts differ"
+}

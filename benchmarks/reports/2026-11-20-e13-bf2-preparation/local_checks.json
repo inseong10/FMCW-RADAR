@@ -1,0 +1,65 @@
+{
+  "host_tests": [
+    {
+      "command": "python src/PS/fft128/test_native.py",
+      "tests": 9,
+      "returncode": 0,
+      "log": "fft128_tests.log"
+    },
+    {
+      "command": "python src/PS/fft128/dma_batch/test_tools.py",
+      "tests": 3,
+      "returncode": 0,
+      "log": "dma_batch_tests.log"
+    },
+    {
+      "command": "python src/PS/fft128/dma_parallel/test_tools.py",
+      "tests": 4,
+      "returncode": 0,
+      "log": "dma_parallel_tests.log"
+    },
+    {
+      "command": "python src/PS/fft128/dma_quad/test_tools.py",
+      "tests": 5,
+      "returncode": 0,
+      "log": "dma_quad_tests.log"
+    },
+    {
+      "command": "python src/PS/fft128/dma_overlap/test_tools.py",
+      "tests": 7,
+      "returncode": 0,
+      "log": "dma_overlap_tests.log"
+    },
+    {
+      "command": "python src/PS/fft128/dma_bf2/test_tools.py",
+      "tests": 7,
+      "returncode": 0,
+      "log": "dma_bf2_tests.log"
+    }
+  ],
+  "host_test_count": 35,
+  "python_compile": true,
+  "shell_syntax_files": 10,
+  "tcl_info_complete": "TCL_COMPLETE C:\\Users\\user\\Desktop\\FMCW\\FMCW-RADAR\\src\\PL\\fft128_ps\\build_dma_bf2.tcl",
+  "recorded_live_dt_overlay": true,
+  "e12_bundle_rejected": true,
+  "incorrect_butterfly_identity_rejected": true,
+  "linux_userspace_c_syntax_and_fixed_layout_with_host_shims": true,
+  "unchanged_e12_arithmetic_fifo_transport_and_gather_sources": {
+    "src/PL/fft128_ps/butterfly_pipeline.v": "8152035a94ef0a7761e463c18a0011def3c7f239572ee9f928c6305287546297",
+    "src/PL/fft128_ps/fft128_twiddle.v": "26c81c3038907f29cffa17a6d066c84613ebdcd22b0e5770765ea4dedb48f874",
+    "src/PL/fft128_ps/fft_working_ram.v": "5464b1b0a57e663a1cdc58406c0fc73f3d27829f1ecd9f267bcd66a5211d9eb0",
+    "src/PL/fft128_ps/address_generator.v": "9757d675e1564a9985a01b08726fae90f6eecd294b7bb10d9e6dd8e55685606d",
+    "src/PL/fft128_ps/fft128_stream_fifo.v": "84e740edcd4d3ef7368cc6ae8f4128e52e6f26b73c7bd01e4cbf419a3c3c1c8e",
+    "src/PL/fft128_ps/fft128_pipeline.v": "7fb0fd12a15fae339ca391eeb6485b71b64a697f3b6a1fe3aa643f6a3d6b37f4",
+    "src/PL/fft128_ps/fft128_buffered_lane.v": "33d6a076f26aa792921ef3394f550e46da6b3b9e4fe02b541f0ced21d3bf8545",
+    "src/PL/fft128_ps/fft128_dma_overlap_ctrl.v": "d481c5e60fce8343bd2b37097588d76a042ad1aa442b8e157bd6a6a0b1cebdf1",
+    "src/PS/fft128/native_core.c": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+    "src/PS/fft128/dma_batch/batch_process.c": "051378930703730099b418e481f508e43dd764a971f4e7b882f837d041dd49c4",
+    "src/PS/fft128/dma_batch/batch_process.h": "bc4f0ebd12995e3db7642305e844ea788a6aa5e0edcf1d7df6a35872e76d087e"
+  },
+  "arm_build": false,
+  "vivado_build": false,
+  "board_verified": false,
+  "bundle_report_paths_match_build_outputs": true
+}

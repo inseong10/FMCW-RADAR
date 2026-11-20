@@ -1,0 +1,10 @@
+CPU_AFFINITY=0
+DMA: kernel-owned control registers, HP0, coherent bounce buffers; 64 KiB per direction/axis, 128 FFTs, 4 arithmetic cores, group barrier
+BACKEND=PL_DMA_QUAD implementation=native_C
+BENCHMARK: warmup=2 repeat=20 preallocated buffers; data path=PL_DMA_QUAD
+peak_unshifted=(107,20) fft_and_transfer_seconds=0.004223
+DMA_PROFILE: ioctl_ms=3.060724 kernel_copies_ms=0.856814 kernel_wait_ms=2.128747 PS_transpose_ms=0.685060 pl_active_ms=2.081883
+DMA_PROFILE: nested kernel and PL intervals overlap ioctl; active cycles INCLUDE stream stalls. Separate instrumented run.
+QUAD_PROFILE cores=4 mean_multi_work_cycles=38720.000 mean_all_work_cycles=5952.000 group_barrier=1 next_group_prefetch=0
+PIPELINE_TIMING backend=PL_DMA_QUAD mean_ms=4.222976 median_ms=4.220256 min_ms=4.180986 max_ms=4.270884 repeats=20
+FRAME_PASS backend=PL_DMA_QUAD bit_exact_bins=16384

@@ -1,0 +1,5 @@
+{
+  "profiled_trial_rejected": "Actual unprofiled PL_DMA_STREAM required",
+  "one_lsb_output_corruption_rejected": "PL result differs from independent Python integer model",
+  "stage6_retire_count_corruption_rejected": "Stage issue/retire conservation failed"
+}

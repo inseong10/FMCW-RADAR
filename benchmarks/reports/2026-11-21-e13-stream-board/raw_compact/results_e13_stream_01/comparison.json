@@ -1,0 +1,260 @@
+{
+  "status": "E13_STREAM_PAIRED_SAME_BOARD_VALIDATED",
+  "results": {
+    "double": {
+      "timing": {
+        "count": 300,
+        "mean_ms": 5.816576056666667,
+        "median_ms": 5.826396000000001,
+        "p05_ms": 5.7528159500000005,
+        "p95_ms": 5.87826,
+        "min_ms": 5.729598,
+        "max_ms": 6.073872
+      },
+      "trials": [
+        {
+          "trial": 1,
+          "timing": {
+            "count": 100,
+            "mean_ms": 5.81465537,
+            "median_ms": 5.826645,
+            "p05_ms": 5.75229155,
+            "p95_ms": 5.8764003,
+            "min_ms": 5.744046,
+            "max_ms": 5.92584
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 1.8331451766013172e-12,
+            "rms_q15_lsb": 3.736327989884738e-14,
+            "relative_l2": 2.93148433221987e-16
+          }
+        },
+        {
+          "trial": 2,
+          "timing": {
+            "count": 100,
+            "mean_ms": 5.81954892,
+            "median_ms": 5.826423,
+            "p05_ms": 5.7593013,
+            "p95_ms": 5.8694784,
+            "min_ms": 5.729598,
+            "max_ms": 6.073872
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 1.8331451766013172e-12,
+            "rms_q15_lsb": 3.736327989884738e-14,
+            "relative_l2": 2.93148433221987e-16
+          }
+        },
+        {
+          "trial": 3,
+          "timing": {
+            "count": 100,
+            "mean_ms": 5.81552388,
+            "median_ms": 5.826162,
+            "p05_ms": 5.7507958,
+            "p95_ms": 5.8791948,
+            "min_ms": 5.738256,
+            "max_ms": 6.061404
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 1.8331451766013172e-12,
+            "rms_q15_lsb": 3.736327989884738e-14,
+            "relative_l2": 2.93148433221987e-16
+          }
+        }
+      ]
+    },
+    "float_neon": {
+      "timing": {
+        "count": 300,
+        "mean_ms": 3.6628540633333335,
+        "median_ms": 3.652869,
+        "p05_ms": 3.6094857,
+        "p95_ms": 3.7334829,
+        "min_ms": 3.542442,
+        "max_ms": 3.79314
+      },
+      "trials": [
+        {
+          "trial": 1,
+          "timing": {
+            "count": 100,
+            "mean_ms": 3.66511596,
+            "median_ms": 3.653376,
+            "p05_ms": 3.61008,
+            "p95_ms": 3.7334913,
+            "min_ms": 3.596226,
+            "max_ms": 3.752478
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 0.0004268086729199998,
+            "rms_q15_lsb": 1.3804696940275296e-05,
+            "relative_l2": 1.0831022571096338e-07
+          }
+        },
+        {
+          "trial": 2,
+          "timing": {
+            "count": 100,
+            "mean_ms": 3.65462701,
+            "median_ms": 3.645825,
+            "p05_ms": 3.6028887,
+            "p95_ms": 3.7281642,
+            "min_ms": 3.542442,
+            "max_ms": 3.79314
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 0.0004268086729199998,
+            "rms_q15_lsb": 1.3804696940275296e-05,
+            "relative_l2": 1.0831022571096338e-07
+          }
+        },
+        {
+          "trial": 3,
+          "timing": {
+            "count": 100,
+            "mean_ms": 3.6688192200000005,
+            "median_ms": 3.660057,
+            "p05_ms": 3.6200286,
+            "p95_ms": 3.7335669,
+            "min_ms": 3.614514,
+            "max_ms": 3.754518
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 0.0004268086729199998,
+            "rms_q15_lsb": 1.3804696940275296e-05,
+            "relative_l2": 1.0831022571096338e-07
+          }
+        }
+      ]
+    },
+    "pl": {
+      "timing": {
+        "count": 300,
+        "mean_ms": 2.8005754666666665,
+        "median_ms": 2.787411,
+        "p05_ms": 2.7688875,
+        "p95_ms": 2.8586313,
+        "min_ms": 2.759514,
+        "max_ms": 3.07257
+      },
+      "trials": [
+        {
+          "trial": 1,
+          "timing": {
+            "count": 100,
+            "mean_ms": 2.80388325,
+            "median_ms": 2.792034,
+            "p05_ms": 2.77692665,
+            "p95_ms": 2.8588548,
+            "min_ms": 2.7708,
+            "max_ms": 2.896986
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 8.749842363453245,
+            "rms_q15_lsb": 1.734691375725571,
+            "relative_l2": 0.013610209282866834
+          }
+        },
+        {
+          "trial": 2,
+          "timing": {
+            "count": 100,
+            "mean_ms": 2.7997186500000004,
+            "median_ms": 2.7802350000000002,
+            "p05_ms": 2.7652074,
+            "p95_ms": 2.862762,
+            "min_ms": 2.759514,
+            "max_ms": 3.07257
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 8.749842363453245,
+            "rms_q15_lsb": 1.734691375725571,
+            "relative_l2": 0.013610209282866834
+          }
+        },
+        {
+          "trial": 3,
+          "timing": {
+            "count": 100,
+            "mean_ms": 2.7981245000000006,
+            "median_ms": 2.786172,
+            "p05_ms": 2.773773,
+            "p95_ms": 2.8510986,
+            "min_ms": 2.764824,
+            "max_ms": 2.868618
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 8.749842363453245,
+            "rms_q15_lsb": 1.734691375725571,
+            "relative_l2": 0.013610209282866834
+          }
+        }
+      ]
+    }
+  },
+  "parallel_cores": 1,
+  "streaming_stages": 7,
+  "group_barrier": false,
+  "dma_irq_deltas": {
+    "68": [
+      660,
+      0
+    ],
+    "67": [
+      660,
+      0
+    ]
+  },
+  "dma_requests_per_frame": 2,
+  "dma_channel_submissions_per_frame": 4,
+  "double_over_pl": 2.090253643972848,
+  "float_neon_over_pl": 1.3104881196206801,
+  "fixture_sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+  "dma_artifacts": {
+    "fft128_e13_stream.bin": "cad440ff51b3a99e5645f06e3122663ec1fdb6b117ae6b6b4bf030d6ecd37967",
+    "fft128_e13_stream.dtbo": "0ef118190985b0358a2f2ddea4be24a9662315508c51d6176f92815fa7029e62",
+    "fft128_e13_stream.json": "f92fce78608e8740aad1bed978248a2f3914485d3d2a34a92771bc2561fe0fa4",
+    "fft128_dma_stream.ko": "ece22db75d43cd3fac9ad8e0a106814f9567b2ab625453e1066308712acf6850",
+    "fft128-receiver": "0545f95549a7582235920dac61e8bdcd890c78885ac8428260dccb42ba78fd1f",
+    "test-dma-stream-client": "6c911ac58a9a0c8feb7a09c4e110f9565ce72c09f136aefca7966803cac00a6f",
+    "frame.rspb": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "kernelrelease.txt": "b1fc844b1ee87f48cd89d857eb48ae13b9a1e5bd6d366112a8cb8972fc01034d",
+    "gic_phandle.bin": "1bc5d0e3df0ea12c4d0078668d14924f95106bbe173e196de50fe13a900b0937",
+    "gic_path.txt": "1c6c83c7ef115c7a7d6bd02696ca4f5a64e2ae24beabac820da66ff111b90faa",
+    "dma_config.json": "0ebb8ad668a9d29b123b596a5c7658c3941d8f8d0425e4bf369a2668861f8a10",
+    "stream_core_check.txt": "44c2927395bf9c1abdd7587acd68ff6e394a594f6b6ddc211a13f6ed9a03b0d1",
+    "stream_utilization.rpt": "55d1a4112757c893a28254f11fa70428e980bd3df0b4eb6671906b111b5cce37",
+    "build_config.json": "f6deb3dc3241203c31af50f730ffe5b20510623a0ba6f642c34185a7a615f37c",
+    "clock_source.txt": "9f749a74cea4bfbe43d7d176174f2ea808fd87b5bb56b631d5fdfeac82e52597",
+    "pl_source.sha256": "7ccc243ae8a9a4e65452514664d1e845a9acffa30171172ef7a738a3cc21ec80",
+    "host_source.sha256": "75f00e5c90f780a8350a59e7b4cd66a251fad47d442766ccf805689d036716fe",
+    "module_source.sha256": "c064ffdf23e47a08acf694382d306c1170933f098fd8a5867be8a2d3a33fc43d",
+    "module_build_environment.txt": "022f0a270f48b5fb41b15469ddbeb5a2c5aeaa82f1f1c32e930de33f8ad23834",
+    "load_board.sh": "0faaa68a8d26bcb35631c467a452345858ee75f652b7f38de287417e80c9230e",
+    "profile_board.sh": "119d942f7f2cf8751906f96b6eb5d67f478088064c815cb5ae38bfb5ae29ab25",
+    "run_board.sh": "9a4692e48a9bda17bc4a16ce1e2d6ef89b19b1e06da91c55b17f25c262bc3273"
+  },
+  "ps_artifacts": {
+    "frame.rspb": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "reference.csv": "3de9c2b73979b89ece211543d0b13da9eb7192a2c7a00e73b7fbc05d6668f553",
+    "reference.json": "b5b41a758ed8f7dcbc02f9253085f7118d426371bd5ed0803ab71a280e67521b",
+    "run_board.sh": "5f2ddb5096efdb23b5083977c840153c96736b61f7b91f64078d0a762c903433",
+    "double/bin/receiver": "a238b98b8d43b4f26bf1c8bf1bac43050bbde26a5b2a71be196837db50f24e85",
+    "double/lib/libfftw3.so.3": "182f6f5317bf1480aeee92d9a93958c5c5cc24fdccf36217d3ce253b01cb3c6b",
+    "double/build_environment.txt": "60091ff3a3a81c3399821febf8f34179c9f6558bda56644269a9159df14ee282",
+    "double/fftw_build_environment.txt": "6877a0cbbef7cfd027b27e52fe101086485657c20de2c6c8dc1ebb7db9de6d85",
+    "float_scalar/bin/receiver": "e9dce02870b541a2028ec01cea38dd219da2c1b6a860cf86a4b49f359ccf06a4",
+    "float_scalar/lib/libfftw3f.so.3": "bfb57f35aab07931c3932ab7918f7fd0e390310d0434585f23a013194dd719fa",
+    "float_scalar/build_environment.txt": "a11ca79e697ad050f16e046ef44ad764bffafcdd5a666c483f031cea57902e7d",
+    "float_scalar/fftw_build_environment.txt": "8e249f92cbec400d773f360ab64a3502bc27d4eb1fbeff0bdbb58f8785d5a132",
+    "float_neon/bin/receiver": "1feda3b947f5e2421b30179c0183fdce3fcf540050d19e88ac9ef7c8a09451e4",
+    "float_neon/lib/libfftw3f.so.3": "9c06dfa6f7e6f686b5eabda0845b75d38c5f05b852234364edfd84c423315653",
+    "float_neon/build_environment.txt": "64cce6a4db6b36b166b4184c80c70806d5f7a848c8cd09f23e70f82546a3a013",
+    "float_neon/fftw_build_environment.txt": "77c2cd82f944d6ba0fe68491cc0068e51f87872f8039833d3803f4acf127f429"
+  },
+  "scope": "Q15 input to CPU-available 2D FFT output; required copies, DMA, IRQ wait, transpose and normalization included; IO/planning/validation excluded",
+  "limitation": "Same recorded warm-cache frame, CPU0, one ioctl/axis, coherent HP0 bounce buffers; one seven-stage DIT pipeline with per-stage double input/output frame slots and no group barrier; shared ordered DMA; no continuous-stream throughput claim",
+  "environment": "Linux Petalinux-2022 5.15.19-xilinx #1 SMP PREEMPT Wed Aug 26 11:47:56 KST 2026 armv7l GNU/Linux\n6c00e207-a01f-4387-a30b-d48e07520367\nprocessor\t: 0\nmodel name\t: ARMv7 Processor rev 0 (v7l)\nBogoMIPS\t: 333.33\nFeatures\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 \nCPU implementer\t: 0x41\nCPU architecture: 7\nCPU variant\t: 0x3\nCPU part\t: 0xc09\nCPU revision\t: 0\n\nprocessor\t: 1\nmodel name\t: ARMv7 Processor rev 0 (v7l)\nBogoMIPS\t: 333.33\nFeatures\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 \nCPU implementer\t: 0x41\nCPU architecture: 7\nCPU variant\t: 0x3\nCPU part\t: 0xc09\nCPU revision\t: 0\n\nHardware\t: Xilinx Zynq Platform\nRevision\t: 0003\nSerial\t\t: 0000000000000000\nE13-stream CPU0 warmup=10 repeats=100 trials=3, coherent bounce buffers, HP0, 50MHz 1streaming_core 7dedicated_stages per_stage_frame_slots\n{\"experiment\":\"E13-stream\",\"core\":\"pipeline\",\"clock_hz\":50000000,\"fft_control_base\":\"0x43c60000\",\"dma_base\":\"0x40400000\",\"irq_f2p_bits\":[6,7],\"dt_spi\":[35,36],\"memory_port\":\"HP0\",\"memory_width\":64,\"stream_width\":32,\"sg\":false,\"dre\":false,\"burst\":16,\"length_width\":17,\"register_abi\":7,\"parallel_cores\":1,\"streaming_stages\":7,\"total_butterflies\":7,\"frame_initiation_interval\":128,\"group_barrier\":false,\"next_group_prefetch\":false,\"external_ping_pong\":false,\"external_buffers\":false,\"buffering\":\"per_stage_double_frame_slots\",\"input_frame_slots_per_stage\":2,\"output_frame_slots_per_stage\":2,\"fft_per_request\":128,\"bytes_per_direction\":65536,\"board_verified\":false,\"next_vector_prefetch\":true,\"stage_frame_slots\":true}\ncad440ff51b3a99e5645f06e3122663ec1fdb6b117ae6b6b4bf030d6ecd37967  /opt/fft128/e13_stream/fft128_e13_stream.bin\nece22db75d43cd3fac9ad8e0a106814f9567b2ab625453e1066308712acf6850  /opt/fft128/e13_stream/fft128_dma_stream.ko\n0545f95549a7582235920dac61e8bdcd890c78885ac8428260dccb42ba78fd1f  /opt/fft128/e13_stream/fft128-receiver\naa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976  /opt/fft128/e13_stream/frame.rspb\n/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor: unavailable\n/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: unavailable\n"
+}

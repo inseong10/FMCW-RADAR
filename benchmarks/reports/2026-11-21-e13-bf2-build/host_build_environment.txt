@@ -1,0 +1,8 @@
+Linux ubuntu 5.15.0-139-generic #149~20.04.1-Ubuntu SMP Wed Apr 16 08:29:56 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+arm-linux-gnueabihf-gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+0f888b308df3beca2451a184fe5336cad8cac963e5eaf0bb6f80636f4d516f98  /home/user/fmcw_share/FMCW-FFT-test/src/PS/fft128/dma_bf2/dma_bf2_backend.c
+09b65b2a55f24d9df091bdda7511c75a4a7760ff23f5b37528f937e4a9b7f0a2  /home/user/fmcw_share/FMCW-FFT-test/src/PS/fft128/dma_bf2/fft128_dma_bf2_uapi.h
+46ef81d03968703b725c6b71d9543667ec8ec02eb2e446e3e209193c571fcf00  /home/user/fmcw_share/FMCW-FFT-test/src/PS/fft128/dma_bf2/../native_receiver.c
+2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c  /home/user/fmcw_share/FMCW-FFT-test/src/PS/fft128/dma_bf2/../native_core.c
+8ce917a46dd90d9a767c4699619992a68b69765549832ff9d5bc12e0875d514c  /home/user/fmcw_share/FMCW-FFT-test/src/PS/fft128/dma_bf2/../native_core.h
+Overlay validation is offline only; kernel DMA transfer/IRQ and Vivado integration remain unverified.

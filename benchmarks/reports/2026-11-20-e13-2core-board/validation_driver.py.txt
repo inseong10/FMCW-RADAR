@@ -1,0 +1,82 @@
+from pathlib import Path
+import json, hashlib, sys, shutil, tempfile, csv, statistics, math
+import numpy as np
+
+root=Path(__file__).resolve().parent.parent
+sys.path.insert(0,str(root/'benchmarks'))
+import compare_dma_parallel_board as comp
+raw=root/'build/fft128_dma_parallel_measurements'
+runs=raw/'results_e13_2core_01';prof=raw/'profile_e13_2core_01'
+a=json.loads((root/'build/e13_comparison_revalidation.json').read_text())
+p=json.loads((root/'build/e13_profile_revalidation.json').read_text())
+roundoff=[]
+def same(x,y,path=''):
+    if isinstance(x,dict):
+        assert x.keys()==y.keys(),path
+        for k in x: same(x[k],y[k],path+'/'+k)
+    elif isinstance(x,list):
+        assert len(x)==len(y),path
+        for i,(u,v) in enumerate(zip(x,y)):same(u,v,path+'/'+str(i))
+    elif isinstance(x,float):
+        assert math.isclose(x,y,rel_tol=1e-13,abs_tol=2e-12),(path,x,y)
+        if x!=y:roundoff.append(dict(field=path,windows=x,ubuntu=y))
+    else:assert x==y,(path,x,y)
+same(a,json.loads((raw/'comparison_console.json').read_text()))
+same(p,json.loads((raw/'profile_console.json').read_text()))
+identity=json.loads((root/'benchmarks/reports/2026-11-20-e13-2core-build/board_selftest.json').read_text())
+assert a['dma_artifacts']=={k:v['sha256'] for k,v in identity['artifacts'].items()}
+assert (runs/'dma_artifacts.sha256').read_bytes()==(prof/'artifacts.sha256').read_bytes()
+for name in ['dma_config.json','fft128_e13_2core.json']:
+    assert (runs/name).read_bytes()==(prof/name).read_bytes()
+for manifest in ['pl_source.sha256','host_source.sha256','module_source.sha256']:
+    for line in (runs/manifest).read_text().splitlines():
+        digest,name=line.split(maxsplit=1);name=name.lstrip('*')
+        prefix='/home/user/fmcw_share/FMCW-FFT-test/'
+        path=root/name[len(prefix):] if name.startswith(prefix) else (root/'src/PS/fft128/dma_parallel'/name if manifest=='module_source.sha256' else root/name)
+        assert hashlib.sha256(path.read_bytes()).hexdigest()==digest,path
+expected,q,scale=comp.reference(root/'benchmarks/fixtures/radarsimpy_128x128.rspb')
+integer=comp.integer_reference(q)
+meta=json.loads((prof/'pl.json').read_text())
+assert (meta['backend'],meta['profiling'],meta['warmup'],meta['repeats'],meta['mismatched_complex_bins'])==('PL_DMA_PARALLEL',True,2,20,0)
+assert meta['shape']==[128,128] and meta['window']=='none' and meta['total_normalization']=='1/16384' and meta['input_to_q15_scale']==scale
+actual=comp.spectrum(prof/'pl.csv');assert np.array_equal(actual,integer)
+source=np.loadtxt(prof/'pl.input.csv',delimiter=',',skiprows=1)
+ch,sm=np.indices((128,128))
+assert np.array_equal(source[:,:2],np.column_stack((ch.ravel(),sm.ravel())))
+assert np.array_equal((np.rint(source[:,2]*scale)+1j*np.rint(source[:,3]*scale)).reshape(128,128),q)
+assert 'FRAME_PASS backend=PL_DMA_PARALLEL bit_exact_bins=16384' in (prof/'profile.log').read_text()
+assert all(np.array_equal(comp.spectrum(runs/f'pl/trial_{i}.csv'),integer) for i in [1,2,3])
+with (prof/'pl.profile.csv').open() as f:rows=list(csv.DictReader(f))
+assert len(rows)==20 and np.isclose(meta['fft_and_transfer_seconds']*1000,p['mean_ms']['wall_ms'])
+with (prof/'pl.timings.csv').open() as f:times=[float(r['wall_ms']) for r in csv.DictReader(f) if r['stage']=='fft_pipeline']
+assert len(times)==20 and np.allclose(times,[float(r['wall_ms']) for r in rows])
+checks=dict(independent_comparison_and_profile_revalidated=True,
+    ubuntu_windows_float_roundoff=roundoff,roundoff_comparison_tolerance=dict(relative=1e-13,absolute=2e-12),
+    exact_integer_oracle_comparison_has_no_tolerance=True,
+    profile_and_unprofiled_same_bundle=True,bundle_matches_selftest_22_artifacts=True,
+    build_sources_match_current_checkout=True,profile_integer_and_quantized_input=True,
+    all_trial_spectra_match_profile=True,profile_frames=20,
+    profile_peak=[int(v) for v in np.unravel_index(np.argmax(abs(actual)),actual.shape)],
+    input_stall_cycles_mean=statistics.mean(int(r['input_stall_cycles']) for r in rows),
+    output_stall_cycles_mean=statistics.mean(int(r['output_stall_cycles']) for r in rows),
+    global_minus_input_stall_cycles_observed=sorted(set(int(r['pl_active_cycles'])-int(r['input_stall_cycles']) for r in rows)),
+    stream_stall_subtraction_is_general_compute_measure=False)
+sandbox=Path(tempfile.mkdtemp(prefix='e13_analysis_guards_',dir=root/'build'))
+shutil.copytree(runs,sandbox/'results');test=sandbox/'results';guards={}
+path=test/'pl/trial_1.json';original=path.read_bytes();data=json.loads(original)
+data['profiling']=True;path.write_text(json.dumps(data),encoding='utf-8')
+try:comp.analyze(test);raise AssertionError('Instrumented trial accepted')
+except ValueError as e:guards['profiled_trial_rejected']=str(e)
+path.write_bytes(original)
+path=test/'pl/trial_1.csv';original=path.read_bytes();lines=original.decode().splitlines()
+cells=lines[1].split(',');cells[2]=str(float(cells[2])+1);lines[1]=','.join(cells)
+path.write_text('\n'.join(lines)+'\n',encoding='utf-8')
+try:comp.analyze(test);raise AssertionError('Corrupted output accepted')
+except ValueError as e:guards['one_lsb_output_corruption_rejected']=str(e)
+path.write_bytes(original)
+out=root/'benchmarks/reports/2026-11-20-e13-2core-board';out.mkdir(parents=True,exist_ok=True)
+for name,data in [('raw_validation.json',checks),('analysis_guards.json',guards)]:
+    (out/name).write_text(json.dumps(data,indent=2)+'\n',encoding='utf-8',newline='\n')
+print(json.dumps({k:v for k,v in checks.items() if k!='ubuntu_windows_float_roundoff'},indent=2))
+print(json.dumps(guards,indent=2))
+print('E13_FULL_RAW_IDENTITY_ACCURACY_OVERLAP_REVALIDATED')

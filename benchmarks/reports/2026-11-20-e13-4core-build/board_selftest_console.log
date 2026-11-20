@@ -1,0 +1,30 @@
+run_board.sh: OK
+HP0 read/write control before activation: 0x00000000 0x00000F00
+fpga_manager fpga0: writing fft128_e13_4core.bin to Xilinx Zynq FPGA Manager
+Time taken to load BIN is 55.000000 Milli Seconds
+BIN FILE loaded through FPGA manager successfully
+OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/ff
+t128_e13_4core_clock
+OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/ff
+t128_e13_4core_dma
+xilinx-vdma 40400000.dma: Xilinx AXI DMA Engine Driver Probed!!
+fft128_dma_quad: loading out-of-tree module taints kernel.
+fft128-dma-quad 43c60000.fft: E13-4core ready: up to 128 FFT/ioctl, 4 cores, group barrier
+, coherent bounce buffers, 64KiB each direction
+QUAD_PACKET_PASS fft_count=1 bytes_each_direction=512 completed=1
+QUAD_PACKET_PASS fft_count=2 bytes_each_direction=1024 completed=2
+QUAD_PACKET_PASS fft_count=3 bytes_each_direction=1536 completed=3
+QUAD_PACKET_PASS fft_count=4 bytes_each_direction=2048 completed=4
+QUAD_PACKET_PASS fft_count=5 bytes_each_direction=2560 completed=5
+QUAD_PACKET_PASS fft_count=127 bytes_each_direction=65024 completed=127
+QUAD_PACKET_PASS fft_count=128 bytes_each_direction=65536 completed=128
+QUAD_PACKET_PASS fft_count=128 bytes_each_direction=65536 completed=128
+QUAD_OVERLAP_PASS cores=4 multi_busy_cycles=43854 all_busy_cycles=27534 multi_work_cycles=
+19360 all_work_cycles=2976
+DMA_QUAD_CLIENT_PASS exclusive_owner invalid_ABI timeout flags count full_axis repeated_pa
+ckets
+DMA: kernel-owned control registers, HP0, coherent bounce buffers; 64 KiB per direction/ax
+is, 128 FFTs, 4 arithmetic cores, group barrier
+BACKEND=PL_DMA_QUAD implementation=native_C
+SELFTEST_PASS backend=PL_DMA_QUAD vectors=4 bins=512
+DMA_E13_4CORE_SELFTEST_READY: next run full frame/profile before benchmarking

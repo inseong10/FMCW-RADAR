@@ -1,0 +1,51 @@
+BF2_SCHEDULE_PASS count=1 active=789 io=0 input_CALC=0 output_CALC=0 three_CALC=0 prefetch=0
+BF2_COUNTER_PASS count=1 stall_mode=0 active=789 c0=636 c1=0 c2=0 c3=0 any_busy=636 multi_busy=0 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=21 output_stalls=0
+BF2_SCHEDULE_PASS count=2 active=917 io=0 input_CALC=0 output_CALC=63 three_CALC=0 prefetch=0
+BF2_COUNTER_PASS count=2 stall_mode=0 active=917 c0=636 c1=636 c2=0 c3=0 any_busy=764 multi_busy=508 all_busy=0 multi_work=125 all_work=0 actual_multi_CALC=124 actual_all_CALC=0 max_CALC_lanes=2 arbitration=127 input_stalls=21 output_stalls=0
+BF2_SCHEDULE_PASS count=3 active=1045 io=0 input_CALC=126 output_CALC=127 three_CALC=0 prefetch=0
+BF2_COUNTER_PASS count=3 stall_mode=0 active=1045 c0=636 c1=636 c2=636 c3=0 any_busy=892 multi_busy=636 all_busy=0 multi_work=250 all_work=0 actual_multi_CALC=248 actual_all_CALC=0 max_CALC_lanes=2 arbitration=254 input_stalls=21 output_stalls=0
+BF2_SCHEDULE_PASS count=4 active=1173 io=0 input_CALC=254 output_CALC=254 three_CALC=0 prefetch=0
+BF2_COUNTER_PASS count=4 stall_mode=0 active=1173 c0=636 c1=636 c2=636 c3=636 any_busy=1020 multi_busy=764 all_busy=252 multi_work=375 all_work=0 actual_multi_CALC=372 actual_all_CALC=0 max_CALC_lanes=2 arbitration=381 input_stalls=21 output_stalls=0
+BF2_SCHEDULE_PASS count=5 active=1427 io=64 input_CALC=382 output_CALC=506 three_CALC=64 prefetch=1
+BF2_COUNTER_PASS count=5 stall_mode=0 active=1427 c0=1272 c1=636 c2=636 c3=636 any_busy=1274 multi_busy=892 all_busy=378 multi_work=375 all_work=0 actual_multi_CALC=372 actual_all_CALC=0 max_CALC_lanes=2 arbitration=382 input_stalls=21 output_stalls=0
+BF2_SCHEDULE_PASS count=6 active=1555 io=128 input_CALC=510 output_CALC=573 three_CALC=128 prefetch=1
+BF2_COUNTER_PASS count=6 stall_mode=0 active=1555 c0=1272 c1=1272 c2=636 c3=636 any_busy=1402 multi_busy=1146 all_busy=504 multi_work=500 all_work=0 actual_multi_CALC=496 actual_all_CALC=0 max_CALC_lanes=2 arbitration=509 input_stalls=21 output_stalls=0
+BF2_SCHEDULE_PASS count=7 active=1683 io=256 input_CALC=636 output_CALC=637 three_CALC=254 prefetch=1
+BF2_COUNTER_PASS count=7 stall_mode=0 active=1683 c0=1272 c1=1272 c2=1272 c3=636 any_busy=1530 multi_busy=1274 all_busy=630 multi_work=625 all_work=0 actual_multi_CALC=620 actual_all_CALC=0 max_CALC_lanes=2 arbitration=636 input_stalls=21 output_stalls=0
+BF2_SCHEDULE_PASS count=127 active=20823 io=13446 input_CALC=15940 output_CALC=15937 three_CALC=13388 prefetch=1
+BF2_COUNTER_PASS count=127 stall_mode=0 active=20823 c0=20352 c1=20352 c2=20352 c3=19716 any_busy=20670 multi_busy=20414 all_busy=19530 multi_work=11875 all_work=0 actual_multi_CALC=11780 actual_all_CALC=0 max_CALC_lanes=2 arbitration=12096 input_stalls=21 output_stalls=0
+BF2_SCHEDULE_PASS count=128 active=20951 io=13511 input_CALC=16068 output_CALC=16064 three_CALC=13453 prefetch=1
+BF2_COUNTER_PASS count=128 stall_mode=0 active=20951 c0=20352 c1=20352 c2=20352 c3=20352 any_busy=20798 multi_busy=20542 all_busy=19782 multi_work=12000 all_work=0 actual_multi_CALC=11904 actual_all_CALC=0 max_CALC_lanes=2 arbitration=12223 input_stalls=21 output_stalls=0
+BF2_SCHEDULE_PASS count=4 active=3273 io=0 input_CALC=0 output_CALC=0 three_CALC=0 prefetch=0
+BF2_COUNTER_PASS count=4 stall_mode=2 active=3273 c0=636 c1=636 c2=636 c3=636 any_busy=2544 multi_busy=0 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=2121 output_stalls=0
+BF2_SCHEDULE_PASS count=128 active=41622 io=6516 input_CALC=12802 output_CALC=12173 three_CALC=4860 prefetch=1
+BF2_COUNTER_PASS count=128 stall_mode=1 active=41622 c0=20352 c1=20352 c2=20352 c3=20352 any_busy=41276 multi_busy=40132 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=24597 output_stalls=11719
+BF2_SCHEDULE_PASS count=128 active=41622 io=6516 input_CALC=12802 output_CALC=12173 three_CALC=4860 prefetch=1
+BF2_COUNTER_PASS count=128 stall_mode=1 active=41622 c0=20352 c1=20352 c2=20352 c3=20352 any_busy=41276 multi_busy=40132 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=24597 output_stalls=11719
+BF2_SCHEDULE_PASS count=128 active=41622 io=6516 input_CALC=12802 output_CALC=12173 three_CALC=4860 prefetch=1
+BF2_COUNTER_PASS count=128 stall_mode=1 active=41622 c0=20352 c1=20352 c2=20352 c3=20352 any_busy=41276 multi_busy=40132 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=24597 output_stalls=11719
+BF2_SCHEDULE_PASS count=128 active=41622 io=6516 input_CALC=12802 output_CALC=12173 three_CALC=4860 prefetch=1
+BF2_COUNTER_PASS count=128 stall_mode=1 active=41622 c0=20352 c1=20352 c2=20352 c3=20352 any_busy=41276 multi_busy=40132 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=24597 output_stalls=11719
+BF2_SCHEDULE_PASS count=128 active=41622 io=6516 input_CALC=12802 output_CALC=12173 three_CALC=4860 prefetch=1
+BF2_COUNTER_PASS count=128 stall_mode=1 active=41622 c0=20352 c1=20352 c2=20352 c3=20352 any_busy=41276 multi_busy=40132 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=24597 output_stalls=11719
+BF2_SCHEDULE_PASS count=128 active=41622 io=6516 input_CALC=12802 output_CALC=12173 three_CALC=4860 prefetch=1
+BF2_COUNTER_PASS count=128 stall_mode=1 active=41622 c0=20352 c1=20352 c2=20352 c3=20352 any_busy=41276 multi_busy=40132 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=24597 output_stalls=11719
+BF2_SCHEDULE_PASS count=128 active=41622 io=6516 input_CALC=12802 output_CALC=12173 three_CALC=4860 prefetch=1
+BF2_COUNTER_PASS count=128 stall_mode=1 active=41622 c0=20352 c1=20352 c2=20352 c3=20352 any_busy=41276 multi_busy=40132 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=24597 output_stalls=11719
+BF2_SCHEDULE_PASS count=128 active=41622 io=6516 input_CALC=12802 output_CALC=12173 three_CALC=4860 prefetch=1
+BF2_COUNTER_PASS count=128 stall_mode=1 active=41622 c0=20352 c1=20352 c2=20352 c3=20352 any_busy=41276 multi_busy=40132 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=24597 output_stalls=11719
+BF2_SCHEDULE_PASS count=128 active=41622 io=6516 input_CALC=12802 output_CALC=12173 three_CALC=4860 prefetch=1
+BF2_COUNTER_PASS count=128 stall_mode=1 active=41622 c0=20352 c1=20352 c2=20352 c3=20352 any_busy=41276 multi_busy=40132 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=24597 output_stalls=11719
+BF2_SCHEDULE_PASS count=128 active=41622 io=6516 input_CALC=12802 output_CALC=12173 three_CALC=4860 prefetch=1
+BF2_COUNTER_PASS count=128 stall_mode=1 active=41622 c0=20352 c1=20352 c2=20352 c3=20352 any_busy=41276 multi_busy=40132 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=24597 output_stalls=11719
+BF2_SCHEDULE_PASS count=128 active=41622 io=6516 input_CALC=12802 output_CALC=12173 three_CALC=4860 prefetch=1
+BF2_COUNTER_PASS count=128 stall_mode=1 active=41622 c0=20352 c1=20352 c2=20352 c3=20352 any_busy=41276 multi_busy=40132 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=24597 output_stalls=11719
+BF2_SCHEDULE_PASS count=128 active=41622 io=6516 input_CALC=12802 output_CALC=12173 three_CALC=4860 prefetch=1
+BF2_COUNTER_PASS count=128 stall_mode=1 active=41622 c0=20352 c1=20352 c2=20352 c3=20352 any_busy=41276 multi_busy=40132 all_busy=0 multi_work=0 all_work=0 actual_multi_CALC=0 actual_all_CALC=0 max_CALC_lanes=1 arbitration=0 input_stalls=24597 output_stalls=11719
+BF2_SCHEDULE_PASS count=128 active=20951 io=13511 input_CALC=16068 output_CALC=16064 three_CALC=13453 prefetch=1
+BF2_COUNTER_PASS count=128 stall_mode=0 active=20951 c0=20352 c1=20352 c2=20352 c3=20352 any_busy=20798 multi_busy=20542 all_busy=19782 multi_work=12000 all_work=0 actual_multi_CALC=11904 actual_all_CALC=0 max_CALC_lanes=2 arbitration=12223 input_stalls=21 output_stalls=0
+BF2_SCHEDULE_PASS count=128 active=20951 io=13511 input_CALC=16068 output_CALC=16064 three_CALC=13453 prefetch=1
+BF2_COUNTER_PASS count=128 stall_mode=0 active=20951 c0=20352 c1=20352 c2=20352 c3=20352 any_busy=20798 multi_busy=20542 all_busy=19782 multi_work=12000 all_work=0 actual_multi_CALC=11904 actual_all_CALC=0 max_CALC_lanes=2 arbitration=12223 input_stalls=21 output_stalls=0
+BF2_ZERO_STALL_PASS fft_count=128 active_cycles=20930 frame_cycles=41860 clock_hz=50000000
+DMA_BF2_CTRL_PASS numeric_vectors=272 full_axis_packets malformed_TLAST_TKEEP abort_recovery lane2_partial_abort lane3_stalled_abort actual_two_butterflies_per_core buffered_independent_lanes actual_input_CALC_output_overlap partial_group source_starved
+C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\dma_bf2_ctrl_tb.v:334: $finish called at 6588940000 (1ps)

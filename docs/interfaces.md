@@ -26,8 +26,16 @@ chirp 1개를 UDP 데이터그램 1개로 보냅니다.
 | MMIO (E06~E10) | FFT 1개를 AXI4-Lite 데이터 창으로 읽고 씀 | [AXI4-Lite 계약](../src/PL/fft128_ps/README.md) |
 | DMA, FFT당 (E11a) | FFT 1개 = 512 B, 외부 TLAST는 매 128번째 beat | [E11a 실행 계약](../src/PS/fft128/dma/README.md) |
 | DMA, 축당 묶음 (E11b) | FFT 128개 = 65,536 B, 외부 TLAST는 축 마지막 beat | [E11b 실행 계약](../src/PS/fft128/dma_batch/README.md) |
+| DMA, E13-2core | 축당 128 FFT = 65,536 B, 외부 TLAST는 축 마지막 beat | [기존 코어 2개, pair barrier](../src/PS/fft128/dma_parallel/README.md) |
+| DMA, E13-4core | 축당 128 FFT = 65,536 B, 외부 TLAST는 축 마지막 beat | [기존 코어 4개, group barrier](../src/PS/fft128/dma_quad/README.md) |
+| DMA, E12-4core | 축당 128 FFT = 65,536 B, 외부 TLAST는 축 마지막 beat | [4코어, FIFO·독립 스케줄](../src/PS/fft128/dma_overlap/README.md) |
+| DMA, E13-bf2 | 축당 128 FFT = 65,536 B, 외부 TLAST는 축 마지막 beat | [4코어, 코어당 버터플라이 2개](../src/PS/fft128/dma_bf2/README.md) |
+| DMA, E13-stream | 축당 128 FFT = 65,536 B, 외부 TLAST는 축 마지막 beat | [전용 7단계 프레임 스트리밍](../src/PS/fft128/dma_stream/README.md) |
 
-세 경로 모두 128×128 고정 크기이고, 두 축 사이 전치는 PS가 합니다.
+위 경로 모두 128×128 고정 크기이고, 두 축 사이 전치는 PS가 합니다.
+
+E13-stream의 스트리밍은 단일 축 안에서 FFT 벡터의 단계 처리를 겹치는 구조입니다.
+Range→전치→Doppler 전체 프레임을 PL 안에서 연결한 경로는 아직 구현하지 않았습니다.
 
 ## PS → PL: 전체 프레임 AXI4-Stream 입력 (명세 초안, 미구현)
 

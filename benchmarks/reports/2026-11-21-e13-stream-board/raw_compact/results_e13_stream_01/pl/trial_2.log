@@ -1,0 +1,7 @@
+CPU_AFFINITY=0
+DMA: kernel-owned control registers, HP0, coherent bounce buffers; 64 KiB per direction/axis, 128 FFTs, 1 streaming core, 7 dedicated stages
+BACKEND=PL_DMA_STREAM implementation=native_C
+BENCHMARK: warmup=10 repeat=100 preallocated buffers; data path=PL_DMA_STREAM
+peak_unshifted=(107,20) fft_and_transfer_seconds=0.002800
+PIPELINE_TIMING backend=PL_DMA_STREAM mean_ms=2.799719 median_ms=2.780235 min_ms=2.759514 max_ms=3.072570 repeats=100
+FRAME_PASS backend=PL_DMA_STREAM bit_exact_bins=16384

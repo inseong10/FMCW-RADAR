@@ -1,0 +1,40 @@
+{
+  "status": "E13_2CORE_DMA_DIAGNOSTIC_ONLY",
+  "frames": 20,
+  "mean_ms": {
+    "wall_ms": 4.97431325,
+    "pl_active_ms": 2.857541,
+    "host_input_copy_ms": 0.23164745,
+    "ioctl_ms": 3.8021508,
+    "host_output_copy_ms": 0.2507172,
+    "gather_ms": 0.3535104,
+    "scatter_ms": 0.326703,
+    "kernel_copy_in_ms": 0.2018724,
+    "kernel_submit_ms": 0.0367653,
+    "kernel_wait_ms": 2.8915356,
+    "kernel_check_ms": 0.0121455,
+    "kernel_copy_out_ms": 0.6366528
+  },
+  "wall_median_ms": 4.9636949999999995,
+  "host_residual_ms": 0.009584399999999604,
+  "ioctl_residual_ms": 0.023179199999999955,
+  "both_work_cycles": {
+    "min": 44672,
+    "max": 44672,
+    "mean": 44672
+  },
+  "simultaneous_calc_cycles_lower_bound": {
+    "min": 44544,
+    "max": 44544,
+    "mean": 44544
+  },
+  "parallel_counters_mean": {
+    "core0_active_cycles": 110109.05,
+    "core1_active_cycles": 142749.05,
+    "both_busy_cycles": 110109.05,
+    "both_work_cycles": 44672,
+    "arbitration_stall_cycles": 16256
+  },
+  "payload_bytes_per_frame": 262144,
+  "interpretation": "Kernel stages and PL active time overlap ioctl. Do not sum them with host stages. Input and output stalls may overlap each other across lanes; never subtract their sum as pure compute time. Both-work window spans last input handshake to first output valid, including initial output read latency. Coherent HP0 copies included. Separate unprofiled paired trials are required for performance comparisons."
+}

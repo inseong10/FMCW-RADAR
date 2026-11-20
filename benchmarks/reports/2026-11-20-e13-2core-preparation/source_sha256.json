@@ -1,0 +1,166 @@
+{
+  "baseline_commit": "6beaa8b4a207647d4d54d873ab8f03f16b066ec2",
+  "convention": "raw bytes and CRLF normalized to LF",
+  "files": {
+    "benchmarks/compare_dma_parallel_board.py": {
+      "raw_sha256": "e041f4967ebcf9bdc2545ea0dd240682b19b0def8ff42a9728c58cfb95d3d8c2",
+      "lf_sha256": "e041f4967ebcf9bdc2545ea0dd240682b19b0def8ff42a9728c58cfb95d3d8c2"
+    },
+    "src/PL/fft128_ps/address_generator.v": {
+      "raw_sha256": "9757d675e1564a9985a01b08726fae90f6eecd294b7bb10d9e6dd8e55685606d",
+      "lf_sha256": "27161ae63c9a417611b6919e0567df2bb10d02bdf66fef147154aea9c042ac9e"
+    },
+    "src/PL/fft128_ps/build.tcl": {
+      "raw_sha256": "62febe110530628f44335de4efdb825be1a5b0632bd2c1adcb95333fce08168e",
+      "lf_sha256": "62febe110530628f44335de4efdb825be1a5b0632bd2c1adcb95333fce08168e"
+    },
+    "src/PL/fft128_ps/build_dma_parallel.tcl": {
+      "raw_sha256": "228871d801a92bb299cf1c3b97393a3fb60a06eb559a8b67518a147dd7ed6720",
+      "lf_sha256": "228871d801a92bb299cf1c3b97393a3fb60a06eb559a8b67518a147dd7ed6720"
+    },
+    "src/PL/fft128_ps/butterfly_pipeline.v": {
+      "raw_sha256": "8152035a94ef0a7761e463c18a0011def3c7f239572ee9f928c6305287546297",
+      "lf_sha256": "8152035a94ef0a7761e463c18a0011def3c7f239572ee9f928c6305287546297"
+    },
+    "src/PL/fft128_ps/dma_parallel_ctrl_tb.v": {
+      "raw_sha256": "883b66d2bb52f5859fb95d30673121941b3d9cb9bafc2559638c109ad6fb8781",
+      "lf_sha256": "883b66d2bb52f5859fb95d30673121941b3d9cb9bafc2559638c109ad6fb8781"
+    },
+    "src/PL/fft128_ps/fft128_dma_parallel_ctrl.v": {
+      "raw_sha256": "51bf405aa6f691d86484e37adee2130f39b42a2f78124c3f0a8af6d355eeef07",
+      "lf_sha256": "51bf405aa6f691d86484e37adee2130f39b42a2f78124c3f0a8af6d355eeef07"
+    },
+    "src/PL/fft128_ps/fft128_pipeline.v": {
+      "raw_sha256": "7fb0fd12a15fae339ca391eeb6485b71b64a697f3b6a1fe3aa643f6a3d6b37f4",
+      "lf_sha256": "7fb0fd12a15fae339ca391eeb6485b71b64a697f3b6a1fe3aa643f6a3d6b37f4"
+    },
+    "src/PL/fft128_ps/fft128_twiddle.v": {
+      "raw_sha256": "26c81c3038907f29cffa17a6d066c84613ebdcd22b0e5770765ea4dedb48f874",
+      "lf_sha256": "0b5d76b62c7c0239262cf09fcdc67d7e2e5ca5622c644ef0d6e22f2c306f161b"
+    },
+    "src/PL/fft128_ps/fft_working_ram.v": {
+      "raw_sha256": "5464b1b0a57e663a1cdc58406c0fc73f3d27829f1ecd9f267bcd66a5211d9eb0",
+      "lf_sha256": "2346601c1feb600adc10158b2fe6af6fb26cd65341f1732d43d7c5466c004f01"
+    },
+    "src/PL/fft128_ps/reset_dma_parallel_tb.v": {
+      "raw_sha256": "bba5805d08f8637384a3c9763ce64fc9b21b088bf90d7a523ca739a8f6ba73ca",
+      "lf_sha256": "bba5805d08f8637384a3c9763ce64fc9b21b088bf90d7a523ca739a8f6ba73ca"
+    },
+    "src/PL/fft128_ps/reset_sim_sources.tcl": {
+      "raw_sha256": "a823ed935910af4922779d2a7596ef3f072bb7a9e7aba073c57dccc8c09e57e5",
+      "lf_sha256": "a823ed935910af4922779d2a7596ef3f072bb7a9e7aba073c57dccc8c09e57e5"
+    },
+    "src/PL/fft128_ps/verify_dma_parallel.py": {
+      "raw_sha256": "4a3e463127f59e11f0ae4a64ea94555ca3fea4c2d4f9b0259905851fb4ab78ac",
+      "lf_sha256": "4a3e463127f59e11f0ae4a64ea94555ca3fea4c2d4f9b0259905851fb4ab78ac"
+    },
+    "src/PL/fft128_ps/zybo_sysclk.xdc": {
+      "raw_sha256": "c889d72c6ab907a373332b77bcdbd10429983104522b69266f520e05e0214457",
+      "lf_sha256": "63d01c27230b0d597ed530c15f4a2d06722412fc907135ace4ed7aad3bcac719"
+    },
+    "src/PS/fft128/build_native.sh": {
+      "raw_sha256": "6dd83a926f91606a34e606a1056905b5e5c64e67d79719386f8c3f87be3431b0",
+      "lf_sha256": "6dd83a926f91606a34e606a1056905b5e5c64e67d79719386f8c3f87be3431b0"
+    },
+    "src/PS/fft128/dma/make_overlay.py": {
+      "raw_sha256": "16c8dc163b3b24e4a4e7b271744df21c0442fcc03803e752a917ed1a599aefb7",
+      "lf_sha256": "16c8dc163b3b24e4a4e7b271744df21c0442fcc03803e752a917ed1a599aefb7"
+    },
+    "src/PS/fft128/dma_batch/batch_process.c": {
+      "raw_sha256": "051378930703730099b418e481f508e43dd764a971f4e7b882f837d041dd49c4",
+      "lf_sha256": "051378930703730099b418e481f508e43dd764a971f4e7b882f837d041dd49c4"
+    },
+    "src/PS/fft128/dma_batch/batch_process.h": {
+      "raw_sha256": "bc4f0ebd12995e3db7642305e844ea788a6aa5e0edcf1d7df6a35872e76d087e",
+      "lf_sha256": "bc4f0ebd12995e3db7642305e844ea788a6aa5e0edcf1d7df6a35872e76d087e"
+    },
+    "src/PS/fft128/dma_batch/make_overlay.py": {
+      "raw_sha256": "c7a26c18bf2078f5689e73b96ceb75f2798f83b7987d54f064a0de693a161e0d",
+      "lf_sha256": "c7a26c18bf2078f5689e73b96ceb75f2798f83b7987d54f064a0de693a161e0d"
+    },
+    "src/PS/fft128/dma_parallel/analyze_profile.py": {
+      "raw_sha256": "b763a99e502e27d4cf6ac3451f1c326e3cbc0be0ef44e1aca0291a67ab28457f",
+      "lf_sha256": "b763a99e502e27d4cf6ac3451f1c326e3cbc0be0ef44e1aca0291a67ab28457f"
+    },
+    "src/PS/fft128/dma_parallel/build_module.sh": {
+      "raw_sha256": "f3d6b9247c77da92e83c502f3839270deaf7157b56d418e1181a0b15f8c88b5a",
+      "lf_sha256": "f3d6b9247c77da92e83c502f3839270deaf7157b56d418e1181a0b15f8c88b5a"
+    },
+    "src/PS/fft128/dma_parallel/collect_results.sh": {
+      "raw_sha256": "bd3261cff6e8136a4462a225b3d2033c56a01f5a22b2658eecb358b667d0a1b4",
+      "lf_sha256": "bd3261cff6e8136a4462a225b3d2033c56a01f5a22b2658eecb358b667d0a1b4"
+    },
+    "src/PS/fft128/dma_parallel/deploy.sh": {
+      "raw_sha256": "25da8a38ef0c7e8e48290d77229ac57a3023c246cade80616b6b8f550446375f",
+      "lf_sha256": "25da8a38ef0c7e8e48290d77229ac57a3023c246cade80616b6b8f550446375f"
+    },
+    "src/PS/fft128/dma_parallel/dma_parallel_backend.c": {
+      "raw_sha256": "9bb4488ee802d62a2668c8cd25f23aa2732783a851003b0283f3170e6225faee",
+      "lf_sha256": "9bb4488ee802d62a2668c8cd25f23aa2732783a851003b0283f3170e6225faee"
+    },
+    "src/PS/fft128/dma_parallel/fft128_dma_parallel.c": {
+      "raw_sha256": "286e30ac8e4ec9125aa68551f9b84816f048c75fb90bdc017aabd7b0d3917341",
+      "lf_sha256": "286e30ac8e4ec9125aa68551f9b84816f048c75fb90bdc017aabd7b0d3917341"
+    },
+    "src/PS/fft128/dma_parallel/fft128_dma_parallel_uapi.h": {
+      "raw_sha256": "6214015fedfe22f2440533ec607598c5ba516a1ae9f21933293225e348c8d915",
+      "lf_sha256": "6214015fedfe22f2440533ec607598c5ba516a1ae9f21933293225e348c8d915"
+    },
+    "src/PS/fft128/dma_parallel/load_board.sh": {
+      "raw_sha256": "68dc3564ca4857b0f99770fa2652ad88f98c9d7c16567bc38cbc8f7dda07b3b8",
+      "lf_sha256": "68dc3564ca4857b0f99770fa2652ad88f98c9d7c16567bc38cbc8f7dda07b3b8"
+    },
+    "src/PS/fft128/dma_parallel/make_overlay.py": {
+      "raw_sha256": "3017f60b42ea3f071476ac9307fda912518f06d44bf924510365ef6de4a3ecea",
+      "lf_sha256": "3017f60b42ea3f071476ac9307fda912518f06d44bf924510365ef6de4a3ecea"
+    },
+    "src/PS/fft128/dma_parallel/Makefile": {
+      "raw_sha256": "23971159fc18c6e4c420058a47a922ca3bc34fb9dee86d5c831ea75ca8027e63",
+      "lf_sha256": "23971159fc18c6e4c420058a47a922ca3bc34fb9dee86d5c831ea75ca8027e63"
+    },
+    "src/PS/fft128/dma_parallel/prepare_all.sh": {
+      "raw_sha256": "a5b54d9fda11f21579ea964738a043430a9102b350f4ec26641c1f42db29a48b",
+      "lf_sha256": "a5b54d9fda11f21579ea964738a043430a9102b350f4ec26641c1f42db29a48b"
+    },
+    "src/PS/fft128/dma_parallel/prepare_bundle.sh": {
+      "raw_sha256": "089f78501eca99e60be0c52eae9a0b50298bea64d9cc03082b166b81774086e1",
+      "lf_sha256": "089f78501eca99e60be0c52eae9a0b50298bea64d9cc03082b166b81774086e1"
+    },
+    "src/PS/fft128/dma_parallel/prepare_host.sh": {
+      "raw_sha256": "611e336e0150813e170122d9ca44fa1a62f89e71d7586e04a8781281806d98e3",
+      "lf_sha256": "611e336e0150813e170122d9ca44fa1a62f89e71d7586e04a8781281806d98e3"
+    },
+    "src/PS/fft128/dma_parallel/profile_board.sh": {
+      "raw_sha256": "5ebc4bd29d0be17eaef5425d42b73f4a6584e0527ff1e274a7dfb9b9ab78faed",
+      "lf_sha256": "5ebc4bd29d0be17eaef5425d42b73f4a6584e0527ff1e274a7dfb9b9ab78faed"
+    },
+    "src/PS/fft128/dma_parallel/README.md": {
+      "raw_sha256": "13f939f38e721aaa8f27eb019945719fedd940fbcae4f8524738f9591fa63eae",
+      "lf_sha256": "13f939f38e721aaa8f27eb019945719fedd940fbcae4f8524738f9591fa63eae"
+    },
+    "src/PS/fft128/dma_parallel/run_board.sh": {
+      "raw_sha256": "52dd5fdca7c0a39f1b9d531d1fff071d811e8e73fb1bd0e4111190f0fcc67c94",
+      "lf_sha256": "52dd5fdca7c0a39f1b9d531d1fff071d811e8e73fb1bd0e4111190f0fcc67c94"
+    },
+    "src/PS/fft128/dma_parallel/test_dma_parallel_client.c": {
+      "raw_sha256": "5d9647a8ae4096f63ca6cb31ecc2188cb063c7393dba8c89f5e1b72b6656138a",
+      "lf_sha256": "5d9647a8ae4096f63ca6cb31ecc2188cb063c7393dba8c89f5e1b72b6656138a"
+    },
+    "src/PS/fft128/dma_parallel/test_tools.py": {
+      "raw_sha256": "49d10ae2c1e34818038d9df7ca2e3591852af07ab42311403b64b9239f6fc67c",
+      "lf_sha256": "49d10ae2c1e34818038d9df7ca2e3591852af07ab42311403b64b9239f6fc67c"
+    },
+    "src/PS/fft128/native_core.c": {
+      "raw_sha256": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+      "lf_sha256": "adc8cbd4c24a9511e3ed3a6a435af1338d0f9fb88dc53258f94be45e84ef861f"
+    },
+    "src/PS/fft128/native_core.h": {
+      "raw_sha256": "28957fa537466a115b5de31b3bd0d3942ebc2ac0b0ff33f658a933bf6cac5ce6",
+      "lf_sha256": "28957fa537466a115b5de31b3bd0d3942ebc2ac0b0ff33f658a933bf6cac5ce6"
+    },
+    "src/PS/fft128/native_receiver.c": {
+      "raw_sha256": "5431be3f55e55136c56cd91ebfb52e2843e838e55f261ceb6d32adea721637f5",
+      "lf_sha256": "5431be3f55e55136c56cd91ebfb52e2843e838e55f261ceb6d32adea721637f5"
+    }
+  }
+}

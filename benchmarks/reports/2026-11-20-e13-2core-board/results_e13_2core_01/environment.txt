@@ -1,0 +1,33 @@
+Linux Petalinux-2022 5.15.19-xilinx #1 SMP PREEMPT Wed Aug 26 11:47:56 KST 2026 armv7l GNU/Linux
+99dbd625-31d0-43fe-a3d8-f65c4e12939c
+processor	: 0
+model name	: ARMv7 Processor rev 0 (v7l)
+BogoMIPS	: 333.33
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x3
+CPU part	: 0xc09
+CPU revision	: 0
+
+processor	: 1
+model name	: ARMv7 Processor rev 0 (v7l)
+BogoMIPS	: 333.33
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x3
+CPU part	: 0xc09
+CPU revision	: 0
+
+Hardware	: Xilinx Zynq Platform
+Revision	: 0003
+Serial		: 0000000000000000
+E13-2core CPU0 warmup=10 repeats=100 trials=3, coherent bounce buffers, HP0, 50MHz 2cores pair_barrier
+{"experiment":"E13-2core","core":"pipeline","clock_hz":50000000,"fft_control_base":"0x43c60000","dma_base":"0x40400000","irq_f2p_bits":[6,7],"dt_spi":[35,36],"memory_port":"HP0","memory_width":64,"stream_width":32,"sg":false,"dre":false,"burst":16,"length_width":17,"register_abi":3,"parallel_cores":2,"pair_barrier":true,"next_pair_prefetch":false,"external_ping_pong":false,"fft_per_request":128,"bytes_per_direction":65536,"board_verified":false}
+c6aa49d2936700c7b407c9317f7969938ba7641282862870bc45ad02550573f1  /opt/fft128/e13_2core/fft128_e13_2core.bin
+265c860509aba9237df3d57e3e422deb8bfef433af357c2565511d35d9c74d7c  /opt/fft128/e13_2core/fft128_dma_parallel.ko
+7fab5da12902232ffa413eb741f4f9af2b14fe77c8e6d5a29a736ee106565217  /opt/fft128/e13_2core/fft128-receiver
+aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976  /opt/fft128/e13_2core/frame.rspb
+/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor: unavailable
+/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: unavailable

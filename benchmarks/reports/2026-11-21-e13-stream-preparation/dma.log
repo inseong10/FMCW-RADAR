@@ -1,0 +1,19 @@
+STREAM_ZERO_STALL_AXIS cycles=17770 frame_cycles=35540
+STREAM_PACKET_PASS count=128 mode=0 malformed=0 cycles=17770 multi_stage=16640 multi_vector=17386
+STREAM_ZERO_STALL_AXIS cycles=17770 frame_cycles=35540
+STREAM_PACKET_PASS count=128 mode=0 malformed=0 cycles=17770 multi_stage=16640 multi_vector=17386
+STREAM_PACKET_PASS count=16 mode=0 malformed=0 cycles=3434 multi_stage=2304 multi_vector=3050
+STREAM_PACKET_PASS count=1 mode=0 malformed=0 cycles=1514 multi_stage=0 multi_vector=0
+STREAM_PACKET_PASS count=2 mode=0 malformed=0 cycles=1642 multi_stage=0 multi_vector=1258
+STREAM_PACKET_PASS count=3 mode=0 malformed=0 cycles=1770 multi_stage=60 multi_vector=1386
+STREAM_PACKET_PASS count=4 mode=0 malformed=0 cycles=1898 multi_stage=400 multi_vector=1514
+STREAM_PACKET_PASS count=5 mode=0 malformed=0 cycles=2026 multi_stage=740 multi_vector=1642
+STREAM_PACKET_PASS count=127 mode=0 malformed=0 cycles=17642 multi_stage=16512 multi_vector=17258
+STREAM_PACKET_PASS count=128 mode=1 malformed=0 cycles=42956 multi_stage=18925 multi_vector=41995
+STREAM_PACKET_PASS count=128 mode=2 malformed=0 cycles=106670 multi_stage=12192 multi_vector=70866
+STREAM_PACKET_PASS count=2 mode=0 malformed=1 cycles=1642 multi_stage=0 multi_vector=1258
+STREAM_PACKET_PASS count=2 mode=0 malformed=2 cycles=1642 multi_stage=0 multi_vector=1258
+STREAM_PACKET_PASS count=2 mode=0 malformed=3 cycles=1642 multi_stage=0 multi_vector=1258
+STREAM_PACKET_PASS count=5 mode=0 malformed=0 cycles=2026 multi_stage=740 multi_vector=1642
+DMA_STREAM_CTRL_PASS numeric_vectors=272 full_partial_repeated_axis independent_AW_W response_stalls TLAST_TKEEP backpressure abort_recovery stage_counters inter_frame_overlap
+C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\dma_stream_ctrl_tb.v:170: $finish called at 2348490000 (1ps)

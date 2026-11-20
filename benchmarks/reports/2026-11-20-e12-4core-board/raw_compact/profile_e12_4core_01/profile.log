@@ -1,0 +1,10 @@
+CPU_AFFINITY=0
+DMA: kernel-owned control registers, HP0, coherent bounce buffers; 64 KiB per direction/axis, 128 FFTs, 4 arithmetic cores, independent buffered lanes
+BACKEND=PL_DMA_OVERLAP implementation=native_C
+BENCHMARK: warmup=2 repeat=20 preallocated buffers; data path=PL_DMA_OVERLAP
+peak_unshifted=(107,20) fft_and_transfer_seconds=0.003200
+DMA_PROFILE: ioctl_ms=2.088512 kernel_copies_ms=0.836815 kernel_wait_ms=1.170026 PS_transpose_ms=0.674777 pl_active_ms=1.124590
+DMA_PROFILE: nested kernel and PL intervals overlap ioctl; active cycles INCLUDE stream stalls. Separate instrumented run.
+OVERLAP_PROFILE cores=4 mean_multi_work_cycles=38720.000 mean_all_work_cycles=5952.000 group_barrier=0 next_group_prefetch=1
+PIPELINE_TIMING backend=PL_DMA_OVERLAP mean_ms=3.200291 median_ms=3.183387 min_ms=3.164184 max_ms=3.291258 repeats=20
+FRAME_PASS backend=PL_DMA_OVERLAP bit_exact_bins=16384

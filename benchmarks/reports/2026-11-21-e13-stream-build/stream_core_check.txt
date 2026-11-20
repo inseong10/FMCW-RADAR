@@ -1,0 +1,1 @@
+streaming_cores=1; dedicated_stages=7; DSP48E1=28; frame_initiation_interval=128; board stage counters pending

@@ -1,0 +1,14 @@
+{
+  "experiment": "E13-stream",
+  "clock_hz": 50000000,
+  "baseline_experiment": "E13-bf2",
+  "baseline_zero_stall_axis_cycles": 20930,
+  "stream_zero_stall_axis_cycles": 17770,
+  "baseline_frame_ms": 0.8372,
+  "stream_frame_ms": 0.7108,
+  "pl_interval_reduction_percent": 15.09794553272814,
+  "steady_frame_interval_cycles": 128,
+  "single_fft_axis_cycles": 1514,
+  "scope": "RTL cycles at fixed target clock; no real AXI DMA, DDR, IRQ, PS copies, transpose or board result",
+  "board_verified": false
+}

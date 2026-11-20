@@ -1,0 +1,1 @@
+core_instances=4; DSP48E1=32; butterflies_per_core=2; total_butterflies=8; board dual-issue counters pending

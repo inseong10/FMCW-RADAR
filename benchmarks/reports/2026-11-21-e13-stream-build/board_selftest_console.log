@@ -1,0 +1,26 @@
+ dedicated stages, coherent bounce buffers, 64KiB each direction
+STREAM_PACKET_PASS fft_count=1 bytes_each_direction=512 completed=1
+STREAM_PACKET_PASS fft_count=2 bytes_each_direction=1024 completed=2
+STREAM_PACKET_PASS fft_count=3 bytes_each_direction=1536 completed=3
+STREAM_PACKET_PASS fft_count=4 bytes_each_direction=2048 completed=4
+STREAM_PACKET_PASS fft_count=5 bytes_each_direction=2560 completed=5
+STREAM_PACKET_PASS fft_count=127 bytes_each_direction=65024 completed=127
+STREAM_PACKET_PASS fft_count=128 bytes_each_direction=65536 completed=128
+STREAM_PACKET_PASS fft_count=128 bytes_each_direction=65536 completed=128
+STREAM_IO_PASS io=14998 input_work=16191 output_work=16191 three=14998
+STREAM_STAGE_PASS stages=7 stage_busy_cycles=60928 multi_stage_cycles=16640 vector_overlap
+_cycles=17386
+STREAM_ARITHMETIC_PASS stage=0 issue=8192 retire=8192
+STREAM_ARITHMETIC_PASS stage=1 issue=8192 retire=8192
+STREAM_ARITHMETIC_PASS stage=2 issue=8192 retire=8192
+STREAM_ARITHMETIC_PASS stage=3 issue=8192 retire=8192
+STREAM_ARITHMETIC_PASS stage=4 issue=8192 retire=8192
+STREAM_ARITHMETIC_PASS stage=5 issue=8192 retire=8192
+STREAM_ARITHMETIC_PASS stage=6 issue=8192 retire=8192
+DMA_STREAM_CLIENT_PASS exclusive_owner invalid_ABI timeout flags count full_axis repeated_
+packets
+DMA: kernel-owned control registers, HP0, coherent bounce buffers; 64 KiB per direction/ax
+is, 128 FFTs, 1 streaming core, 7 dedicated stages
+BACKEND=PL_DMA_STREAM implementation=native_C
+SELFTEST_PASS backend=PL_DMA_STREAM vectors=4 bins=512
+DMA_E13_STREAM_SELFTEST_READY: next run full frame/profile before benchmarking

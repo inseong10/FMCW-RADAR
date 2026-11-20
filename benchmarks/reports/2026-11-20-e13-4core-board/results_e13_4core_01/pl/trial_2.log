@@ -1,0 +1,7 @@
+CPU_AFFINITY=0
+DMA: kernel-owned control registers, HP0, coherent bounce buffers; 64 KiB per direction/axis, 128 FFTs, 4 arithmetic cores, group barrier
+BACKEND=PL_DMA_QUAD implementation=native_C
+BENCHMARK: warmup=10 repeat=100 preallocated buffers; data path=PL_DMA_QUAD
+peak_unshifted=(107,20) fft_and_transfer_seconds=0.004263
+PIPELINE_TIMING backend=PL_DMA_QUAD mean_ms=4.263111 median_ms=4.252101 min_ms=4.210818 max_ms=4.525278 repeats=100
+FRAME_PASS backend=PL_DMA_QUAD bit_exact_bins=16384

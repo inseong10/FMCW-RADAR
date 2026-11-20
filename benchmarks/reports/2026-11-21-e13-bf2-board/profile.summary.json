@@ -1,0 +1,62 @@
+{
+  "status": "E13_BF2_DMA_DIAGNOSTIC_ONLY",
+  "frames": 20,
+  "mean_ms": {
+    "wall_ms": 2.88536885,
+    "pl_active_ms": 0.8379030000000001,
+    "host_input_copy_ms": 0.2404851,
+    "ioctl_ms": 1.79015615,
+    "host_output_copy_ms": 0.1729878,
+    "gather_ms": 0.3431853,
+    "scatter_ms": 0.3283863,
+    "kernel_copy_in_ms": 0.1923231,
+    "kernel_submit_ms": 0.0342618,
+    "kernel_wait_ms": 0.87875015,
+    "kernel_check_ms": 0.0205455,
+    "kernel_copy_out_ms": 0.6414846
+  },
+  "wall_median_ms": 2.86425,
+  "host_residual_ms": 0.01016819999999985,
+  "ioctl_residual_ms": 0.022791000000000006,
+  "multi_work_cycles": {
+    "min": 24000,
+    "max": 24000,
+    "mean": 24000
+  },
+  "all_work_cycles": {
+    "min": 0,
+    "max": 0,
+    "mean": 0
+  },
+  "simultaneous_multi_calc_cycles_lower_bound": {
+    "min": 23744,
+    "max": 23744,
+    "mean": 23744
+  },
+  "simultaneous_four_calc_cycles_lower_bound": {
+    "min": 0,
+    "max": 0,
+    "mean": 0
+  },
+  "parallel_counters_mean": {
+    "core0_active_cycles": 40704,
+    "core1_active_cycles": 40704,
+    "core2_active_cycles": 40704,
+    "core3_active_cycles": 40704,
+    "any_busy_cycles": 41596,
+    "multi_busy_cycles": 41084,
+    "all_busy_cycles": 39564,
+    "multi_work_cycles": 24000,
+    "all_work_cycles": 0,
+    "arbitration_stall_cycles": 24446,
+    "io_overlap_cycles": 27022,
+    "input_work_overlap_cycles": 32194,
+    "output_work_overlap_cycles": 32192,
+    "three_overlap_cycles": 26964,
+    "dual_issue_events": 57344,
+    "dual_retire_events": 57344,
+    "calc_lane_cycles": 64512
+  },
+  "payload_bytes_per_frame": 262144,
+  "interpretation": "Kernel stages and PL active time overlap ioctl. Do not sum them with host stages. Input and output stalls may overlap each other across lanes; never subtract their sum as pure compute time. Work window spans last input handshake to first output valid, including initial output read latency. IO overlap counts simultaneous external handshakes; work overlap includes that initial read clock. Bounds subtract 256 cycles/frame for multi-work and 256 for all-four-work. Coherent HP0 copies included. Four simultaneous FFT CALC windows are not required; each core executes two butterflies per issue. Issue/retire events and CALC lane cycles sum across cores and can exceed wall cycles. Separate unprofiled paired trials are required for performance comparisons."
+}

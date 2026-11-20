@@ -3,3 +3,11 @@
 *.log -whitespace
 *.rpt -whitespace
 build_config.json -whitespace
+
+# Preserve exact captured evidence bytes used by E12/E13 SHA256 manifests.
+2026-11-20-e12-4core-*/** -text
+2026-11-20-e13-2core-*/** -text
+2026-11-20-e13-4core-*/** -text
+2026-11-20-e13-bf2-*/** -text
+2026-11-21-e13-bf2-*/** -text
+2026-11-21-e13-stream-*/** -text

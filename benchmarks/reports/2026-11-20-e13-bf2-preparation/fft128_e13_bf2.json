@@ -1,0 +1,30 @@
+{
+  "overlay_layout": "existing_amba_pl_v2",
+  "target_bus": "/amba_pl",
+  "gic_path": "/axi/interrupt-controller@f8f01000",
+  "gic_phandle": 4,
+  "fft_base": "0x43c60000",
+  "dma_base": "0x40400000",
+  "dt_spi": [
+    35,
+    36
+  ],
+  "irq_f2p_bits": [
+    6,
+    7
+  ],
+  "clock_hz": 50000000,
+  "live_dt_sha256": "a6d514ad3a47f85f32ebda23a27f841e33f80da2e6ebaeec0ab50d157397076e",
+  "experiment": "E13-bf2",
+  "register_abi": 6,
+  "fft_per_request": 128,
+  "bytes_per_direction": 65536,
+  "parallel_cores": 4,
+  "butterflies_per_core": 2,
+  "total_butterflies": 8,
+  "group_barrier": false,
+  "next_group_prefetch": true,
+  "external_ping_pong": false,
+  "external_buffers": true,
+  "buffering": "per_lane_fifos"
+}

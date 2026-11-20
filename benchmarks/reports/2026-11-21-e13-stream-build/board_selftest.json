@@ -1,0 +1,168 @@
+{
+  "experiment": "E13-stream",
+  "date": "2026-11-21 Asia/Seoul",
+  "evidence_scope": "User-supplied partial PetaLinux console plus independent shared bundle hashes; programming/probe prelude was not supplied and is not reconstructed.",
+  "status": "BOARD_PACKET_AND_RECEIVER_SELFTEST_PASS",
+  "programming_ms": null,
+  "fft_cores": 1,
+  "dedicated_stages": 7,
+  "fft_counts_pass": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    127,
+    128,
+    128
+  ],
+  "receiver_selftest_vectors": 4,
+  "receiver_selftest_bins": 512,
+  "last_axis_fft_count": 128,
+  "stage_issue_events": [
+    8192,
+    8192,
+    8192,
+    8192,
+    8192,
+    8192,
+    8192
+  ],
+  "stage_retire_events": [
+    8192,
+    8192,
+    8192,
+    8192,
+    8192,
+    8192,
+    8192
+  ],
+  "stage_busy_cycles": 60928,
+  "multi_stage_cycles": 16640,
+  "vector_overlap_cycles": 17386,
+  "io_overlap_cycles": 14998,
+  "input_calc_overlap_cycles": 16191,
+  "output_calc_overlap_cycles": 16191,
+  "input_calc_output_overlap_cycles": 14998,
+  "calc_overlap_semantics": "Direct actual stage CALC gating; no output-read work-window correction",
+  "stage_issue_retire_per_fft": 64,
+  "stage_calc_cycles_per_fft": 68,
+  "bundle_artifacts_verified": [
+    {
+      "path": "fft128_e13_stream.bin",
+      "sha256": "cad440ff51b3a99e5645f06e3122663ec1fdb6b117ae6b6b4bf030d6ecd37967",
+      "bytes": 2083744
+    },
+    {
+      "path": "fft128_e13_stream.dtbo",
+      "sha256": "0ef118190985b0358a2f2ddea4be24a9662315508c51d6176f92815fa7029e62",
+      "bytes": 1469
+    },
+    {
+      "path": "fft128_e13_stream.json",
+      "sha256": "f92fce78608e8740aad1bed978248a2f3914485d3d2a34a92771bc2561fe0fa4",
+      "bytes": 831
+    },
+    {
+      "path": "fft128_dma_stream.ko",
+      "sha256": "ece22db75d43cd3fac9ad8e0a106814f9567b2ab625453e1066308712acf6850",
+      "bytes": 14368
+    },
+    {
+      "path": "fft128-receiver",
+      "sha256": "0545f95549a7582235920dac61e8bdcd890c78885ac8428260dccb42ba78fd1f",
+      "bytes": 465452
+    },
+    {
+      "path": "test-dma-stream-client",
+      "sha256": "6c911ac58a9a0c8feb7a09c4e110f9565ce72c09f136aefca7966803cac00a6f",
+      "bytes": 431768
+    },
+    {
+      "path": "frame.rspb",
+      "sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+      "bytes": 135176
+    },
+    {
+      "path": "kernelrelease.txt",
+      "sha256": "b1fc844b1ee87f48cd89d857eb48ae13b9a1e5bd6d366112a8cb8972fc01034d",
+      "bytes": 15
+    },
+    {
+      "path": "gic_phandle.bin",
+      "sha256": "1bc5d0e3df0ea12c4d0078668d14924f95106bbe173e196de50fe13a900b0937",
+      "bytes": 4
+    },
+    {
+      "path": "gic_path.txt",
+      "sha256": "1c6c83c7ef115c7a7d6bd02696ca4f5a64e2ae24beabac820da66ff111b90faa",
+      "bytes": 35
+    },
+    {
+      "path": "dma_config.json",
+      "sha256": "0ebb8ad668a9d29b123b596a5c7658c3941d8f8d0425e4bf369a2668861f8a10",
+      "bytes": 715
+    },
+    {
+      "path": "stream_core_check.txt",
+      "sha256": "44c2927395bf9c1abdd7587acd68ff6e394a594f6b6ddc211a13f6ed9a03b0d1",
+      "bytes": 111
+    },
+    {
+      "path": "stream_utilization.rpt",
+      "sha256": "55d1a4112757c893a28254f11fa70428e980bd3df0b4eb6671906b111b5cce37",
+      "bytes": 98980
+    },
+    {
+      "path": "build_config.json",
+      "sha256": "f6deb3dc3241203c31af50f730ffe5b20510623a0ba6f642c34185a7a615f37c",
+      "bytes": 68
+    },
+    {
+      "path": "clock_source.txt",
+      "sha256": "9f749a74cea4bfbe43d7d176174f2ea808fd87b5bb56b631d5fdfeac82e52597",
+      "bytes": 264
+    },
+    {
+      "path": "pl_source.sha256",
+      "sha256": "7ccc243ae8a9a4e65452514664d1e845a9acffa30171172ef7a738a3cc21ec80",
+      "bytes": 1661
+    },
+    {
+      "path": "host_source.sha256",
+      "sha256": "75f00e5c90f780a8350a59e7b4cd66a251fad47d442766ccf805689d036716fe",
+      "bytes": 1251
+    },
+    {
+      "path": "module_source.sha256",
+      "sha256": "c064ffdf23e47a08acf694382d306c1170933f098fd8a5867be8a2d3a33fc43d",
+      "bytes": 252
+    },
+    {
+      "path": "module_build_environment.txt",
+      "sha256": "022f0a270f48b5fb41b15469ddbeb5a2c5aeaa82f1f1c32e930de33f8ad23834",
+      "bytes": 1388
+    },
+    {
+      "path": "load_board.sh",
+      "sha256": "0faaa68a8d26bcb35631c467a452345858ee75f652b7f38de287417e80c9230e",
+      "bytes": 3557
+    },
+    {
+      "path": "profile_board.sh",
+      "sha256": "119d942f7f2cf8751906f96b6eb5d67f478088064c815cb5ae38bfb5ae29ab25",
+      "bytes": 669
+    },
+    {
+      "path": "run_board.sh",
+      "sha256": "9a4692e48a9bda17bc4a16ce1e2d6ef89b19b1e06da91c55b17f25c262bc3273",
+      "bytes": 3986
+    }
+  ],
+  "bundle_bin_matches_firmware_conversion": true,
+  "module_compatibility_inferred_from_successful_selftest": true,
+  "full_frame_verified": false,
+  "profile_verified": false,
+  "paired_benchmark_verified": false,
+  "board_wall_time_measured": false
+}

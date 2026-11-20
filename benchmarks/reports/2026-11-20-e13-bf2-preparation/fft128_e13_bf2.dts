@@ -1,0 +1,47 @@
+/dts-v1/;
+/plugin/;
+/ {
+    fragment@0 {
+        target-path = "/";
+        __overlay__ {
+            fft128_e13_bf2_clock: fft128-e13_bf2-clock {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <50000000>;
+            };
+        };
+    };
+    fragment@1 {
+        target-path = "/amba_pl";
+        __overlay__ {
+            #address-cells = <1>;
+            #size-cells = <1>;
+                fft128_e13_bf2_dma: dma@40400000 {
+                    compatible = "xlnx,axi-dma-1.00.a";
+                    interrupt-parent = <0x4>;
+                    reg = <0x40400000 0x10000>;
+                    #dma-cells = <1>;
+                    xlnx,addrwidth = <32>;
+                    xlnx,sg-length-width = <17>;
+                    clocks = <&fft128_e13_bf2_clock>, <&fft128_e13_bf2_clock>, <&fft128_e13_bf2_clock>;
+                    clock-names = "s_axi_lite_aclk", "m_axi_mm2s_aclk", "m_axi_s2mm_aclk";
+                    dma-channel-mm2s {
+                        compatible = "xlnx,axi-dma-mm2s-channel";
+                        interrupts = <0 35 4>;
+                        xlnx,datawidth = <64>;
+                    };
+                    dma-channel-s2mm {
+                        compatible = "xlnx,axi-dma-s2mm-channel";
+                        interrupts = <0 36 4>;
+                        xlnx,datawidth = <64>;
+                    };
+                };
+                fft@43c60000 {
+                    compatible = "fmcw,fft128-dma-bf2-v6";
+                    reg = <0x43c60000 0x1000>;
+                    dmas = <&fft128_e13_bf2_dma 0>, <&fft128_e13_bf2_dma 1>;
+                    dma-names = "tx", "rx";
+                };
+        };
+    };
+};

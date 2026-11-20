@@ -1,0 +1,30 @@
+HP0 read/write control before activation: 0x00000000 0x00000F00
+fpga_manager fpga0: writing fft128_e12_4core.bin to Xilinx Zynq FPGA Manager
+Time taken to load BIN is 56.000000 Milli Seconds
+BIN FILE loaded through FPGA manager successfully
+OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/ff
+t128_e12_4core_clock
+OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/ff
+t128_e12_4core_dma
+xilinx-vdma 40400000.dma: Xilinx AXI DMA Engine Driver Probed!!
+fft128_dma_overlap: loading out-of-tree module taints kernel.
+fft128-dma-overlap 43c60000.fft: E12-4core ready: up to 128 FFT/ioctl, 4 cores, independen
+t buffered lanes, coherent bounce buffers, 64KiB each direction
+OVERLAP_PACKET_PASS fft_count=1 bytes_each_direction=512 completed=1
+OVERLAP_PACKET_PASS fft_count=2 bytes_each_direction=1024 completed=2
+OVERLAP_PACKET_PASS fft_count=3 bytes_each_direction=1536 completed=3
+OVERLAP_PACKET_PASS fft_count=4 bytes_each_direction=2048 completed=4
+OVERLAP_PACKET_PASS fft_count=5 bytes_each_direction=2560 completed=5
+OVERLAP_PACKET_PASS fft_count=127 bytes_each_direction=65024 completed=127
+OVERLAP_PACKET_PASS fft_count=128 bytes_each_direction=65536 completed=128
+OVERLAP_PACKET_PASS fft_count=128 bytes_each_direction=65536 completed=128
+OVERLAP_IO_PASS io=11415 input_work=16097 output_work=16096 three=11386
+OVERLAP_OVERLAP_PASS cores=4 multi_busy_cycles=27710 all_busy_cycles=26950 multi_work_cycl
+es=19360 all_work_cycles=2976
+DMA_OVERLAP_CLIENT_PASS exclusive_owner invalid_ABI timeout flags count full_axis repeated
+_packets
+DMA: kernel-owned control registers, HP0, coherent bounce buffers; 64 KiB per direction/ax
+is, 128 FFTs, 4 arithmetic cores, independent buffered lanes
+BACKEND=PL_DMA_OVERLAP implementation=native_C
+SELFTEST_PASS backend=PL_DMA_OVERLAP vectors=4 bins=512
+DMA_E12_4CORE_SELFTEST_READY: next run full frame/profile before benchmarking

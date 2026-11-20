@@ -1,0 +1,7 @@
+CPU_AFFINITY=0
+DMA: kernel-owned control registers, HP0, coherent bounce buffers; 64 KiB per direction/axis, 128 FFTs, 4 arithmetic cores, independent buffered lanes
+BACKEND=PL_DMA_OVERLAP implementation=native_C
+BENCHMARK: warmup=10 repeat=100 preallocated buffers; data path=PL_DMA_OVERLAP
+peak_unshifted=(107,20) fft_and_transfer_seconds=0.003108
+PIPELINE_TIMING backend=PL_DMA_OVERLAP mean_ms=3.108267 median_ms=3.096540 min_ms=3.079002 max_ms=3.483654 repeats=100
+FRAME_PASS backend=PL_DMA_OVERLAP bit_exact_bins=16384

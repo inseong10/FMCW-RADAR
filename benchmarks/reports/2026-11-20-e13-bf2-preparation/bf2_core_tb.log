@@ -1,0 +1,2 @@
+BF2_CORE_PASS vectors=272 exact_bins=34816 baseline_CALC=476 bf2_CALC=252 issue_pairs=224 retire_pairs=224 bank_conflicts=0 stalled_output malformed_TLAST
+C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\bf2_core_tb.v:92: $finish called at 3041010000 (1ps)

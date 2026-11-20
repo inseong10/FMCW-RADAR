@@ -1,0 +1,55 @@
+{
+  "status": "E13_4CORE_DMA_DIAGNOSTIC_ONLY",
+  "frames": 20,
+  "mean_ms": {
+    "wall_ms": 4.2229761,
+    "pl_active_ms": 2.081883,
+    "host_input_copy_ms": 0.23285519999999998,
+    "ioctl_ms": 3.0607236,
+    "host_output_copy_ms": 0.2344059,
+    "gather_ms": 0.3603636,
+    "scatter_ms": 0.3246969,
+    "kernel_copy_in_ms": 0.211416,
+    "kernel_submit_ms": 0.0362094,
+    "kernel_wait_ms": 2.1287466,
+    "kernel_check_ms": 0.0154392,
+    "kernel_copy_out_ms": 0.6453981
+  },
+  "wall_median_ms": 4.220256,
+  "host_residual_ms": 0.00993090000000052,
+  "ioctl_residual_ms": 0.023514300000000432,
+  "multi_work_cycles": {
+    "min": 38720,
+    "max": 38720,
+    "mean": 38720
+  },
+  "all_work_cycles": {
+    "min": 5952,
+    "max": 5952,
+    "mean": 5952
+  },
+  "simultaneous_multi_calc_cycles_lower_bound": {
+    "min": 38464,
+    "max": 38464,
+    "mean": 38464
+  },
+  "simultaneous_four_calc_cycles_lower_bound": {
+    "min": 5888,
+    "max": 5888,
+    "mean": 5888
+  },
+  "parallel_counters_mean": {
+    "core0_active_cycles": 55070.15,
+    "core1_active_cycles": 71390.15,
+    "core2_active_cycles": 87710.15,
+    "core3_active_cycles": 104030.15,
+    "any_busy_cycles": 104030.15,
+    "multi_busy_cycles": 87710.15,
+    "all_busy_cycles": 55070.15,
+    "multi_work_cycles": 38720,
+    "all_work_cycles": 5952,
+    "arbitration_stall_cycles": 40704
+  },
+  "payload_bytes_per_frame": 262144,
+  "interpretation": "Kernel stages and PL active time overlap ioctl. Do not sum them with host stages. Input and output stalls may overlap each other across lanes; never subtract their sum as pure compute time. Work window spans last input handshake to first output valid, including initial output read latency. Bounds subtract 256 cycles/frame for multi-work and 64 for all-four-work. Coherent HP0 copies included. Separate unprofiled paired trials are required for performance comparisons."
+}

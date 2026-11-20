@@ -1,0 +1,43 @@
+{
+  "pl_source": {
+    "src/PL/fft128_ps/build_dma_quad.tcl": "6f0a67fa4eb4bde1b130bca34408f29b4e3b2004a114635af570f397d2e8b357",
+    "src/PL/fft128_ps/build.tcl": "62febe110530628f44335de4efdb825be1a5b0632bd2c1adcb95333fce08168e",
+    "src/PL/fft128_ps/reset_dma_quad_tb.v": "36bdeb2cd288686db185a43b6feddbbef84398d936243b62d8066f72cafe2cd6",
+    "src/PL/fft128_ps/reset_sim_sources.tcl": "a823ed935910af4922779d2a7596ef3f072bb7a9e7aba073c57dccc8c09e57e5",
+    "src/PL/fft128_ps/zybo_sysclk.xdc": "c889d72c6ab907a373332b77bcdbd10429983104522b69266f520e05e0214457",
+    "src/PL/fft128_ps/fft128_dma_quad_ctrl.v": "561066c0056a48b30d752d0b4be3287f0b2ced89945e61b1b01bd5cd6e76f11d",
+    "src/PL/fft128_ps/fft128_pipeline.v": "7fb0fd12a15fae339ca391eeb6485b71b64a697f3b6a1fe3aa643f6a3d6b37f4",
+    "src/PL/fft128_ps/fft128_twiddle.v": "26c81c3038907f29cffa17a6d066c84613ebdcd22b0e5770765ea4dedb48f874",
+    "src/PL/fft128_ps/butterfly_pipeline.v": "8152035a94ef0a7761e463c18a0011def3c7f239572ee9f928c6305287546297",
+    "src/PL/fft128_ps/fft_working_ram.v": "5464b1b0a57e663a1cdc58406c0fc73f3d27829f1ecd9f267bcd66a5211d9eb0",
+    "src/PL/fft128_ps/address_generator.v": "9757d675e1564a9985a01b08726fae90f6eecd294b7bb10d9e6dd8e55685606d"
+  },
+  "host_source": {
+    "src/PS/fft128/native_receiver.c": "6ff18bc159266c8333d264ca0300225db59827f8408e48d042e9e583dfcd72e9",
+    "src/PS/fft128/native_core.c": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+    "src/PS/fft128/native_core.h": "0a9420a4cadede8f59cfa150f55839a1121ac60941caef2925391212eeff0c3d",
+    "src/PS/fft128/build_native.sh": "7a863f70352c94ff2373eb32b88127933146c3a326c689fe7bb06469d07c7b93",
+    "src/PS/fft128/dma_quad/dma_quad_backend.c": "9377c2be2a78c82b0e3bcda4867341feebabab6d060da44910e21ce54e64fcf2",
+    "src/PS/fft128/dma_quad/fft128_dma_quad_uapi.h": "4565424624aabc66b150358015ecbb20ca08047d7e71d80161a9d5bafb5d0c63",
+    "src/PS/fft128/dma_quad/test_dma_quad_client.c": "0bf0ddd33f69514dd38db318421b3632ca308d990c2a001fc1a7f4ec3efc0ec3",
+    "src/PS/fft128/dma_quad/make_overlay.py": "cdb6239358d61d5fef842a4ddd696ba73a38dfc6f0dde6bea39a769ea1d010d1",
+    "src/PS/fft128/dma/make_overlay.py": "16c8dc163b3b24e4a4e7b271744df21c0442fcc03803e752a917ed1a599aefb7",
+    "src/PS/fft128/dma_batch/batch_process.c": "051378930703730099b418e481f508e43dd764a971f4e7b882f837d041dd49c4",
+    "src/PS/fft128/dma_batch/batch_process.h": "bc4f0ebd12995e3db7642305e844ea788a6aa5e0edcf1d7df6a35872e76d087e",
+    "src/PS/fft128/dma_batch/make_overlay.py": "c7a26c18bf2078f5689e73b96ceb75f2798f83b7987d54f064a0de693a161e0d"
+  },
+  "module_source": {
+    "fft128_dma_quad.c": "dc8d36479da1cc27e4f1f834f49bc04183f98870dd3dd7fb87775ca1edb281b9",
+    "fft128_dma_quad_uapi.h": "4565424624aabc66b150358015ecbb20ca08047d7e71d80161a9d5bafb5d0c63",
+    "Makefile": "8bb077b430b8be080959d4a19a6ac1fe30f1debc597d7a6421330fcb0da962c9"
+  },
+  "host_artifacts": {
+    "bin/fft128-receiver": "453c0bfd5532099b75c7100662074c68642efde85ea00b331e2cd2e70fde905a",
+    "bin/test-dma-quad-client": "68fd893023ff88fcabe5c714afcfdb01d08eb097f22dc8bf99dabe860d632823",
+    "fft128_e13_4core.dtbo": "ccfe0b89b58e800cdcd6cab18c1f413f279d8541e548657e5143140d85935642",
+    "fft128_e13_4core.dts": "96e26e39a08d21a0149709ce2fc13496478417ecfe153be5751b054a1fb1ca04"
+  },
+  "module_artifacts": {
+    "fft128_dma_quad.ko": "5b70a10a556cd366c007d8efd6d1b5c440b07794eb3a6021dac189d8084077b5"
+  }
+}

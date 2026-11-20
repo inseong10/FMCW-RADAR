@@ -1,0 +1,116 @@
+{
+  "independent_comparison_and_profile_revalidated": true,
+  "ubuntu_windows_float_roundoff": [
+    {
+      "field": "/results/double/trials/0/accuracy/rms_q15_lsb",
+      "windows": 3.705134990033928e-14,
+      "ubuntu": 3.736327989884738e-14
+    },
+    {
+      "field": "/results/double/trials/0/accuracy/relative_l2",
+      "windows": 2.90701062686393e-16,
+      "ubuntu": 2.93148433221987e-16
+    },
+    {
+      "field": "/results/double/trials/1/accuracy/rms_q15_lsb",
+      "windows": 3.705134990033928e-14,
+      "ubuntu": 3.736327989884738e-14
+    },
+    {
+      "field": "/results/double/trials/1/accuracy/relative_l2",
+      "windows": 2.90701062686393e-16,
+      "ubuntu": 2.93148433221987e-16
+    },
+    {
+      "field": "/results/double/trials/2/accuracy/rms_q15_lsb",
+      "windows": 3.705134990033928e-14,
+      "ubuntu": 3.736327989884738e-14
+    },
+    {
+      "field": "/results/double/trials/2/accuracy/relative_l2",
+      "windows": 2.90701062686393e-16,
+      "ubuntu": 2.93148433221987e-16
+    },
+    {
+      "field": "/results/float_neon/trials/0/accuracy/max_complex_q15_lsb",
+      "windows": 0.00042680867197479784,
+      "ubuntu": 0.0004268086729199998
+    },
+    {
+      "field": "/results/float_neon/trials/0/accuracy/rms_q15_lsb",
+      "windows": 1.3804696940779287e-05,
+      "ubuntu": 1.3804696940275296e-05
+    },
+    {
+      "field": "/results/float_neon/trials/0/accuracy/relative_l2",
+      "windows": 1.0831022571491762e-07,
+      "ubuntu": 1.0831022571096338e-07
+    },
+    {
+      "field": "/results/float_neon/trials/1/accuracy/max_complex_q15_lsb",
+      "windows": 0.00042680867197479784,
+      "ubuntu": 0.0004268086729199998
+    },
+    {
+      "field": "/results/float_neon/trials/1/accuracy/rms_q15_lsb",
+      "windows": 1.3804696940779287e-05,
+      "ubuntu": 1.3804696940275296e-05
+    },
+    {
+      "field": "/results/float_neon/trials/1/accuracy/relative_l2",
+      "windows": 1.0831022571491762e-07,
+      "ubuntu": 1.0831022571096338e-07
+    },
+    {
+      "field": "/results/float_neon/trials/2/accuracy/max_complex_q15_lsb",
+      "windows": 0.00042680867197479784,
+      "ubuntu": 0.0004268086729199998
+    },
+    {
+      "field": "/results/float_neon/trials/2/accuracy/rms_q15_lsb",
+      "windows": 1.3804696940779287e-05,
+      "ubuntu": 1.3804696940275296e-05
+    },
+    {
+      "field": "/results/float_neon/trials/2/accuracy/relative_l2",
+      "windows": 1.0831022571491762e-07,
+      "ubuntu": 1.0831022571096338e-07
+    },
+    {
+      "field": "/results/pl/trials/0/accuracy/relative_l2",
+      "windows": 0.013610209282866829,
+      "ubuntu": 0.013610209282866834
+    },
+    {
+      "field": "/results/pl/trials/1/accuracy/relative_l2",
+      "windows": 0.013610209282866829,
+      "ubuntu": 0.013610209282866834
+    },
+    {
+      "field": "/results/pl/trials/2/accuracy/relative_l2",
+      "windows": 0.013610209282866829,
+      "ubuntu": 0.013610209282866834
+    }
+  ],
+  "roundoff_comparison_tolerance": {
+    "relative": 1e-13,
+    "absolute": 2e-12
+  },
+  "exact_integer_oracle_comparison_has_no_tolerance": true,
+  "profile_and_unprofiled_same_bundle": true,
+  "bundle_matches_selftest_22_artifacts": true,
+  "build_sources_match_current_checkout": true,
+  "profile_integer_and_quantized_input": true,
+  "all_trial_spectra_match_profile": true,
+  "profile_frames": 20,
+  "profile_peak": [
+    107,
+    20
+  ],
+  "input_stall_cycles_mean": 30.15,
+  "output_stall_cycles_mean": 0,
+  "global_minus_input_stall_cycles_observed": [
+    104064
+  ],
+  "stream_stall_subtraction_is_general_compute_measure": false
+}

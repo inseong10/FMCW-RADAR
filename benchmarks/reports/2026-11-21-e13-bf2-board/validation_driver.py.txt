@@ -1,0 +1,85 @@
+from pathlib import Path
+import json,hashlib,sys,shutil,tempfile,csv,statistics,math,importlib.util,re
+import numpy as np
+root=Path(__file__).resolve().parent.parent
+sys.path.insert(0,str(root/'benchmarks'))
+import compare_dma_bf2_board as comp
+spec=importlib.util.spec_from_file_location('bf2_profile',root/'src/PS/fft128/dma_bf2/analyze_profile.py');profile=importlib.util.module_from_spec(spec);spec.loader.exec_module(profile)
+raw=root/'build/fft128_dma_bf2_measurements';runs=raw/'results_e13_bf2_01';prof=raw/'profile_e13_bf2_01';out=root/'benchmarks/reports/2026-11-21-e13-bf2-board';out.mkdir(parents=True,exist_ok=True)
+a=json.loads(json.dumps(comp.analyze(runs)));p=json.loads(json.dumps(profile.analyze(prof/'pl.profile.csv')));roundoff=[]
+def write(path,value):
+ with path.open('w',encoding='utf-8',newline='\n') as f:f.write(json.dumps(value,indent=2)+'\n')
+def same(x,y,path=''):
+ if isinstance(x,dict):
+  assert x.keys()==y.keys(),path
+  for k in x:same(x[k],y[k],path+'/'+k)
+ elif isinstance(x,list):
+  assert len(x)==len(y),path
+  for i,(u,v) in enumerate(zip(x,y)):same(u,v,path+'/'+str(i))
+ elif isinstance(x,float):
+  assert math.isclose(x,y,rel_tol=1e-13,abs_tol=2e-12),(path,x,y)
+  if x!=y:roundoff.append(dict(field=path,windows=x,ubuntu=y))
+ else:assert x==y,(path,x,y)
+same(a,json.loads((raw/'comparison_console.json').read_text()));same(p,json.loads((raw/'profile_console.json').read_text()))
+identity=json.loads((root/'benchmarks/reports/2026-11-21-e13-bf2-build/board_selftest.json').read_text())
+assert a['dma_artifacts']=={x['path']:x['sha256'] for x in identity['bundle_artifacts_verified']}
+assert (runs/'dma_artifacts.sha256').read_bytes()==(prof/'artifacts.sha256').read_bytes()
+assert (runs/'pl/trial_1.batch.json').read_bytes()==(prof/'pl.batch.json').read_bytes()
+for n in ['dma_config.json','fft128_e13_bf2.json']:assert (runs/n).read_bytes()==(prof/n).read_bytes()
+for manifest in ['pl_source.sha256','host_source.sha256','module_source.sha256']:
+ for line in (runs/manifest).read_text().splitlines():
+  h,n=line.split(maxsplit=1);n=n.lstrip('*');prefix='/home/user/fmcw_share/FMCW-FFT-test/'
+  path=root/n.removeprefix(prefix) if n.startswith(prefix) else (root/'src/PS/fft128/dma_bf2'/n if manifest=='module_source.sha256' else root/n)
+  assert hashlib.sha256(path.read_bytes()).hexdigest()==h,path
+expected,q,scale=comp.reference(root/'benchmarks/fixtures/radarsimpy_128x128.rspb');integer=comp.integer_reference(q)
+meta=json.loads((prof/'pl.json').read_text());assert (meta['backend'],meta['profiling'],meta['warmup'],meta['repeats'],meta['mismatched_complex_bins'])==('PL_DMA_BF2',True,2,20,0)
+assert meta['shape']==[128,128] and meta['window']=='none' and meta['total_normalization']=='1/16384' and meta['input_to_q15_scale']==scale
+actual=comp.spectrum(prof/'pl.csv');assert np.array_equal(actual,integer)
+source=np.loadtxt(prof/'pl.input.csv',delimiter=',',skiprows=1);ch,sm=np.indices((128,128))
+assert source.shape==(16384,4) and np.isfinite(source).all()
+assert np.array_equal(source[:,:2],np.column_stack((ch.ravel(),sm.ravel())))
+assert np.array_equal((np.rint(source[:,2]*scale)+1j*np.rint(source[:,3]*scale)).reshape(128,128),q)
+assert 'FRAME_PASS backend=PL_DMA_BF2 bit_exact_bins=16384' in (prof/'profile.log').read_text()
+assert all(np.array_equal(comp.spectrum(runs/f'pl/trial_{i}.csv'),integer) for i in [1,2,3])
+with (prof/'pl.profile.csv').open() as f:rows=list(csv.DictReader(f))
+assert len(rows)==20 and np.isclose(meta['fft_and_transfer_seconds']*1000,p['mean_ms']['wall_ms'])
+with (prof/'pl.timings.csv').open() as f:times=[float(r['wall_ms']) for r in csv.DictReader(f) if r['stage']=='fft_pipeline']
+assert len(times)==20 and np.allclose(times,[float(r['wall_ms']) for r in rows])
+for row in rows:
+ assert (int(row['butterflies_per_core']),int(row['dual_issue_events']),int(row['dual_retire_events']),int(row['calc_lane_cycles']))==(2,57344,57344,64512)
+ assert 0<int(row['three_overlap_cycles'])<=int(row['io_overlap_cycles'])<=32768
+ assert int(row['three_overlap_cycles'])<=min(int(row['input_work_overlap_cycles']),int(row['output_work_overlap_cycles']))
+assert all(v==[660,0] for v in a['dma_irq_deltas'].values())
+e12=json.loads((root/'benchmarks/reports/2026-11-20-e12-4core-board/comparison.json').read_text());e12p=json.loads((root/'benchmarks/reports/2026-11-20-e12-4core-board/profile.summary.json').read_text())
+assert a['ps_artifacts']==e12['ps_artifacts']
+ids=lambda env:re.findall(r'(?m)^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$',env)
+oldids=ids(e12['environment']);newids=ids(a['environment']);assert len(oldids)==len(newids)==1 and oldids!=newids
+checks=dict(independent_comparison_and_profile_revalidated=True,ubuntu_windows_float_roundoff=roundoff,roundoff_comparison_tolerance=dict(relative=1e-13,absolute=2e-12),exact_integer_oracle_comparison_has_no_tolerance=True,profile_and_unprofiled_same_bundle=True,bundle_matches_selftest_22_artifacts=True,build_sources_match_current_checkout=True,profile_integer_and_quantized_input=True,all_trial_spectra_match_profile=True,profile_frames=20,profile_peak=[int(v) for v in np.unravel_index(np.argmax(abs(actual)),actual.shape)],input_stall_cycles_mean=statistics.mean(int(r['input_stall_cycles']) for r in rows),output_stall_cycles_mean=statistics.mean(int(r['output_stall_cycles']) for r in rows),global_minus_input_stall_cycles_observed=sorted(set(int(r['pl_active_cycles'])-int(r['input_stall_cycles']) for r in rows)),stream_stall_subtraction_is_general_compute_measure=False,io_overlap_cycles_mean=statistics.mean(int(r['io_overlap_cycles']) for r in rows),input_calc_overlap_cycles_lower_bound=max(0,min(int(r['input_work_overlap_cycles']) for r in rows)-256),output_calc_overlap_cycles_lower_bound=max(0,min(int(r['output_work_overlap_cycles']) for r in rows)-256),input_calc_output_overlap_cycles_lower_bound=max(0,min(int(r['three_overlap_cycles']) for r in rows)-256),four_calc_overlap_cycles_lower_bound=max(0,min(int(r['all_work_cycles']) for r in rows)-256),exact_dual_butterfly_events_and_calc_per_frame=True,all_work_zero_is_expected=True,ps_artifacts_match_e12=True,previous_boot_id=oldids[0],current_boot_id=newids[0],comparison_is_historical_different_boot=True,original_ubuntu_derived_json_preserved=True)
+assert checks['input_calc_output_overlap_cycles_lower_bound']>0
+sandbox=Path(tempfile.mkdtemp(prefix='e13_bf2_analysis_guards_',dir=root/'build'));shutil.copytree(runs,sandbox/'results');test=sandbox/'results';guards={}
+path=test/'pl/trial_1.json';original=path.read_bytes();data=json.loads(original);data['profiling']=True;path.write_text(json.dumps(data),encoding='utf-8')
+try:comp.analyze(test);raise AssertionError('Instrumented trial accepted')
+except ValueError as e:guards['profiled_trial_rejected']=str(e)
+path.write_bytes(original)
+path=test/'pl/trial_1.csv';original=path.read_bytes();lines=original.decode().splitlines();cells=lines[1].split(',');cells[2]=str(float(cells[2])+1);lines[1]=','.join(cells);path.write_text('\n'.join(lines)+'\n',encoding='utf-8')
+try:comp.analyze(test);raise AssertionError('Corrupted output accepted')
+except ValueError as e:guards['one_lsb_output_corruption_rejected']=str(e)
+path.write_bytes(original)
+path=sandbox/'invalid.profile.csv';fields=list(rows[0]);bad=[dict(r) for r in rows];bad[0]['dual_retire_events']='57343'
+with path.open('w',newline='') as f:w=csv.DictWriter(f,fieldnames=fields);w.writeheader();w.writerows(bad)
+try:profile.analyze(path);raise AssertionError('Wrong dual-retire accepted')
+except ValueError as e:guards['dual_retire_count_corruption_rejected']=str(e)
+ms=p['mean_ms'];oldms=e12p['mean_ms'];copynames=['host_input_copy_ms','host_output_copy_ms','kernel_copy_in_ms','kernel_copy_out_ms'];transpose=['gather_ms','scatter_ms']
+progress=dict(experiment='E13-bf2',previous_experiment='E12-4core',fft_cores=4,butterflies_per_core_before=1,butterflies_per_core_after=2,calc_cycles_per_fft_before=476,calc_cycles_per_fft_after=252,calc_reduction_percent=(1-252/476)*100,previous_median_ms=e12['results']['pl']['timing']['median_ms'],current_median_ms=a['results']['pl']['timing']['median_ms'],overall_latency_reduction_percent=(1-a['results']['pl']['timing']['median_ms']/e12['results']['pl']['timing']['median_ms'])*100,overall_speedup=e12['results']['pl']['timing']['median_ms']/a['results']['pl']['timing']['median_ms'],paired_neon_latency_reduction_percent=(1-a['results']['pl']['timing']['median_ms']/a['results']['float_neon']['timing']['median_ms'])*100,paired_double_latency_reduction_percent=(1-a['results']['pl']['timing']['median_ms']/a['results']['double']['timing']['median_ms'])*100,previous_profile_mean_ms=oldms['wall_ms'],profile_mean_ms=ms['wall_ms'],previous_profile_pl_active_ms=oldms['pl_active_ms'],profile_pl_active_ms=ms['pl_active_ms'],pl_active_reduction_percent=(1-ms['pl_active_ms']/oldms['pl_active_ms'])*100,profile_pl_fraction_percent=100*ms['pl_active_ms']/ms['wall_ms'],previous_profile_outside_pl_ms=oldms['wall_ms']-oldms['pl_active_ms'],profile_outside_pl_ms=ms['wall_ms']-ms['pl_active_ms'],profile_copies_ms=sum(ms[k] for k in copynames),previous_profile_copies_ms=sum(oldms[k] for k in copynames),profile_transpose_ms=sum(ms[k] for k in transpose),previous_profile_transpose_ms=sum(oldms[k] for k in transpose),profile_wall_decrease_ms=oldms['wall_ms']-ms['wall_ms'],profile_pl_decrease_ms=oldms['pl_active_ms']-ms['pl_active_ms'],profile_outside_pl_decrease_ms=(oldms['wall_ms']-oldms['pl_active_ms'])-(ms['wall_ms']-ms['pl_active_ms']),rtl_zero_stall_model_ms=0.837200,rtl_zero_stall_model_cycles=41860,clock_hz=50000000,stream_output_32bit_1_sample_per_cycle_lower_bound_ms=32768/50000,lower_bound_scope='Two serialized axis requests, 16384 output samples/axis, fixed 32-bit 50MHz AXIS; lower bound only, not a streaming design prediction',board_verified=True)
+for n,v in [('comparison.json',a),('profile.summary.json',p),('raw_validation.json',checks),('analysis_guards.json',guards),('progression.json',progress)]:write(out/n,v)
+raw_files={f.relative_to(raw).as_posix():dict(bytes=f.stat().st_size,sha256=hashlib.sha256(f.read_bytes()).hexdigest()) for f in sorted(raw.rglob('*')) if f.is_file()}
+write(out/'raw_artifact_sha256.json',raw_files)
+for f in sorted(raw.rglob('*')):
+ if not f.is_file():continue
+ if f.name.endswith('.input.csv') or f.name in ('pl.csv','trial_1.csv','trial_2.csv','trial_3.csv'):continue
+ target=out/'raw_compact'/f.relative_to(raw);target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(f,target)
+source_files=['benchmarks/compare_dma_bf2_board.py','src/PS/fft128/dma_bf2/analyze_profile.py','benchmarks/compare_board.py','benchmarks/ps_precision/prepare_reference.py','src/PS/fft128/receiver.py','src/PL/fft128_ps/verify.py']
+write(out/'analysis_source_sha256.json',{n:hashlib.sha256((root/n).read_bytes()).hexdigest() for n in source_files})
+write(out/'board_verification.json',dict(status='E13_BF2_FULL_FRAME_PROFILE_PAIRED_RAW_VALIDATED',board_verified=True,scope='Exactly the 22 bundle artifact SHA identities in comparison.json; unprofiled 300 repetitions/variant plus separate 20-frame profile',bundle_artifacts=a['dma_artifacts'],validation_date='2026-11-21 Asia/Seoul',raw_file_count=len(raw_files),raw_bytes=sum(v['bytes'] for v in raw_files.values()),measurements='Fixed recorded 128x128 frame, CPU0, warm cache offline latency; not continuous UDP, worst-case latency or loss-free realtime proof',build_report='../2026-11-21-e13-bf2-build/README.md'))
+shutil.copyfile(Path(__file__),out/'validation_driver.py.txt')
+print(json.dumps(progress,indent=2));print(json.dumps({k:v for k,v in checks.items() if k!='ubuntu_windows_float_roundoff'},indent=2));print(json.dumps(guards,indent=2));print('E13_BF2_FULL_RAW_IDENTITY_ACCURACY_COUNTERS_REVALIDATED')

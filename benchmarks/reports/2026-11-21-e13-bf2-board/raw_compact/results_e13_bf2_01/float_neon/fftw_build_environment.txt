@@ -1,0 +1,14 @@
+SOURCE=https://www.fftw.org/fftw-3.3.11.tar.gz
+SOURCE_SHA256=5630c24cdeb33b131612f7eb4b1a9934234754f9f388ff8617458d0be6f239a1
+CC=arm-linux-gnueabihf-gcc
+CFLAGS=-O3 -mcpu=cortex-a9 -mfpu=neon -mfloat-abi=hard -fPIC -fno-tree-vectorize -fno-tree-slp-vectorize
+arm-linux-gnueabihf-gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+VARIANT=float_neon
+CONFIGURE_EXTRA=--enable-single --enable-neon
+Single thread; no FFTW threads/OpenMP/MPI; no fast-math.
+Slow timer is used only for planning measurements; no privileged ARM PMU instructions.
+9c06dfa6f7e6f686b5eabda0845b75d38c5f05b852234364edfd84c423315653  /home/user/fmcw_share/FMCW-FFT-test/build/fft128_ps_precision/float_neon/lib/libfftw3f.so.3

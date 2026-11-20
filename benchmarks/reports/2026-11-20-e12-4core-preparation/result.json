@@ -1,0 +1,40 @@
+{
+  "axi_vectors": 272,
+  "exact_complex_bins": 34816,
+  "full_2d_frame_shape": [
+    128,
+    128
+  ],
+  "independent_numpy_max_error_q15_lsb": 5.109735109344928,
+  "known_tone_peak_unshifted": [
+    121,
+    11
+  ],
+  "tested": "Unchanged serial/pipeline baseline plus E12-4core DMA AXIS/control frontend; no AXI DMA IP, DDR, IRQ, kernel or board validation",
+  "serial_cycles": 3073,
+  "pipeline_cycles": 861,
+  "experiment": "E12-4core",
+  "unchanged_core_count": 4,
+  "board_verified": false,
+  "zero_external_stall_cycles_per_axis": 28098,
+  "cycle_derived_frame_ms_at_50mhz": 1.12392,
+  "baseline_rerun": false,
+  "schedule": "independent lanes; per-lane 256-word ingress/egress RAM FIFO plus output register; next-vector prefetch; shared ordered AXIS",
+  "dma_requests_per_frame": 2,
+  "dma_checks": [
+    "272 independent numeric vectors in full 128-FFT packets",
+    "AXIS input gaps/output backpressure",
+    "stable stalled payload",
+    "malformed TLAST/TKEEP flags",
+    "partial-load, compute and stalled-output abort/recovery",
+    "1/2/3/4/5/6/7/127/128-FFT batches",
+    "external axis TLAST/internal vector TLAST",
+    "actual four-core CALC, input/output/CALC handshakes and independent overlap counters; next-vector prefetch; long downstream backpressure",
+    "independent AW/W",
+    "AXI response backpressure and forbidden payload windows",
+    "source-starved correct completion without concurrent CALC",
+    "lane2 partial-load and lane3 stalled-output abort/recovery; full-buffer abort/recovery",
+    "FIFO capacity and whole-output reservation every cycle",
+    "zero-external-stall 128 FFT packet cycle assertion"
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "date_on_client": "2026-11-20",
+  "evidence": "User-provided PetaLinux console plus independently checked local deployment bundle; no direct remote board access",
+  "status": "SELFTEST_PASS_FRAME_PROFILE_PAIRED_PENDING",
+  "normal_module_load_and_client_bind": "PASS reported; loader uses insmod without force",
+  "hp0_read_control": "0x00000000",
+  "hp0_write_control": "0x00000F00",
+  "fpga_load_ms": 73,
+  "fpga_load_is_fft_performance": false,
+  "packets": [
+    {
+      "fft_count": 1,
+      "bytes_each_direction": 512,
+      "completed": 1
+    },
+    {
+      "fft_count": 128,
+      "bytes_each_direction": 65536,
+      "completed": 128
+    },
+    {
+      "fft_count": 128,
+      "bytes_each_direction": 65536,
+      "completed": 128
+    }
+  ],
+  "client_abi_exclusive_owner_timeout_flags_count": "PASS",
+  "arithmetic_cores": 2,
+  "both_busy_cycles_last_packet": 55054,
+  "both_work_cycles_last_packet": 22336,
+  "simultaneous_calc_cycles_conservative_lower_bound_last_packet": 22272,
+  "overlap_interpretation": "Both-work includes CALC and initial output read latency. Subtract at most one cycle/pair (64 pairs/128 FFT axis) to prove positive actual CALC overlap. Busy is not pure compute.",
+  "receiver_selftest": {
+    "vectors": 4,
+    "bins": 512,
+    "status": "PASS"
+  },
+  "console_warnings": [
+    "OF overlay removal property memory leak warning",
+    "Out-of-tree module taint"
+  ],
+  "pending": [
+    "Full 128x128 frame and independent integer/NumPy output validation",
+    "Separate 20-frame DMA profile",
+    "Unprofiled same-board PS double/NEON/PL paired 300 samples each",
+    "Source/artifact/input/PS plan/IRQ validation of collected raw results"
+  ],
+  "bundle_path": "C:\\Users\\user\\Documents\\share\\FMCW-FFT-test\\build\\fft128_dma_parallel_bundle",
+  "bundle_artifact_count": 22,
+  "artifacts": {
+    "fft128_e13_2core.bin": {
+      "sha256": "c6aa49d2936700c7b407c9317f7969938ba7641282862870bc45ad02550573f1",
+      "bytes": 2083744
+    },
+    "fft128_e13_2core.dtbo": {
+      "sha256": "d816208b3e08b77cd970e3485317a4f8681f2ed8818d64d8236cfc8b3f325848",
+      "bytes": 1467
+    },
+    "fft128_e13_2core.json": {
+      "sha256": "1e71a1b5f7184b31dffb064eee1137c54f6b1c9226896e1a38d648920c21c0d6",
+      "bytes": 603
+    },
+    "fft128_dma_parallel.ko": {
+      "sha256": "265c860509aba9237df3d57e3e422deb8bfef433af357c2565511d35d9c74d7c",
+      "bytes": 14180
+    },
+    "fft128-receiver": {
+      "sha256": "7fab5da12902232ffa413eb741f4f9af2b14fe77c8e6d5a29a736ee106565217",
+      "bytes": 465500
+    },
+    "test-dma-parallel-client": {
+      "sha256": "c5669333ce4109eafa02783ea9458ec4094b8ffe51b7a369b9cfd58f91db3c29",
+      "bytes": 431784
+    },
+    "frame.rspb": {
+      "sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+      "bytes": 135176
+    },
+    "kernelrelease.txt": {
+      "sha256": "b1fc844b1ee87f48cd89d857eb48ae13b9a1e5bd6d366112a8cb8972fc01034d",
+      "bytes": 15
+    },
+    "gic_phandle.bin": {
+      "sha256": "1bc5d0e3df0ea12c4d0078668d14924f95106bbe173e196de50fe13a900b0937",
+      "bytes": 4
+    },
+    "gic_path.txt": {
+      "sha256": "1c6c83c7ef115c7a7d6bd02696ca4f5a64e2ae24beabac820da66ff111b90faa",
+      "bytes": 35
+    },
+    "dma_config.json": {
+      "sha256": "41eaece9dff12fefbad4cec78a42c4555216e8d55731558141e534f51cf111bd",
+      "bytes": 450
+    },
+    "parallel_core_check.txt": {
+      "sha256": "3e323ffc658167d348dff17592dd670b6a3ae7dd0f441e08da55233a30000d07",
+      "bytes": 95
+    },
+    "parallel_utilization.rpt": {
+      "sha256": "6f3c351959212e68205ab960d1ca42123b83bdffba7d6e7ef5bda22198e1c206",
+      "bytes": 88027
+    },
+    "build_config.json": {
+      "sha256": "f6deb3dc3241203c31af50f730ffe5b20510623a0ba6f642c34185a7a615f37c",
+      "bytes": 68
+    },
+    "clock_source.txt": {
+      "sha256": "9f749a74cea4bfbe43d7d176174f2ea808fd87b5bb56b631d5fdfeac82e52597",
+      "bytes": 264
+    },
+    "pl_source.sha256": {
+      "sha256": "db63b4a5f197bee8b224afc7255d1158c7cc7b3100c6775e4477e28cb0867df1",
+      "bytes": 1525
+    },
+    "host_source.sha256": {
+      "sha256": "e33560761dcb8633700c6b2402b381d6035d54764643dcad88b8bfa4a899b26d",
+      "bytes": 1265
+    },
+    "module_source.sha256": {
+      "sha256": "c291bbfa1d91b829307639ce438fba170032e5d007c2498908164028b5f77240",
+      "bytes": 256
+    },
+    "module_build_environment.txt": {
+      "sha256": "9cda3b9bec761dcf64ca26195b1dcfe54d4c3e7a9bf7b8348449a57da10a073a",
+      "bytes": 1407
+    },
+    "load_board.sh": {
+      "sha256": "68dc3564ca4857b0f99770fa2652ad88f98c9d7c16567bc38cbc8f7dda07b3b8",
+      "bytes": 3043
+    },
+    "profile_board.sh": {
+      "sha256": "5ebc4bd29d0be17eaef5425d42b73f4a6584e0527ff1e274a7dfb9b9ab78faed",
+      "bytes": 667
+    },
+    "run_board.sh": {
+      "sha256": "52dd5fdca7c0a39f1b9d531d1fff071d811e8e73fb1bd0e4111190f0fcc67c94",
+      "bytes": 3947
+    }
+  }
+}

@@ -1,0 +1,1 @@
+{"experiment":"E12-4core","hardware":true,"dma_requests_per_frame":2,"dma_channel_submissions_per_frame":4,"fft_per_request":128,"bytes_per_direction_per_request":65536,"parallel_cores":4,"group_barrier":false,"transfer_compute_overlap":true,"next_group_prefetch":true,"external_ping_pong":false,"external_buffers":true,"buffering":"per_lane_fifos"}

@@ -1,0 +1,35 @@
+{
+  "scope": "Windows host regressions, not ARM/kernel/board",
+  "tests": [
+    {
+      "name": "native",
+      "command": [
+        "C:\\Users\\user\\miniconda3\\python.exe",
+        "src\\PS\\fft128\\test_native.py"
+      ],
+      "exit_code": 0,
+      "test_count": 9,
+      "seconds": 4.325082299999849
+    },
+    {
+      "name": "e11b_tools",
+      "command": [
+        "C:\\Users\\user\\miniconda3\\python.exe",
+        "src\\PS\\fft128\\dma_batch\\test_tools.py"
+      ],
+      "exit_code": 0,
+      "test_count": 3,
+      "seconds": 1.733460100000002
+    },
+    {
+      "name": "parallel_tools",
+      "command": [
+        "C:\\Users\\user\\miniconda3\\python.exe",
+        "src\\PS\\fft128\\dma_parallel\\test_tools.py"
+      ],
+      "exit_code": 0,
+      "test_count": 4,
+      "seconds": 2.2271250999999666
+    }
+  ]
+}

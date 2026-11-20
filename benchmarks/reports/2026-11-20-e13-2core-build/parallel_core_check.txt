@@ -1,0 +1,1 @@
+core_instances=2; DSP48E1=8; arithmetic core sources unchanged; board overlap counters pending

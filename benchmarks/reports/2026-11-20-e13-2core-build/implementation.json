@@ -1,0 +1,47 @@
+{
+  "date_on_client": "2026-11-20",
+  "run": "/home/user/fmcw_share/FMCW-FFT-test/build/vivado/fft128_dma_e13_2core_20261120_153153",
+  "clock_hz": 50000000,
+  "wns_ns": 9.292,
+  "whs_ns": 0.029,
+  "setup_failing_endpoints": 0,
+  "hold_failing_endpoints": 0,
+  "unconstrained_internal_endpoints": 0,
+  "resources": {
+    "LUT": 3818,
+    "FF": 4460,
+    "BRAM_tiles": 7,
+    "DSP": 8
+  },
+  "arithmetic_cores": 2,
+  "dsp_per_core": 4,
+  "reset_generated_ip": "PASS",
+  "ARM_userspace_and_module": "PASS; ELF ARM32, source and artifact manifests independently checked",
+  "board": "not yet verified; CRC acceptance/transfer/frame/profile/performance pending",
+  "artifacts": {
+    "build/vivado/fft128_dma_e13_2core_20261120_153153/fft128_ps.runs/impl_1/system_wrapper.bit": {
+      "bytes": 2083850,
+      "sha256": "5d1c8d4ae8d93067320b7b5ebc9cc1626f12ff033d3067e91d63ceda43ca4478"
+    },
+    "build/vivado/fft128_dma_e13_2core_20261120_153153/system.xsa": {
+      "bytes": 476586,
+      "sha256": "d42eb46c5b1488790680cb1212b045203abaa8b1f5042ce530375094f3929c12"
+    },
+    "build/fft128_dma_parallel_host/bin/fft128-receiver": {
+      "bytes": 465500,
+      "sha256": "7fab5da12902232ffa413eb741f4f9af2b14fe77c8e6d5a29a736ee106565217"
+    },
+    "build/fft128_dma_parallel_host/bin/test-dma-parallel-client": {
+      "bytes": 431784,
+      "sha256": "c5669333ce4109eafa02783ea9458ec4094b8ffe51b7a369b9cfd58f91db3c29"
+    },
+    "build/fft128_dma_parallel_module/fft128_dma_parallel.ko": {
+      "bytes": 14180,
+      "sha256": "265c860509aba9237df3d57e3e422deb8bfef433af357c2565511d35d9c74d7c"
+    },
+    "build/fft128_dma_parallel_host/fft128_e13_2core.dtbo": {
+      "bytes": 1467,
+      "sha256": "d816208b3e08b77cd970e3485317a4f8681f2ed8818d64d8236cfc8b3f325848"
+    }
+  }
+}

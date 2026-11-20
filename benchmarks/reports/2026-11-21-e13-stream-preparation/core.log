@@ -1,0 +1,6 @@
+STREAM_CORE_CASE_PASS count=272 mode=0 cycles=36203 first_output=1388 frame_II=128 multi_stage=35072 multi_vector=35818 stage_CALC_per_FFT=68
+STREAM_CORE_CASE_PASS count=128 mode=1 cycles=31944 first_output=1418 frame_II=128 multi_stage=21289 multi_vector=31451 stage_CALC_per_FFT=68
+STREAM_CORE_CASE_PASS count=1 mode=0 cycles=1515 first_output=1388 frame_II=128 multi_stage=0 multi_vector=0 stage_CALC_per_FFT=68
+STREAM_CORE_CASE_PASS count=5 mode=0 cycles=2027 first_output=1388 frame_II=128 multi_stage=740 multi_vector=1642 stage_CALC_per_FFT=68
+STREAMING_CORE_PASS numeric_vectors=272 exact_bins=34816 stages=7 frame_II=128 bank_conflicts=0 stalls malformed_TLAST reset_recovery
+C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\streaming_core_tb.v:95: $finish called at 1444760000 (1ps)

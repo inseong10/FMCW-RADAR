@@ -1,0 +1,259 @@
+{
+  "status": "E13_2CORE_PAIRED_SAME_BOARD_VALIDATED",
+  "results": {
+    "double": {
+      "timing": {
+        "count": 300,
+        "mean_ms": 5.757465436666666,
+        "median_ms": 5.767263,
+        "p05_ms": 5.6963739,
+        "p95_ms": 5.8217214,
+        "min_ms": 5.655102,
+        "max_ms": 6.088188
+      },
+      "trials": [
+        {
+          "trial": 1,
+          "timing": {
+            "count": 100,
+            "mean_ms": 5.757345419999999,
+            "median_ms": 5.7687930000000005,
+            "p05_ms": 5.697990300000001,
+            "p95_ms": 5.82131195,
+            "min_ms": 5.667762,
+            "max_ms": 6.036144
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 1.8331451766013172e-12,
+            "rms_q15_lsb": 3.705134990033928e-14,
+            "relative_l2": 2.90701062686393e-16
+          }
+        },
+        {
+          "trial": 2,
+          "timing": {
+            "count": 100,
+            "mean_ms": 5.75865407,
+            "median_ms": 5.7676055,
+            "p05_ms": 5.6977926000000005,
+            "p95_ms": 5.828559,
+            "min_ms": 5.676156,
+            "max_ms": 5.977818
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 1.8331451766013172e-12,
+            "rms_q15_lsb": 3.705134990033928e-14,
+            "relative_l2": 2.90701062686393e-16
+          }
+        },
+        {
+          "trial": 3,
+          "timing": {
+            "count": 100,
+            "mean_ms": 5.756396819999999,
+            "median_ms": 5.765127,
+            "p05_ms": 5.6960343,
+            "p95_ms": 5.8060815,
+            "min_ms": 5.655102,
+            "max_ms": 6.088188
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 1.8331451766013172e-12,
+            "rms_q15_lsb": 3.705134990033928e-14,
+            "relative_l2": 2.90701062686393e-16
+          }
+        }
+      ]
+    },
+    "float_neon": {
+      "timing": {
+        "count": 300,
+        "mean_ms": 3.6559962366666667,
+        "median_ms": 3.6462120000000002,
+        "p05_ms": 3.5991693000000002,
+        "p95_ms": 3.7255518,
+        "min_ms": 3.50781,
+        "max_ms": 3.785298
+      },
+      "trials": [
+        {
+          "trial": 1,
+          "timing": {
+            "count": 100,
+            "mean_ms": 3.6531238499999996,
+            "median_ms": 3.645993,
+            "p05_ms": 3.6041067,
+            "p95_ms": 3.7189209,
+            "min_ms": 3.585234,
+            "max_ms": 3.778242
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 0.00042680867197479784,
+            "rms_q15_lsb": 1.3804696940779287e-05,
+            "relative_l2": 1.0831022571491762e-07
+          }
+        },
+        {
+          "trial": 2,
+          "timing": {
+            "count": 100,
+            "mean_ms": 3.666474299999999,
+            "median_ms": 3.655203,
+            "p05_ms": 3.6222888,
+            "p95_ms": 3.7243686,
+            "min_ms": 3.606408,
+            "max_ms": 3.785298
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 0.00042680867197479784,
+            "rms_q15_lsb": 1.3804696940779287e-05,
+            "relative_l2": 1.0831022571491762e-07
+          }
+        },
+        {
+          "trial": 3,
+          "timing": {
+            "count": 100,
+            "mean_ms": 3.6483905599999997,
+            "median_ms": 3.6379409999999996,
+            "p05_ms": 3.5913366,
+            "p95_ms": 3.7358936999999997,
+            "min_ms": 3.50781,
+            "max_ms": 3.7827
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 0.00042680867197479784,
+            "rms_q15_lsb": 1.3804696940779287e-05,
+            "relative_l2": 1.0831022571491762e-07
+          }
+        }
+      ]
+    },
+    "pl": {
+      "timing": {
+        "count": 300,
+        "mean_ms": 4.92908175,
+        "median_ms": 4.920621000000001,
+        "p05_ms": 4.9006641,
+        "p95_ms": 4.987038,
+        "min_ms": 4.8903,
+        "max_ms": 5.02839
+      },
+      "trials": [
+        {
+          "trial": 1,
+          "timing": {
+            "count": 100,
+            "mean_ms": 4.920275739999999,
+            "median_ms": 4.910241,
+            "p05_ms": 4.8970485,
+            "p95_ms": 4.9752690500000005,
+            "min_ms": 4.8903,
+            "max_ms": 5.02839
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 8.749842363453245,
+            "rms_q15_lsb": 1.734691375725571,
+            "relative_l2": 0.013610209282866829
+          }
+        },
+        {
+          "trial": 2,
+          "timing": {
+            "count": 100,
+            "mean_ms": 4.93381751,
+            "median_ms": 4.9258500000000005,
+            "p05_ms": 4.91018585,
+            "p95_ms": 4.9861359499999995,
+            "min_ms": 4.906086,
+            "max_ms": 4.996644
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 8.749842363453245,
+            "rms_q15_lsb": 1.734691375725571,
+            "relative_l2": 0.013610209282866829
+          }
+        },
+        {
+          "trial": 3,
+          "timing": {
+            "count": 100,
+            "mean_ms": 4.933152,
+            "median_ms": 4.921395,
+            "p05_ms": 4.9066428,
+            "p95_ms": 4.9878777,
+            "min_ms": 4.901227,
+            "max_ms": 5.000172
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 8.749842363453245,
+            "rms_q15_lsb": 1.734691375725571,
+            "relative_l2": 0.013610209282866829
+          }
+        }
+      ]
+    }
+  },
+  "parallel_cores": 2,
+  "pair_barrier": true,
+  "dma_irq_deltas": {
+    "68": [
+      660,
+      0
+    ],
+    "67": [
+      660,
+      0
+    ]
+  },
+  "dma_requests_per_frame": 2,
+  "dma_channel_submissions_per_frame": 4,
+  "double_over_pl": 1.1720599899890682,
+  "float_neon_over_pl": 0.7410064705247569,
+  "fixture_sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+  "dma_artifacts": {
+    "fft128_e13_2core.bin": "c6aa49d2936700c7b407c9317f7969938ba7641282862870bc45ad02550573f1",
+    "fft128_e13_2core.dtbo": "d816208b3e08b77cd970e3485317a4f8681f2ed8818d64d8236cfc8b3f325848",
+    "fft128_e13_2core.json": "1e71a1b5f7184b31dffb064eee1137c54f6b1c9226896e1a38d648920c21c0d6",
+    "fft128_dma_parallel.ko": "265c860509aba9237df3d57e3e422deb8bfef433af357c2565511d35d9c74d7c",
+    "fft128-receiver": "7fab5da12902232ffa413eb741f4f9af2b14fe77c8e6d5a29a736ee106565217",
+    "test-dma-parallel-client": "c5669333ce4109eafa02783ea9458ec4094b8ffe51b7a369b9cfd58f91db3c29",
+    "frame.rspb": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "kernelrelease.txt": "b1fc844b1ee87f48cd89d857eb48ae13b9a1e5bd6d366112a8cb8972fc01034d",
+    "gic_phandle.bin": "1bc5d0e3df0ea12c4d0078668d14924f95106bbe173e196de50fe13a900b0937",
+    "gic_path.txt": "1c6c83c7ef115c7a7d6bd02696ca4f5a64e2ae24beabac820da66ff111b90faa",
+    "dma_config.json": "41eaece9dff12fefbad4cec78a42c4555216e8d55731558141e534f51cf111bd",
+    "parallel_core_check.txt": "3e323ffc658167d348dff17592dd670b6a3ae7dd0f441e08da55233a30000d07",
+    "parallel_utilization.rpt": "6f3c351959212e68205ab960d1ca42123b83bdffba7d6e7ef5bda22198e1c206",
+    "build_config.json": "f6deb3dc3241203c31af50f730ffe5b20510623a0ba6f642c34185a7a615f37c",
+    "clock_source.txt": "9f749a74cea4bfbe43d7d176174f2ea808fd87b5bb56b631d5fdfeac82e52597",
+    "pl_source.sha256": "db63b4a5f197bee8b224afc7255d1158c7cc7b3100c6775e4477e28cb0867df1",
+    "host_source.sha256": "e33560761dcb8633700c6b2402b381d6035d54764643dcad88b8bfa4a899b26d",
+    "module_source.sha256": "c291bbfa1d91b829307639ce438fba170032e5d007c2498908164028b5f77240",
+    "module_build_environment.txt": "9cda3b9bec761dcf64ca26195b1dcfe54d4c3e7a9bf7b8348449a57da10a073a",
+    "load_board.sh": "68dc3564ca4857b0f99770fa2652ad88f98c9d7c16567bc38cbc8f7dda07b3b8",
+    "profile_board.sh": "5ebc4bd29d0be17eaef5425d42b73f4a6584e0527ff1e274a7dfb9b9ab78faed",
+    "run_board.sh": "52dd5fdca7c0a39f1b9d531d1fff071d811e8e73fb1bd0e4111190f0fcc67c94"
+  },
+  "ps_artifacts": {
+    "frame.rspb": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "reference.csv": "3de9c2b73979b89ece211543d0b13da9eb7192a2c7a00e73b7fbc05d6668f553",
+    "reference.json": "b5b41a758ed8f7dcbc02f9253085f7118d426371bd5ed0803ab71a280e67521b",
+    "run_board.sh": "5f2ddb5096efdb23b5083977c840153c96736b61f7b91f64078d0a762c903433",
+    "double/bin/receiver": "a238b98b8d43b4f26bf1c8bf1bac43050bbde26a5b2a71be196837db50f24e85",
+    "double/lib/libfftw3.so.3": "182f6f5317bf1480aeee92d9a93958c5c5cc24fdccf36217d3ce253b01cb3c6b",
+    "double/build_environment.txt": "60091ff3a3a81c3399821febf8f34179c9f6558bda56644269a9159df14ee282",
+    "double/fftw_build_environment.txt": "6877a0cbbef7cfd027b27e52fe101086485657c20de2c6c8dc1ebb7db9de6d85",
+    "float_scalar/bin/receiver": "e9dce02870b541a2028ec01cea38dd219da2c1b6a860cf86a4b49f359ccf06a4",
+    "float_scalar/lib/libfftw3f.so.3": "bfb57f35aab07931c3932ab7918f7fd0e390310d0434585f23a013194dd719fa",
+    "float_scalar/build_environment.txt": "a11ca79e697ad050f16e046ef44ad764bffafcdd5a666c483f031cea57902e7d",
+    "float_scalar/fftw_build_environment.txt": "8e249f92cbec400d773f360ab64a3502bc27d4eb1fbeff0bdbb58f8785d5a132",
+    "float_neon/bin/receiver": "1feda3b947f5e2421b30179c0183fdce3fcf540050d19e88ac9ef7c8a09451e4",
+    "float_neon/lib/libfftw3f.so.3": "9c06dfa6f7e6f686b5eabda0845b75d38c5f05b852234364edfd84c423315653",
+    "float_neon/build_environment.txt": "64cce6a4db6b36b166b4184c80c70806d5f7a848c8cd09f23e70f82546a3a013",
+    "float_neon/fftw_build_environment.txt": "77c2cd82f944d6ba0fe68491cc0068e51f87872f8039833d3803f4acf127f429"
+  },
+  "scope": "Q15 input to CPU-available 2D FFT output; required copies, DMA, IRQ wait, transpose and normalization included; IO/planning/validation excluded",
+  "limitation": "Same recorded warm-cache frame, CPU0, one ioctl/axis, coherent HP0 bounce buffers; two unchanged cores with pair barrier, no next-pair prefetch or external ping-pong or continuous-stream throughput claim",
+  "environment": "Linux Petalinux-2022 5.15.19-xilinx #1 SMP PREEMPT Wed Aug 26 11:47:56 KST 2026 armv7l GNU/Linux\n99dbd625-31d0-43fe-a3d8-f65c4e12939c\nprocessor\t: 0\nmodel name\t: ARMv7 Processor rev 0 (v7l)\nBogoMIPS\t: 333.33\nFeatures\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 \nCPU implementer\t: 0x41\nCPU architecture: 7\nCPU variant\t: 0x3\nCPU part\t: 0xc09\nCPU revision\t: 0\n\nprocessor\t: 1\nmodel name\t: ARMv7 Processor rev 0 (v7l)\nBogoMIPS\t: 333.33\nFeatures\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 \nCPU implementer\t: 0x41\nCPU architecture: 7\nCPU variant\t: 0x3\nCPU part\t: 0xc09\nCPU revision\t: 0\n\nHardware\t: Xilinx Zynq Platform\nRevision\t: 0003\nSerial\t\t: 0000000000000000\nE13-2core CPU0 warmup=10 repeats=100 trials=3, coherent bounce buffers, HP0, 50MHz 2cores pair_barrier\n{\"experiment\":\"E13-2core\",\"core\":\"pipeline\",\"clock_hz\":50000000,\"fft_control_base\":\"0x43c60000\",\"dma_base\":\"0x40400000\",\"irq_f2p_bits\":[6,7],\"dt_spi\":[35,36],\"memory_port\":\"HP0\",\"memory_width\":64,\"stream_width\":32,\"sg\":false,\"dre\":false,\"burst\":16,\"length_width\":17,\"register_abi\":3,\"parallel_cores\":2,\"pair_barrier\":true,\"next_pair_prefetch\":false,\"external_ping_pong\":false,\"fft_per_request\":128,\"bytes_per_direction\":65536,\"board_verified\":false}\nc6aa49d2936700c7b407c9317f7969938ba7641282862870bc45ad02550573f1  /opt/fft128/e13_2core/fft128_e13_2core.bin\n265c860509aba9237df3d57e3e422deb8bfef433af357c2565511d35d9c74d7c  /opt/fft128/e13_2core/fft128_dma_parallel.ko\n7fab5da12902232ffa413eb741f4f9af2b14fe77c8e6d5a29a736ee106565217  /opt/fft128/e13_2core/fft128-receiver\naa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976  /opt/fft128/e13_2core/frame.rspb\n/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor: unavailable\n/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: unavailable\n"
+}

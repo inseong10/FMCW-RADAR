@@ -40,7 +40,22 @@ typedef socklen_t radar_socklen;
 #endif
 #ifdef FFT128_DMA_BACKEND
 #define HARDWARE_NAME "DMA"
-#ifdef FFT128_DMA_BATCH_BACKEND
+#ifdef FFT128_DMA_STREAM_BACKEND
+#define HARDWARE_BACKEND "dma_stream"
+#define HARDWARE_LABEL "PL_DMA_STREAM"
+#elif defined(FFT128_DMA_BF2_BACKEND)
+#define HARDWARE_BACKEND "dma_bf2"
+#define HARDWARE_LABEL "PL_DMA_BF2"
+#elif defined(FFT128_DMA_OVERLAP_BACKEND)
+#define HARDWARE_BACKEND "dma_overlap"
+#define HARDWARE_LABEL "PL_DMA_OVERLAP"
+#elif defined(FFT128_DMA_QUAD_BACKEND)
+#define HARDWARE_BACKEND "dma_quad"
+#define HARDWARE_LABEL "PL_DMA_QUAD"
+#elif defined(FFT128_DMA_PARALLEL_BACKEND)
+#define HARDWARE_BACKEND "dma_parallel"
+#define HARDWARE_LABEL "PL_DMA_PARALLEL"
+#elif defined(FFT128_DMA_BATCH_BACKEND)
 #define HARDWARE_BACKEND "dma_batch"
 #define HARDWARE_LABEL "PL_DMA_BATCH"
 #else
@@ -318,7 +333,19 @@ static int save(const options *o, const collector *c, const uint32_t *spectrum,
 #ifdef FFT128_DMA_BATCH_BACKEND
     f=output_file(o->prefix,".batch.json");
     if(!f) return -1;
+#ifdef FFT128_DMA_STREAM_BACKEND
+    fprintf(f,"{\"experiment\":\"E13-stream\",\"register_abi\":7,\"parallel_cores\":1,\"streaming_stages\":7,\"total_butterflies\":7,\"frame_initiation_interval\":128,\"group_barrier\":false,\"next_group_prefetch\":false,\"next_vector_prefetch\":true,\"external_ping_pong\":false,\"external_buffers\":false,\"stage_frame_slots\":true,\"buffering\":\"per_stage_double_frame_slots\",\"hardware\":%s,\"dma_requests_per_frame\":2,\"dma_channel_submissions_per_frame\":4,\"fft_per_request\":128,\"bytes_per_direction_per_request\":65536,\"transfer_compute_overlap\":true}\n",o->model ? "false" : "true");
+#elif defined(FFT128_DMA_BF2_BACKEND)
+    fprintf(f,"{\"experiment\":\"E13-bf2\",\"hardware\":%s,\"dma_requests_per_frame\":2,\"dma_channel_submissions_per_frame\":4,\"fft_per_request\":128,\"bytes_per_direction_per_request\":65536,\"parallel_cores\":4,\"butterflies_per_core\":2,\"total_butterflies\":8,\"group_barrier\":false,\"transfer_compute_overlap\":true,\"next_group_prefetch\":true,\"external_ping_pong\":false,\"external_buffers\":true,\"buffering\":\"per_lane_fifos\"}\n",o->model ? "false" : "true");
+#elif defined(FFT128_DMA_OVERLAP_BACKEND)
+    fprintf(f,"{\"experiment\":\"E12-4core\",\"hardware\":%s,\"dma_requests_per_frame\":2,\"dma_channel_submissions_per_frame\":4,\"fft_per_request\":128,\"bytes_per_direction_per_request\":65536,\"parallel_cores\":4,\"group_barrier\":false,\"transfer_compute_overlap\":true,\"next_group_prefetch\":true,\"external_ping_pong\":false,\"external_buffers\":true,\"buffering\":\"per_lane_fifos\"}\n",o->model ? "false" : "true");
+#elif defined(FFT128_DMA_QUAD_BACKEND)
+    fprintf(f,"{\"experiment\":\"E13-4core\",\"hardware\":%s,\"dma_requests_per_frame\":2,\"dma_channel_submissions_per_frame\":4,\"fft_per_request\":128,\"bytes_per_direction_per_request\":65536,\"parallel_cores\":4,\"group_barrier\":true,\"transfer_compute_overlap\":true,\"next_group_prefetch\":false,\"external_ping_pong\":false}\n",o->model ? "false" : "true");
+#elif defined(FFT128_DMA_PARALLEL_BACKEND)
+    fprintf(f,"{\"experiment\":\"E13-2core\",\"hardware\":%s,\"dma_requests_per_frame\":2,\"dma_channel_submissions_per_frame\":4,\"fft_per_request\":128,\"bytes_per_direction_per_request\":65536,\"parallel_cores\":2,\"pair_barrier\":true,\"transfer_compute_overlap\":true,\"next_pair_prefetch\":false,\"external_ping_pong\":false}\n",o->model ? "false" : "true");
+#else
     fprintf(f,"{\"experiment\":\"E11b\",\"hardware\":%s,\"dma_requests_per_frame\":2,\"dma_channel_submissions_per_frame\":4,\"fft_per_request\":128,\"bytes_per_direction_per_request\":65536,\"transfer_compute_overlap\":false}\n",o->model ? "false" : "true");
+#endif
     if(checked_close(f)) return -1;
 #endif
     f=output_file(o->prefix,".timings.csv");
@@ -336,6 +363,23 @@ static int save_profiles(const options *o, const fft128_profile *profiles, const
     fprintf(f,"iteration,wall_ms,host_input_copy_ms,ioctl_ms,host_output_copy_ms,gather_ms,scatter_ms,kernel_copy_in_ms,kernel_submit_ms,kernel_wait_ms,kernel_check_ms,kernel_copy_out_ms,pl_active_cycles,pl_active_ms,input_stall_cycles,output_stall_cycles,fft_calls,min_active_cycles,max_active_cycles,pl_clock_hz_declared,bytes_each_direction_per_fft"
 #ifdef FFT128_DMA_BATCH_BACKEND
                 ",dma_requests,dma_channel_submissions,fft_per_request,bytes_each_direction_per_request"
+#endif
+#ifdef FFT128_DMA_PARALLEL_BACKEND
+                ",parallel_cores,core0_active_cycles,core1_active_cycles,both_busy_cycles,both_work_cycles,arbitration_stall_cycles"
+#endif
+#if defined(FFT128_DMA_QUAD_BACKEND) || defined(FFT128_DMA_OVERLAP_BACKEND) || defined(FFT128_DMA_BF2_BACKEND)
+                ",parallel_cores,core0_active_cycles,core1_active_cycles,core2_active_cycles,core3_active_cycles,any_busy_cycles,multi_busy_cycles,all_busy_cycles,multi_work_cycles,all_work_cycles,arbitration_stall_cycles"
+#endif
+#if defined(FFT128_DMA_OVERLAP_BACKEND) || defined(FFT128_DMA_BF2_BACKEND)
+                ",io_overlap_cycles,input_work_overlap_cycles,output_work_overlap_cycles,three_overlap_cycles"
+#endif
+#ifdef FFT128_DMA_BF2_BACKEND
+                ",butterflies_per_core,dual_issue_events,dual_retire_events,calc_lane_cycles"
+#endif
+#ifdef FFT128_DMA_STREAM_BACKEND
+                ",streaming_cores,streaming_stages,stage_busy_cycles,multi_stage_cycles,vector_overlap_cycles,io_overlap_cycles,input_calc_overlap_cycles,output_calc_overlap_cycles,three_overlap_cycles"
+                ",stage0_issue,stage1_issue,stage2_issue,stage3_issue,stage4_issue,stage5_issue,stage6_issue"
+                ",stage0_retire,stage1_retire,stage2_retire,stage3_retire,stage4_retire,stage5_retire,stage6_retire"
 #endif
                 "\n");
     double ioctl_ms=0,active_ms=0,copy_ms=0,wait_ms=0,transpose_ms=0;
@@ -358,6 +402,38 @@ static int save_profiles(const options *o, const fft128_profile *profiles, const
 #ifdef FFT128_DMA_BATCH_BACKEND
         fprintf(f,",%u,%u,128,65536",p->calls,p->calls*2);
 #endif
+#ifdef FFT128_DMA_PARALLEL_BACKEND
+        fprintf(f,",2,%llu,%llu,%llu,%llu,%llu",
+                (unsigned long long)p->parallel_core0_cycles,(unsigned long long)p->parallel_core1_cycles,
+                (unsigned long long)p->parallel_both_busy_cycles,(unsigned long long)p->parallel_both_work_cycles,
+                (unsigned long long)p->parallel_arbitration_stalls);
+#endif
+#if defined(FFT128_DMA_QUAD_BACKEND) || defined(FFT128_DMA_OVERLAP_BACKEND) || defined(FFT128_DMA_BF2_BACKEND)
+        fprintf(f,",4,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu",
+                (unsigned long long)p->quad_core0_cycles,(unsigned long long)p->quad_core1_cycles,
+                (unsigned long long)p->quad_core2_cycles,(unsigned long long)p->quad_core3_cycles,
+                (unsigned long long)p->quad_any_busy_cycles,(unsigned long long)p->quad_multi_busy_cycles,
+                (unsigned long long)p->quad_all_busy_cycles,(unsigned long long)p->quad_multi_work_cycles,
+                (unsigned long long)p->quad_all_work_cycles,(unsigned long long)p->quad_arbitration_stalls);
+#endif
+#if defined(FFT128_DMA_OVERLAP_BACKEND) || defined(FFT128_DMA_BF2_BACKEND)
+        fprintf(f,",%llu,%llu,%llu,%llu",(unsigned long long)p->overlap_io_cycles,
+                (unsigned long long)p->overlap_input_work_cycles,(unsigned long long)p->overlap_output_work_cycles,
+                (unsigned long long)p->overlap_three_cycles);
+#endif
+#ifdef FFT128_DMA_BF2_BACKEND
+        fprintf(f,",2,%llu,%llu,%llu",(unsigned long long)p->bf2_dual_issue_events,
+                (unsigned long long)p->bf2_dual_retire_events,(unsigned long long)p->bf2_calc_lane_cycles);
+#endif
+#ifdef FFT128_DMA_STREAM_BACKEND
+        fprintf(f,",1,7,%llu,%llu,%llu,%llu,%llu,%llu,%llu",
+                (unsigned long long)p->stream_stage_busy_cycles,(unsigned long long)p->stream_multi_stage_cycles,
+                (unsigned long long)p->stream_vector_overlap_cycles,(unsigned long long)p->stream_io_cycles,
+                (unsigned long long)p->stream_input_calc_cycles,(unsigned long long)p->stream_output_calc_cycles,
+                (unsigned long long)p->stream_three_cycles);
+        for(unsigned stage=0;stage<7;++stage) fprintf(f,",%llu",(unsigned long long)p->stream_issue_events[stage]);
+        for(unsigned stage=0;stage<7;++stage) fprintf(f,",%llu",(unsigned long long)p->stream_retire_events[stage]);
+#endif
         fputc('\n',f);
         ioctl_ms+=p->start_wait_ns/1e6;active_ms+=active;
         copy_ms+=(p->dma_copy_in_ns+p->dma_copy_out_ns)/1e6;wait_ms+=p->dma_wait_ns/1e6;
@@ -367,6 +443,33 @@ static int save_profiles(const options *o, const fft128_profile *profiles, const
     printf("DMA_PROFILE: ioctl_ms=%.6f kernel_copies_ms=%.6f kernel_wait_ms=%.6f PS_transpose_ms=%.6f pl_active_ms=%.6f\n",
            ioctl_ms/o->repeat,copy_ms/o->repeat,wait_ms/o->repeat,transpose_ms/o->repeat,active_ms/o->repeat);
     printf("DMA_PROFILE: nested kernel and PL intervals overlap ioctl; active cycles INCLUDE stream stalls. Separate instrumented run.\n");
+#ifdef FFT128_DMA_PARALLEL_BACKEND
+    uint64_t both_work=0,both_busy=0;
+    for(unsigned k=0;k<o->repeat;++k) {
+        both_work+=profiles[k].parallel_both_work_cycles;
+        both_busy+=profiles[k].parallel_both_busy_cycles;
+    }
+    printf("PARALLEL_PROFILE cores=2 mean_both_busy_cycles=%.3f mean_both_work_cycles=%.3f pair_barrier=1 next_pair_prefetch=0\n",
+           (double)both_busy/o->repeat,(double)both_work/o->repeat);
+#endif
+#if defined(FFT128_DMA_QUAD_BACKEND) || defined(FFT128_DMA_OVERLAP_BACKEND) || defined(FFT128_DMA_BF2_BACKEND)
+    uint64_t multi_work=0,all_work=0;
+    for(unsigned k=0;k<o->repeat;++k) {
+        multi_work+=profiles[k].quad_multi_work_cycles;all_work+=profiles[k].quad_all_work_cycles;
+    }
+#if defined(FFT128_DMA_OVERLAP_BACKEND) || defined(FFT128_DMA_BF2_BACKEND)
+#ifdef FFT128_DMA_BF2_BACKEND
+    printf("BF2_PROFILE cores=4 butterflies_per_core=2 mean_multi_work_cycles=%.3f mean_all_work_cycles=%.3f group_barrier=0 next_group_prefetch=1\n",
+           (double)multi_work/o->repeat,(double)all_work/o->repeat);
+#else
+    printf("OVERLAP_PROFILE cores=4 mean_multi_work_cycles=%.3f mean_all_work_cycles=%.3f group_barrier=0 next_group_prefetch=1\n",
+           (double)multi_work/o->repeat,(double)all_work/o->repeat);
+#endif
+#else
+    printf("QUAD_PROFILE cores=4 mean_multi_work_cycles=%.3f mean_all_work_cycles=%.3f group_barrier=1 next_group_prefetch=0\n",
+           (double)multi_work/o->repeat,(double)all_work/o->repeat);
+#endif
+#endif
 #else
     fprintf(f,"iteration,wall_ms,input_write_ms,start_wait_ms,counter_read_ms,output_read_ms,gather_ms,scatter_ms,pl_cycles,pl_internal_ms,fft_calls,min_cycles,max_cycles,pl_clock_hz_declared\n");
     double core_ms=0, write_ms=0, wait_ms=0, read_ms=0, transpose_ms=0;

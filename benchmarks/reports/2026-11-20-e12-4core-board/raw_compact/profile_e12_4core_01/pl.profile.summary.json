@@ -1,0 +1,59 @@
+{
+  "status": "E12_4CORE_DMA_DIAGNOSTIC_ONLY",
+  "frames": 20,
+  "mean_ms": {
+    "wall_ms": 3.20029145,
+    "pl_active_ms": 1.12459,
+    "host_input_copy_ms": 0.2494941,
+    "ioctl_ms": 2.0885118,
+    "host_output_copy_ms": 0.177117,
+    "gather_ms": 0.34230635,
+    "scatter_ms": 0.3324711,
+    "kernel_copy_in_ms": 0.2067927,
+    "kernel_submit_ms": 0.0407595,
+    "kernel_wait_ms": 1.1700258000000001,
+    "kernel_check_ms": 0.0179403,
+    "kernel_copy_out_ms": 0.6300219
+  },
+  "wall_median_ms": 3.1833869999999997,
+  "host_residual_ms": 0.010391099999999653,
+  "ioctl_residual_ms": 0.02297159999999998,
+  "multi_work_cycles": {
+    "min": 38720,
+    "max": 38720,
+    "mean": 38720
+  },
+  "all_work_cycles": {
+    "min": 5952,
+    "max": 5952,
+    "mean": 5952
+  },
+  "simultaneous_multi_calc_cycles_lower_bound": {
+    "min": 38464,
+    "max": 38464,
+    "mean": 38464
+  },
+  "simultaneous_four_calc_cycles_lower_bound": {
+    "min": 5696,
+    "max": 5696,
+    "mean": 5696
+  },
+  "parallel_counters_mean": {
+    "core0_active_cycles": 55040,
+    "core1_active_cycles": 55040,
+    "core2_active_cycles": 55040,
+    "core3_active_cycles": 55040,
+    "any_busy_cycles": 55932,
+    "multi_busy_cycles": 55420,
+    "all_busy_cycles": 53900,
+    "multi_work_cycles": 38720,
+    "all_work_cycles": 5952,
+    "arbitration_stall_cycles": 24384,
+    "io_overlap_cycles": 22830,
+    "input_work_overlap_cycles": 32194,
+    "output_work_overlap_cycles": 32192,
+    "three_overlap_cycles": 22772
+  },
+  "payload_bytes_per_frame": 262144,
+  "interpretation": "Kernel stages and PL active time overlap ioctl. Do not sum them with host stages. Input and output stalls may overlap each other across lanes; never subtract their sum as pure compute time. Work window spans last input handshake to first output valid, including initial output read latency. IO overlap counts simultaneous external handshakes; work overlap includes that initial read clock. Bounds subtract 256 cycles/frame for multi-work and 256 for all-four-work. Coherent HP0 copies included. Separate unprofiled paired trials are required for performance comparisons."
+}

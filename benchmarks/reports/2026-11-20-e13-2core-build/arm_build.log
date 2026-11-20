@@ -1,0 +1,14 @@
+COMPILER: arm-linux-gnueabihf-gcc
+/home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_parallel_host/bin/fft128-receiver: ELF 32-bit LSB executable, ARM, EABI5 version 1 (GNU/Linux), statically linked, BuildID[sha1]=07d4fbcfcc03560c4eaf4ab1872295afa2de73aa, for GNU/Linux 3.2.0, not stripped
+NATIVE_BUILD_PASS: /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_parallel_host/bin/fft128-receiver
+E13-2core build only: use dma_parallel scripts; E11b baseline preserved.
+DMA_PARALLEL_OVERLAY_READY: /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_parallel_host/fft128_e13_2core.dts
+DMA_HOST_BUILD_READY: /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_parallel_host
+make: Entering directory '/home/user/fft128_kernel_e11a/build'
+  CC [M]  /home/user/fft128_dma_parallel_module.jGmjOV/fft128_dma_parallel.o
+  MODPOST /home/user/fft128_dma_parallel_module.jGmjOV/Module.symvers
+  CC [M]  /home/user/fft128_dma_parallel_module.jGmjOV/fft128_dma_parallel.mod.o
+  LD [M]  /home/user/fft128_dma_parallel_module.jGmjOV/fft128_dma_parallel.ko
+make: Leaving directory '/home/user/fft128_kernel_e11a/build'
+DMA_MODULE_BUILD_READY: /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_parallel_module
+E13_2CORE_ARM_BUILD_PASS

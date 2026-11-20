@@ -1,0 +1,3 @@
+board K17 125 MHz -> Clocking Wizard 50.0 MHz -> PS GP0 ACLK, AXI and FFT; FCLK0 not used
+FFT_CORE=pipeline; FFT_CLOCK_HZ=50000000; PIPELINED=1
+RESET_SCHEME=BOARD_MMCM_LOCK_V3_AUX_HIGH; FCLK_RESET0_N not used; ext_reset_in=1 active-low; aux_reset_in=0 active-high

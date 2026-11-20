@@ -1,0 +1,17 @@
+{
+  "scope": "RTL cycles and declared 50MHz conversion; not board performance",
+  "axis_cycles_with_test_startup": 52052,
+  "test_startup_input_starvation_cycles": 20,
+  "no_stall_axis_cycles": 52032,
+  "no_stall_frame_cycles": 104064,
+  "no_stall_frame_ms": 2.08128,
+  "two_core_no_stall_frame_ms": 2.85696,
+  "two_core_over_four_core_no_stall": 1.3726937269372694,
+  "actual_simultaneous_four_calc_cycles_per_axis": 2944,
+  "all_work_window_cycles_per_axis": 2976,
+  "actual_simultaneous_multi_calc_cycles_per_axis": 19328,
+  "multi_work_window_cycles_per_axis": 19360,
+  "ARM_build": false,
+  "Vivado_build": false,
+  "board_verified": false
+}

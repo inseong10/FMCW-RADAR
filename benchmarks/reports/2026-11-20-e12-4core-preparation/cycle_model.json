@@ -1,0 +1,15 @@
+{
+  "scope": "RTL simulation only; two axes, 128 FFTs per axis; no AXI DMA IP/DDR/kernel/board measurement",
+  "clock_hz": 50000000,
+  "baseline_e13_cycles_per_axis": 52032,
+  "e12_cycles_per_axis": 28098,
+  "e12_cycles_per_frame": 56196,
+  "baseline_pl_frame_ms": 2.08128,
+  "e12_pl_frame_ms": 1.12392,
+  "pl_latency_reduction_percent": 45.99861623616236,
+  "pl_speedup": 1.8518043988896007,
+  "baseline_evidence": "../2026-11-20-e13-4core-preparation/dma_quad_ctrl_tb.log",
+  "e12_evidence": "dma_overlap_ctrl_tb.log",
+  "e12_zero_external_stall_asserted": true,
+  "board_verified": false
+}

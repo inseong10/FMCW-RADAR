@@ -1,0 +1,14 @@
+COMPILER: arm-linux-gnueabihf-gcc
+/home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_stream_host/bin/fft128-receiver: ELF 32-bit LSB executable, ARM, EABI5 version 1 (GNU/Linux), statically linked, BuildID[sha1]=8d5c6779259588ee476aa8682d6a6e39bf143230, for GNU/Linux 3.2.0, not stripped
+NATIVE_BUILD_PASS: /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_stream_host/bin/fft128-receiver
+E13-stream build only: use dma_stream scripts; E13-bf2 baseline preserved.
+DMA_STREAM_OVERLAY_READY: /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_stream_host/fft128_e13_stream.dts
+DMA_HOST_BUILD_READY: /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_stream_host
+make: Entering directory '/home/user/fft128_kernel_e11a/build'
+  CC [M]  /home/user/fft128_dma_stream_module.kYMfeD/fft128_dma_stream.o
+  MODPOST /home/user/fft128_dma_stream_module.kYMfeD/Module.symvers
+  CC [M]  /home/user/fft128_dma_stream_module.kYMfeD/fft128_dma_stream.mod.o
+  LD [M]  /home/user/fft128_dma_stream_module.kYMfeD/fft128_dma_stream.ko
+make: Leaving directory '/home/user/fft128_kernel_e11a/build'
+DMA_MODULE_BUILD_READY: /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_stream_module
+E13_STREAM_ARM_BUILD_PASS

@@ -1,0 +1,16 @@
+{
+  "shell_syntax_pass": [
+    "src/PS/fft128/dma_parallel/build_module.sh",
+    "src/PS/fft128/dma_parallel/collect_results.sh",
+    "src/PS/fft128/dma_parallel/deploy.sh",
+    "src/PS/fft128/dma_parallel/load_board.sh",
+    "src/PS/fft128/dma_parallel/prepare_all.sh",
+    "src/PS/fft128/dma_parallel/prepare_bundle.sh",
+    "src/PS/fft128/dma_parallel/prepare_host.sh",
+    "src/PS/fft128/dma_parallel/profile_board.sh",
+    "src/PS/fft128/dma_parallel/run_board.sh"
+  ],
+  "overlay_source": "Recorded live_dt.tar from E11a/E11b board, not live E13 validation",
+  "actual_arm_build": false,
+  "actual_vivado_build": false
+}

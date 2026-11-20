@@ -1,0 +1,17 @@
+kernel_build=/home/user/fft128_kernel_e11a/build
+module_build=/home/user/fft128_dma_stream_module.kYMfeD
+arm-linux-gnueabihf-gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+98e32b9d425156aabf2b3c63c1be28e643fc57b36583926f3eee5e0b6b6bf0f6  /home/user/fft128_kernel_e11a/build/.config
+7b326f16445ba64893a5aefcf3ec560dfb6d2ca96081c77bd51e1235c828b3a7  /home/user/fft128_kernel_e11a/build/Module.symvers
+96c12ad6b9e39e6e27b69c67f79b5b640f2d52ab090e5720ff9b576037ef6a18  /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_probe/probe_board/kernel.config
+95f5804e0914f240577a20c42bc9b4720593c40c236b7e87a9bef03eaa2a79cb  /home/user/fmcw_share/FMCW-FFT-test/src/PS/fft128/dma_stream/fft128_dma_stream.c
+3beb49cc4e77b64dacf9da1ee4a0f90010c98473cf96cc97b5877417752a2eb4  /home/user/fmcw_share/FMCW-FFT-test/src/PS/fft128/dma_stream/fft128_dma_stream_uapi.h
+filename:       /home/user/fmcw_share/FMCW-FFT-test/build/fft128_dma_stream_module/fft128_dma_stream.ko
+description:    FMCW E13-stream axis-batched 128-point FFT DMAengine client
+license:        GPL
+alias:          of:N*T*Cfmcw,fft128-dma-stream-v7C*
+alias:          of:N*T*Cfmcw,fft128-dma-stream-v7
+depends:        
+name:           fft128_dma_stream
+vermagic:       5.15.19-xilinx SMP preempt mod_unload modversions ARMv7 p2v8 
+Matching release is necessary, not sufficient. Board insmod must accept all MODVERSIONS CRCs. Never use --force.

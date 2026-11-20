@@ -1,0 +1,36 @@
+{
+  "experiment": "E13-bf2",
+  "core": "pipeline",
+  "clock_hz": 50000000,
+  "fft_control_base": "0x43c60000",
+  "dma_base": "0x40400000",
+  "irq_f2p_bits": [
+    6,
+    7
+  ],
+  "dt_spi": [
+    35,
+    36
+  ],
+  "memory_port": "HP0",
+  "memory_width": 64,
+  "stream_width": 32,
+  "sg": false,
+  "dre": false,
+  "burst": 16,
+  "length_width": 17,
+  "register_abi": 6,
+  "parallel_cores": 4,
+  "butterflies_per_core": 2,
+  "total_butterflies": 8,
+  "group_barrier": false,
+  "next_group_prefetch": true,
+  "external_ping_pong": false,
+  "external_buffers": true,
+  "buffering": "per_lane_fifos",
+  "fifo_ram_words": 256,
+  "fifo_output_register_words": 1,
+  "fft_per_request": 128,
+  "bytes_per_direction": 65536,
+  "board_verified": false
+}

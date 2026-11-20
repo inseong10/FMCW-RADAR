@@ -1,0 +1,26 @@
+{
+  "scope": "Windows host, not ARM/kernel",
+  "tests": [
+    {
+      "name": "native",
+      "count": 9,
+      "status": "PASS"
+    },
+    {
+      "name": "e11b_tools",
+      "count": 3,
+      "status": "PASS"
+    },
+    {
+      "name": "two_core_tools",
+      "count": 4,
+      "status": "PASS"
+    },
+    {
+      "name": "quad_tools",
+      "count": 5,
+      "status": "PASS"
+    }
+  ],
+  "total_tests": 21
+}

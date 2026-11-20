@@ -1,0 +1,32 @@
+{
+  "axi_vectors": 272,
+  "exact_complex_bins": 34816,
+  "full_2d_frame_shape": [
+    128,
+    128
+  ],
+  "independent_numpy_max_error_q15_lsb": 5.109735109344928,
+  "known_tone_peak_unshifted": [
+    121,
+    11
+  ],
+  "tested": "Unchanged serial/pipeline baseline plus E13-2core DMA AXIS/control frontend; no AXI DMA IP, DDR, IRQ, kernel or board validation",
+  "serial_cycles": 3073,
+  "pipeline_cycles": 861,
+  "experiment": "E13-2core",
+  "unchanged_core_count": 2,
+  "schedule": "two-vector pair barrier; shared ordered AXIS; no external buffers or next-pair prefetch",
+  "dma_requests_per_frame": 2,
+  "dma_checks": [
+    "272 independent numeric vectors in full 128-FFT packets",
+    "AXIS input gaps/output backpressure",
+    "stable stalled payload",
+    "malformed TLAST/TKEEP flags",
+    "partial-load, compute and stalled-output abort/recovery",
+    "1/2/3/127/128-FFT batches",
+    "external axis TLAST/internal vector TLAST",
+    "pair barrier; actual simultaneous CALC state assertion; independent overlap counters",
+    "independent AW/W",
+    "AXI response backpressure and forbidden payload windows"
+  ]
+}

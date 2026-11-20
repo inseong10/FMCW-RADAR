@@ -1,0 +1,9 @@
+CPU_AFFINITY=0
+DMA: kernel-owned control registers, HP0, coherent bounce buffers; 64 KiB per direction/axis, 128 FFTs, 1 streaming core, 7 dedicated stages
+BACKEND=PL_DMA_STREAM implementation=native_C
+BENCHMARK: warmup=2 repeat=20 preallocated buffers; data path=PL_DMA_STREAM
+peak_unshifted=(107,20) fft_and_transfer_seconds=0.002881
+DMA_PROFILE: ioctl_ms=1.687757 kernel_copies_ms=0.857845 kernel_wait_ms=0.745637 PS_transpose_ms=0.687151 pl_active_ms=0.711424
+DMA_PROFILE: nested kernel and PL intervals overlap ioctl; active cycles INCLUDE stream stalls. Separate instrumented run.
+PIPELINE_TIMING backend=PL_DMA_STREAM mean_ms=2.880577 median_ms=2.865153 min_ms=2.848284 max_ms=2.981178 repeats=20
+FRAME_PASS backend=PL_DMA_STREAM bit_exact_bins=16384

@@ -1,0 +1,11 @@
+warning: Some design elements have no explicit time unit and/or
+       : time precision. This may cause confusing timing results.
+       : Affected design elements are:
+       :   -- module address_generator declared here: C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\address_generator.v:2
+       :   -- module butterfly_pipeline declared here: C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\butterfly_pipeline.v:3
+       :   -- module fft128_buffered_lane declared here: C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\fft128_buffered_lane.v:4
+       :   -- module fft128_dma_overlap_ctrl declared here: C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\fft128_dma_overlap_ctrl.v:3
+       :   -- module fft128_pipeline declared here: C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\fft128_pipeline.v:4
+       :   -- module fft128_stream_fifo declared here: C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\fft128_stream_fifo.v:3
+       :   -- module fft128_twiddle declared here: C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\fft128_twiddle.v:2
+       :   -- module fft_working_ram declared here: C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\fft_working_ram.v:2

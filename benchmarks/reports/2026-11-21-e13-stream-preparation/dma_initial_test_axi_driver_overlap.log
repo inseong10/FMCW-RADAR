@@ -1,0 +1,2 @@
+FATAL: C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\dma_stream_ctrl_tb.v:44: B response/hold addr=028 resp=0
+       Time: 980000  Scope: dma_stream_ctrl_tb.write_word

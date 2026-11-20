@@ -1,0 +1,3 @@
+Time resolution is 1 ps
+RESET_AXI_PASS: generated reset IP, ID/length reads, lock-loss recovery
+$finish called at time : 27500 ns : File "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/reset_dma_overlap_tb.v" Line 83

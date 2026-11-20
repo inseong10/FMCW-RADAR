@@ -1,0 +1,71 @@
+{
+  "experiment": "E13-2core",
+  "verified_as_of": "2026-11-20",
+  "board_verified": true,
+  "scope": "Only these artifact hashes; 128x128 recorded warm-cache frame, CPU0; no continuous UDP/real-time guarantee",
+  "backend": "PL_DMA_PARALLEL",
+  "parallel_cores": 2,
+  "pair_barrier": true,
+  "next_pair_prefetch": false,
+  "external_ping_pong": false,
+  "artifacts_sha256": {
+    "fft128_e13_2core.bin": "c6aa49d2936700c7b407c9317f7969938ba7641282862870bc45ad02550573f1",
+    "fft128_e13_2core.dtbo": "d816208b3e08b77cd970e3485317a4f8681f2ed8818d64d8236cfc8b3f325848",
+    "fft128_e13_2core.json": "1e71a1b5f7184b31dffb064eee1137c54f6b1c9226896e1a38d648920c21c0d6",
+    "fft128_dma_parallel.ko": "265c860509aba9237df3d57e3e422deb8bfef433af357c2565511d35d9c74d7c",
+    "fft128-receiver": "7fab5da12902232ffa413eb741f4f9af2b14fe77c8e6d5a29a736ee106565217",
+    "test-dma-parallel-client": "c5669333ce4109eafa02783ea9458ec4094b8ffe51b7a369b9cfd58f91db3c29",
+    "frame.rspb": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "kernelrelease.txt": "b1fc844b1ee87f48cd89d857eb48ae13b9a1e5bd6d366112a8cb8972fc01034d",
+    "gic_phandle.bin": "1bc5d0e3df0ea12c4d0078668d14924f95106bbe173e196de50fe13a900b0937",
+    "gic_path.txt": "1c6c83c7ef115c7a7d6bd02696ca4f5a64e2ae24beabac820da66ff111b90faa",
+    "dma_config.json": "41eaece9dff12fefbad4cec78a42c4555216e8d55731558141e534f51cf111bd",
+    "parallel_core_check.txt": "3e323ffc658167d348dff17592dd670b6a3ae7dd0f441e08da55233a30000d07",
+    "parallel_utilization.rpt": "6f3c351959212e68205ab960d1ca42123b83bdffba7d6e7ef5bda22198e1c206",
+    "build_config.json": "f6deb3dc3241203c31af50f730ffe5b20510623a0ba6f642c34185a7a615f37c",
+    "clock_source.txt": "9f749a74cea4bfbe43d7d176174f2ea808fd87b5bb56b631d5fdfeac82e52597",
+    "pl_source.sha256": "db63b4a5f197bee8b224afc7255d1158c7cc7b3100c6775e4477e28cb0867df1",
+    "host_source.sha256": "e33560761dcb8633700c6b2402b381d6035d54764643dcad88b8bfa4a899b26d",
+    "module_source.sha256": "c291bbfa1d91b829307639ce438fba170032e5d007c2498908164028b5f77240",
+    "module_build_environment.txt": "9cda3b9bec761dcf64ca26195b1dcfe54d4c3e7a9bf7b8348449a57da10a073a",
+    "load_board.sh": "68dc3564ca4857b0f99770fa2652ad88f98c9d7c16567bc38cbc8f7dda07b3b8",
+    "profile_board.sh": "5ebc4bd29d0be17eaef5425d42b73f4a6584e0527ff1e274a7dfb9b9ab78faed",
+    "run_board.sh": "52dd5fdca7c0a39f1b9d531d1fff071d811e8e73fb1bd0e4111190f0fcc67c94"
+  },
+  "checks": {
+    "module_crc_normal_load": true,
+    "selftest_vectors": 4,
+    "selftest_bins": 512,
+    "frame_bins": 16384,
+    "independent_python_integer_match": true,
+    "profile_frames": 20,
+    "simultaneous_calc_cycles_lower_bound_per_frame": 44544,
+    "unprofiled_trials": 3,
+    "unprofiled_repeats_per_trial": 100,
+    "unprofiled_repeats_each_backend": 300,
+    "dma_requests_per_frame": 2,
+    "dma_channel_submissions_per_frame": 4,
+    "fft_per_request": 128,
+    "bytes_each_direction_per_request": 65536,
+    "dma_irq_deltas": {
+      "68": [
+        660,
+        0
+      ],
+      "67": [
+        660,
+        0
+      ]
+    }
+  },
+  "evidence": [
+    "comparison.json",
+    "profile.summary.json",
+    "raw_validation.json",
+    "analysis_guards.json",
+    "raw_artifact_sha256.json",
+    "../2026-11-20-e13-2core-build/board_selftest.json",
+    "../2026-11-20-e13-2core-build/implementation.json"
+  ],
+  "original_build_metadata_board_verified": false
+}

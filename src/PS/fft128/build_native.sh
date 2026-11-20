@@ -10,7 +10,12 @@ case $backend in
     mmio) transport="$here/mmio.c"; default_out="$root/build/fft128_native";;
     dma) transport="$here/dma/dma_backend.c"; extra=(-DFFT128_DMA_BACKEND); default_out="$root/build/fft128_dma_native";;
     dma_batch) transport="$here/dma_batch/dma_batch_backend.c"; processing=("$here/dma_batch/batch_process.c"); extra=(-DFFT128_DMA_BACKEND -DFFT128_DMA_BATCH_BACKEND); default_out="$root/build/fft128_dma_batch_native";;
-    *) echo 'FFT128_IO_BACKEND must be mmio, dma or dma_batch' >&2; exit 1;;
+    dma_parallel) transport="$here/dma_parallel/dma_parallel_backend.c"; processing=("$here/dma_batch/batch_process.c"); extra=(-DFFT128_DMA_BACKEND -DFFT128_DMA_BATCH_BACKEND -DFFT128_DMA_PARALLEL_BACKEND); default_out="$root/build/fft128_dma_parallel_native";;
+    dma_stream) transport="$here/dma_stream/dma_stream_backend.c"; processing=("$here/dma_batch/batch_process.c"); extra=(-DFFT128_DMA_BACKEND -DFFT128_DMA_BATCH_BACKEND -DFFT128_DMA_STREAM_BACKEND); default_out="$root/build/fft128_dma_stream_native";;
+    dma_bf2) transport="$here/dma_bf2/dma_bf2_backend.c"; processing=("$here/dma_batch/batch_process.c"); extra=(-DFFT128_DMA_BACKEND -DFFT128_DMA_BATCH_BACKEND -DFFT128_DMA_BF2_BACKEND); default_out="$root/build/fft128_dma_bf2_native";;
+    dma_overlap) transport="$here/dma_overlap/dma_overlap_backend.c"; processing=("$here/dma_batch/batch_process.c"); extra=(-DFFT128_DMA_BACKEND -DFFT128_DMA_BATCH_BACKEND -DFFT128_DMA_OVERLAP_BACKEND); default_out="$root/build/fft128_dma_overlap_native";;
+    dma_quad) transport="$here/dma_quad/dma_quad_backend.c"; processing=("$here/dma_batch/batch_process.c"); extra=(-DFFT128_DMA_BACKEND -DFFT128_DMA_BATCH_BACKEND -DFFT128_DMA_QUAD_BACKEND); default_out="$root/build/fft128_dma_quad_native";;
+    *) echo 'FFT128_IO_BACKEND must be mmio, dma, dma_batch, dma_parallel dma_quad, dma_overlap, dma_bf2 or dma_stream' >&2; exit 1;;
 esac
 out=${FFT128_OUT:-"$default_out"}
 compiler=()
@@ -54,7 +59,17 @@ printf 'COMPILER: %s\n' "${compiler[*]}"
     "${linkmode[@]}" "${ldflags[@]}" -lm -o "$out/fft128-receiver"
 if command -v file >/dev/null 2>&1; then file "$out/fft128-receiver"; fi
 printf 'NATIVE_BUILD_PASS: %s\n' "$out/fft128-receiver"
-if [[ $backend == dma_batch ]]; then
+if [[ $backend == dma_stream ]]; then
+    printf '%s\n' 'E13-stream build only: use dma_stream scripts; E13-bf2 baseline preserved.'
+elif [[ $backend == dma_bf2 ]]; then
+    printf '%s\n' 'E13-bf2 build only: use dma_bf2 scripts; E12 baseline preserved.'
+elif [[ $backend == dma_overlap ]]; then
+    printf '%s\n' 'E12-4core build only: use dma_overlap scripts; E13 baselines preserved.'
+elif [[ $backend == dma_quad ]]; then
+    printf '%s\n' 'E13-4core build only: use dma_quad scripts; E13-2core baseline preserved.'
+elif [[ $backend == dma_parallel ]]; then
+    printf '%s\n' 'E13-2core build only: use dma_parallel scripts; E11b baseline preserved.'
+elif [[ $backend == dma_batch ]]; then
     printf '%s\n' 'E11b build only: use dma_batch/prepare_host.sh and prepare_bundle.sh; E11a preserved.'
 elif [[ $backend == dma ]]; then
     printf '%s\n' 'E11a build only. Use dma/prepare_bundle.sh and dma/deploy.sh; baseline deployment stays intact.' \

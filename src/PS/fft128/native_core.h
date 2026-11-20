@@ -13,6 +13,26 @@ typedef struct {
     /* E11a nested ioctl stages; not additive to start_wait_ns. */
     uint64_t dma_copy_in_ns, dma_submit_ns, dma_wait_ns, dma_check_ns, dma_copy_out_ns;
     uint64_t dma_input_stalls, dma_output_stalls;
+#ifdef FFT128_DMA_PARALLEL_BACKEND
+    uint64_t parallel_core0_cycles, parallel_core1_cycles;
+    uint64_t parallel_both_busy_cycles, parallel_both_work_cycles, parallel_arbitration_stalls;
+#endif
+#if defined(FFT128_DMA_QUAD_BACKEND) || defined(FFT128_DMA_OVERLAP_BACKEND) || defined(FFT128_DMA_BF2_BACKEND)
+    uint64_t quad_core0_cycles, quad_core1_cycles, quad_core2_cycles, quad_core3_cycles;
+    uint64_t quad_any_busy_cycles, quad_multi_busy_cycles, quad_all_busy_cycles;
+    uint64_t quad_multi_work_cycles, quad_all_work_cycles, quad_arbitration_stalls;
+#endif
+#if defined(FFT128_DMA_OVERLAP_BACKEND) || defined(FFT128_DMA_BF2_BACKEND)
+    uint64_t overlap_io_cycles, overlap_input_work_cycles, overlap_output_work_cycles, overlap_three_cycles;
+#endif
+#ifdef FFT128_DMA_BF2_BACKEND
+    uint64_t bf2_dual_issue_events, bf2_dual_retire_events, bf2_calc_lane_cycles;
+#endif
+#ifdef FFT128_DMA_STREAM_BACKEND
+    uint64_t stream_stage_busy_cycles, stream_multi_stage_cycles, stream_vector_overlap_cycles;
+    uint64_t stream_issue_events[7], stream_retire_events[7];
+    uint64_t stream_io_cycles, stream_input_calc_cycles, stream_output_calc_cycles, stream_three_cycles;
+#endif
 } fft128_profile;
 uint64_t fft128_now_ns(void);
 uint32_t fft128_pack(int real, int imag);

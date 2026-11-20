@@ -1,0 +1,10 @@
+{
+  "python_compile": true,
+  "shell_syntax_files": 10,
+  "tcl_syntax_complete": true,
+  "tcl_actual_vivado_execution": false,
+  "overlay_from_recorded_live_dt": true,
+  "arithmetic_files_unchanged": 6,
+  "two_core_measurement_contract_rejected": true,
+  "two_core_artifacts_rejected_after_label_edit": true
+}

@@ -1,0 +1,10 @@
+CPU_AFFINITY=0
+DMA: kernel-owned control registers, HP0, coherent bounce buffers; 64 KiB per direction/axis, 128 FFTs, 4 FFT cores, 2 butterflies/core, independent buffered lanes
+BACKEND=PL_DMA_BF2 implementation=native_C
+BENCHMARK: warmup=2 repeat=20 preallocated buffers; data path=PL_DMA_BF2
+peak_unshifted=(107,20) fft_and_transfer_seconds=0.002885
+DMA_PROFILE: ioctl_ms=1.790156 kernel_copies_ms=0.833808 kernel_wait_ms=0.878750 PS_transpose_ms=0.671572 pl_active_ms=0.837903
+DMA_PROFILE: nested kernel and PL intervals overlap ioctl; active cycles INCLUDE stream stalls. Separate instrumented run.
+BF2_PROFILE cores=4 butterflies_per_core=2 mean_multi_work_cycles=24000.000 mean_all_work_cycles=0.000 group_barrier=0 next_group_prefetch=1
+PIPELINE_TIMING backend=PL_DMA_BF2 mean_ms=2.885369 median_ms=2.864250 min_ms=2.850660 max_ms=2.978040 repeats=20
+FRAME_PASS backend=PL_DMA_BF2 bit_exact_bins=16384
