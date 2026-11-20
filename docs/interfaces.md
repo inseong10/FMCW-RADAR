@@ -19,11 +19,19 @@ chirp 1개를 UDP 데이터그램 1개로 보냅니다.
 헤더는 28바이트이고, 헤더와 payload 모두 big-endian입니다.
 프로토콜에 frame ID가 없으므로 한 번에 프레임 하나만 보냅니다.
 
-## PS → PL: AXI4-Stream 입력 (명세 초안)
+## PS → PL: 현재 구현된 경로
 
-128×128 최초 기능 실험은 별도 [AXI4-Lite 계약](../src/PL/fft128_ps/README.md)을 사용합니다.
-한 번에 128포인트 FFT 하나를 호출하며 내부 스트림의 TLAST는 매 128번째 beat입니다.
-아래 전체 프레임 DMA 명세는 향후 통합을 위한 초안입니다.
+| 경로 | 전송 단위 | 계약 |
+|---|---|---|
+| MMIO (E06~E10) | FFT 1개를 AXI4-Lite 데이터 창으로 읽고 씀 | [AXI4-Lite 계약](../src/PL/fft128_ps/README.md) |
+| DMA, FFT당 (E11a) | FFT 1개 = 512 B, 외부 TLAST는 매 128번째 beat | [E11a 실행 계약](../src/PS/fft128/dma/README.md) |
+| DMA, 축당 묶음 (E11b) | FFT 128개 = 65,536 B, 외부 TLAST는 축 마지막 beat | [E11b 실행 계약](../src/PS/fft128/dma_batch/README.md) |
+
+세 경로 모두 128×128 고정 크기이고, 두 축 사이 전치는 PS가 합니다.
+
+## PS → PL: 전체 프레임 AXI4-Stream 입력 (명세 초안, 미구현)
+
+아래는 가변 크기·전체 프레임 통합을 위한 초안이며 아직 구현하지 않았습니다.
 
 - **형식:** AXI4-Stream 32비트, 1 beat = 복소 샘플 1개입니다. `TDATA[15:0]`는 I, `TDATA[31:16]`은 Q이고, 각각 int16 2의 보수입니다.
 - **정수 변환:** PS가 고정 계수 S를 곱하고 반올림한 뒤 int16 범위로 포화합니다. 창함수나 정규화는 PS가 적용하지 않습니다.
