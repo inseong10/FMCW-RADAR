@@ -1,0 +1,1 @@
+streaming_cores=1; dedicated_stages=7; DSP48E1=28; frame_initiation_interval=128; matrix_bytes=65536; matrix_half_blocks=32; total_half_blocks=94; board counters pending

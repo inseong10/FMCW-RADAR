@@ -1,0 +1,27 @@
+FRAME_PACKET_PASS index=0 mode=0 malformed=0 cycles=51927 range=17771 doppler=17771 drain=16385
+FRAME_PACKET_PASS index=1 mode=0 malformed=0 cycles=51927 range=17771 doppler=17771 drain=16385
+FRAME_PACKET_PASS index=2 mode=0 malformed=0 cycles=51927 range=17771 doppler=17771 drain=16385
+FRAME_PACKET_PASS index=3 mode=0 malformed=0 cycles=51927 range=17771 doppler=17771 drain=16385
+FRAME_PACKET_PASS index=4 mode=0 malformed=0 cycles=51927 range=17771 doppler=17771 drain=16385
+FRAME_PACKET_PASS index=5 mode=0 malformed=0 cycles=51927 range=17771 doppler=17771 drain=16385
+FRAME_PACKET_PASS index=2 mode=1 malformed=0 cycles=88790 range=42347 doppler=17771 drain=28672
+FRAME_PACKET_PASS index=3 mode=2 malformed=0 cycles=141523 range=107367 doppler=17771 drain=16385
+FRAME_PACKET_PASS index=1 mode=0 malformed=1 cycles=51927 range=17771 doppler=17771 drain=16385
+FRAME_PACKET_PASS index=4 mode=0 malformed=2 cycles=51927 range=17771 doppler=17771 drain=16385
+FRAME_PACKET_PASS index=5 mode=0 malformed=3 cycles=51927 range=17771 doppler=17771 drain=16385
+FRAME_PACKET_PASS index=0 mode=0 malformed=0 cycles=51927 range=17771 doppler=17771 drain=16385
+FRAME_OVERWRITE_GUARD_PASS premature_result_blocked_and_counted
+FRAME_ABORT_PASS phase=1 hard_reset=0
+FRAME_PACKET_PASS index=2 mode=0 malformed=0 cycles=51927 range=17771 doppler=17771 drain=16385
+FRAME_ABORT_PASS phase=2 hard_reset=0
+FRAME_PACKET_PASS index=2 mode=0 malformed=0 cycles=51927 range=17771 doppler=17771 drain=16385
+FRAME_ABORT_PASS phase=3 hard_reset=0
+FRAME_PACKET_PASS index=2 mode=0 malformed=0 cycles=51927 range=17771 doppler=17771 drain=16385
+FRAME_ABORT_PASS phase=1 hard_reset=1
+FRAME_PACKET_PASS index=2 mode=0 malformed=0 cycles=51927 range=17771 doppler=17771 drain=16385
+FRAME_ABORT_PASS phase=2 hard_reset=1
+FRAME_PACKET_PASS index=2 mode=0 malformed=0 cycles=51927 range=17771 doppler=17771 drain=16385
+FRAME_ABORT_PASS phase=3 hard_reset=1
+FRAME_PACKET_PASS index=2 mode=0 malformed=0 cycles=51927 range=17771 doppler=17771 drain=16385
+DMA_FRAME_CTRL_PASS frames=18 exact_bins=294912 all_phases_abort in_place_read_before_write row_major independent_AW_W held_responses malformed_TLAST_TKEEP backpressure starvation
+C:\Users\user\Desktop\FMCW\FMCW-RADAR\src\PL\fft128_ps\dma_frame_ctrl_tb.v:178: $finish called at 11936110000 (1ps)

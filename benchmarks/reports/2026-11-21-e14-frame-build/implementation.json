@@ -1,0 +1,264 @@
+{
+  "status": "E14_FRAME_VIVADO_ARM_BUILD_VALIDATED",
+  "validation_date": "2026-11-21 Asia/Seoul",
+  "run": "/home/user/fmcw_share/FMCW-FFT-test/build/vivado/fft128_dma_e14_frame_20261121_020411",
+  "clock_hz": 50000000,
+  "setup_wns_ns": 10.166,
+  "hold_whs_ns": 0.02,
+  "resources": {
+    "Slice LUTs": {
+      "used": 6158.0,
+      "available": 17600,
+      "percent": 34.99
+    },
+    "Slice Registers": {
+      "used": 6305.0,
+      "available": 35200,
+      "percent": 17.91
+    },
+    "Block RAM Tile": {
+      "used": 47.0,
+      "available": 60,
+      "percent": 78.33
+    },
+    "DSPs": {
+      "used": 28.0,
+      "available": 80,
+      "percent": 35.0
+    }
+  },
+  "core_count": 1,
+  "dedicated_stages": 7,
+  "total_butterflies": 7,
+  "working_ram_banks": 28,
+  "matrix_bytes": 65536,
+  "matrix_bram36_equivalents": 16,
+  "in_place_matrix": true,
+  "pl_transpose": true,
+  "pl_output_reorder": true,
+  "rtl_verified_fft_vector_initiation_interval": 128,
+  "rtl_full_frame_cycles": 51927,
+  "generated_reset_simulation_pass": true,
+  "e13_stream_bd_non_fft_components_and_connections_identical": true,
+  "xsa_bitstream_matches": true,
+  "identities": {
+    "pl_sources": [
+      {
+        "path": "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/build_dma_frame.tcl",
+        "sha256": "4ed4bedf2950062f7fee0d7c65008131a1cf71c28e22e2e1816f41793a4de1b9",
+        "bytes": 10490
+      },
+      {
+        "path": "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/build.tcl",
+        "sha256": "62febe110530628f44335de4efdb825be1a5b0632bd2c1adcb95333fce08168e",
+        "bytes": 8983
+      },
+      {
+        "path": "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/reset_dma_frame_tb.v",
+        "sha256": "2ccfd9b051e3a2952a7cd49fd701c425a9897df200f39545bb4ca723956718a8",
+        "bytes": 3420
+      },
+      {
+        "path": "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/reset_sim_sources.tcl",
+        "sha256": "a823ed935910af4922779d2a7596ef3f072bb7a9e7aba073c57dccc8c09e57e5",
+        "bytes": 2041
+      },
+      {
+        "path": "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/zybo_sysclk.xdc",
+        "sha256": "c889d72c6ab907a373332b77bcdbd10429983104522b69266f520e05e0214457",
+        "bytes": 288
+      },
+      {
+        "path": "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft128_frame_ram.v",
+        "sha256": "ecdf01459b6311a2223cabf10a967cad93c8bccff6d03078a2f5e0c69f078221",
+        "bytes": 512
+      },
+      {
+        "path": "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft128_dma_frame_ctrl.v",
+        "sha256": "0c511f9350949671fd6cdf3e65d2a0aa8e4891483ae467a1d179a24b17594524",
+        "bytes": 12302
+      },
+      {
+        "path": "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft128_streaming.v",
+        "sha256": "9d46dc81cffe1775c70df72e9e9ea17f00d16d25239e4ca89ad8a7ba33d80566",
+        "bytes": 1750
+      },
+      {
+        "path": "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft128_stream_stage.v",
+        "sha256": "db94cc98094c455faf5b9b92152a42faa55648840b78c2f6b800cbce9b156c4e",
+        "bytes": 4825
+      },
+      {
+        "path": "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft128_twiddle.v",
+        "sha256": "26c81c3038907f29cffa17a6d066c84613ebdcd22b0e5770765ea4dedb48f874",
+        "bytes": 2208
+      },
+      {
+        "path": "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/butterfly_pipeline.v",
+        "sha256": "8152035a94ef0a7761e463c18a0011def3c7f239572ee9f928c6305287546297",
+        "bytes": 1508
+      },
+      {
+        "path": "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft_working_ram.v",
+        "sha256": "5464b1b0a57e663a1cdc58406c0fc73f3d27829f1ecd9f267bcd66a5211d9eb0",
+        "bytes": 2628
+      },
+      {
+        "path": "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/address_generator.v",
+        "sha256": "9757d675e1564a9985a01b08726fae90f6eecd294b7bb10d9e6dd8e55685606d",
+        "bytes": 3904
+      }
+    ],
+    "host_sources": [
+      {
+        "path": "src/PS/fft128/native_receiver.c",
+        "sha256": "2ccb90fd6c27965f6695c2db40e7b4e92cf1ffc4365603756cd4622be26bb9a1",
+        "bytes": 33008
+      },
+      {
+        "path": "src/PS/fft128/native_core.c",
+        "sha256": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+        "bytes": 6211
+      },
+      {
+        "path": "src/PS/fft128/native_core.h",
+        "sha256": "a58054f0d251944c5ffd80abbf35726e67102e50eef3944d0fa3cbad673a17d8",
+        "bytes": 3578
+      },
+      {
+        "path": "src/PS/fft128/build_native.sh",
+        "sha256": "8e1d5bdedf018ae727bcd4e5726057e71901293ae98a67883f5691c59711a92a",
+        "bytes": 5509
+      },
+      {
+        "path": "src/PS/fft128/dma_frame/dma_frame_backend.c",
+        "sha256": "9897e06fb1b35c860d66817d13a801a2d40858afb4074028dd3fa00c4f4e715a",
+        "bytes": 4678
+      },
+      {
+        "path": "src/PS/fft128/dma_frame/fft128_dma_frame_uapi.h",
+        "sha256": "e89d334c172f1d6df50738239c2261cc6cb7bd0ca2be43ce10bd92cc081953f3",
+        "bytes": 1456
+      },
+      {
+        "path": "src/PS/fft128/dma_frame/test_dma_frame_client.c",
+        "sha256": "0e62222268e13ccba7c5c27919b9a8b2907ae22315a2de54d97e7d7833f36f51",
+        "bytes": 4545
+      },
+      {
+        "path": "src/PS/fft128/dma_frame/make_overlay.py",
+        "sha256": "b01fbbac8f855c82f3c471223421b2de49de53a386bda3c4a08018785e550d74",
+        "bytes": 1705
+      },
+      {
+        "path": "src/PS/fft128/dma/make_overlay.py",
+        "sha256": "16c8dc163b3b24e4a4e7b271744df21c0442fcc03803e752a917ed1a599aefb7",
+        "bytes": 5557
+      },
+      {
+        "path": "src/PS/fft128/dma_frame/frame_process.c",
+        "sha256": "837b90ccc24c8157a83e71b4671e0254eacb3550ab13149707a63a8e5921e67d",
+        "bytes": 4238
+      },
+      {
+        "path": "src/PS/fft128/dma_frame/frame_process.h",
+        "sha256": "268cd245b1796e0d6ee6fdc63658dfe4782a01d40ccbdc3ccade2f47ace04cb0",
+        "bytes": 493
+      },
+      {
+        "path": "src/PS/fft128/dma_batch/make_overlay.py",
+        "sha256": "c7a26c18bf2078f5689e73b96ceb75f2798f83b7987d54f064a0de693a161e0d",
+        "bytes": 896
+      }
+    ],
+    "module_sources": [
+      {
+        "path": "fft128_dma_frame.c",
+        "sha256": "0dbcdb5df31b1317cd14683b87af3e3f959cb4a77fdca558de42aff552d29476",
+        "bytes": 11787
+      },
+      {
+        "path": "fft128_dma_frame_uapi.h",
+        "sha256": "e89d334c172f1d6df50738239c2261cc6cb7bd0ca2be43ce10bd92cc081953f3",
+        "bytes": 1456
+      },
+      {
+        "path": "Makefile",
+        "sha256": "d20833e0178776a52e9d9c977e0b2831f0e1d73d969ebf0ef9fec2a4decbfe20",
+        "bytes": 28
+      }
+    ],
+    "host_artifacts": [
+      {
+        "path": "bin/fft128-receiver",
+        "sha256": "21128056810a6e195ec90f12cdea86f869108adc5f4b960669653cb615becaec",
+        "bytes": 465516
+      },
+      {
+        "path": "bin/test-dma-frame-client",
+        "sha256": "8dad9451676678862362259f50d22be801db92d68935b6ed92f5e6de50102641",
+        "bytes": 431792
+      },
+      {
+        "path": "fft128_e14_frame.dtbo",
+        "sha256": "2421bfd9eddac6967ad1d20b7e76d19a9c9d6b9fef66f61ac3893fb8505d1514",
+        "bytes": 1467
+      },
+      {
+        "path": "fft128_e14_frame.dts",
+        "sha256": "830cf63fa15eed97c89390dcb0c7833aab86235eb9b9fdbbb1512c282f2837fa",
+        "bytes": 1749
+      }
+    ],
+    "module_artifacts": [
+      {
+        "path": "fft128_dma_frame.ko",
+        "sha256": "a7a37e11c805a8850e4086b72f13ad472cc458d5758367eefeb96e995a0cb178",
+        "bytes": 14428
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "/home/user/fmcw_share/FMCW-FFT-test/build/vivado/fft128_dma_e14_frame_20261121_020411/fft128_ps.runs/impl_1/system_wrapper.bit",
+      "bytes": 2083850,
+      "sha256": "060f9f3b8b472bf0cb111a69cc76c3707de73f64fc8170ae20178d19035d2039"
+    },
+    {
+      "path": "/home/user/fmcw_share/FMCW-FFT-test/build/vivado/fft128_dma_e14_frame_20261121_020411/system.xsa",
+      "bytes": 565469,
+      "sha256": "791ec53c9745d73035e34f1eb762d8a6105736c8a3468f1383c52ec0a697257d"
+    },
+    {
+      "path": "/home/user/fmcw_share/FMCW-FFT-test/build/vivado/fft128_dma_e14_frame_20261121_020411/fft128_ps.runs/impl_1/system_wrapper_routed.dcp",
+      "bytes": 7279245,
+      "sha256": "6eba42b45e4573707e1f782ae26cd1ad73b98dedfa2fa7966906fa5229a832b6"
+    }
+  ],
+  "elf_identities": [
+    {
+      "path": "build\\fft128_dma_frame_host\\bin\\fft128-receiver",
+      "elf_class": 32,
+      "machine": "ARM",
+      "type": 2,
+      "static": true
+    },
+    {
+      "path": "build\\fft128_dma_frame_host\\bin\\test-dma-frame-client",
+      "elf_class": 32,
+      "machine": "ARM",
+      "type": 2,
+      "static": true
+    },
+    {
+      "path": "build\\fft128_dma_frame_module\\fft128_dma_frame.ko",
+      "elf_class": 32,
+      "machine": "ARM",
+      "type": 1,
+      "static": null
+    }
+  ],
+  "board_verified": false,
+  "firmware_bundle_created": false,
+  "board_measurements": null
+}

@@ -1,0 +1,122 @@
+from pathlib import Path
+import csv, hashlib, importlib.util, json, math, re, shutil, statistics, sys
+import numpy as np
+
+root=Path(__file__).resolve().parent.parent
+shared=Path('C:/Users/user/Documents/share/FMCW-FFT-test')
+source=shared/'build/fft128_dma_frame_measurements'
+raw=root/'build/fft128_dma_frame_measurements'
+out=root/'benchmarks/reports/2026-11-21-e14-frame-board'
+out.mkdir(parents=True,exist_ok=True)
+def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+def write(p,v): p.write_text(json.dumps(v,indent=2)+'\n',encoding='utf-8',newline='\n')
+for p in sorted(source.rglob('*')):
+    if not p.is_file(): continue
+    target=raw/p.relative_to(source)
+    if target.is_file(): assert sha(target)==sha(p),str(target)
+    else:
+        target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,target)
+    assert sha(target)==sha(p)
+assert {p.relative_to(raw) for p in raw.rglob('*') if p.is_file()}=={p.relative_to(source) for p in source.rglob('*') if p.is_file()}
+sys.path.insert(0,str(root/'benchmarks'))
+import compare_dma_frame_board as comp
+spec=importlib.util.spec_from_file_location('frame_profile',root/'src/PS/fft128/dma_frame/analyze_profile.py')
+profile=importlib.util.module_from_spec(spec);spec.loader.exec_module(profile)
+runs=raw/'results_e14_frame_01';prof=raw/'profile_e14_frame_01'
+a=json.loads(json.dumps(comp.analyze(runs)));p=profile.analyze(prof/'pl.profile.csv');roundoff=[]
+def same(x,y,path=''):
+    if isinstance(x,dict):
+        assert x.keys()==y.keys(),path
+        for k in x:same(x[k],y[k],path+'/'+k)
+    elif isinstance(x,list):
+        assert len(x)==len(y),path
+        for i,(u,v) in enumerate(zip(x,y)):same(u,v,path+'/'+str(i))
+    elif isinstance(x,float):
+        assert math.isclose(x,y,rel_tol=1e-13,abs_tol=2e-12),(path,x,y)
+        if x!=y:roundoff.append(dict(field=path,windows=x,ubuntu=y))
+    else: assert x==y,(path,x,y)
+same(a,json.loads((raw/'comparison_console.json').read_text()))
+same(p,json.loads((raw/'profile_console.json').read_text()))
+identity=json.loads((root/'benchmarks/reports/2026-11-21-e14-frame-build/board_selftest.json').read_text())
+assert a['dma_artifacts']==identity['bundle_artifacts']
+assert (runs/'dma_artifacts.sha256').read_bytes()==(prof/'artifacts.sha256').read_bytes()
+assert (runs/'pl/trial_1.batch.json').read_bytes()==(prof/'pl.batch.json').read_bytes()
+for name in ('dma_config.json','fft128_e14_frame.json','pl_source.sha256','host_source.sha256','module_source.sha256','module_build_environment.txt'):
+    assert (runs/name).read_bytes()==(prof/name).read_bytes()
+    assert sha(prof/name)==a['dma_artifacts'][name]
+assert all(f'{name}: OK' in (prof/'artifact_check.txt').read_text() for name in a['dma_artifacts'])
+for manifest in ('pl_source.sha256','host_source.sha256','module_source.sha256'):
+    for line in (runs/manifest).read_text().splitlines():
+        h,n=line.split(maxsplit=1);n=n.lstrip('*');prefix='/home/user/fmcw_share/FMCW-FFT-test/'
+        rel=n.removeprefix(prefix) if n.startswith(prefix) else ('src/PS/fft128/dma_frame/'+n if manifest=='module_source.sha256' else n)
+        assert sha(root/rel)==sha(shared/rel)==h,rel
+expected,q,scale=comp.reference(root/'benchmarks/fixtures/radarsimpy_128x128.rspb');integer=comp.integer_reference(q)
+meta=json.loads((prof/'pl.json').read_text())
+assert (meta['backend'],meta['profiling'],meta['warmup'],meta['repeats'],meta['mismatched_complex_bins'])==('PL_DMA_FRAME',True,2,20,0)
+assert meta['shape']==[128,128] and meta['window']=='none' and meta['total_normalization']=='1/16384' and meta['input_to_q15_scale']==scale
+actual=comp.spectrum(prof/'pl.csv');assert np.array_equal(actual,integer)
+inp=np.loadtxt(prof/'pl.input.csv',delimiter=',',skiprows=1);ch,sm=np.indices((128,128))
+assert inp.shape==(16384,4) and np.isfinite(inp).all()
+assert np.array_equal(inp[:,:2],np.column_stack((ch.ravel(),sm.ravel())))
+assert np.array_equal((np.rint(inp[:,2]*scale)+1j*np.rint(inp[:,3]*scale)).reshape(128,128),q)
+assert 'FRAME_PASS backend=PL_DMA_FRAME bit_exact_bins=16384' in (prof/'profile.log').read_text()
+assert 'CPU_AFFINITY=0' in (prof/'profile.log').read_text()
+with (prof/'pl.profile.csv').open() as f: rows=list(csv.DictReader(f))
+assert len(rows)==20 and math.isclose(meta['fft_and_transfer_seconds']*1000,p['mean_ms']['wall_ms'],rel_tol=1e-12)
+with (prof/'pl.timings.csv').open() as f: times=[float(r['wall_ms']) for r in csv.DictReader(f) if r['stage']=='fft_pipeline']
+assert np.array_equal(times,[float(r['wall_ms']) for r in rows])
+before,after=(comp.irq_counts(prof/f'interrupts_{phase}.txt') for phase in ('before','after'))
+profile_irq={irq:[after[irq][cpu]-before[irq][cpu] for cpu in (0,1)] for irq in before}
+assert all(v==[22,0] for v in profile_irq.values())
+assert all(v==[330,0] for v in a['dma_irq_deltas'].values())
+old=root/'benchmarks/reports/2026-11-21-e13-stream-board'
+baseline=json.loads((old/'comparison.json').read_text());baselinep=json.loads((old/'profile.summary.json').read_text())
+assert baseline['ps_artifacts']==a['ps_artifacts']
+ids=lambda env: re.findall(r'(?m)^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$',env)
+oldids=ids(baseline['environment']);newids=ids(a['environment']);profileids=ids((prof/'environment.txt').read_text())
+assert len(oldids)==len(newids)==len(profileids)==1 and newids==profileids
+ms=p['mean_ms'];oldms=baselinep['mean_ms'];copynames=('host_input_copy_ms','host_output_copy_ms','kernel_copy_in_ms','kernel_copy_out_ms')
+current=a['results']['pl']['timing']['median_ms'];previous=baseline['results']['pl']['timing']['median_ms']
+progress=dict(experiment='E14-frame',previous_experiment='E13-stream',previous_median_ms=previous,current_median_ms=current,
+    overall_latency_reduction_percent=(1-current/previous)*100,overall_speedup=previous/current,
+    paired_neon_speedup=a['float_neon_over_pl'],paired_double_speedup=a['double_over_pl'],
+    paired_neon_latency_reduction_percent=(1-current/a['results']['float_neon']['timing']['median_ms'])*100,
+    paired_double_latency_reduction_percent=(1-current/a['results']['double']['timing']['median_ms'])*100,
+    previous_profile_mean_ms=oldms['wall_ms'],profile_mean_ms=ms['wall_ms'],
+    previous_profile_pl_active_ms=oldms['pl_active_ms'],profile_pl_active_ms=ms['pl_active_ms'],
+    pl_active_increase_ms=ms['pl_active_ms']-oldms['pl_active_ms'],
+    profile_copies_ms=sum(ms[k] for k in copynames),previous_profile_copies_ms=sum(oldms[k] for k in copynames),
+    profile_cpu_transpose_ms=ms['gather_ms']+ms['scatter_ms'],previous_profile_cpu_transpose_ms=oldms['gather_ms']+oldms['scatter_ms'],
+    profile_wall_decrease_ms=oldms['wall_ms']-ms['wall_ms'],
+    profile_outside_pl_ms=ms['wall_ms']-ms['pl_active_ms'],previous_profile_outside_pl_ms=oldms['wall_ms']-oldms['pl_active_ms'],
+    previous_dma_payload_bytes_per_frame=262144,dma_payload_bytes_per_frame=131072,
+    previous_dma_requests_per_frame=2,dma_requests_per_frame=1,
+    previous_boot_id=oldids[0],current_boot_id=newids[0],historical_comparison_different_boot=oldids!=newids,
+    historical_neon_change_percent=(a['results']['float_neon']['timing']['median_ms']/baseline['results']['float_neon']['timing']['median_ms']-1)*100,
+    historical_double_change_percent=(a['results']['double']['timing']['median_ms']/baseline['results']['double']['timing']['median_ms']-1)*100,
+    board_verified=True,full_frame_profile_paired_complete=True)
+checks=dict(independent_comparison_and_profile_revalidated=True,ubuntu_windows_float_roundoff=roundoff,
+    roundoff_comparison_tolerance=dict(relative=1e-13,absolute=2e-12),integer_oracle_comparison_exact=True,
+    current_local_shared_build_sources_match=True,bundle_matches_selftest_22_artifacts=True,profile_and_paired_same_bundle_and_boot=True,
+    profile_integer_and_quantized_input_match=True,profile_frames=20,profile_dma_irq_deltas=profile_irq,
+    profile_peak=[int(v) for v in np.unravel_index(np.argmax(abs(actual)),actual.shape)],
+    all_matrix_phase_stage_counters_checked=True,cpu_transpose_zero=True,ps_artifacts_match_e13_stream=True,
+    original_ubuntu_derived_json_preserved=True,
+    phase_cycles_observed={k:sorted(set(int(r[k]) for r in rows)) for k in ('range_cycles','doppler_cycles','drain_cycles')},
+    profile_input_stall_cycles_mean=statistics.mean(int(r['input_stall_cycles']) for r in rows),
+    profile_output_stall_cycles_mean=statistics.mean(int(r['output_stall_cycles']) for r in rows))
+for name,value in [('comparison.json',a),('profile.summary.json',p),('raw_validation.json',checks),('progression.json',progress)]:write(out/name,value)
+files={f.relative_to(raw).as_posix():dict(bytes=f.stat().st_size,sha256=sha(f)) for f in sorted(raw.rglob('*')) if f.is_file()}
+write(out/'raw_artifact_sha256.json',files)
+for f in sorted(raw.rglob('*')):
+    if not f.is_file() or f.name.endswith('.input.csv') or f.name in ('pl.csv','trial_1.csv','trial_2.csv','trial_3.csv'):continue
+    target=out/'raw_compact'/f.relative_to(raw);target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(f,target)
+sources=['benchmarks/compare_dma_frame_board.py','src/PS/fft128/dma_frame/analyze_profile.py','benchmarks/compare_board.py','benchmarks/ps_precision/prepare_reference.py','src/PS/fft128/receiver.py','src/PL/fft128_ps/verify.py']
+write(out/'analysis_source_sha256.json',{n:sha(root/n) for n in sources})
+write(out/'board_verification.json',dict(status='E14_FRAME_FULL_FRAME_PROFILE_PAIRED_RAW_VALIDATED',board_verified=True,
+    validation_date='2026-11-21 Asia/Seoul',raw_file_count=len(files),raw_bytes=sum(v['bytes'] for v in files.values()),
+    bundle_artifacts=a['dma_artifacts'],scope='300 unprofiled repetitions per variant plus separate 20-frame profile; fixed recorded 128x128 input, CPU0, warm-cache offline latency',
+    continuous_udp_verified=False,build_report='../2026-11-21-e14-frame-build/README.md'))
+shutil.copyfile(Path(__file__),out/'validation_driver.py.txt')
+print(json.dumps(progress,indent=2));print(json.dumps({k:v for k,v in checks.items() if k!='ubuntu_windows_float_roundoff'},indent=2))
+print(f'E14_FRAME_FULL_RAW_VALIDATED files={len(files)} bytes={sum(v["bytes"] for v in files.values())} roundoff_fields={len(roundoff)}')

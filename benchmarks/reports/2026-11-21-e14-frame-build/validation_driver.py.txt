@@ -1,0 +1,84 @@
+from pathlib import Path
+import json,hashlib,re,struct,shutil,zipfile
+root=Path.cwd();shared=Path('C:/Users/user/Documents/share/FMCW-FFT-test');linux='/home/user/fmcw_share/FMCW-FFT-test/'
+runlinux=(shared/'build/fft128_dma_frame_latest.txt').read_text().strip();run=shared/runlinux.removeprefix(linux)
+report=root/'benchmarks/reports/2026-11-21-e14-frame-build';report.mkdir(parents=True,exist_ok=True)
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def write(p,s):
+ with p.open('w',encoding='utf-8',newline='\n') as f:f.write(s)
+def verify_manifest(p,base,source=False):
+ result=[]
+ for line in p.read_text().splitlines():
+  digest,name=line.split(None,1);name=name.strip().lstrip('*')
+  relative=name.removeprefix(linux) if name.startswith(linux) else name
+  target=shared/relative if name.startswith(linux) else base/relative
+  assert target.is_file() and sha(target)==digest,(name,'shared mismatch')
+  if source:
+   rel=target.relative_to(shared);assert sha(root/rel)==digest,(name,'checkout mismatch')
+  result.append(dict(path=name,sha256=digest,bytes=target.stat().st_size))
+ return result
+identities={'pl_sources':verify_manifest(run/'source.sha256',shared,True)}
+host=shared/'build/fft128_dma_frame_host';module=shared/'build/fft128_dma_frame_module'
+for k,p,base,source in [('host_sources',host/'source.sha256',shared,True),('module_sources',module/'source.sha256',shared/'src/PS/fft128/dma_frame',True),('host_artifacts',host/'artifacts.sha256',host,False),('module_artifacts',module/'artifacts.sha256',module,False)]:identities[k]=verify_manifest(p,base,source)
+expected=json.loads((root/'benchmarks/reports/2026-11-21-e14-frame-preparation/intended_dma_config.json').read_text());actual=json.loads((run/'dma_config.json').read_text());assert expected==actual
+assert json.loads((run/'build_config.json').read_text())==dict(core='pipeline',pl_clock_hz=50000000,board_verified=False)
+assert 'done=1 passed=1' in (run/'reset_simulation.txt').read_text()
+timing=(run/'timing.rpt').read_text();match=re.search(r'\n\s*(\d+\.\d+)\s+(\d+\.\d+)\s+(\d+)\s+(\d+)\s+(\d+\.\d+)\s+(\d+\.\d+)\s+(\d+)\s+(\d+)\s+(\d+\.\d+)\s+(\d+\.\d+)\s+(\d+)\s+(\d+)\s*\n',timing[timing.index('Design Timing Summary'):]);assert match
+v=match.groups();wns=float(v[0]);whs=float(v[4]);assert wns>=0 and whs>=0 and v[2]==v[6]==v[10]=='0'
+assert 'All user specified timing constraints are met.' in timing
+assert 'There are 0 register/latch pins with no clock.' in timing
+assert 'There are 0 pins that are not constrained for maximum delay.' in timing
+assert re.search(r'clk_out1_\S+\s+\{0.000 10.000\}\s+20.000\s+50.000',timing)
+resources={};u=(run/'utilization.rpt').read_text()
+for k in ('Slice LUTs','Slice Registers','Block RAM Tile','DSPs'):
+ m=re.search(r'^\| '+re.escape(k)+r'\s*\|\s*(\d+(?:\.\d+)?)\s*\|\s*\d+\s*\|\s*\d+\s*\|\s*(\d+)\s*\|\s*([\d.]+)',u,re.M);assert m,k
+ resources[k]=dict(used=float(m[1]),available=int(m[2]),percent=float(m[3]))
+assert resources['DSPs']['used']==28 and resources['Block RAM Tile']['used']==47
+hierarchy=(run/'frame_utilization.rpt').read_text();stages=[];butterflies=[];banks=[]
+for line in hierarchy.splitlines():
+ cols=[c.strip() for c in line.split('|')[1:-1]]
+ if len(cols)<3:continue
+ if re.fullmatch(r'stage\[[0-6]\]\.unit',cols[0]):
+  assert int(cols[-1])==4 and int(cols[-3])==4 and int(cols[-2])==0;stages.append(cols[0])
+ if cols[0]=='butterfly':
+  assert int(cols[-1])==4;butterflies.append(cols[0])
+ if re.fullmatch(r'slot\[[01]\]\.(input|output)_ram',cols[0]):
+  assert int(cols[-3])==1 and int(cols[-2])==0;banks.append(cols[0])
+assert len(stages)==7 and len(butterflies)==7 and len(banks)==28
+matrices=[]
+for line in hierarchy.splitlines():
+ cols=[c.strip() for c in line.split('|')[1:-1]]
+ if len(cols)>3 and cols[0]=='matrix':
+  assert int(cols[-3])==16 and int(cols[-2])==0 and int(cols[-1])==0
+  matrices.append(cols)
+assert len(matrices)==1
+assert 'matrix_half_blocks=32; total_half_blocks=94' in (run/'frame_core_check.txt').read_text()
+
+bdrel='fft128_ps.srcs/sources_1/bd/system/system.bd'
+newbd=json.loads((run/bdrel).read_text())['design'];oldrun=shared/'build/vivado/fft128_dma_e13_stream_20261121_004729';oldbd=json.loads((oldrun/bdrel).read_text())['design']
+assert set(newbd['components'])==set(oldbd['components'])
+for k in newbd['components']:
+ if k!='fft':assert newbd['components'][k]==oldbd['components'][k],k
+for k in ('interface_ports','ports','interface_nets','nets','addressing'):assert newbd[k]==oldbd[k],k
+reset=(run/'fft128_ps.gen/sources_1/bd/system/ip/system_reset_0/sim/system_reset_0.vhd').read_text()
+assert re.search(r"C_AUX_RESET_HIGH\s*=>\s*'1'",reset) and re.search(r"C_EXT_RESET_HIGH\s*=>\s*'0'",reset)
+elfs=[]
+for p,etype in [(host/'bin/fft128-receiver',2),(host/'bin/test-dma-frame-client',2),(module/'fft128_dma_frame.ko',1)]:
+ data=p.read_bytes();assert data[:6]==b'\x7fELF\x01\x01';assert struct.unpack_from('<HH',data,16)==(etype,40)
+ static=None
+ if etype==2:
+  phoff=struct.unpack_from('<I',data,28)[0];phsize,phnum=struct.unpack_from('<HH',data,42)
+  assert all(struct.unpack_from('<I',data,phoff+i*phsize)[0] not in (2,3) for i in range(phnum));static=True
+ elfs.append(dict(path=str(p.relative_to(shared)),elf_class=32,machine='ARM',type=etype,static=static))
+assert b'vermagic=5.15.19-xilinx SMP preempt mod_unload modversions ARMv7 p2v8' in (module/'fft128_dma_frame.ko').read_bytes()
+assert 'E14_FRAME_ARM_BUILD_PASS' in (shared/'build/fft128_dma_frame_preparation/arm_build.log').read_text()
+bit=run/'fft128_ps.runs/impl_1/system_wrapper.bit';xsa=run/'system.xsa';assert bit.stat().st_size>100000
+with zipfile.ZipFile(xsa) as z:
+ bitnames=[n for n in z.namelist() if n.endswith('.bit')];assert len(bitnames)==1 and hashlib.sha256(z.read(bitnames[0])).hexdigest()==sha(bit)
+artifacts=[dict(path=runlinux+'/'+p.relative_to(run).as_posix(),bytes=p.stat().st_size,sha256=sha(p)) for p in (bit,xsa,run/'fft128_ps.runs/impl_1/system_wrapper_routed.dcp')]
+result=dict(status='E14_FRAME_VIVADO_ARM_BUILD_VALIDATED',validation_date='2026-11-21 Asia/Seoul',run=runlinux,clock_hz=50000000,setup_wns_ns=wns,hold_whs_ns=whs,resources=resources,core_count=1,dedicated_stages=7,total_butterflies=7,working_ram_banks=28,matrix_bytes=65536,matrix_bram36_equivalents=16,in_place_matrix=True,pl_transpose=True,pl_output_reorder=True,rtl_verified_fft_vector_initiation_interval=128,rtl_full_frame_cycles=51927,generated_reset_simulation_pass=True,e13_stream_bd_non_fft_components_and_connections_identical=True,xsa_bitstream_matches=True,identities=identities,artifacts=artifacts,elf_identities=elfs,board_verified=False,firmware_bundle_created=False,board_measurements=None)
+for name in ('timing.rpt','utilization.rpt','frame_utilization.rpt','frame_core_check.txt','build_config.json','dma_config.json','clock_source.txt','reset_simulation.txt'):
+ shutil.copyfile(run/name,report/name)
+for p,name in [(run/'source.sha256','pl_source.sha256'),(host/'source.sha256','host_source.sha256'),(host/'artifacts.sha256','host_artifacts.sha256'),(module/'source.sha256','module_source.sha256'),(module/'artifacts.sha256','module_artifacts.sha256'),(host/'build_environment.txt','host_build_environment.txt'),(module/'build_environment.txt','module_build_environment.txt'),(host/'dtc.log','host_dtc.log'),(shared/'build/fft128_dma_frame_preparation/arm_build.log','arm_build.log')]:shutil.copyfile(p,report/name)
+write(report/'implementation.json',json.dumps(result,indent=2)+'\n')
+print(json.dumps({k:v for k,v in result.items() if k not in ('identities','artifacts')},indent=2))

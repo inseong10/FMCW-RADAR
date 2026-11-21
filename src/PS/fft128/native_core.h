@@ -13,6 +13,14 @@ typedef struct {
     /* E11a nested ioctl stages; not additive to start_wait_ns. */
     uint64_t dma_copy_in_ns, dma_submit_ns, dma_wait_ns, dma_check_ns, dma_copy_out_ns;
     uint64_t dma_input_stalls, dma_output_stalls;
+#ifdef FFT128_DMA_FRAME_BACKEND
+    uint64_t frame_range_cycles, frame_doppler_cycles, frame_drain_cycles;
+    uint64_t frame_matrix_reads, frame_matrix_writes;
+    uint64_t frame_range_outputs, frame_doppler_inputs, frame_doppler_outputs;
+    uint64_t frame_overwrite_errors, frame_io_overlap_cycles, frame_matrix_words;
+    uint64_t frame_stage_busy_cycles, frame_multi_stage_cycles, frame_vector_overlap_cycles;
+    uint64_t frame_issue_events[7], frame_retire_events[7];
+#endif
 #ifdef FFT128_DMA_PARALLEL_BACKEND
     uint64_t parallel_core0_cycles, parallel_core1_cycles;
     uint64_t parallel_both_busy_cycles, parallel_both_work_cycles, parallel_arbitration_stalls;

@@ -1,0 +1,77 @@
+arm-linux-gnueabihf-g++ (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+VARIANT=float_neon
+CXXFLAGS=-O3 -mcpu=cortex-a9 -mfpu=neon -mfloat-abi=hard -std=c++17 -Wall -Wextra -fno-tree-vectorize -fno-tree-slp-vectorize
+DEFINITIONS=-DFFT128_VARIANT="float_neon" -DFFT128_SINGLE=1
+source: 5ff77242f69f8418a7bd3a2f2f4a1d22805ccd29bef917a92b9e4e0fc5b1fadb  /home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/udp_radar_receiver.cpp
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 03 00 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - GNU
+  ABI Version:                       0
+  Type:                              DYN (Shared object file)
+  Machine:                           ARM
+  Version:                           0x1
+  Entry point address:               0x97b1
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          1187628 (bytes into file)
+  Flags:                             0x5000400, Version5 EABI, hard-float ABI
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         10
+  Size of section headers:           40 (bytes)
+  Number of section headers:         32
+  Section header string table index: 31
+
+Program Headers:
+  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
+  EXIDX          0x09910c 0x0009910c 0x0009910c 0x03b88 0x03b88 R   0x4
+  PHDR           0x000034 0x00000034 0x00000034 0x00140 0x00140 R   0x4
+  INTERP         0x000174 0x00000174 0x00000174 0x00019 0x00019 R   0x1
+      [Requesting program interpreter: /lib/ld-linux-armhf.so.3]
+  LOAD           0x000000 0x00000000 0x00000000 0x9cc98 0x9cc98 R E 0x10000
+  LOAD           0x09d9ac 0x000ad9ac 0x000ad9ac 0x04700 0x06148 RW  0x10000
+  DYNAMIC        0x0a1440 0x000b1440 0x000b1440 0x00110 0x00110 RW  0x4
+  NOTE           0x000190 0x00000190 0x00000190 0x00044 0x00044 R   0x4
+  TLS            0x09d9ac 0x000ad9ac 0x000ad9ac 0x00000 0x0000c R   0x4
+  GNU_STACK      0x000000 0x00000000 0x00000000 0x00000 0x00000 RW  0x10
+  GNU_RELRO      0x09d9ac 0x000ad9ac 0x000ad9ac 0x04654 0x04654 R   0x1
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     .ARM.exidx 
+   01     
+   02     .interp 
+   03     .interp .note.gnu.build-id .note.ABI-tag .gnu.hash .dynsym .dynstr .gnu.version .gnu.version_r .rel.dyn .rel.plt .init .plt .text .fini .rodata .ARM.extab .ARM.exidx .eh_frame 
+   04     .init_array .fini_array .data.rel.ro .dynamic .got .data .bss 
+   05     .dynamic 
+   06     .note.gnu.build-id .note.ABI-tag 
+   07     .tbss 
+   08     
+   09     .init_array .fini_array .data.rel.ro .dynamic .got 
+Attribute Section: aeabi
+File Attributes
+  Tag_CPU_name: "7-A"
+  Tag_CPU_arch: v7
+  Tag_CPU_arch_profile: Application
+  Tag_ARM_ISA_use: Yes
+  Tag_THUMB_ISA_use: Thumb-2
+  Tag_FP_arch: VFPv3
+  Tag_Advanced_SIMD_arch: NEONv1
+  Tag_ABI_PCS_wchar_t: 4
+  Tag_ABI_FP_rounding: Needed
+  Tag_ABI_FP_denormal: Needed
+  Tag_ABI_FP_exceptions: Needed
+  Tag_ABI_FP_number_model: IEEE 754
+  Tag_ABI_align_needed: 8-byte
+  Tag_ABI_align_preserved: 8-byte, except leaf SP
+  Tag_ABI_enum_size: int
+  Tag_ABI_VFP_args: VFP registers
+  Tag_CPU_unaligned_access: v6
+  Tag_MPextension_use: Allowed
+  Tag_Virtualization_use: TrustZone

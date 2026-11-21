@@ -1,0 +1,17 @@
+{
+  "frames.hex": {
+    "path": "build/fft128_dma_frame_verify/frames.hex",
+    "bytes": 983040,
+    "sha256": "9b3b83f09a0b8ce2f0198d9fa4acafd3926b6893a23459958203d67d43e53ace"
+  },
+  "frames_expected.hex": {
+    "path": "build/fft128_dma_frame_verify/frames_expected.hex",
+    "bytes": 983040,
+    "sha256": "959098c7e7729d920cb6be99176c97d94cb58ae98b859a3a053acaecd4ec9033"
+  },
+  "radarsimpy_128x128.rspb": {
+    "path": "benchmarks/fixtures/radarsimpy_128x128.rspb",
+    "bytes": 135176,
+    "sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976"
+  }
+}

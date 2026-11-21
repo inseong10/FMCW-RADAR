@@ -13,15 +13,16 @@
 
 ## 현재 상태 (2026-11-21 기준)
 
-- **최신 보드 검증 구성:** 전용 DIT 7단계의 단일 프레임 스트리밍 FFT / 50 MHz / Q15 / 축당 128 FFT HP0 Simple DMA (E13-stream).
-- **최신 paired 비교(각 300회 중앙값):** PS double **5.826396 ms** / PS float+NEON **3.652869 ms** /
-  PL **2.787411 ms**. 같은 회차 NEON 대비 1.310488배 빠르고 지연은 23.69% 짧다.
-  [완료 보고서](../benchmarks/reports/2026-11-21-e13-stream-board/README.md).
+- **최신 성능 검증 구성:** E14-frame / 단일 전용 DIT 7단계 FFT 재사용 / PL 전치·최종 배열 복원 / 50MHz·Q15 / 전체 프레임 HP0 Simple DMA.
+- **최신 paired 비교(각 300회 중앙값):** PS double **5.706612 ms** / PS float+NEON **3.489441 ms** /
+  PL **1.657914 ms**. 같은 회차 NEON 대비 2.104718배 빠르고 지연은 52.49% 짧다.
+  [완료 보고서](../benchmarks/reports/2026-11-21-e14-frame-board/README.md).
 - **E13 완료 범위:** 2·4코어 복제 → E12 입출력 겹치기 → 코어당 버터플라이 2개 → 전용 7단계 스트리밍을 각각 구현·측정했다.
   마지막 구성은 4코어에 스트리밍을 더한 것이 아니라 단일 7단계 파이프라인으로 교체한 구조다.
-- **현재 병목:** 별도 20회 계측 평균에서 PL active 0.711424 ms, 복사 1.352026 ms, PS 전치 0.687152 ms.
-  코어 밖 비용이 지배적이다. PL active는 ioctl 대기와 겹치므로 호스트 단계에 더하지 않는다.
-- **미실시:** PS02, 독립 E11c·E11d, E14 PL 전치, 연속 프레임/UDP 처리량·최악 지연·누락, 크기 스윕, 보드 CFAR.
+- **현재 비용:** 별도20회 계측 평균 전체1.700746ms, PL active1.038842ms (최종 배출0.327700ms 포함), 복사0.590928ms, CPU 전치0.
+  PL active는 ioctl 대기와 겹치므로 호스트 단계에 더하지 않는다.
+- **E14 완료:** PL 중간 결과 보관·전치·최종 배열 순서 복원, RTL·host53개·ARM/Vivado·보드 자체 검사·20회profile·각300회paired·원시82파일 독립 검증 완료. 연속 프레임 검증은 별도다.
+- **미실시:** PS02, 독립 E11c·E11d, 연속 프레임/UDP 처리량·최악 지연·누락, 크기 스윕, 보드 CFAR.
 
 ### PL 경로 성능 추이 (비계측, 각 300회 중앙값, 같은 보드·같은 입력)
 
@@ -37,6 +38,7 @@
 | E12-4core | 4코어, FIFO·독립 스케줄 / 50 MHz | 5.711883 ms | 3.488904 ms | 3.129210 ms |
 | E13-bf2 | 4코어, 코어당 버터플라이 2개 / 50 MHz | 5.708112 ms | 3.520371 ms | 2.841720 ms |
 | E13-stream | 전용 7단계 프레임 스트리밍 / 50 MHz | 5.826396 ms | 3.652869 ms | 2.787411 ms |
+| E14-frame | PL 전치·최종 배열 복원 / 50 MHz | 5.706612 ms | 3.489441 ms | 1.657914 ms |
 
 실험 사이의 PL 비율은 서로 다른 회차의 비교다. 같은 회차 PS 값도 회차마다 달라졌으며 원인은 확인하지 않았다.
 
@@ -61,6 +63,7 @@
 | [E12-4core](#e12-4core--입출력계산-겹치기) | 11-20 | 공유 입출력·장벽 비용을 숨길 수 있는가 | 4코어, FIFO·독립 스케줄 | 완료. PL 3.129210 ms, 계측 active 1.124590 ms ([보고서](../benchmarks/reports/2026-11-20-e12-4core-board/README.md)) |
 | [E13-bf2](#e13-bf2--버터플라이-확대) | 11-21 | 코어 내부 CALC를 줄일 수 있는가 | 4코어, 코어당 버터플라이 2개 | 완료. PL 2.841720 ms, 계측 active 0.837903 ms ([보고서](../benchmarks/reports/2026-11-21-e13-bf2-board/README.md)) |
 | [E13-stream](#e13-stream--프레임-스트리밍) | 11-21 | 벡터의 단계 처리를 겹칠 수 있는가 | 전용 7단계 프레임 스트리밍 | 완료. PL 2.787411 ms, 계측 active 0.711424 ms ([보고서](../benchmarks/reports/2026-11-21-e13-stream-board/README.md)) |
+| [E14-frame](#e14-frame--pl-전치와-전체-프레임-dma-진행-중) | 11-21 | 중간 왕복·CPU 전치를 없앨 수 있는가 | 같은 FFT 재사용·64KiB in-place 행렬·1요청/프레임 | 완료. PL1.657914ms/NEON 대비2.104718배, profile active1.038842ms·복사0.590928ms·CPU 전치0 ([보드 결과](../benchmarks/reports/2026-11-21-e14-frame-board/README.md)) |
 
 ## 공통 조건과 해석 규칙
 
@@ -554,6 +557,100 @@
 - **근거:** [준비·초기 실패·RTL](../benchmarks/reports/2026-11-21-e13-stream-preparation/README.md),
   [실제 구현·콘솔](../benchmarks/reports/2026-11-21-e13-stream-build/README.md),
   [원본·정확도·분포·분해·한계](../benchmarks/reports/2026-11-21-e13-stream-board/README.md).
+
+---
+
+## E14-frame — PL 전치와 전체 프레임 DMA (진행 중)
+
+- **날짜·선행:** 2026-11-21, E13-stream. 사용자가 E14 진행을 요청했다.
+- **질문:** Range 결과의 PS 회수·전치·Doppler 재제출을 없애 전체 지연을 줄일 수 있는가.
+  E13-stream 별도 profile 평균은 전체 2.880577 / PL active 0.711424 / 복사 1.352026 / 전치 0.687152 ms다.
+- **가설·설계:** 기존 단일 7단계 FFT를 두 축에 재사용한다. Range 출력을 16,384×32-bit RAM에 저장하고
+  열 방향으로 읽어 Doppler에 공급한다. 한 열의 입력을 모두 소비한 뒤 같은 열에 결과를 덮어쓰고,
+  완성 행렬을 Doppler-major/range-minor 순서로 배출한다. RAM 내용은 reset하지 않고 유효 상태만 초기화한다.
+  중간·최종 행렬에 같은 64KiB를 사용해 추가 BRAM을 제한한다. E13의 BRAM 31/60에 행렬 약 16개가 더해지는
+  자원 예산이며 합성·배치 실측은 아직 없다. 새 전체 프레임 ABI8·별도 backend를 사용한다.
+- **유지:** Q15 butterfly/twiddle·반올림/포화·단계별 1/2 스케일, 50 MHz, HP0/64-bit·AXIS32,
+  Simple DMA·coherent bounce·CPU0·측정 경계. 기존 E13 소스와 보고서를 보존한다.
+- **변경 범위:** PS gather/scatter와 중간 host 왕복 제거, 1 ioctl·2채널 제출·64KiB/방향/프레임.
+  CPU↔요청↔coherent 버퍼의 최초 입력·최종 출력 복사는 유지한다. 출력 순서 복원은 PL RAM에서 수행한다.
+  새 `dma_frame` backend·드라이버·빌드/배치/수집/분석과 `fft128_dma_frame_ctrl`을 별도로 추가한다.
+- **예상·위험:** 최종 행렬 배출 약 16,384클록이 새로 필요하므로 PL active 자체는 E13-stream보다 늘 수 있다.
+  복사 반감과 전치 제거의 전체 효과는 cache·IRQ·DDR·새 스케줄에 따라 달라지며 실측으로 채우지 않는다.
+  in-place 덮어쓰기의 read-before-write, 동기 RAM prefetch, backpressure, 오류/abort 이후 재실행을 직접 검증한다.
+- **통과 조건:** 여러 전체 128×128 입력의 독립 정수 모델 일치, 두 축 각 128 FFT·단계별 발행/완료 보존,
+  배열 순서·임의 TREADY·입력 starvation·잘못된 TLAST/TKEEP·AXI AW/W·각 phase abort/recovery,
+  실제 Vivado RAM 추론·자원·50 MHz setup/hold·ARM 모듈/클라이언트, 보드 자체 검사 후 별도 frame/profile/paired.
+- **로컬 검증 결과:** 6종 전체 128×128 입력을 사용한 18개 완성 프레임/294,912 complex bins가 정수 모델과 완전 일치했다.
+  중간 결과 소비 scoreboard, read/write 충돌 없음, 정상 행렬 read/write 각32768, 단계별 issue/retire 각16384를 확인했다.
+  이른 결과 fault injection은 실제 write 차단·오류 계수를 확인했다. 입력 지연·출력 정지·잘못된 TLAST/TKEEP·독립 AW/W·
+  각 phase soft/hard abort 후 전체 재계산과 별도 reset 없는 반복 요청도 통과했다.
+  기존 E11~E13 RTL 전체 회귀와 host53개(기존43+E14 10), C export/ABI shim·설정/overlay·스크립트 검사 PASS.
+- **사이클 모델:** Range17771 + Doppler17771 + drain16385 = 51927 cycles, 50MHz 환산1.038540 ms.
+  과거 E13-stream의 RTL35540cycles보다 PL 구간은 늘지만 PS 전치·중간 복사 절감은 별도로 기대한다.
+  이 값은 보드 전체 시간이나 보장된 성능 예측이 아니다.
+- **현재 상태/다음:** 로컬 구현·검증과 Vivado/ARM 빌드 준비 완료. ARM 실제 빌드·생성 reset IP·합성/배치 자원·50MHz 타이밍·
+  보드 자체 검사/프레임/profile/paired는 아직 미확인이다.
+  [정확한 소스·RTL·host 근거](../benchmarks/reports/2026-11-21-e14-frame-preparation/README.md),
+  [빌드·배포·계측 절차](../src/PS/fft128/dma_frame/README.md).
+
+---
+
+### E14-frame 실제 빌드 확인 — 2026-11-21
+
+- 사용자 비트스트림 생성 알림 이후 공유 run `fft128_dma_e14_frame_20261121_020411`을 독립 확인했다.
+  ARM receiver/client·모듈 빌드와 기록 base-DT overlay 검증도 성공했다.
+- PL/host/module source SHA는 현재 작업 파일·공유 소스와 일치한다. host/module artifact, ARM32 static ELF·
+  모듈 vermagic, XSA와 구현 bitstream 일치를 확인했다. 보드 symbol CRC 수용은 아직 확인하지 않았다.
+- 실제 routed LUT6158/17600, FF6305/35200, BRAM47/60, DSP28/80이며 행렬은 RAMB36 16개다.
+  FFT는 기존 전용7단계/각4DSP·4RAMB36을 유지한다. 기준 E13-stream보다 BRAM16개가 늘고 DSP는 같다.
+- 50MHz setup WNS10.166ns/hold WHS0.020ns, setup·hold·pulse failing endpoint0, no-clock·unconstrained0.
+  생성 reset IP ID/ABI8/full-frame16384/초기계측/lock-loss simulation done1/passed1이다.
+- FFT 외의 생성 BD PS7/DMA/clock/reset/IRQ·포트/연결/주소는 E13-stream과 동일하다.
+  자원·타이밍으로 보드 전체 지연을 추정하지 않는다. 번들 생성·NFS 배포 후 보드 자체검사/frame/profile/paired를 진행한다.
+- [실제 구현·ARM 로그·정확한 SHA](../benchmarks/reports/2026-11-21-e14-frame-build/README.md).
+  초기 준비 기록과 빌드 metadata의 `board_verified:false`는 해당 단계 상태로 보존한다.
+
+---
+
+### E14-frame 사용자 보드 자체 검사 — 2026-11-21
+
+- **증거 종류:** 사용자 제공 콘솔과 공유 번들 독립 SHA 대조. 보드 원시 profile·paired 파일은 아직 회수하지 않았다.
+- FPGA Manager BIN 로드 57ms, E14 드라이버 정상 등록. 클라이언트 반복 4프레임 각각 256 FFT/16,384 bin 정수 일치,
+  수신기 자체 검사 4프레임/65,536 bin PASS다.
+- 계측한 클라이언트 3회 모두 matrix reads/writes 각각32,768, range/doppler_in/doppler_out 각각16,384,
+  overwrite_errors=0. stage 수치 자체는 콘솔에 없고 동일 SHA 클라이언트의 검사를 통과했다.
+- Range/Doppler/drain phase 합계51,943/51,941/51,941 cycles이며 50MHz 환산1.038860/1.038820/1.038820ms다.
+  자체 검사 PL 구간 환산이며 CPU 복사 등을 포함한 전체 프레임 시간으로 해석하지 않는다.
+- 번들22개 artifact와 기존 host/module 빌드 SHA, 현재 로컬·공유 compiled sources를 확인했다.
+  구현 bitstream payload의 byte swap·Bootgen NOOP padding도 번들 BIN과 일치한다. 보드 파일 SHA는 아직 미회수다.
+- **다음:** 현재 로드 상태에서 profile20회, CPU double/NEON/PL 각각300회 paired 측정 후 Ubuntu 수집·독립 재검산.
+  [정확한 콘솔·신원·명령](../benchmarks/reports/2026-11-21-e14-frame-build/README.md). E14 성능 완료로 표시하지 않는다.
+
+---
+
+### E14-frame 원시 결과 독립 검증 완료 — 2026-11-21
+
+- **증거:** 공유 수집82파일/9,290,439B를 ignored `build/fft128_dma_frame_measurements`에 SHA 동일하게 회수했다.
+  Ubuntu 요약은 보존하고 Windows에서 paired/profile·입력Q15·정수 모델·소스·artifact·IRQ를 독립 재계산했다.
+- **측정:** 고정128×128 입력, CPU0·warmup10/repeat100×3 회전, 창없음·전체1/16384 정규화.
+  Q15 입력부터 CPU 가용2D 출력까지 필요한 복사/DMA/대기/전치·재배열을 포함하며 IO·양자화·할당·검증·plan 생성은 제외한다.
+- **paired 중앙값:** double5.706612/NEON3.489441/PL1.657914ms. PL은 같은 회차 NEON보다2.104718배,
+  double보다3.442043배 빠르다. PL p05/p95=1.649642/1.694033ms, 최대1.821228ms다.
+- **별도20회 profile 평균:** 전체1.700746, PL active1.038842, 복사합0.590928, PS gather/scatter0ms.
+  Range0.355722/Doppler0.355420/drain0.327700ms 합계가 PL active다. kernel/PL은 ioctl 내부라 전체에 중복 합산하지 않는다.
+- **해석:** 과거 E13-stream의 전체중앙값2.787411→1.657914ms (40.521366% 감소), profile 복사1.352026→0.590928,
+  CPU 전치0.687152→0ms. PL active는 최종 배출 추가로0.711424→1.038842ms로 늘어도 전체가 줄었다.
+  1 ioctl/2채널/128KiB로 제출·외부 payload를 절반으로 줄였다.
+  E13과 다른 부팅이며 PS기준도NEON4.47%/double2.06% 짧아져 차이 전체를 순수한 한 변수 효과로 단정하지 않는다.
+- **정확도/신원:** 저장3trial/profile 각16,384 bin이 정수 oracle과 완전일치하고 peak(107,20), 기존 NumPy 상대L2오차1.361020928% 유지.
+  번들22개와 수집/빌드/현재 로컬·공유 소스 SHA가 일치하며 profile/paired는 같은 부팅·bundle이다.
+  IRQ67/68은 paired CPU0각330, profile각22회/CPU1증가0. 모든20행의 matrix reads/writes32768,
+  range/doppler_in/doppler_out16384,overwrite_errors0,stage issue/retire각16384·CALC합121856이다.
+- **완료/다음:** E14 고정 크기 오프라인 가속 검증 완료. 남은 복사(E11d)와 PL 배출/프레임 구조는 별도 최적화 후보이며
+  연속 UDP 처리량·최악 지연·누락은 아직 검증하지 않았다.
+  [전체 결과·원본 SHA·재계산 코드](../benchmarks/reports/2026-11-21-e14-frame-board/README.md).
+  초기 준비/빌드/자체 검사 당시의 미확인 상태 기록은 그대로 보존한다.
 
 ---
 

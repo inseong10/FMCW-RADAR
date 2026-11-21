@@ -1,4 +1,9 @@
 *.sh text eol=lf
+fft128_dma_frame_ctrl.v text eol=lf
+fft128_frame_ram.v text eol=lf
+dma_frame_ctrl_tb.v text eol=lf
+reset_dma_frame_tb.v text eol=lf
+verify_dma_frame.py text eol=lf
 # Preserve upstream board files and the three verbatim imported RTL sources.
 board_files/** -whitespace
 address_generator.v whitespace=-blank-at-eof

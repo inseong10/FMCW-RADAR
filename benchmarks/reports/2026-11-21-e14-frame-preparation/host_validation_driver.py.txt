@@ -1,0 +1,47 @@
+from pathlib import Path
+import hashlib,importlib.util,json,py_compile,re,shutil,subprocess,sys
+root=Path(__file__).resolve().parent.parent
+out=root/'build/fft128_dma_frame_preparation';out.mkdir(exist_ok=True)
+tests=[];checks={}
+for rel,count in [('src/PS/fft128/test_native.py',9),('src/PS/fft128/dma_batch/test_tools.py',3),('src/PS/fft128/dma_parallel/test_tools.py',4),('src/PS/fft128/dma_quad/test_tools.py',5),('src/PS/fft128/dma_overlap/test_tools.py',7),('src/PS/fft128/dma_bf2/test_tools.py',7),('src/PS/fft128/dma_stream/test_tools.py',8),('src/PS/fft128/dma_frame/test_tools.py',10)]:
+    r=subprocess.run([sys.executable,str(root/rel)],capture_output=True,text=True,timeout=90)
+    log=Path(rel).parent.name+'_tests.log';(out/log).write_text(r.stdout+r.stderr,encoding='utf-8')
+    assert r.returncode==0,(rel,r.stdout,r.stderr)
+    tests.append(dict(command='python '+rel,tests=count,returncode=0,log=log))
+checks['host_tests']=tests;checks['host_test_count']=sum(t['tests'] for t in tests)
+for p in list((root/'src/PS/fft128/dma_frame').glob('*.py'))+[root/'benchmarks/compare_dma_frame_board.py',root/'src/PL/fft128_ps/verify_dma_frame.py']:
+    py_compile.compile(str(p),doraise=True)
+checks['python_compile']=True
+scripts=list((root/'src/PS/fft128/dma_frame').glob('*.sh'))+[root/'src/PS/fft128/build_native.sh']
+for p in scripts:subprocess.run(['C:/msys64/usr/bin/bash.exe','-n',str(p)],capture_output=True,text=True,check=True)
+checks['shell_syntax_files']=len(scripts)
+tcl=out/'parse_tcl.tcl';tcl.write_text('foreach path $argv {set f [open $path r];set s [read $f];close $f;if {![info complete $s]} {error "Incomplete Tcl"};puts "TCL_COMPLETE $path"}\n',encoding='utf-8')
+result=subprocess.run(['C:/msys64/ucrt64/bin/tclsh.exe',str(tcl),str(root/'src/PL/fft128_ps/build_dma_frame.tcl')],capture_output=True,text=True,check=True)
+checks['tcl_info_complete']=result.stdout.strip()
+source=(root/'src/PL/fft128_ps/build_dma_frame.tcl').read_text(encoding='utf-8')
+config=json.loads(re.search(r'puts \$f \{(\{"experiment":"E14-frame".*?\})\}',source).group(1))
+(out/'intended_dma_config.json').write_text(json.dumps(config,indent=2)+'\n',encoding='utf-8')
+spec=importlib.util.spec_from_file_location('frame_overlay',root/'src/PS/fft128/dma_frame/make_overlay.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+shared=Path('C:/Users/user/Documents/share/FMCW-FFT-test')
+text,meta=m.make_overlay(str(shared/'build/fft128_dma_probe/probe_board/live_dt.tar'))
+for key in ('experiment','register_abi','parallel_cores','streaming_stages','pl_transpose','pl_output_reorder','in_place_matrix','matrix_bytes','cpu_transpose','fft_per_request','frame_words','dma_requests_per_frame','dma_channel_submissions_per_frame','payload_bytes_per_frame','output_order','buffering'):
+    assert config[key]==meta[key],key
+assert 'fmcw,fft128-dma-frame-v8' in text and 'fft128_e14_frame' in text
+(out/'fft128_e14_frame.dts').write_text(text,encoding='utf-8');(out/'fft128_e14_frame.json').write_text(json.dumps(meta,indent=2)+'\n',encoding='utf-8')
+checks['recorded_live_dt_overlay_identity']=True
+shim=root/'build/fft128_dma_overlap_preparation/linux_header_shim'
+for name in ['dma_frame_backend.c','test_dma_frame_client.c']:
+    r=subprocess.run(['gcc','-fsyntax-only','-std=c11','-Wall','-Wextra','-Werror','-DFFT128_DMA_FRAME_BACKEND','-I',str(shim),str(root/'src/PS/fft128/dma_frame'/name)],capture_output=True,text=True)
+    assert r.returncode==0,(name,r.stdout,r.stderr)
+checks['linux_userspace_syntax_and_112_131280_byte_layout_with_host_shims']=True
+for group in [('PL source dependencies',r'foreach name \{([^}]+)\}',root/'src/PL/fft128_ps')]:
+    for names in re.findall(group[1],source):
+        for name in names.split():assert (group[2]/name).exists(),name
+checks['tcl_source_file_list_exists']=True
+unchanged=['src/PL/fft128_ps/'+n for n in ['fft128_streaming.v','fft128_stream_stage.v','butterfly_pipeline.v','fft128_twiddle.v','fft_working_ram.v','address_generator.v','fft128_dma_stream_ctrl.v','build_dma_stream.tcl']]+['src/PS/fft128/native_core.c']
+baseline=json.loads((root/'benchmarks/reports/2026-11-21-e13-stream-preparation/source_sha256.json').read_text())
+for name in unchanged:assert hashlib.sha256((root/name).read_bytes()).hexdigest()==baseline[name],name
+checks['unchanged_stream_arithmetic_and_e13_design_sha256']={n:hashlib.sha256((root/n).read_bytes()).hexdigest() for n in unchanged}
+checks.update(arm_build=False,vivado_build=False,board_verified=False,scope='Host checks only; generated reset IP, target ARM module and hardware timing require Vivado/Ubuntu build')
+(out/'local_checks.json').write_text(json.dumps(checks,indent=2)+'\n',encoding='utf-8')
+print(json.dumps({k:v for k,v in checks.items() if k!='unchanged_stream_arithmetic_and_e13_design_sha256'},indent=2))

@@ -5,9 +5,9 @@
 **목표, 단계별 상태, 남은 단계의 설계·가설·통과 조건**만 둔다. 아래의 모든 예상 수치는 측정값이 아니다.
 
 - 계획 수립 2026-11-15, PS 목표 갱신 2026-11-16, E11b 결과 반영 2026-11-19, E12·E13 완료 반영 2026-11-21.
-- 최신 보드 검증 구성: E13-stream (전용 7단계 프레임 스트리밍 / 50 MHz / Q15 / 축당 HP0 Simple DMA).
-  각 300회 중앙값 PL **2.787411 ms**, 같은 회차 NEON **3.652869 ms** / double **5.826396 ms**.
-  [최신 결과](../benchmarks/reports/2026-11-21-e13-stream-board/README.md).
+- 최신 보드 검증 구성: E14-frame (전용 7단계 FFT 재사용·PL 전치/최종 재배열 / 50MHz / Q15 / 전체 프레임 HP0 Simple DMA).
+  각300회 중앙값 PL **1.657914ms**, 같은 회차 NEON **3.489441ms** / double **5.706612ms**.
+  [최신 결과](../benchmarks/reports/2026-11-21-e14-frame-board/README.md).
 
 ## 1. 목표
 
@@ -32,7 +32,7 @@
 | E13-2core / 4core | 기존 코어 2개 → 4개 복제, 별도 측정 | 산술·50 MHz·공유 I/O·group barrier | **완료** 11-20 | PL 4.920621 → 4.186353 ms |
 | E13-bf2 | 기존 4코어 각각 버터플라이 1→2개 | E12 FIFO·스케줄·Q15·50 MHz·전송 | **완료** 11-21 | PL 2.841720 ms ([보고서](../benchmarks/reports/2026-11-21-e13-bf2-board/README.md)) |
 | E13-stream | 반복형 4코어 → 전용 DIT 7단계 단일 파이프라인 | Q15·50 MHz·단일 DMA·복사·PS 전치 | **완료** 11-21 | PL 2.787411 ms ([보고서](../benchmarks/reports/2026-11-21-e13-stream-board/README.md)) |
-| E14 (선택) | PL 내부 중간 결과 보관과 전치 | 수학적 결과·외부 출력 배열 | 계획 | — |
+| E14-frame | PL 내부 중간 결과 보관·전치, 두 축 단일 요청 | Q15·50 MHz·단일 FFT·외부 출력 배열 | **완료** 11-21 | PL1.657914ms/NEON 대비2.104718배. profile20회·paired 각300회·원시82파일 독립검증 ([보고서](../benchmarks/reports/2026-11-21-e14-frame-board/README.md)) |
 | 분리 실험 (선택) | serial/pipeline × 20/50 MHz 4구성 | 입력·측정 조건 | 계획 | E10의 결합 효과를 나눌 때만 |
 
 E11c 이후 번호는 변경 종류의 ID이며 실행 순서가 아니다. 순서는 [5절](#5-실행-순서-결정-규칙)로 정한다.
@@ -48,6 +48,7 @@ E11c 이후 번호는 변경 종류의 ID이며 실행 순서가 아니다. 순�
 | E12-4core | FIFO로 LOAD/CALC/OUTPUT 겹치기 | PL 3.129210 ms, active 1.124590 ms | 실제 I/O·CALC 겹침 확인, 같은 회차 NEON보다 10.31% 짧음 |
 | E13-bf2 | CALC 476→252 cycles/FFT | 가설 일치, PL 2.841720 ms / active 0.837903 ms | active 절감보다 전체 절감이 작음 |
 | E13-stream | 전용 단계로 정상상태 II 128 clocks/FFT | RTL II 128, PL 2.787411 ms / active 0.711424 ms | 초기 지연 증가, 복사·전치가 전체 병목 |
+| E14-frame | PL 전치로 중간 왕복·CPU 전치 제거 | PL 1.657914ms / active 1.038842ms, 복사0.590928ms·CPU 전치0 | 최종 배출로 PL 시간이 늘어도 전체 경로는 단축 |
 
 - E10 double 기준에서는 PL 내부 4.408320 ms를 뺀 예산이 약 1.149 ms였지만, PS01 NEON 목표는 PL 내부보다
   이미 0.792468 ms 짧았다. 그래서 E11 DMA만으로 PS를 이긴다고 예측하지 않았다.
@@ -133,6 +134,13 @@ profile 비PL 비용 증가를 보존하며 차이를 순수 스트리밍 효과
 
 ### E14 (선택) — PL 전치
 
+- 2026-11-21 완료: 전체 중앙값1.657914ms, 같은 회차 NEON 대비2.104718배. CPU 전치0, 외부payload128KiB/프레임,
+  1ioctl/2채널을 보드에서 확인했다. 별도profile평균 PL active1.038842ms·복사0.590928ms다.
+  [완료 결과](../benchmarks/reports/2026-11-21-e14-frame-board/README.md). 아래는 실행 전 선택 근거다.
+
+- 2026-11-21 실행 결정: `dma_frame` 별도 구성, 기존 단일 7단계 FFT와 64KiB in-place 행렬 RAM을 사용한다.
+  Range→PL 열 방향 읽기→Doppler→PL 배열 순서 복원으로 연결한다. 프레임당 1 ioctl·2채널·입출력 합 128KiB가 목표다.
+  최초 입력·최종 출력 coherent 복사는 유지한다. [E14 실행 기록](experiment_log.md#e14-frame--pl-전치와-전체-프레임-dma-진행-중).
 - 현재 CPU gather/scatter(E13-stream 0.687152 ms, 과거 E11b 0.670374 ms)와 중간 DDR 왕복 128 KiB가 제거 후보다.
   PL 전치·저장·출력 배열 복원 비용을 차감해야 한다.
 - PL에서 전치한 뒤 중간 데이터를 다시 PS로 보내면 왕복은 없어지지 않는다. BRAM 포트·용량·주소 생성을 확인한다.

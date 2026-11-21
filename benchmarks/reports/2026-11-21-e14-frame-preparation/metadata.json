@@ -1,0 +1,22 @@
+{
+  "experiment": "E14-frame",
+  "base_commit": "c776596a9dd3de62e0cb23f51fa6b6a86b9cc088",
+  "source_state": "uncommitted working change identified by source_sha256.json",
+  "rtl_verified": true,
+  "host_verified": true,
+  "host_tests": 53,
+  "arm_build": false,
+  "vivado_build": false,
+  "board_verified": false,
+  "board_measurements_available": false,
+  "expected_clock_hz": 50000000,
+  "logical_matrix_bytes": 65536,
+  "expected_matrix_bram36_equivalents": 16,
+  "estimated_total_bram36_equivalents": 47,
+  "resource_numbers_are_estimates": true,
+  "scope": "Preparation only; no measured E14 board latency or implemented timing/resource claim",
+  "baseline_command": "python src/PL/fft128_ps/verify_dma_stream.py",
+  "baseline_exit_code": 0,
+  "rtl_command": "python src/PL/fft128_ps/verify_dma_frame.py --skip-baseline",
+  "rtl_exit_code": 0
+}

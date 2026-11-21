@@ -31,15 +31,19 @@ chirp 1개를 UDP 데이터그램 1개로 보냅니다.
 | DMA, E12-4core | 축당 128 FFT = 65,536 B, 외부 TLAST는 축 마지막 beat | [4코어, FIFO·독립 스케줄](../src/PS/fft128/dma_overlap/README.md) |
 | DMA, E13-bf2 | 축당 128 FFT = 65,536 B, 외부 TLAST는 축 마지막 beat | [4코어, 코어당 버터플라이 2개](../src/PS/fft128/dma_bf2/README.md) |
 | DMA, E13-stream | 축당 128 FFT = 65,536 B, 외부 TLAST는 축 마지막 beat | [전용 7단계 프레임 스트리밍](../src/PS/fft128/dma_stream/README.md) |
+| DMA, E14-frame | 전체 128×128 프레임, 방향별 65,536 B·프레임 마지막 TLAST | [PL 전치·최종 배열 복원, 1 ioctl](../src/PS/fft128/dma_frame/README.md) |
 
-위 경로 모두 128×128 고정 크기이고, 두 축 사이 전치는 PS가 합니다.
+위 경로 모두 128×128 고정 크기입니다. E13까지는 두 축 사이 전치를 PS가 하고, E14는 PL에서 처리합니다.
 
 E13-stream의 스트리밍은 단일 축 안에서 FFT 벡터의 단계 처리를 겹치는 구조입니다.
-Range→전치→Doppler 전체 프레임을 PL 안에서 연결한 경로는 아직 구현하지 않았습니다.
+E14-frame은 고정 128×128의 Range→PL 전치→Doppler→PL 배열 복원을 구현하고 RTL·host·실제 빌드·보드 검증을 완료했습니다.
+프레임당 입력·출력 각각 65,536 B, TLAST는 방향별 마지막 beat이며 1 ioctl로 두 축을 처리합니다.
+ABI8과 별도 `/dev/fft128-dma-frame`을 사용합니다. 자체 검사·20회 profile·각300회 paired 원시 검증을 통과했습니다.
+[전체 프레임 실행 계약](../src/PS/fft128/dma_frame/README.md)을 참고하십시오.
 
-## PS → PL: 전체 프레임 AXI4-Stream 입력 (명세 초안, 미구현)
+## PS → PL: 가변 크기 전체 프레임 AXI4-Stream 입력 (명세 초안, 미구현)
 
-아래는 가변 크기·전체 프레임 통합을 위한 초안이며 아직 구현하지 않았습니다.
+고정 128×128 전체 프레임은 E14에 구현했습니다. 아래 가변 크기 계약은 향후 확장 초안이며 아직 구현하지 않았습니다.
 
 - **형식:** AXI4-Stream 32비트, 1 beat = 복소 샘플 1개입니다. `TDATA[15:0]`는 I, `TDATA[31:16]`은 Q이고, 각각 int16 2의 보수입니다.
 - **정수 변환:** PS가 고정 계수 S를 곱하고 반올림한 뒤 int16 범위로 포화합니다. 창함수나 정규화는 PS가 적용하지 않습니다.

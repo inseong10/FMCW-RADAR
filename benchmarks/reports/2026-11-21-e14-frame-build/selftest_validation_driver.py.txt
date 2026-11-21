@@ -1,0 +1,77 @@
+from pathlib import Path
+import hashlib, json, re, shutil
+
+root = Path(__file__).resolve().parent.parent
+shared = Path('C:/Users/user/Documents/share/FMCW-FFT-test')
+linux = '/home/user/fmcw_share/FMCW-FFT-test/'
+report = root/'benchmarks/reports/2026-11-21-e14-frame-build'
+bundle = shared/'build/fft128_dma_frame_bundle'
+build = json.loads((report/'implementation.json').read_text(encoding='utf-8'))
+run = shared/build['run'].removeprefix(linux)
+def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
+def write(path, value):
+    path.write_text(json.dumps(value, indent=2)+'\n', encoding='utf-8', newline='\n')
+artifacts = {}
+for line in (bundle/'artifacts.sha256').read_text().splitlines():
+    digest, name = line.split(None, 1)
+    name = name.strip().lstrip('*')
+    target = (bundle/name).resolve()
+    assert target.is_relative_to(bundle.resolve()) and sha(target) == digest, name
+    artifacts[name] = digest
+assert len(artifacts) == 22
+for group in ('host_artifacts', 'module_artifacts'):
+    for item in build['identities'][group]:
+        name = Path(item['path']).name
+        if name in artifacts: assert artifacts[name] == item['sha256'], name
+for key, base in [('pl_sources', ''), ('host_sources', ''), ('module_sources', 'src/PS/fft128/dma_frame')]:
+    for item in build['identities'][key]:
+        rel = Path(base)/item['path'].removeprefix(linux)
+        assert sha(root/rel) == sha(shared/rel) == item['sha256'], str(rel)
+for a, b in [('pl_source.sha256','pl_source.sha256'), ('host_source.sha256','host_source.sha256'), ('module_source.sha256','module_source.sha256')]:
+    assert sha(bundle/a) == sha(report/b), a
+assert sha(run/'firmware/fft128.bit') == build['artifacts'][0]['sha256']
+for name in ('fft128.bin', 'fft128.bit.bin'):
+    assert sha(run/'firmware'/name) == artifacts['fft128_e14_frame.bin']
+assert 'Bootimage generated successfully' in (run/'e14_frame_firmware_prepare.log').read_text()
+# The bit header terminates in field e followed by a 32-bit payload size.
+bit = (run/'firmware/fft128.bit').read_bytes()
+offset = 2+int.from_bytes(bit[:2], 'big')
+assert bit[offset:offset+2] == b'\x00\x01'
+offset += 2
+for tag in b'abcd':
+    assert bit[offset] == tag
+    size = int.from_bytes(bit[offset+1:offset+3], 'big')
+    offset += 3+size
+assert bit[offset:offset+1] == b'e'
+payload_size = int.from_bytes(bit[offset+1:offset+5], 'big')
+header = offset+5
+assert header+payload_size == len(bit)
+payload = bit[header:]
+swapped = b''.join(payload[i:i+4][::-1] for i in range(0, len(payload), 4))
+converted = (bundle/'fft128_e14_frame.bin').read_bytes()
+assert converted[:len(swapped)] == swapped
+# Bootgen rounds to a 16-byte boundary with configuration NOOP words.
+padding = converted[len(swapped):]
+assert len(converted) == (len(swapped)+15)//16*16
+assert padding == b'\x00\x00\x00\x20'*(len(padding)//4)
+console = (report/'board_selftest_console.log').read_text()
+normalized = console.replace('bit_exac\nt_bins', 'bit_exact_bins')
+packets = re.findall(r'FRAME_PACKET_PASS trial=(\d+) bytes_each_direction=(\d+) completed_ffts=(\d+) profile=(\d+) bit_exact_bins=(\d+)', normalized)
+assert packets == [(str(i),'65536','256','1' if i<3 else '0','16384') for i in range(4)]
+matrices = re.findall(r'FRAME_MATRIX_PASS reads=(\d+) writes=(\d+) range=(\d+) doppler_in=(\d+) doppler_out=(\d+)\s+overwrite_errors=(\d+) phase_cycles=(\d+)/(\d+)/(\d+)', console)
+assert len(matrices) == 3
+trials = []
+for i, row in enumerate(matrices):
+    values = list(map(int, row))
+    assert values[:6] == [32768,32768,16384,16384,16384,0]
+    assert values[6:] == [17787 if i==0 else 17785,17771,16385]
+    trials.append(dict(trial=i, range_cycles=values[6], doppler_cycles=values[7], drain_cycles=values[8], active_cycles=sum(values[6:]), cycle_derived_pl_ms=sum(values[6:])/50000))
+assert 'DMA_FRAME_CLIENT_PASS' in console
+assert 'SELFTEST_PASS backend=PL_DMA_FRAME frames=4 bins=65536' in console
+assert 'DMA_E14_FRAME_SELFTEST_READY' in console
+shutil.copyfile(bundle/'artifacts.sha256', report/'bundle_artifacts.sha256')
+result = dict(status='E14_FRAME_USER_CONSOLE_SELFTEST_PASS', date='2026-11-21 Asia/Seoul', evidence_scope='User-supplied board console; shared bundle and compiled-source hashes independently checked. No raw board profile or paired timing files collected.', console_sha256=sha(report/'board_selftest_console.log'), build_run=build['run'], programming_ms=57, client_frames=4, client_bit_exact_bins=65536, receiver_frames=4, receiver_bit_exact_bins=65536, profiled_client_trials=trials, stage_counter_evidence='DMA_FRAME_CLIENT_PASS implies client checks stage_count=7, stage_busy_cycles=121856 and each stage issue/retire=16384; these numeric counters were not printed in the supplied console.', bundle_artifacts=artifacts, current_local_and_shared_compiled_sources_match=True, bootgen_bit_payload_byteswap_matches_bin=True, firmware_bundle_verified=True, full_frame_profile_paired_complete=False, whole_frame_wall_time_ms=None)
+write(report/'board_selftest.json',result)
+shutil.copyfile(Path(__file__),report/'selftest_validation_driver.py.txt')
+write(report/'evidence_sha256.json',{p.name:sha(p) for p in sorted(report.iterdir()) if p.is_file() and p.name!='evidence_sha256.json'})
+print(json.dumps(dict(status=result['status'],bundle_artifacts=len(artifacts),phase_cycle_totals=[t['active_cycles'] for t in trials],bit_payload_matches=True,performance_measurements_pending=True)))

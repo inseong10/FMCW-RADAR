@@ -7,6 +7,7 @@ backend=${FFT128_IO_BACKEND:-mmio}
 extra=()
 processing=()
 case $backend in
+    dma_frame) transport="$here/dma_frame/dma_frame_backend.c"; processing=("$here/dma_frame/frame_process.c"); extra=(-DFFT128_DMA_BACKEND -DFFT128_DMA_BATCH_BACKEND -DFFT128_DMA_FRAME_BACKEND); default_out="$root/build/fft128_dma_frame_native";;
     mmio) transport="$here/mmio.c"; default_out="$root/build/fft128_native";;
     dma) transport="$here/dma/dma_backend.c"; extra=(-DFFT128_DMA_BACKEND); default_out="$root/build/fft128_dma_native";;
     dma_batch) transport="$here/dma_batch/dma_batch_backend.c"; processing=("$here/dma_batch/batch_process.c"); extra=(-DFFT128_DMA_BACKEND -DFFT128_DMA_BATCH_BACKEND); default_out="$root/build/fft128_dma_batch_native";;
@@ -15,7 +16,7 @@ case $backend in
     dma_bf2) transport="$here/dma_bf2/dma_bf2_backend.c"; processing=("$here/dma_batch/batch_process.c"); extra=(-DFFT128_DMA_BACKEND -DFFT128_DMA_BATCH_BACKEND -DFFT128_DMA_BF2_BACKEND); default_out="$root/build/fft128_dma_bf2_native";;
     dma_overlap) transport="$here/dma_overlap/dma_overlap_backend.c"; processing=("$here/dma_batch/batch_process.c"); extra=(-DFFT128_DMA_BACKEND -DFFT128_DMA_BATCH_BACKEND -DFFT128_DMA_OVERLAP_BACKEND); default_out="$root/build/fft128_dma_overlap_native";;
     dma_quad) transport="$here/dma_quad/dma_quad_backend.c"; processing=("$here/dma_batch/batch_process.c"); extra=(-DFFT128_DMA_BACKEND -DFFT128_DMA_BATCH_BACKEND -DFFT128_DMA_QUAD_BACKEND); default_out="$root/build/fft128_dma_quad_native";;
-    *) echo 'FFT128_IO_BACKEND must be mmio, dma, dma_batch, dma_parallel dma_quad, dma_overlap, dma_bf2 or dma_stream' >&2; exit 1;;
+    *) echo 'FFT128_IO_BACKEND must be mmio, dma, dma_batch, dma_parallel, dma_quad, dma_overlap, dma_bf2, dma_stream or dma_frame' >&2; exit 1;;
 esac
 out=${FFT128_OUT:-"$default_out"}
 compiler=()
@@ -59,7 +60,9 @@ printf 'COMPILER: %s\n' "${compiler[*]}"
     "${linkmode[@]}" "${ldflags[@]}" -lm -o "$out/fft128-receiver"
 if command -v file >/dev/null 2>&1; then file "$out/fft128-receiver"; fi
 printf 'NATIVE_BUILD_PASS: %s\n' "$out/fft128-receiver"
-if [[ $backend == dma_stream ]]; then
+if [[ $backend == dma_frame ]]; then
+    printf '%s\n' 'E14-frame build only: use dma_frame scripts; E13-stream baseline preserved.'
+elif [[ $backend == dma_stream ]]; then
     printf '%s\n' 'E13-stream build only: use dma_stream scripts; E13-bf2 baseline preserved.'
 elif [[ $backend == dma_bf2 ]]; then
     printf '%s\n' 'E13-bf2 build only: use dma_bf2 scripts; E12 baseline preserved.'

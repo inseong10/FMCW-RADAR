@@ -1,0 +1,74 @@
+{
+  "host_tests": [
+    {
+      "command": "python src/PS/fft128/test_native.py",
+      "tests": 9,
+      "returncode": 0,
+      "log": "fft128_tests.log"
+    },
+    {
+      "command": "python src/PS/fft128/dma_batch/test_tools.py",
+      "tests": 3,
+      "returncode": 0,
+      "log": "dma_batch_tests.log"
+    },
+    {
+      "command": "python src/PS/fft128/dma_parallel/test_tools.py",
+      "tests": 4,
+      "returncode": 0,
+      "log": "dma_parallel_tests.log"
+    },
+    {
+      "command": "python src/PS/fft128/dma_quad/test_tools.py",
+      "tests": 5,
+      "returncode": 0,
+      "log": "dma_quad_tests.log"
+    },
+    {
+      "command": "python src/PS/fft128/dma_overlap/test_tools.py",
+      "tests": 7,
+      "returncode": 0,
+      "log": "dma_overlap_tests.log"
+    },
+    {
+      "command": "python src/PS/fft128/dma_bf2/test_tools.py",
+      "tests": 7,
+      "returncode": 0,
+      "log": "dma_bf2_tests.log"
+    },
+    {
+      "command": "python src/PS/fft128/dma_stream/test_tools.py",
+      "tests": 8,
+      "returncode": 0,
+      "log": "dma_stream_tests.log"
+    },
+    {
+      "command": "python src/PS/fft128/dma_frame/test_tools.py",
+      "tests": 10,
+      "returncode": 0,
+      "log": "dma_frame_tests.log"
+    }
+  ],
+  "host_test_count": 53,
+  "python_compile": true,
+  "shell_syntax_files": 10,
+  "tcl_info_complete": "TCL_COMPLETE C:\\Users\\user\\Desktop\\FMCW\\FMCW-RADAR\\src\\PL\\fft128_ps\\build_dma_frame.tcl",
+  "recorded_live_dt_overlay_identity": true,
+  "linux_userspace_syntax_and_112_131280_byte_layout_with_host_shims": true,
+  "tcl_source_file_list_exists": true,
+  "unchanged_stream_arithmetic_and_e13_design_sha256": {
+    "src/PL/fft128_ps/fft128_streaming.v": "9d46dc81cffe1775c70df72e9e9ea17f00d16d25239e4ca89ad8a7ba33d80566",
+    "src/PL/fft128_ps/fft128_stream_stage.v": "db94cc98094c455faf5b9b92152a42faa55648840b78c2f6b800cbce9b156c4e",
+    "src/PL/fft128_ps/butterfly_pipeline.v": "8152035a94ef0a7761e463c18a0011def3c7f239572ee9f928c6305287546297",
+    "src/PL/fft128_ps/fft128_twiddle.v": "26c81c3038907f29cffa17a6d066c84613ebdcd22b0e5770765ea4dedb48f874",
+    "src/PL/fft128_ps/fft_working_ram.v": "5464b1b0a57e663a1cdc58406c0fc73f3d27829f1ecd9f267bcd66a5211d9eb0",
+    "src/PL/fft128_ps/address_generator.v": "9757d675e1564a9985a01b08726fae90f6eecd294b7bb10d9e6dd8e55685606d",
+    "src/PL/fft128_ps/fft128_dma_stream_ctrl.v": "9954ae7a6f71e8695f6127cfa453f8ff4a625921e7496a979bbf7d6f817f0c5d",
+    "src/PL/fft128_ps/build_dma_stream.tcl": "d338703407712537816c6c82ef399300a61ce2522fbf24f36d0fcdbced7d2dfc",
+    "src/PS/fft128/native_core.c": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c"
+  },
+  "arm_build": false,
+  "vivado_build": false,
+  "board_verified": false,
+  "scope": "Host checks only; generated reset IP, target ARM module and hardware timing require Vivado/Ubuntu build"
+}

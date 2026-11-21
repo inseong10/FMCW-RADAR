@@ -7,17 +7,20 @@ Zynq 기반 FMCW 레이더 신호처리 시스템. RadarSimPy I/Q 데이터를 Z
 ### 1. PS-PL 연동
 
 128×128 고정 크기의 PS C++/FFTW와 PS 구동 PL FFT를 보드에서 비교함.
-최신 PL 구성은 단일 DMA와 전용 7단계 스트리밍 파이프라인이며, 두 축 사이 전치는 PS에서 처리함.
+최신 PL 구성은 단일 DMA와 전용 7단계 스트리밍 FFT를 재사용하며, 두 축 사이 전치와 최종 배열 복원을 PL에서 처리함.
 초기 MMIO 기준선은 PS DDR → AXI4-Lite MMIO → PL FFT → MMIO → PS DDR로 이동하고,
 두 FFT 축 사이의 전치/gather는 PS에서 처리함. 단일 128-point 코어를 재사용함.
 
 **E12·E13 완료:** 2·4코어 복제, 코어별 FIFO 입출력 겹치기, 코어당 버터플라이 2개,
 전용 7단계 프레임 스트리밍을 순서대로 구현하고 보드 원본 검증을 마침.
-최신 구성의 각 300회 중앙값은 PL **2.787 ms** / 같은 회차 PS double **5.826 ms** /
-NEON **3.653 ms**로, NEON 대비 지연이 **23.69% 짧음**(1.310배).
-복사·PS 전치가 주요 잔여 비용이며 가변 크기·연속 UDP 처리량은 아직 검증하지 않음.
-[최신 결과·정확도·시간 분해](benchmarks/reports/2026-11-21-e13-stream-board/README.md),
-[빌드·보드 실행](src/PS/fft128/dma_stream/README.md), [단계별 이력](docs/experiment_log.md).
+**E14 완료:** 64KiB in-place 행렬로 중간 결과를 PL에 보관해 CPU 전치와 중간 DDR 왕복을 제거함.
+프레임당 1 ioctl·2채널·입출력 합128KiB이며 최초 입력·최종 출력의 coherent 복사는 유지함.
+최신 구성의 각300회 중앙값은 PL **1.658ms** / 같은 회차 PS double **5.707ms** /
+NEON **3.489ms**로, NEON 대비 지연이 **52.49% 짧음**(2.105배).
+RTL·host53개·ARM/Vivado·보드 자체 검사·20회 profile·paired 원시 검증을 완료함.
+가변 크기·연속 UDP 처리량은 아직 검증하지 않음.
+[최신 결과·정확도·시간 분해](benchmarks/reports/2026-11-21-e14-frame-board/README.md),
+[빌드·보드 실행](src/PS/fft128/dma_frame/README.md), [단계별 이력](docs/experiment_log.md).
 
 - **데이터 경로**: DDR 프레임 버퍼 → AXI DMA(MM2S) → AXI4-Stream → PL FFT → S2MM → DDR
 - **제어 경로 목표**: AXI4-Lite 레지스터로 N_CHIRPS·N_SAMPLES 설정. 비트스트림 재합성 없이 크기 변경
@@ -70,7 +73,7 @@ float+NEON **3.616 ms**임. NEON 변형은 새 double보다 1.522배 빠르고 �
 ## 현재 측정 결과
 
 Zybo Z7-10에서 같은 128×128 Q15 입력, CPU0, 비계측 각 300회 FFT 전체 경로 중앙값임.
-FFT 두 축·전송·PS 전치를 포함하고 UDP·파일 I/O·할당·검증은 제외함.
+FFT 두 축·필요한 복사·전송·전치·배열 복원을 포함하고 UDP·파일 I/O·할당·검증은 제외함.
 
 | 구성 | PS C++/FFTW double | PS float+NEON | PL 경로 |
 |---|---:|---:|---:|
@@ -82,12 +85,13 @@ FFT 두 축·전송·PS 전치를 포함하고 UDP·파일 I/O·할당·검증�
 | E13-4core/50 MHz + 축당 DMA | 5.768 ms | 3.650 ms | 4.186 ms |
 | E12-4core/50 MHz + FIFO overlap | 5.712 ms | 3.489 ms | 3.129 ms |
 | E13-bf2/50 MHz + 코어당2 butterfly | 5.708 ms | 3.520 ms | 2.842 ms |
-| E13-stream/50 MHz + 전용7단계 | 5.826 ms | 3.653 ms | **2.787 ms** |
+| E13-stream/50 MHz + 전용7단계 | 5.826 ms | 3.653 ms | 2.787 ms |
+| E14-frame/50 MHz + PL 전치·최종 배열 복원 | 5.707 ms | 3.489 ms | **1.658 ms** |
 
 E10에서 PL은 이전보다 3.225배 개선됐지만 당시 PS double보다 4.545배 느렸음. 매 반복 16,384 bin이
 정수 모델과 일치했고, 저장 출력의 NumPy 대비 상대 L2 오차는 1.361%임.
 [E10 결과](benchmarks/reports/2026-11-15-pipeline50-benchmark/README.md),
-[최신 E13-stream 결과·조건·원시 시간 CSV](benchmarks/reports/2026-11-21-e13-stream-board/README.md),
+[최신 E14-frame 결과·조건·원시 시간 CSV](benchmarks/reports/2026-11-21-e14-frame-board/README.md),
 [변경 이유와 실험 일지](docs/experiment_log.md), [벤치마크 재현 절차](benchmarks/README.md)를 참고함.
 
 ## 코드와 실행 안내
@@ -102,7 +106,7 @@ E10에서 PL은 이전보다 3.225배 개선됐지만 당시 PS double보다 4.5
 
 UDP는 chirp당 데이터그램 하나, big-endian 28-byte 헤더와 float32 I/Q payload임.
 frame ID가 없어 현재는 한 번에 한 프레임만 보냄.
-현재 MMIO 레지스터 계약은 PL 실행 안내, 향후 DMA 초안은 [인터페이스 문서](docs/interfaces.md)를 참고함.
+현재 MMIO·DMA 계약과 향후 가변 크기 초안은 [인터페이스 문서](docs/interfaces.md)를 참고함.
 
 검증 범위는 시뮬레이션 입력·고정 128×128·캐시가 데워진 오프라인 반복 지연임.
 실제 RF, 연속 프레임 처리량·실시간 보장, ACP, 가변 크기는 아직 검증하지 않음.

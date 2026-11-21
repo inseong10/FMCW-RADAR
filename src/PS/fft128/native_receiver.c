@@ -35,12 +35,17 @@ typedef socklen_t radar_socklen;
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef FFT128_DMA_BATCH_BACKEND
+#ifdef FFT128_DMA_FRAME_BACKEND
+#include "dma_frame/frame_process.h"
+#elif defined(FFT128_DMA_BATCH_BACKEND)
 #include "dma_batch/batch_process.h"
 #endif
 #ifdef FFT128_DMA_BACKEND
 #define HARDWARE_NAME "DMA"
-#ifdef FFT128_DMA_STREAM_BACKEND
+#ifdef FFT128_DMA_FRAME_BACKEND
+#define HARDWARE_BACKEND "dma_frame"
+#define HARDWARE_LABEL "PL_DMA_FRAME"
+#elif defined(FFT128_DMA_STREAM_BACKEND)
 #define HARDWARE_BACKEND "dma_stream"
 #define HARDWARE_LABEL "PL_DMA_STREAM"
 #elif defined(FFT128_DMA_BF2_BACKEND)
@@ -64,7 +69,11 @@ typedef socklen_t radar_socklen;
 #endif
 #define PROFILE_OPTION "--profile-dma"
 #define DEFAULT_BASE 0x43c60000
+#ifdef FFT128_DMA_FRAME_BACKEND
+#define TIMING_NOTE "Repeated same frame; includes host copies, one ioctl, coherent bounce copies, DMA, two FFT axes, PL transpose and PL output reorder. No PS transpose. Preallocated buffers. Excludes input IO, quantization, validation and files. Kernel/PL stages overlap ioctl."
+#else
 #define TIMING_NOTE "Repeated same frame; includes host copies, ioctl, coherent bounce copies, DMA, FFT and PS transpose. Preallocated buffers. Excludes input IO, quantization, validation and files. Kernel nested stages overlap host ioctl; coherent HP0, no streaming sync."
+#endif
 #else
 #define HARDWARE_NAME "MMIO"
 #define HARDWARE_BACKEND "mmio"
@@ -333,7 +342,9 @@ static int save(const options *o, const collector *c, const uint32_t *spectrum,
 #ifdef FFT128_DMA_BATCH_BACKEND
     f=output_file(o->prefix,".batch.json");
     if(!f) return -1;
-#ifdef FFT128_DMA_STREAM_BACKEND
+#ifdef FFT128_DMA_FRAME_BACKEND
+    fprintf(f,"{\"experiment\":\"E14-frame\",\"register_abi\":8,\"parallel_cores\":1,\"streaming_stages\":7,\"total_butterflies\":7,\"hardware\":%s,\"dma_requests_per_frame\":1,\"dma_channel_submissions_per_frame\":2,\"fft_per_request\":256,\"frame_words\":16384,\"bytes_per_direction_per_request\":65536,\"payload_bytes_per_frame\":131072,\"pl_transpose\":true,\"pl_output_reorder\":true,\"cpu_transpose\":false,\"matrix_bytes\":65536,\"in_place_matrix\":true,\"output_order\":\"doppler-major/range-minor\",\"buffering\":\"per_stage_double_frame_slots_and_inplace_matrix\"}\n",o->model ? "false" : "true");
+#elif defined(FFT128_DMA_STREAM_BACKEND)
     fprintf(f,"{\"experiment\":\"E13-stream\",\"register_abi\":7,\"parallel_cores\":1,\"streaming_stages\":7,\"total_butterflies\":7,\"frame_initiation_interval\":128,\"group_barrier\":false,\"next_group_prefetch\":false,\"next_vector_prefetch\":true,\"external_ping_pong\":false,\"external_buffers\":false,\"stage_frame_slots\":true,\"buffering\":\"per_stage_double_frame_slots\",\"hardware\":%s,\"dma_requests_per_frame\":2,\"dma_channel_submissions_per_frame\":4,\"fft_per_request\":128,\"bytes_per_direction_per_request\":65536,\"transfer_compute_overlap\":true}\n",o->model ? "false" : "true");
 #elif defined(FFT128_DMA_BF2_BACKEND)
     fprintf(f,"{\"experiment\":\"E13-bf2\",\"hardware\":%s,\"dma_requests_per_frame\":2,\"dma_channel_submissions_per_frame\":4,\"fft_per_request\":128,\"bytes_per_direction_per_request\":65536,\"parallel_cores\":4,\"butterflies_per_core\":2,\"total_butterflies\":8,\"group_barrier\":false,\"transfer_compute_overlap\":true,\"next_group_prefetch\":true,\"external_ping_pong\":false,\"external_buffers\":true,\"buffering\":\"per_lane_fifos\"}\n",o->model ? "false" : "true");
@@ -357,6 +368,9 @@ static int save(const options *o, const collector *c, const uint32_t *spectrum,
     return 0;
 }
 static int save_profiles(const options *o, const fft128_profile *profiles, const double *times) {
+#ifdef FFT128_DMA_FRAME_BACKEND
+    return fft128_frame_save_profiles(o->prefix,o->repeat,o->pl_clock_hz,profiles,times);
+#else
     FILE *f=output_file(o->prefix,".profile.csv");
     if(!f) return -1;
 #ifdef FFT128_DMA_BACKEND
@@ -490,6 +504,7 @@ static int save_profiles(const options *o, const fft128_profile *profiles, const
     printf("MMIO_PROFILE: PL internal time overlaps start_wait; do not add it to host stages. Instrumented timing is separate from baseline.\n");
 #endif
     return 0;
+#endif
 }
 int main(int argc, char **argv) {
     options o=parse(argc,argv);
@@ -508,7 +523,7 @@ int main(int argc, char **argv) {
     fft128_sample *frame=NULL;
     uint32_t *packed=NULL, *spectrum=NULL, *expected=NULL;
     uint32_t *workspace=NULL;
-#ifdef FFT128_DMA_BATCH_BACKEND
+#if defined(FFT128_DMA_BATCH_BACKEND) && !defined(FFT128_DMA_FRAME_BACKEND)
     uint32_t *axis_in=NULL, *axis_out=NULL;
 #endif
     double *times=NULL;
@@ -524,6 +539,12 @@ int main(int argc, char **argv) {
     }
     printf("BACKEND=%s implementation=native_C\n",label); fflush(stdout);
     if (o.self_test) {
+#ifdef FFT128_DMA_FRAME_BACKEND
+        if(!o.model) {
+            if(!fft128_frame_selftest()) {printf("SELFTEST_PASS backend=%s frames=4 bins=65536\n",label);result=0;}
+            goto finish;
+        }
+#endif
         if (!self_test(transform)) { printf("SELFTEST_PASS backend=%s vectors=4 bins=512\n",label); result=0; }
         goto finish;
     }
@@ -532,7 +553,7 @@ int main(int argc, char **argv) {
     spectrum=malloc(FFT128_BINS*sizeof(*spectrum));
     expected=malloc(FFT128_BINS*sizeof(*expected));
     workspace=malloc(FFT128_BINS*sizeof(*workspace));
-#ifdef FFT128_DMA_BATCH_BACKEND
+#if defined(FFT128_DMA_BATCH_BACKEND) && !defined(FFT128_DMA_FRAME_BACKEND)
     if(!o.model) {
         axis_in=malloc(FFT128_BINS*sizeof(*axis_in));
         axis_out=malloc(FFT128_BINS*sizeof(*axis_out));
@@ -554,14 +575,19 @@ int main(int argc, char **argv) {
         fft128_profile *profile=o.profile ? &current : NULL;
         double started=now();
         int rc;
-#ifdef FFT128_DMA_BATCH_BACKEND
+#ifdef FFT128_DMA_FRAME_BACKEND
+        if(!o.model) rc=fft128_process_frame(packed,spectrum,profile);
+        else
+#elif defined(FFT128_DMA_BATCH_BACKEND)
         if(!o.model) rc=fft128_process_batch(packed,spectrum,workspace,axis_in,axis_out,profile);
         else
 #endif
         rc=fft128_process_profiled(packed,spectrum,workspace,transform,profile,profile);
         double duration=now()-started;
         if (rc) { fprintf(stderr,"FFT processing failed (%d); frame aborted\n",rc); goto finish; }
-#ifdef FFT128_DMA_BATCH_BACKEND
+#ifdef FFT128_DMA_FRAME_BACKEND
+        const unsigned expected_calls=1;
+#elif defined(FFT128_DMA_BATCH_BACKEND)
         const unsigned expected_calls=2;
 #else
         const unsigned expected_calls=256;
@@ -587,7 +613,7 @@ int main(int argc, char **argv) {
     printf("FRAME_PASS backend=%s bit_exact_bins=16384\n",label);
     result=0;
 finish:
-#ifdef FFT128_DMA_BATCH_BACKEND
+#if defined(FFT128_DMA_BATCH_BACKEND) && !defined(FFT128_DMA_FRAME_BACKEND)
     free(axis_in); free(axis_out);
 #endif
     free(frame); free(packed); free(spectrum); free(expected); free(workspace); free(times); free(profiles);

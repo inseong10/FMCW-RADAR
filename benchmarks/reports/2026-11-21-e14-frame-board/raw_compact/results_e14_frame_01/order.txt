@@ -1,0 +1,3 @@
+trial=1 order=double float_neon pl
+trial=2 order=float_neon pl double
+trial=3 order=pl double float_neon

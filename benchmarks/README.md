@@ -17,8 +17,10 @@
 | E12-4core | 4코어, FIFO·독립 스케줄 | [완료 보고서](reports/2026-11-20-e12-4core-board/README.md) | `python benchmarks/compare_dma_overlap_board.py build/fft128_dma_overlap_measurements/results_e12_4core_01` |
 | E13-bf2 | 4코어, 코어당 버터플라이 2개 | [완료 보고서](reports/2026-11-21-e13-bf2-board/README.md) | `python benchmarks/compare_dma_bf2_board.py build/fft128_dma_bf2_measurements/results_e13_bf2_01` |
 | E13-stream | 전용 7단계 프레임 스트리밍 | [완료 보고서](reports/2026-11-21-e13-stream-board/README.md) | `python benchmarks/compare_dma_stream_board.py build/fft128_dma_stream_measurements/results_e13_stream_01` |
+| E14-frame | PL 전치·최종 배열 복원, 전체 프레임 DMA | [완료 보고서](reports/2026-11-21-e14-frame-board/README.md) | `python benchmarks/compare_dma_frame_board.py build/fft128_dma_frame_measurements/results_e14_frame_01` |
 
-- 각 DMA 구성의 빌드·배치·실행·회수는 `src/PS/fft128/dma_<구성>/README.md`에 있다. 최신 [스트리밍 절차](../src/PS/fft128/dma_stream/README.md).
+- E14-frame은 자체 검사·20회 profile·각300회 paired와 원시 결과 검증을 완료했다. 중앙값1.657914ms, 같은 회차 NEON 대비2.104718배다.
+- 각 DMA 구성의 빌드·배치·실행·회수는 `src/PS/fft128/dma_<구성>/README.md`에 있다. 최신 보드 검증 [전체 프레임 절차](../src/PS/fft128/dma_frame/README.md).
 - 20회 계측 프로파일은 진단용이며 비계측 300회 표본에 합치지 않는다.
 - 공유 절차와 스크립트는 Git으로 추적한다. `data/`(원시·패킷 입력)와 `results/`(CSV·그림)는 로컬 전용이다.
 - 측정마다 OS, CPU, 컴파일러와 flags, FFTW 버전, 창, 크기, warmup, repeat 수, wisdom 사용 여부를 기록한다.
