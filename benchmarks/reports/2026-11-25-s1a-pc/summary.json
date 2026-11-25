@@ -1,0 +1,5105 @@
+{
+ "params": {
+  "guard": [
+   2,
+   2
+  ],
+  "train": [
+   8,
+   8
+  ],
+  "pfa": 1e-06,
+  "lambda_m": 0.01246538286902287,
+  "slope_hz_per_s": 1250000000000.0
+ },
+ "runs": [
+  {
+   "scenario": "fixture_single",
+   "input": "float",
+   "window": "none",
+   "method": "ca",
+   "source": {
+    "rspb": "benchmarks/fixtures/radarsimpy_128x128.rspb",
+    "sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "frame_sha256": "91df724bd472b1d8c19120d583697c17a22afdf85d5a99f16d0eb682c6ad0f8c"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 113,
+   "peaks": 2,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ]
+   ],
+   "false_count": 1,
+   "all_hit": true
+  },
+  {
+   "scenario": "fixture_single",
+   "input": "float",
+   "window": "none",
+   "method": "os",
+   "source": {
+    "rspb": "benchmarks/fixtures/radarsimpy_128x128.rspb",
+    "sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "frame_sha256": "91df724bd472b1d8c19120d583697c17a22afdf85d5a99f16d0eb682c6ad0f8c"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 463,
+   "peaks": 2,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ]
+   ],
+   "false_count": 1,
+   "all_hit": true
+  },
+  {
+   "scenario": "fixture_single",
+   "input": "float",
+   "window": "hann",
+   "method": "ca",
+   "source": {
+    "rspb": "benchmarks/fixtures/radarsimpy_128x128.rspb",
+    "sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "frame_sha256": "91df724bd472b1d8c19120d583697c17a22afdf85d5a99f16d0eb682c6ad0f8c"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 69,
+   "peaks": 17,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ],
+    [
+     107,
+     52
+    ],
+    [
+     107,
+     48
+    ],
+    [
+     107,
+     55
+    ],
+    [
+     107,
+     59
+    ],
+    [
+     107,
+     61
+    ],
+    [
+     107,
+     57
+    ],
+    [
+     107,
+     67
+    ],
+    [
+     87,
+     40
+    ],
+    [
+     0,
+     127
+    ],
+    [
+     21,
+     108
+    ],
+    [
+     66,
+     59
+    ],
+    [
+     41,
+     88
+    ],
+    [
+     46,
+     79
+    ],
+    [
+     5,
+     119
+    ],
+    [
+     62,
+     68
+    ]
+   ],
+   "false_count": 16,
+   "all_hit": true
+  },
+  {
+   "scenario": "fixture_single",
+   "input": "float",
+   "window": "hann",
+   "method": "os",
+   "source": {
+    "rspb": "benchmarks/fixtures/radarsimpy_128x128.rspb",
+    "sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "frame_sha256": "91df724bd472b1d8c19120d583697c17a22afdf85d5a99f16d0eb682c6ad0f8c"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 976,
+   "peaks": 31,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ],
+    [
+     107,
+     108
+    ],
+    [
+     107,
+     106
+    ],
+    [
+     107,
+     52
+    ],
+    [
+     107,
+     48
+    ],
+    [
+     107,
+     46
+    ],
+    [
+     107,
+     100
+    ],
+    [
+     107,
+     55
+    ],
+    [
+     107,
+     59
+    ],
+    [
+     107,
+     61
+    ],
+    [
+     107,
+     57
+    ],
+    [
+     107,
+     98
+    ],
+    [
+     107,
+     67
+    ],
+    [
+     107,
+     96
+    ],
+    [
+     107,
+     69
+    ],
+    [
+     107,
+     71
+    ],
+    [
+     107,
+     73
+    ],
+    [
+     107,
+     91
+    ],
+    [
+     107,
+     76
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     87,
+     40
+    ],
+    [
+     0,
+     127
+    ],
+    [
+     21,
+     108
+    ],
+    [
+     66,
+     59
+    ],
+    [
+     41,
+     88
+    ],
+    [
+     46,
+     79
+    ],
+    [
+     25,
+     99
+    ],
+    [
+     5,
+     119
+    ],
+    [
+     62,
+     68
+    ],
+    [
+     82,
+     49
+    ]
+   ],
+   "false_count": 30,
+   "all_hit": true
+  },
+  {
+   "scenario": "fixture_single",
+   "input": "q15_input",
+   "window": "none",
+   "method": "ca",
+   "source": {
+    "rspb": "benchmarks/fixtures/radarsimpy_128x128.rspb",
+    "sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "frame_sha256": "91df724bd472b1d8c19120d583697c17a22afdf85d5a99f16d0eb682c6ad0f8c"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 113,
+   "peaks": 2,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ]
+   ],
+   "false_count": 1,
+   "all_hit": true
+  },
+  {
+   "scenario": "fixture_single",
+   "input": "q15_input",
+   "window": "none",
+   "method": "os",
+   "source": {
+    "rspb": "benchmarks/fixtures/radarsimpy_128x128.rspb",
+    "sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "frame_sha256": "91df724bd472b1d8c19120d583697c17a22afdf85d5a99f16d0eb682c6ad0f8c"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 463,
+   "peaks": 2,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ]
+   ],
+   "false_count": 1,
+   "all_hit": true
+  },
+  {
+   "scenario": "fixture_single",
+   "input": "q15_input",
+   "window": "hann",
+   "method": "ca",
+   "source": {
+    "rspb": "benchmarks/fixtures/radarsimpy_128x128.rspb",
+    "sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "frame_sha256": "91df724bd472b1d8c19120d583697c17a22afdf85d5a99f16d0eb682c6ad0f8c"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 40,
+   "peaks": 8,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ],
+    [
+     107,
+     50
+    ],
+    [
+     107,
+     54
+    ],
+    [
+     107,
+     59
+    ],
+    [
+     107,
+     61
+    ],
+    [
+     107,
+     57
+    ],
+    [
+     107,
+     67
+    ]
+   ],
+   "false_count": 7,
+   "all_hit": true
+  },
+  {
+   "scenario": "fixture_single",
+   "input": "q15_input",
+   "window": "hann",
+   "method": "os",
+   "source": {
+    "rspb": "benchmarks/fixtures/radarsimpy_128x128.rspb",
+    "sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "frame_sha256": "91df724bd472b1d8c19120d583697c17a22afdf85d5a99f16d0eb682c6ad0f8c"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 613,
+   "peaks": 22,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ],
+    [
+     107,
+     108
+    ],
+    [
+     107,
+     106
+    ],
+    [
+     107,
+     100
+    ],
+    [
+     107,
+     46
+    ],
+    [
+     107,
+     50
+    ],
+    [
+     107,
+     54
+    ],
+    [
+     107,
+     59
+    ],
+    [
+     107,
+     61
+    ],
+    [
+     107,
+     57
+    ],
+    [
+     107,
+     43
+    ],
+    [
+     107,
+     98
+    ],
+    [
+     107,
+     67
+    ],
+    [
+     107,
+     64
+    ],
+    [
+     107,
+     69
+    ],
+    [
+     107,
+     93
+    ],
+    [
+     107,
+     73
+    ],
+    [
+     60,
+     20
+    ],
+    [
+     107,
+     91
+    ],
+    [
+     107,
+     75
+    ],
+    [
+     32,
+     20
+    ]
+   ],
+   "false_count": 21,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single",
+   "input": "float",
+   "window": "none",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "b46d5b3b5f0fd151154bb827d3a97ac4f377063a03f66b002d5325130c95f8db"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 113,
+   "peaks": 2,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ]
+   ],
+   "false_count": 1,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single",
+   "input": "float",
+   "window": "none",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "b46d5b3b5f0fd151154bb827d3a97ac4f377063a03f66b002d5325130c95f8db"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 463,
+   "peaks": 2,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ]
+   ],
+   "false_count": 1,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single",
+   "input": "float",
+   "window": "hann",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "b46d5b3b5f0fd151154bb827d3a97ac4f377063a03f66b002d5325130c95f8db"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 69,
+   "peaks": 17,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ],
+    [
+     107,
+     52
+    ],
+    [
+     107,
+     48
+    ],
+    [
+     107,
+     55
+    ],
+    [
+     107,
+     59
+    ],
+    [
+     107,
+     61
+    ],
+    [
+     107,
+     57
+    ],
+    [
+     107,
+     67
+    ],
+    [
+     87,
+     40
+    ],
+    [
+     0,
+     127
+    ],
+    [
+     21,
+     108
+    ],
+    [
+     66,
+     59
+    ],
+    [
+     41,
+     88
+    ],
+    [
+     46,
+     79
+    ],
+    [
+     62,
+     68
+    ],
+    [
+     5,
+     119
+    ]
+   ],
+   "false_count": 16,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single",
+   "input": "float",
+   "window": "hann",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "b46d5b3b5f0fd151154bb827d3a97ac4f377063a03f66b002d5325130c95f8db"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 976,
+   "peaks": 31,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ],
+    [
+     107,
+     108
+    ],
+    [
+     107,
+     106
+    ],
+    [
+     107,
+     52
+    ],
+    [
+     107,
+     48
+    ],
+    [
+     107,
+     46
+    ],
+    [
+     107,
+     100
+    ],
+    [
+     107,
+     55
+    ],
+    [
+     107,
+     59
+    ],
+    [
+     107,
+     61
+    ],
+    [
+     107,
+     57
+    ],
+    [
+     107,
+     98
+    ],
+    [
+     107,
+     67
+    ],
+    [
+     107,
+     96
+    ],
+    [
+     107,
+     69
+    ],
+    [
+     107,
+     71
+    ],
+    [
+     107,
+     73
+    ],
+    [
+     107,
+     91
+    ],
+    [
+     107,
+     76
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     87,
+     40
+    ],
+    [
+     0,
+     127
+    ],
+    [
+     21,
+     108
+    ],
+    [
+     66,
+     59
+    ],
+    [
+     41,
+     88
+    ],
+    [
+     46,
+     79
+    ],
+    [
+     25,
+     99
+    ],
+    [
+     62,
+     68
+    ],
+    [
+     5,
+     119
+    ],
+    [
+     82,
+     49
+    ]
+   ],
+   "false_count": 30,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single",
+   "input": "q15_input",
+   "window": "none",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "b46d5b3b5f0fd151154bb827d3a97ac4f377063a03f66b002d5325130c95f8db"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 113,
+   "peaks": 2,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ]
+   ],
+   "false_count": 1,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single",
+   "input": "q15_input",
+   "window": "none",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "b46d5b3b5f0fd151154bb827d3a97ac4f377063a03f66b002d5325130c95f8db"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 463,
+   "peaks": 2,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ]
+   ],
+   "false_count": 1,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single",
+   "input": "q15_input",
+   "window": "hann",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "b46d5b3b5f0fd151154bb827d3a97ac4f377063a03f66b002d5325130c95f8db"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 40,
+   "peaks": 8,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ],
+    [
+     107,
+     50
+    ],
+    [
+     107,
+     54
+    ],
+    [
+     107,
+     59
+    ],
+    [
+     107,
+     61
+    ],
+    [
+     107,
+     57
+    ],
+    [
+     107,
+     67
+    ]
+   ],
+   "false_count": 7,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single",
+   "input": "q15_input",
+   "window": "hann",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "b46d5b3b5f0fd151154bb827d3a97ac4f377063a03f66b002d5325130c95f8db"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 613,
+   "peaks": 22,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ],
+    [
+     107,
+     108
+    ],
+    [
+     107,
+     106
+    ],
+    [
+     107,
+     100
+    ],
+    [
+     107,
+     46
+    ],
+    [
+     107,
+     50
+    ],
+    [
+     107,
+     54
+    ],
+    [
+     107,
+     59
+    ],
+    [
+     107,
+     61
+    ],
+    [
+     107,
+     57
+    ],
+    [
+     107,
+     43
+    ],
+    [
+     107,
+     98
+    ],
+    [
+     107,
+     67
+    ],
+    [
+     107,
+     64
+    ],
+    [
+     107,
+     69
+    ],
+    [
+     107,
+     93
+    ],
+    [
+     107,
+     73
+    ],
+    [
+     60,
+     20
+    ],
+    [
+     107,
+     91
+    ],
+    [
+     107,
+     75
+    ],
+    [
+     32,
+     20
+    ]
+   ],
+   "false_count": 21,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4",
+   "input": "float",
+   "window": "none",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "96c69fccce3b9d0f4da187267ffb3427b80e73ceed943bc0e4907f91ab05337b"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 177,
+   "peaks": 7,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     10,
+     127
+    ],
+    [
+     10,
+     54
+    ],
+    [
+     107,
+     127
+    ]
+   ],
+   "false_count": 3,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4",
+   "input": "float",
+   "window": "none",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "96c69fccce3b9d0f4da187267ffb3427b80e73ceed943bc0e4907f91ab05337b"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 740,
+   "peaks": 12,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     10
+    ],
+    [
+     10,
+     127
+    ],
+    [
+     10,
+     37
+    ],
+    [
+     10,
+     54
+    ],
+    [
+     107,
+     127
+    ],
+    [
+     4,
+     53
+    ],
+    [
+     107,
+     53
+    ],
+    [
+     107,
+     55
+    ]
+   ],
+   "false_count": 8,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4",
+   "input": "float",
+   "window": "hann",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "96c69fccce3b9d0f4da187267ffb3427b80e73ceed943bc0e4907f91ab05337b"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 95,
+   "peaks": 18,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     10,
+     121
+    ],
+    [
+     107,
+     127
+    ],
+    [
+     10,
+     98
+    ],
+    [
+     107,
+     53
+    ],
+    [
+     107,
+     67
+    ],
+    [
+     87,
+     92
+    ],
+    [
+     87,
+     94
+    ],
+    [
+     87,
+     100
+    ],
+    [
+     87,
+     102
+    ],
+    [
+     87,
+     127
+    ],
+    [
+     87,
+     124
+    ],
+    [
+     39,
+     74
+    ],
+    [
+     53,
+     74
+    ],
+    [
+     25,
+     74
+    ]
+   ],
+   "false_count": 14,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4",
+   "input": "float",
+   "window": "hann",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "96c69fccce3b9d0f4da187267ffb3427b80e73ceed943bc0e4907f91ab05337b"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 1983,
+   "peaks": 53,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     10,
+     121
+    ],
+    [
+     107,
+     127
+    ],
+    [
+     11,
+     127
+    ],
+    [
+     10,
+     51
+    ],
+    [
+     10,
+     100
+    ],
+    [
+     10,
+     98
+    ],
+    [
+     10,
+     96
+    ],
+    [
+     10,
+     59
+    ],
+    [
+     10,
+     90
+    ],
+    [
+     10,
+     86
+    ],
+    [
+     107,
+     108
+    ],
+    [
+     87,
+     37
+    ],
+    [
+     107,
+     106
+    ],
+    [
+     87,
+     10
+    ],
+    [
+     107,
+     53
+    ],
+    [
+     87,
+     35
+    ],
+    [
+     107,
+     48
+    ],
+    [
+     85,
+     10
+    ],
+    [
+     107,
+     100
+    ],
+    [
+     107,
+     59
+    ],
+    [
+     107,
+     61
+    ],
+    [
+     107,
+     57
+    ],
+    [
+     107,
+     98
+    ],
+    [
+     107,
+     67
+    ],
+    [
+     107,
+     96
+    ],
+    [
+     107,
+     69
+    ],
+    [
+     107,
+     71
+    ],
+    [
+     107,
+     73
+    ],
+    [
+     107,
+     91
+    ],
+    [
+     87,
+     92
+    ],
+    [
+     107,
+     76
+    ],
+    [
+     87,
+     90
+    ],
+    [
+     87,
+     94
+    ],
+    [
+     87,
+     100
+    ],
+    [
+     4,
+     78
+    ],
+    [
+     87,
+     97
+    ],
+    [
+     4,
+     76
+    ],
+    [
+     87,
+     102
+    ],
+    [
+     87,
+     104
+    ],
+    [
+     87,
+     106
+    ],
+    [
+     87,
+     127
+    ],
+    [
+     87,
+     109
+    ],
+    [
+     87,
+     124
+    ],
+    [
+     87,
+     111
+    ],
+    [
+     87,
+     119
+    ],
+    [
+     87,
+     115
+    ],
+    [
+     39,
+     74
+    ],
+    [
+     53,
+     74
+    ],
+    [
+     25,
+     74
+    ]
+   ],
+   "false_count": 49,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4",
+   "input": "q15_input",
+   "window": "none",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "96c69fccce3b9d0f4da187267ffb3427b80e73ceed943bc0e4907f91ab05337b"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 177,
+   "peaks": 7,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     10,
+     127
+    ],
+    [
+     10,
+     54
+    ],
+    [
+     107,
+     127
+    ]
+   ],
+   "false_count": 3,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4",
+   "input": "q15_input",
+   "window": "none",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "96c69fccce3b9d0f4da187267ffb3427b80e73ceed943bc0e4907f91ab05337b"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 741,
+   "peaks": 12,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     10
+    ],
+    [
+     10,
+     127
+    ],
+    [
+     10,
+     37
+    ],
+    [
+     10,
+     54
+    ],
+    [
+     107,
+     127
+    ],
+    [
+     4,
+     53
+    ],
+    [
+     107,
+     53
+    ],
+    [
+     107,
+     55
+    ]
+   ],
+   "false_count": 8,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4",
+   "input": "q15_input",
+   "window": "hann",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "96c69fccce3b9d0f4da187267ffb3427b80e73ceed943bc0e4907f91ab05337b"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 68,
+   "peaks": 9,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     10,
+     119
+    ],
+    [
+     10,
+     122
+    ],
+    [
+     107,
+     127
+    ],
+    [
+     10,
+     100
+    ],
+    [
+     10,
+     98
+    ]
+   ],
+   "false_count": 5,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4",
+   "input": "q15_input",
+   "window": "hann",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "96c69fccce3b9d0f4da187267ffb3427b80e73ceed943bc0e4907f91ab05337b"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 965,
+   "peaks": 44,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     10,
+     119
+    ],
+    [
+     10,
+     122
+    ],
+    [
+     107,
+     127
+    ],
+    [
+     11,
+     127
+    ],
+    [
+     51,
+     10
+    ],
+    [
+     10,
+     105
+    ],
+    [
+     10,
+     51
+    ],
+    [
+     10,
+     100
+    ],
+    [
+     10,
+     98
+    ],
+    [
+     10,
+     55
+    ],
+    [
+     56,
+     10
+    ],
+    [
+     10,
+     96
+    ],
+    [
+     78,
+     20
+    ],
+    [
+     108,
+     116
+    ],
+    [
+     59,
+     10
+    ],
+    [
+     10,
+     59
+    ],
+    [
+     10,
+     93
+    ],
+    [
+     107,
+     114
+    ],
+    [
+     27,
+     37
+    ],
+    [
+     62,
+     10
+    ],
+    [
+     10,
+     62
+    ],
+    [
+     10,
+     87
+    ],
+    [
+     107,
+     112
+    ],
+    [
+     4,
+     56
+    ],
+    [
+     10,
+     85
+    ],
+    [
+     29,
+     37
+    ],
+    [
+     108,
+     110
+    ],
+    [
+     87,
+     70
+    ],
+    [
+     31,
+     37
+    ],
+    [
+     65,
+     10
+    ],
+    [
+     87,
+     39
+    ],
+    [
+     72,
+     20
+    ],
+    [
+     10,
+     66
+    ],
+    [
+     87,
+     73
+    ],
+    [
+     67,
+     53
+    ],
+    [
+     10,
+     83
+    ],
+    [
+     107,
+     48
+    ],
+    [
+     10,
+     68
+    ],
+    [
+     107,
+     100
+    ],
+    [
+     34,
+     37
+    ]
+   ],
+   "false_count": 40,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_close_weak",
+   "input": "float",
+   "window": "none",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "3b327b1da9946cceab8358a5aa41a45c9690a8598f374aa81075963d832297e7"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 121,
+   "peaks": 3,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": [
+      16,
+      40
+     ],
+     "range_m": 59.9584916,
+     "speed_mps": 7.790864293139293,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ]
+   ],
+   "false_count": 1,
+   "all_hit": false
+  },
+  {
+   "scenario": "sim_close_weak",
+   "input": "float",
+   "window": "none",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "3b327b1da9946cceab8358a5aa41a45c9690a8598f374aa81075963d832297e7"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 466,
+   "peaks": 4,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": [
+      107,
+      23
+     ],
+     "range_m": 34.47613267,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": [
+      16,
+      40
+     ],
+     "range_m": 59.9584916,
+     "speed_mps": 7.790864293139293,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ]
+   ],
+   "false_count": 1,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_close_weak",
+   "input": "float",
+   "window": "hann",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "3b327b1da9946cceab8358a5aa41a45c9690a8598f374aa81075963d832297e7"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 95,
+   "peaks": 25,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": [
+      16,
+      40
+     ],
+     "range_m": 59.9584916,
+     "speed_mps": 7.790864293139293,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ],
+    [
+     107,
+     48
+    ],
+    [
+     107,
+     46
+    ],
+    [
+     107,
+     52
+    ],
+    [
+     107,
+     50
+    ],
+    [
+     107,
+     59
+    ],
+    [
+     107,
+     61
+    ],
+    [
+     107,
+     55
+    ],
+    [
+     107,
+     57
+    ],
+    [
+     107,
+     67
+    ],
+    [
+     107,
+     71
+    ],
+    [
+     16,
+     0
+    ],
+    [
+     16,
+     2
+    ],
+    [
+     16,
+     4
+    ],
+    [
+     16,
+     120
+    ],
+    [
+     16,
+     125
+    ],
+    [
+     16,
+     123
+    ],
+    [
+     87,
+     40
+    ],
+    [
+     0,
+     127
+    ],
+    [
+     66,
+     59
+    ],
+    [
+     41,
+     88
+    ],
+    [
+     46,
+     79
+    ],
+    [
+     62,
+     68
+    ]
+   ],
+   "false_count": 23,
+   "all_hit": false
+  },
+  {
+   "scenario": "sim_close_weak",
+   "input": "float",
+   "window": "hann",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "3b327b1da9946cceab8358a5aa41a45c9690a8598f374aa81075963d832297e7"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 1572,
+   "peaks": 56,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": [
+      107,
+      23
+     ],
+     "range_m": 34.47613267,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": [
+      16,
+      40
+     ],
+     "range_m": 59.9584916,
+     "speed_mps": 7.790864293139293,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ],
+    [
+     107,
+     110
+    ],
+    [
+     107,
+     108
+    ],
+    [
+     107,
+     106
+    ],
+    [
+     107,
+     100
+    ],
+    [
+     107,
+     48
+    ],
+    [
+     107,
+     46
+    ],
+    [
+     107,
+     52
+    ],
+    [
+     107,
+     50
+    ],
+    [
+     107,
+     59
+    ],
+    [
+     107,
+     61
+    ],
+    [
+     107,
+     55
+    ],
+    [
+     107,
+     57
+    ],
+    [
+     107,
+     98
+    ],
+    [
+     107,
+     67
+    ],
+    [
+     107,
+     96
+    ],
+    [
+     107,
+     63
+    ],
+    [
+     107,
+     69
+    ],
+    [
+     107,
+     71
+    ],
+    [
+     107,
+     91
+    ],
+    [
+     107,
+     73
+    ],
+    [
+     107,
+     76
+    ],
+    [
+     16,
+     79
+    ],
+    [
+     16,
+     81
+    ],
+    [
+     16,
+     86
+    ],
+    [
+     16,
+     0
+    ],
+    [
+     16,
+     2
+    ],
+    [
+     16,
+     7
+    ],
+    [
+     16,
+     89
+    ],
+    [
+     16,
+     4
+    ],
+    [
+     16,
+     120
+    ],
+    [
+     16,
+     125
+    ],
+    [
+     16,
+     123
+    ],
+    [
+     16,
+     91
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     16,
+     93
+    ],
+    [
+     16,
+     116
+    ],
+    [
+     16,
+     118
+    ],
+    [
+     87,
+     40
+    ],
+    [
+     16,
+     96
+    ],
+    [
+     16,
+     114
+    ],
+    [
+     16,
+     111
+    ],
+    [
+     16,
+     98
+    ],
+    [
+     0,
+     127
+    ],
+    [
+     21,
+     108
+    ],
+    [
+     66,
+     59
+    ],
+    [
+     41,
+     88
+    ],
+    [
+     46,
+     79
+    ],
+    [
+     16,
+     107
+    ],
+    [
+     87,
+     46
+    ]
+   ],
+   "false_count": 53,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_close_weak",
+   "input": "q15_input",
+   "window": "none",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "3b327b1da9946cceab8358a5aa41a45c9690a8598f374aa81075963d832297e7"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 121,
+   "peaks": 3,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": [
+      16,
+      40
+     ],
+     "range_m": 59.9584916,
+     "speed_mps": 7.790864293139293,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ]
+   ],
+   "false_count": 1,
+   "all_hit": false
+  },
+  {
+   "scenario": "sim_close_weak",
+   "input": "q15_input",
+   "window": "none",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "3b327b1da9946cceab8358a5aa41a45c9690a8598f374aa81075963d832297e7"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 467,
+   "peaks": 4,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": [
+      107,
+      23
+     ],
+     "range_m": 34.47613267,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": [
+      16,
+      40
+     ],
+     "range_m": 59.9584916,
+     "speed_mps": 7.790864293139293,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ]
+   ],
+   "false_count": 1,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_close_weak",
+   "input": "q15_input",
+   "window": "hann",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "3b327b1da9946cceab8358a5aa41a45c9690a8598f374aa81075963d832297e7"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 50,
+   "peaks": 9,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": [
+      16,
+      40
+     ],
+     "range_m": 59.9584916,
+     "speed_mps": 7.790864293139293,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ],
+    [
+     107,
+     50
+    ],
+    [
+     107,
+     59
+    ],
+    [
+     107,
+     46
+    ],
+    [
+     107,
+     61
+    ],
+    [
+     108,
+     52
+    ],
+    [
+     107,
+     57
+    ]
+   ],
+   "false_count": 7,
+   "all_hit": false
+  },
+  {
+   "scenario": "sim_close_weak",
+   "input": "q15_input",
+   "window": "hann",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": false,
+    "frame_sha256": "3b327b1da9946cceab8358a5aa41a45c9690a8598f374aa81075963d832297e7"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 747,
+   "peaks": 36,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": [
+      107,
+      23
+     ],
+     "range_m": 34.47613267,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": [
+      16,
+      40
+     ],
+     "range_m": 59.9584916,
+     "speed_mps": 7.790864293139293,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     107,
+     127
+    ],
+    [
+     107,
+     115
+    ],
+    [
+     107,
+     108
+    ],
+    [
+     107,
+     106
+    ],
+    [
+     107,
+     103
+    ],
+    [
+     107,
+     50
+    ],
+    [
+     107,
+     100
+    ],
+    [
+     107,
+     59
+    ],
+    [
+     107,
+     46
+    ],
+    [
+     107,
+     61
+    ],
+    [
+     108,
+     52
+    ],
+    [
+     107,
+     43
+    ],
+    [
+     24,
+     20
+    ],
+    [
+     107,
+     55
+    ],
+    [
+     107,
+     57
+    ],
+    [
+     107,
+     98
+    ],
+    [
+     107,
+     41
+    ],
+    [
+     107,
+     63
+    ],
+    [
+     107,
+     66
+    ],
+    [
+     73,
+     23
+    ],
+    [
+     108,
+     96
+    ],
+    [
+     62,
+     20
+    ],
+    [
+     107,
+     71
+    ],
+    [
+     125,
+     40
+    ],
+    [
+     107,
+     69
+    ],
+    [
+     60,
+     20
+    ],
+    [
+     107,
+     93
+    ],
+    [
+     107,
+     91
+    ],
+    [
+     119,
+     40
+    ],
+    [
+     39,
+     40
+    ],
+    [
+     107,
+     76
+    ],
+    [
+     108,
+     73
+    ],
+    [
+     16,
+     63
+    ]
+   ],
+   "false_count": 33,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single_noise",
+   "input": "float",
+   "window": "none",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "371d6dba281f53499e0d8dbd5e506702396f9310342360eb33c6751080c14b4a"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 8,
+   "peaks": 1,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single_noise",
+   "input": "float",
+   "window": "none",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "371d6dba281f53499e0d8dbd5e506702396f9310342360eb33c6751080c14b4a"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 13,
+   "peaks": 1,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single_noise",
+   "input": "float",
+   "window": "hann",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "371d6dba281f53499e0d8dbd5e506702396f9310342360eb33c6751080c14b4a"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 11,
+   "peaks": 1,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single_noise",
+   "input": "float",
+   "window": "hann",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "371d6dba281f53499e0d8dbd5e506702396f9310342360eb33c6751080c14b4a"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 11,
+   "peaks": 1,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single_noise",
+   "input": "q15_input",
+   "window": "none",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "371d6dba281f53499e0d8dbd5e506702396f9310342360eb33c6751080c14b4a"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 8,
+   "peaks": 1,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single_noise",
+   "input": "q15_input",
+   "window": "none",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "371d6dba281f53499e0d8dbd5e506702396f9310342360eb33c6751080c14b4a"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 13,
+   "peaks": 1,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single_noise",
+   "input": "q15_input",
+   "window": "hann",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "371d6dba281f53499e0d8dbd5e506702396f9310342360eb33c6751080c14b4a"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 11,
+   "peaks": 1,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_single_noise",
+   "input": "q15_input",
+   "window": "hann",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "371d6dba281f53499e0d8dbd5e506702396f9310342360eb33c6751080c14b4a"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 11,
+   "peaks": 1,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4_noise",
+   "input": "float",
+   "window": "none",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "a972a75f43a8ba5e6ead6df481e5e2741439660d4e5e8fda9244fa47e7310493"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 20,
+   "peaks": 5,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     34,
+     10
+    ]
+   ],
+   "false_count": 1,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4_noise",
+   "input": "float",
+   "window": "none",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "a972a75f43a8ba5e6ead6df481e5e2741439660d4e5e8fda9244fa47e7310493"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 62,
+   "peaks": 11,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     20,
+     10
+    ],
+    [
+     127,
+     10
+    ],
+    [
+     124,
+     10
+    ],
+    [
+     23,
+     10
+    ],
+    [
+     34,
+     10
+    ],
+    [
+     25,
+     10
+    ],
+    [
+     118,
+     10
+    ]
+   ],
+   "false_count": 7,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4_noise",
+   "input": "float",
+   "window": "hann",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "a972a75f43a8ba5e6ead6df481e5e2741439660d4e5e8fda9244fa47e7310493"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 30,
+   "peaks": 4,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4_noise",
+   "input": "float",
+   "window": "hann",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "a972a75f43a8ba5e6ead6df481e5e2741439660d4e5e8fda9244fa47e7310493"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 35,
+   "peaks": 4,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4_noise",
+   "input": "q15_input",
+   "window": "none",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "a972a75f43a8ba5e6ead6df481e5e2741439660d4e5e8fda9244fa47e7310493"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 20,
+   "peaks": 5,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     34,
+     10
+    ]
+   ],
+   "false_count": 1,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4_noise",
+   "input": "q15_input",
+   "window": "none",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "a972a75f43a8ba5e6ead6df481e5e2741439660d4e5e8fda9244fa47e7310493"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 62,
+   "peaks": 11,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [
+    [
+     20,
+     10
+    ],
+    [
+     127,
+     10
+    ],
+    [
+     124,
+     10
+    ],
+    [
+     23,
+     10
+    ],
+    [
+     34,
+     10
+    ],
+    [
+     25,
+     10
+    ],
+    [
+     118,
+     10
+    ]
+   ],
+   "false_count": 7,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4_noise",
+   "input": "q15_input",
+   "window": "hann",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "a972a75f43a8ba5e6ead6df481e5e2741439660d4e5e8fda9244fa47e7310493"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 30,
+   "peaks": 4,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_multi4_noise",
+   "input": "q15_input",
+   "window": "hann",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "a972a75f43a8ba5e6ead6df481e5e2741439660d4e5e8fda9244fa47e7310493"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 35,
+   "peaks": 4,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+     },
+     "expected_doppler_bin": 10.268,
+     "expected_range_bin": 10.007,
+     "detected": [
+      10,
+      10
+     ],
+     "range_m": 14.9896229,
+     "speed_mps": 4.869290183212058,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+     },
+     "expected_doppler_bin": 4.107,
+     "expected_range_bin": 36.692,
+     "detected": [
+      4,
+      37
+     ],
+     "range_m": 55.46160473,
+     "speed_mps": 1.9477160732848233,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+     },
+     "expected_doppler_bin": -41.074,
+     "expected_range_bin": 53.37,
+     "detected": [
+      87,
+      53
+     ],
+     "range_m": 79.44500137,
+     "speed_mps": -19.96408975116944,
+     "hit": true
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": true
+  },
+  {
+   "scenario": "sim_close_weak_noise",
+   "input": "float",
+   "window": "none",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "83d02d225f00c36709ad544affa5c1745a363c76d94a8ffda91589cf44de4fee"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 8,
+   "peaks": 1,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": false
+  },
+  {
+   "scenario": "sim_close_weak_noise",
+   "input": "float",
+   "window": "none",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "83d02d225f00c36709ad544affa5c1745a363c76d94a8ffda91589cf44de4fee"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 17,
+   "peaks": 2,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": [
+      108,
+      23
+     ],
+     "range_m": 34.47613267,
+     "speed_mps": -9.738580366424117,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": false
+  },
+  {
+   "scenario": "sim_close_weak_noise",
+   "input": "float",
+   "window": "hann",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "83d02d225f00c36709ad544affa5c1745a363c76d94a8ffda91589cf44de4fee"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 10,
+   "peaks": 1,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": false
+  },
+  {
+   "scenario": "sim_close_weak_noise",
+   "input": "float",
+   "window": "hann",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "83d02d225f00c36709ad544affa5c1745a363c76d94a8ffda91589cf44de4fee"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 16,
+   "peaks": 2,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": [
+      108,
+      23
+     ],
+     "range_m": 34.47613267,
+     "speed_mps": -9.738580366424117,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": false
+  },
+  {
+   "scenario": "sim_close_weak_noise",
+   "input": "q15_input",
+   "window": "none",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "83d02d225f00c36709ad544affa5c1745a363c76d94a8ffda91589cf44de4fee"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 8,
+   "peaks": 1,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": false
+  },
+  {
+   "scenario": "sim_close_weak_noise",
+   "input": "q15_input",
+   "window": "none",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "83d02d225f00c36709ad544affa5c1745a363c76d94a8ffda91589cf44de4fee"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 17,
+   "peaks": 2,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": [
+      108,
+      23
+     ],
+     "range_m": 34.47613267,
+     "speed_mps": -9.738580366424117,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": false
+  },
+  {
+   "scenario": "sim_close_weak_noise",
+   "input": "q15_input",
+   "window": "hann",
+   "method": "ca",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "83d02d225f00c36709ad544affa5c1745a363c76d94a8ffda91589cf44de4fee"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 10,
+   "peaks": 1,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": false
+  },
+  {
+   "scenario": "sim_close_weak_noise",
+   "input": "q15_input",
+   "window": "hann",
+   "method": "os",
+   "source": {
+    "simulated": true,
+    "seed": 42,
+    "noise": true,
+    "frame_sha256": "83d02d225f00c36709ad544affa5c1745a363c76d94a8ffda91589cf44de4fee"
+   },
+   "shape": [
+    128,
+    128
+   ],
+   "fs_hz": 1600000.0,
+   "detected_cells": 16,
+   "peaks": 2,
+   "targets": [
+    {
+     "truth": {
+      "range_m": 30.0,
+      "speed_mps": -10.0,
+      "rcs": 10
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 20.014,
+     "detected": [
+      107,
+      20
+     ],
+     "range_m": 29.9792458,
+     "speed_mps": -10.225509384745322,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 34.5,
+      "speed_mps": -10.0,
+      "rcs": 0
+     },
+     "expected_doppler_bin": -20.537,
+     "expected_range_bin": 23.016,
+     "detected": [
+      108,
+      23
+     ],
+     "range_m": 34.47613267,
+     "speed_mps": -9.738580366424117,
+     "hit": true
+    },
+    {
+     "truth": {
+      "range_m": 60.0,
+      "speed_mps": 8.0,
+      "rcs": -10
+     },
+     "expected_doppler_bin": 16.429,
+     "expected_range_bin": 40.028,
+     "detected": null,
+     "range_m": null,
+     "speed_mps": null,
+     "hit": false
+    }
+   ],
+   "false_peaks": [],
+   "false_count": 0,
+   "all_hit": false
+  }
+ ]
+}

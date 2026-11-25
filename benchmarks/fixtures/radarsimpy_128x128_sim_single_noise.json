@@ -1,0 +1,19 @@
+{
+  "source": "RadarSimPy 15.5.0 per-target baseband sum (tools/detection/make_fixture.py)",
+  "scenario": "sim_single_noise",
+  "shape": [
+    1,
+    128,
+    128
+  ],
+  "sample_rate_hz": 1600000.0,
+  "targets": [
+    {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+    }
+  ],
+  "noise": true,
+  "noise_model": "NumPy default_rng(42) circular complex Gaussian, RMS 1.79e-3",
+  "record_sha256": "dc25ac944391a1ae88f3988d171e271dc365038dbc745f12eaf48d32aaacfcb7"
+}

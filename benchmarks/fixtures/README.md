@@ -17,3 +17,22 @@ For new input, run `tools/sender/sender.py --pulses 128 --samples 128` with your
 own matching RadarSimPy installation. The sender uses seed 42, an 80 us chirp,
 100 us PRP and a 24.0–24.1 GHz sweep. The committed recording, rather than a
 new simulation on a different simulator version, defines this measured case.
+
+## Noisy S1 records (2026-11-25)
+
+The record above is **noise-free**: `sender.py` sends RadarSimPy `baseband`, which excludes
+receiver noise (S1a). Detection experiments use these records instead. They have the same
+radar, format and packet layout and were made with `tools/detection/make_fixture.py`:
+each target is simulated alone and the baseband results are summed (the free tier allows 2 targets per scene).
+Then seed-42 NumPy complex Gaussian noise (RMS 1.79e-3) is added. RadarSimPy's own noise output
+was not reproducible across runs. Each `.json` lists the targets.
+
+| File | Targets (range m / speed m/s / RCS dBsm) | SHA256 |
+|---|---|---|
+| `radarsimpy_128x128_sim_single_noise.rspb` | 30/-10/10 | `dc25ac944391a1ae88f3988d171e271dc365038dbc745f12eaf48d32aaacfcb7` |
+| `radarsimpy_128x128_sim_multi4_noise.rspb` | 15/5, 30/-10, 55/2, 80/-20 (all 10) | `450ffd3c05bf2570773c7fd3bf543a00d66e3ec531a05d07ef2747bb6a688413` |
+| `radarsimpy_128x128_sim_close_weak_noise.rspb` | 30/-10/10, 34.5/-10/0, 60/8/-10 | `d307901c4c040f462f8a49bffce9d409f530f347322421b5d5214d7b2d4310f6` |
+
+Regenerating gives byte-identical files on the same machine (macOS, Python 3.13.5, NumPy 2.1.3).
+Regenerating the noise-free fixture on macOS gave values within float32 rounding of the Windows original
+(relative L2 3.3e-9, 0.32% of values differ). It was not byte-identical, so the committed records are the reference.
