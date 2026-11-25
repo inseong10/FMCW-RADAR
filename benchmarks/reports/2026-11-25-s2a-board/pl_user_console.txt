@@ -1,0 +1,12 @@
+Evidence: user-reported board console; PL raw traces/detections pending.
+Deployment: /opt/fft128/s2a_20261125_rxfix1
+CPU0, backend=pl, diagnostic probe, run92005,20 frames, output=pl_01.
+Device /dev/fft128-dma-frame present (character10,124).
+S2A_READY backend=pl run_id=92005 port=5000
+S2A_LEGACY_PROBE bytes=1076 flags=8 payload_truncated=0 control_truncated=1 capacity=36 controllen=20
+S2A_FIRST_PACKET bytes=1076 flags=0 controllen=48 cmsg=1:35:20;1:64:28;
+S2A_FIRST_VALID run_id=92005 frame_id=1
+S2A_RECORDED processed=20 expected=20
+
+Processing completion is reported; full correctness and trace verification
+await raw-file collection. This diagnostic run is not throughput acceptance.

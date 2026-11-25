@@ -1,0 +1,22 @@
+test_committed_noise_recordings (test_cfar.CfarTests.test_committed_noise_recordings) ... ok
+test_invalid_parameters_and_negative_power (test_cfar.CfarTests.test_invalid_parameters_and_negative_power) ... ok
+test_random_rectangular_and_wrapped_small_maps (test_cfar.CfarTests.test_random_rectangular_and_wrapped_small_maps) ... ok
+test_zero_and_tied_peaks (test_cfar.CfarTests.test_zero_and_tied_peaks) ... ok
+test_incomplete_replay_is_rejected (test_receiver.CppReceiverTests.test_incomplete_replay_is_rejected) ... skipped 'Build build/udp_radar_receiver for C++/FFTW checks'
+test_offline_spectrum_matches_numpy (test_receiver.CppReceiverTests.test_offline_spectrum_matches_numpy) ... skipped 'Build build/udp_radar_receiver for C++/FFTW checks'
+test_q15_normalized_pipeline_matches_numpy (test_receiver.CppReceiverTests.test_q15_normalized_pipeline_matches_numpy) ... skipped 'Build build/udp_radar_receiver for C++/FFTW checks'
+test_recorded_cfar_matches_s1a (test_receiver.CppReceiverTests.test_recorded_cfar_matches_s1a) ... skipped 'Build build/udp_radar_receiver for C++/FFTW checks'
+test_explicit_missing_simulator_does_not_fall_back (test_receiver.PacketAndReferenceTests.test_explicit_missing_simulator_does_not_fall_back) ... ok
+test_external_package_root_and_package_directory (test_receiver.PacketAndReferenceTests.test_external_package_root_and_package_directory) ... ok
+test_help_does_not_load_simulator (test_receiver.PacketAndReferenceTests.test_help_does_not_load_simulator) ... ok
+test_invalid_packets (test_receiver.PacketAndReferenceTests.test_invalid_packets) ... ok
+test_known_tone_bins_and_axes (test_receiver.PacketAndReferenceTests.test_known_tone_bins_and_axes) ... ok
+test_packet_round_trip (test_receiver.PacketAndReferenceTests.test_packet_round_trip) ... ok
+test_reference_against_direct_dft (test_receiver.PacketAndReferenceTests.test_reference_against_direct_dft) ... ok
+test_sender_sample_count_sets_rate_without_truncation (test_receiver.PacketAndReferenceTests.test_sender_sample_count_sets_rate_without_truncation) ... ok
+test_unit_impulse_has_flat_range_doppler_magnitude (test_reference_smoke.ReceiverReferenceSmokeTests.test_unit_impulse_has_flat_range_doppler_magnitude) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 2.634s
+
+OK (skipped=4)

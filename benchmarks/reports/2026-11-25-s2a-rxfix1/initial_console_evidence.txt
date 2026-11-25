@@ -1,0 +1,33 @@
+Evidence type: user-reported board/Ubuntu console; board raw files pending.
+Original deployment: /opt/fft128/s2a_20261125_201834
+Run: backend=ps, cpu0, run_id=92002, expected_frames=20, output=ps_02.
+Board printed S2A_READY but did not complete promptly after sender finished.
+
+cat ps_02/counters.txt:
+invalid=2560
+foreign=0
+duplicates=0
+late=0
+metadata_errors=0
+kernel_drops=0
+kernel_missing=0
+clock_errors=0
+interrupted=0
+failed=0
+error=
+
+wc -l ps_02/detections.csv:
+1 /opt/fft128/s2a_20261125_201834/ps_02/detections.csv
+
+Ubuntu ip route get 10.0.0.3:
+10.0.0.3 dev ens33 src 10.0.0.2 uid 1000
+
+Ubuntu ping -c 2 10.0.0.3:
+2 packets transmitted, 2 received, 0% packet loss
+rtt min/avg/max/mdev = 2.097/2.202/2.308/0.105 ms
+
+Interpretation: 2560 rejected datagrams equals 20*128; the original receiver
+did not distinguish payload truncation, ancillary truncation and decode errors.
+No raw recvmsg flags exist yet. Kernel/time32 ancillary conversion is a
+hypothesis, not a confirmed board finding. failed=0 only means no worker/sampler
+exception was recorded; it does not mean the run passed.

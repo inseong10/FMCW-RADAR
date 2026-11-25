@@ -11,7 +11,7 @@
 - 시스템 목표와 S 단계는 [시스템 목표와 단계 계획](system_goal_plan.md), FFT 가속 계획은 [단계별 가속 계획](fft128_dma_plan.md), 커밋 해시 대응표는
   [커밋 해시 대응표](commit_hash_map.md)에 있다.
 
-## 현재 상태 (2026-11-21 기준)
+## 현재 상태 (2026-11-25 기준)
 
 - **최신 성능 검증 구성:** E14-frame / 단일 전용 DIT 7단계 FFT 재사용 / PL 전치·최종 배열 복원 / 50MHz·Q15 / 전체 프레임 HP0 Simple DMA.
 - **최신 paired 비교(각 300회 중앙값):** PS double **5.706612 ms** / PS float+NEON **3.489441 ms** /
@@ -23,7 +23,17 @@
   PL active는 ioctl 대기와 겹치므로 호스트 단계에 더하지 않는다.
 - **E14 완료:** PL 중간 결과 보관·전치·최종 배열 순서 복원, RTL·host53개·ARM/Vivado·보드 자체 검사·20회profile·각300회paired·원시82파일 독립 검증 완료. 연속 프레임 검증은 별도다.
 - **S1a(PC):** 고정 입력이 무잡음임을 확인, 잡음 포함 시나리오에서 hann+CA 잠정 기준. [S1a](#s1a--cfar-기준-모델과-ground-truth).
-- **미실시:** PS02, 독립 E11c·E11d, 연속 프레임/UDP 처리량·최악 지연·누락, 크기 스윕, 보드 CFAR.
+- **S1b 완료:** 보드 기록 재생6구성·각100회와 실제 UDP Hann 4표적 한 프레임을 원본 독립 검증했다.
+  UDP 검출4/4·오검출0, FFT와 검출 CSV는 같은 조건의 보드 기록 재생과 같다.
+- **S1c 완료:** 실제 E14 잡음 기록6구성·각100회에서 정수 FFT 모든 bin과 CFAR가 독립 기준에 일치했다.
+  검출 목록은 float와 같고 근접 약표적1/3 한계도 유지된다. 다음은 S2a 통합 연속 처리 계측이다.
+- **S2a 준비:** 별도 통합 수신기·RSPY v2 프레임 ID·수신/처리 큐·커널 시각·CPU/RSS 기록을 구현했다.
+  초기 PC 검사7개와 Ubuntu 스모크3개·ARM 빌드는 통과했지만 첫 보드 PS는2560패킷 전부 거부했다.
+  S2a-rxfix1의 PC8검사·수정 Ubuntu3스모크·ARM 빌드 통과.사용자 보드 진단으로36B 버퍼의
+  control truncation을 확인했다. 이후 보드 PS/PL 각각20프레임·각4/4검출/오검출0·드랍0 원본 독립 검증 완료다.
+  S2a 완료, 다음 S2b는 진단을 끈12.8ms/200프레임 예비 검사 후10,000프레임 본검사다.
+- **미실시:** PS02, 독립 E11c·E11d, 연속 프레임/UDP 처리량·최악 지연·누락, 크기 스윕, PL 결과 기반 CFAR.
+- **후속 순서 (11-25 갱신):** [시스템 계획](system_goal_plan.md)의 S1 → S2 → S3. [E15-memory](#e15-memory--메모리-계층별-크기-비교-계획)는 S3b에서 utilization 점검 → BRAM·OCM → DDR 타일 전치 순으로 검토한다. 기존 자료 점검 완료, 새 구현·보드 측정 미실시.
 
 ### PL 경로 성능 추이 (비계측, 각 300회 중앙값, 같은 보드·같은 입력)
 
@@ -66,6 +76,12 @@
 | [E13-stream](#e13-stream--프레임-스트리밍) | 11-21 | 벡터의 단계 처리를 겹칠 수 있는가 | 전용 7단계 프레임 스트리밍 | 완료. PL 2.787411 ms, 계측 active 0.711424 ms ([보고서](../benchmarks/reports/2026-11-21-e13-stream-board/README.md)) |
 | [E14-frame](#e14-frame--pl-전치와-전체-프레임-dma-진행-중) | 11-21 | 중간 왕복·CPU 전치를 없앨 수 있는가 | 같은 FFT 재사용·64KiB in-place 행렬·1요청/프레임 | 완료. PL1.657914ms/NEON 대비2.104718배, profile active1.038842ms·복사0.590928ms·CPU 전치0 ([보드 결과](../benchmarks/reports/2026-11-21-e14-frame-board/README.md)) |
 | [S1a](#s1a--cfar-기준-모델과-ground-truth) | 11-25 | CFAR 기준 모델이 ground truth를 찾는가 | 목표 재정의, PC CA/OS CFAR 모델, 잡음 포함 시나리오 | PC 완료. 고정 기록은 무잡음으로 확인. hann+CA 잡음 4표적 4/4·오검출0, 근접 약표적은 CA masking, 잡음 기록 3개 생성 ([보고서](../benchmarks/reports/2026-11-25-s1a-pc/README.md))
+| [E15-memory](#e15-memory--메모리-계층별-크기-비교-계획) | 11-21 | 크기별 메모리 배치의 자원·성능 경계는 | utilization 점검 → BRAM·OCM → DDR 타일 전치 | 계획. 기존 E14 RAM 구조 확인, 새 변형 구현·측정 미실시 |
+| [S1b](#s1b--ps-수신기-ca-cfar-구현pc-커널-검증) | 11-25 | PS 수신기 CA-CFAR가 S1a와 같은가 | C++ summed-area CA-CFAR·검출 CSV·단계 시간·검증 번들 | 완료. 기록 재생6구성·각100회 및 실제 UDP Hann 4표적4/4·오검출0 원본 독립 검증. CFAR 반복 중앙값3.690945ms·UDP1회3.890856ms |
+| [S1c](#s1c--pl-q15-출력의-cfar-비교-준비) | 11-25 | PL 단계별 Q15 스케일·포화 후에도 검출이 같은가 | 기존 E14 출력 → 같은 C++ CA-CFAR, Hann 선적용 입력 | 완료. 실제 PL 6구성·각100회 모든 정수 bin·CFAR 독립 검증, float 검출과 일치. 성분별 시간만 측정 |
+| [S2a](#s2a--통합-연속-수신과-프레임자원-계측-준비) | 11-25 | 연속 처리의 지연·드랍·CPU를 관측할 수 있는가 | 별도 PS/E14 통합 프로세스·v2 프레임 ID·유한 큐·타임스탬프·CPU/RSS | 완료. 보드 PS/PL 각각20프레임·각4/4검출·오검출0·드랍0·trace 원본 독립 검증. 진단 실행이며 S2b 합격 주장은 없음 |
+| [S2a-rxfix1](#s2a-rxfix1--arm32-수신-보조-데이터-호환거부-진단) | 11-25 | 보드의2560패킷 전부 거부 원인은 | 보조 버퍼512B·time32/time64·거부별 계수·구버퍼 peek·idle 종료 수정 | 완료. 구버퍼 원인 확인, 수정 후 PC8·Ubuntu3·ARM·보드 PS/PL 각각20프레임 원본 독립 검증 통과 |
+| [S2b](#s2b--128ms-연속-부하-검사-준비) | 11-25 | 12.8ms 주기에서 드랍0·P99 목표를 지키는가 | 같은 binary에서 진단flag 해제·50ms→12.8ms, 먼저200프레임 | 준비. 예비 검사 및10,000프레임 본검사 실측 전 |
 
 ## 공통 조건과 해석 규칙
 
@@ -713,6 +729,303 @@
   - 저장한 기록(float32)으로 CFAR를 다시 돌린 결과가 float64 메모리 프레임의 결과(위 표)와 12개 조합 모두 같았다.
     보드 UDP 재생은 아직 하지 않았다.
 - **다음:** 여러 잡음 실현으로 오검출률 확인, S1b(보드 PS에서 잡음 기록 수신·CFAR·시간 측정).
+
+---
+
+## E15-memory — 메모리 계층별 크기 비교 (계획)
+
+- **날짜/선행:** 2026-11-21 / E14-frame. 사용자 제안에 따라 다음 실험 순서를 구체화했다.
+- **관찰:** E14 hierarchical utilization의 BRAM36 환산 47/60 중 FFT 단계 28개, 행렬 16개,
+  DMA 3개다. 단계별 128×32-bit RAM 4개는 원시 RAMB36 비트 용량 활용률이 약 11.1%다.
+  용량 비효율은 확인했으나 포트·동시성 요구를 유지한 절감 가능량은 미확인이다.
+- **가설/순서:** E15a 작은 RAM 배치 효율 확인 → E15b ≤256×128에서 실제 용량에 맞춰 BRAM·OCM 비교
+  → E15c 큰 크기의 DDR 타일 전치. 같은 크기에서 배치를 비교하는 표본을 두어 크기 효과를 분리한다.
+- **변경:** `docs/fft128_dma_plan.md`, 이 일지. RTL·드라이버·클록·펌웨어는 변경하지 않았다.
+  [용량 계산·선행 확장·측정 계약](fft128_dma_plan.md#e15-memory--utilization-점검--bramocm--ddr-타일-전치-계획).
+- **검증/결과:** 기존 routed 리포트와 RAM 선언을 대조했다. 새 빌드·RTL 실행·보드 측정은 없고 성능 수치도 없다.
+- **다음:** E15a에서 128×128 산술·50MHz·인터페이스를 유지한 RAM 배치 후보를 검증한다.
+  크기 확장에는 256-point 코어/주소/ABI·정수 모델 및 DMA length17 한도 처리가 선행된다.
+  OCM은 물리 256KiB와 현재 OS에서 확보 가능한 용량을 구분한다.
+
+---
+
+## S1b — PS 수신기 CA-CFAR 구현·PC 커널 검증
+
+- **날짜/선행:** 2026-11-25 / S1a. 진행 중이며 보드 완료를 뜻하지 않는다.
+- **질문/가설:** S1a의 square-law CA-CFAR를 C++ 수신기에 추가해 같은 잡음 기록의 검출 목록을
+  재현하고 CFAR 비용을 측정할 수 있는가. 합산 영역 테이블로 훈련 셀 합산을 줄이되 경계·피크 규약은 유지한다.
+- **변경:** `src/PS/receiver/cfar_ca.hpp`, 수신기 `--cfar ca`·`--detections`, `cfar` 계측,
+  portable C++ 드라이버/NumPy 대조 테스트, `tools/detection/build_s1b.sh`·`verify_receiver.py`.
+  CFAR 기본값은 꺼짐이고 활성화한 경우 전력 맵 생성·배열 변환·임계값·피크 묶기·정렬을
+  `cfar`와 `processing_total`에 포함한다. 버퍼 준비·CSV 저장은 측정 밖이다.
+- **조건:** 원본 IQ·double FFTW를 S1b 비교 기준으로 사용한다. guard=(2,2), train=(8,8), Pfa=1e-6,
+  Doppler wrap·Range 가용 셀 평균·3×3 지역 최대·전력 내림차순(동률은 bin 순서).
+  잡음 기록 3개에 none/hann을 각각 적용한다. RTL·드라이버·클록·보드 펌웨어는 변경하지 않았다.
+- **검증 경과:** 원격 `f884812`를 fast-forward하고 기존 E15·대시보드 로컬 작업을 보존했다.
+  실험 일지의 S1a/E15 추가 위치 충돌은 두 기록을 모두 유지해 해결했다. E15의 시스템상 실행 위치는 S3b로 정리했다.
+  Windows의 native g++로 공유 CFAR 헤더를 컴파일해 S1a의 독립 NumPy 셀 합산과 대조했다.
+  무작위 직사각형/작은 원형 배열·0 입력·동률 피크·잘못된 파라미터 및 잡음 기록 6구성을 확인했다.
+- **명령:** `python -m unittest discover -s src/PS/receiver/tests -v`.
+  보드 번들 준비는 `python tools/detection/verify_receiver.py --prepare-only --out build/s1b_board_20261125_01 --warmup 10 --repeat 100`.
+  [PC 근거](../benchmarks/reports/2026-11-25-s1b-host/README.md)에 콘솔·검출 목록·소스 SHA를 남긴다.
+- **결과/범위:** portable CFAR 커널의 임계값(부동소수 누적 순서 허용 오차)과 검출 목록은 S1a와 일치한다.
+  수신기 전체 Linux/ARM 빌드 및 FFTW 통합 검사는 미실시이며 관련 테스트는 skip이다.
+  보드 프레임 수신·CFAR 시간·UDP·PL 검출·지속 처리량 측정값은 없다.
+- **막힌 지점:** WSL 배포판 없음. VMware Ubuntu/Vivado와 터미널 화면은 Computer Use로 확인했으나,
+  세션 재초기화·창 재선택 이후에도 문자/Enter 및 메뉴 클릭의 실행 결과를 확인하지 못했다.
+  시리얼 COM4는 최초 조회 후 사라졌다. 기존 임시 SSH 등록은 11-17 만료로 기록돼 있다.
+- **추가 발견:** S1a `quantize_q15`의 최대 I/Q 성분→32767과 실제 보드/수신기의
+  최대 복소수 크기→16384 규칙이 다르다. 현재 PC float 기준 검증과 분리하고 S1c에서 규칙·스케일·포화를 맞춰야 한다.
+- **해석/다음:** 커널 PC 검증만 통과했다. VM 입력 복구 후 host 전체 빌드/6구성 대조,
+  호환 ARM 빌드·보드 같은 기록 대조와 CFAR 시간 측정, 실제 UDP 수신 검증을 완료해야 S1b를 완료로 표시한다.
+  그 뒤 S1c → S2로 진행하며 기존 S1a의 근접 약표적 미검출을 실패 이력으로 유지한다.
+- **후속 검증 (같은 날 19:25):** 위의 초기 미실시 상태에서 진전했다. 사용자가 기존 VMware
+  공유 `share-2`를 `/home/user/fmcw_share`에 연결하고 Ubuntu g++ 9.4.0/x86_64로 전체 수신기 빌드를 완료했다.
+  최초 실행은 FFTW3 동적 라이브러리를 찾지 못해 중단했다(`initial_missing_fftw.log`).
+  런타임 설치 안내 후 재실행한 콘솔은 6구성 모두 PASS였다. 패키지 설치 콘솔 자체는 회수하지 않았다.
+  공유 폴더에서 소스 SHA 4개·빌드 환경·실행 파일 SHA·6구성 전체 스펙트럼/검출/시간 원본을 회수하고
+  Windows에서 독립 재계산해 FFT 복소수 값·검출 bin/전력/임계값·각 단계 3개 시간 표본을 확인했다.
+  [Ubuntu 근거](../benchmarks/reports/2026-11-25-s1b-ubuntu/README.md).
+  hann 다중 표적은 4/4·오검출 0, 근접 약표적은 1/3·오검출 0으로 S1a와 같다.
+  warmup 2/repeat 3의 Ubuntu PC 기능 확인이며 보드 지연·P99·드랍·지속 처리량 근거로 쓰지 않는다.
+  **현재 다음 단계는 ARM 빌드 → 보드 재생/CFAR 시간 → 실제 UDP 수신 검증**이다.
+- **ARM 후속 (같은 날 19:27):** 사용자 콘솔의 `S1B_BUILD_PASS target=arm` 이후 공유 폴더에서
+  실행 파일·빌드 환경·SHA를 회수했다. arm-linux-gnueabihf-g++ 9.4.0으로 빌드했고
+  독립 확인한 ELF는 ARM32 little-endian, hard-float, flags `0x5000400`이다.
+  수신기/헤더 소스 SHA 2개와 작업 사본이 일치하고 실행 파일 SHA도 일치했다.
+  [ARM 근거](../benchmarks/reports/2026-11-25-s1b-arm/README.md). 보드에서의 로더/FFTW 실행은 아직 미검증이다.
+  현재 다음 단계는 새 S1b 경로에 배포해 보드 기록 재생·CFAR 시간을 확인하는 것이다.
+- **보드 기록 재생 후속 (같은 날):** `/opt/fft128/s1b_20261125_192718`에 별도 배포한
+  ARM 실행 파일과 기존 PS01 double FFTW를 사용했다. 사용자 콘솔의 `S1B_RUN_COMPLETE` 이후
+  환경·artifact check·실행 파일/라이브러리 SHA·6구성 로그/전체 스펙트럼/검출/시간 CSV를 회수했다.
+  CPU0·single-thread double·원본 IQ·warmup 10/repeat 100, 각 구성은 같은 기록 프레임 반복이다.
+  모든 artifact SHA와 소스 SHA 4개를 대조하고 Windows에서 FFT·임계값·검출·시간 표본을 독립 재검증했다.
+  [보드 근거](../benchmarks/reports/2026-11-25-s1b-board/README.md).
+  Hann 4표적은 4/4·오검출0, 중앙값 FFT5.514525ms/CFAR3.690945ms/processing_total10.206336ms,
+  processing_total P99 10.30867179ms·최대10.328154ms다. 근접 약표적은 여전히 1/3 검출이다.
+  `processing_total`은 UDP·파일 읽기·할당·계획·워밍업·CSV 저장을 제외한다.
+  이 100개 표본의 P99를 end-to-end 연속 입력의 합격 근거로 쓰지 않는다.
+  보드에서 CFAR 비용과 기준 검출 재현은 확인했으며 **실제 UDP 한 프레임 수신 검증**이 다음이다.
+- **UDP 후속 (사용자 콘솔):** 초기 수신 대기는 사용자가 Ctrl+C로 중단했고, 같은 출력 폴더를
+  재사용한 명령은 mkdir에서 중단했다. 새 출력 폴더의 재실행은 송신자 `10.0.0.2:41915`로부터
+  128×128/fs1.6MHz 프레임을 받아 완료했다. duplicates/invalid/ignored는 모두0, Hann CA 피크4,
+  CPU0·double·warmup0/repeat1이었다. 콘솔상 FFT5.964432ms/CFAR3.890856ms/processing_total10.884054ms.
+  첫~마지막 패킷335.079279ms는 간격을 둔 한 프레임 전송이고, receive_total에는 첫 패킷 대기도 들어간다.
+  [콘솔 근거](../benchmarks/reports/2026-11-25-s1b-udp/console_summary.json).
+  보드 시계 기반 폴더명은 `udp_multi4_hann_20180309_135527`이며 실제 기록 날짜는 사용자 세션의2026-11-25로 구분한다.
+  전체 검출 bin·스펙트럼·시간 CSV 원본은 아직 회수하지 않았으므로 UDP 정확성의 최종 판정은 보류한다.
+  1회 처리 시간과 간격을 둔 송신으로 연속12.8ms 합격·드랍0·P99를 주장하지 않는다.
+- **UDP 원본 최종 확인/완료:** 공유 폴더에 회수된 로그·전체 FFT·검출·시간 CSV4파일을
+  `build/s1b_udp_multi4_hann_20261125_01/`에 보존하고 독립 재계산했다.
+  모든16384개 FFT bin이 NumPy와 일치했다(최대 복소 오차1.9860273225978185e-15, 상대L2 4.695164787484549e-16).
+  기존 Hann 4표적의 보드 기록 재생과 FFT 수치 배열이 정확히 일치했고 검출 CSV는 바이트 단위로 같았다.
+  검출 bin은(Doppler,Range)=(10,10),(107,20),(4,37),(87,53), 정답4/4·오검출0이었다.
+  전력·임계값·거리/속도 환산, decode/reassembly 각128개 표본과 처리 단계 각1개 표본도 확인했다.
+  [최종 근거](../benchmarks/reports/2026-11-25-s1b-udp/independent_validation.json).
+  **S1b는 기준 검출 재현·CFAR 비용·실제 UDP 한 프레임 경로 범위에서 완료**다.
+  CA의 근접 약표적 미검출과 연속 운용 검증은 남는다. 다음 S1c에서는 E14 PL 출력에 같은 CFAR를 적용하며
+  Q15 양자화 규칙·Hann 적용 위치·스케일/포화 및 측정 범위를 먼저 확정한다.
+
+---
+
+## S1c — PL Q15 출력의 CFAR 비교 준비
+
+- **날짜/선행:** 2026-11-25 / S1b 완료. 아래 초기 준비 기록 뒤에 보드 완료 후속을 덧붙였다.
+- **질문/가설:** 기존 E14의 단계별 Q15 floor·포화·1/16384 스케일을 거친 출력에서도
+  S1b CA-CFAR의 피크 목록이 유지되는가. FFT 정수 오차와 검출 변화는 분리해 기록한다.
+- **변경:** `tools/detection/cfar_spectrum.cpp`는 S1b의 `cfar_ca.hpp`를 공유해 E14 정수 CSV를 처리한다.
+  `build_s1c.sh`, `verify_s1c.py`, `test_s1c.py`에 보드 CFAR 빌드·입력/정수 oracle 준비·검증을 추가했다.
+  기존 RTL·펌웨어·DMA 드라이버·E14 실행 파일·S1b 수신기는 변경하지 않았다.
+- **입력/수치 계약:** 커밋된 잡음 기록3개 × none/hann. Hann은 PC에서 원본 IQ에 대칭 창을 곱한 뒤
+  float32 RSPB로 저장한다. 보드 E14는 이를 다시 window하지 않고 최대 복소수 크기→16384,
+  ties-to-even으로 양자화한다. 이 규칙은 실제 `native_core.c`를 따르며 S1a의 최대 I/Q→32767과 구분한다.
+  Python 독립 정수 모델이 7단계 floor·포화를 두 축에 적용하고 NumPy 이상 FFT·float 검출과 대조한다.
+  E14 메타데이터의 window=none은 준비된 입력에 추가 창을 적용하지 않았다는 뜻이다.
+- **측정 범위:** E14 실행 파일이 PL FFT를 내보내고 별도 C++ 프로세스가 CSV를 읽어 CFAR를 실행한다.
+  두 프로세스 사이 파일 IO·입력 Hann 준비는 각각의 처리 시간 밖이다.
+  PL 전달/FFT 시간과 CFAR 전력/임계값/피크/정렬 시간은 **성분별 시간**이며 합산해 종단 지연으로 쓰지 않는다.
+  S2에는 입력 준비·CFAR·출력을 한 연속 경로에 연결하는 작업이 남는다.
+- **PC 검증:** native C 정수 모델 실행 파일과 C++ CFAR를 Windows g++/gcc로 컴파일해
+  Python 정수 oracle 및 NumPy CA-CFAR와 6구성을 대조했다. warmup1/repeat3, FPGA 없음.
+  6구성 모두 정수 FFT의 모든16384개 bin과 검출 목록/전력/임계값이 일치하고 S1b float 피크 목록과 같았다.
+  별도3테스트로 실제 보드 양자화 규칙·0입력·CSV 경계/정수 범위/누락/잘못된 값을 확인했다.
+  모델 출력은 hardware check에서 거부되는 것도 확인했다.
+- **명령/근거:** `python -m unittest discover -s tools/detection -p test_s1c.py -v`.
+  `python tools/detection/verify_s1c.py --model-binary build/s1c_host_validation/model.exe --cfar-binary build/s1c_host_validation/cfar-spectrum.exe --out build/s1c_pc_20261125_03 --warmup 1 --repeat 3`.
+  [PC 근거](../benchmarks/reports/2026-11-25-s1c-pc/README.md). 실행 파일은 ignored build에 둔다.
+- **보드 준비 (사용자 콘솔):** 기존 `/opt/fft128/e14_frame/load_board.sh`가 artifact/HP0 검사를 통과하고
+  E14 FPGA·overlay·모듈을 올렸다. packet/matrix/client 검사·native 4프레임 자체 검사가 통과했고
+  `/dev/fft128-dma-frame`이 생겼다. 이는 기존 E14 자체 검사이며 새 잡음/Hann S1c 검출 결과는 아니다.
+- **다음:** Ubuntu에서 새 CFAR를 ARM 빌드하고 새 번들 경로에 배포한다.
+  보드6구성 정수 FFT·CFAR를 실행한 뒤 원본을 회수해 모델/float 검출과 대조한다.
+- **ARM 준비 후속 (19:52):** Ubuntu의 ARM CFAR 빌드와 준비된6구성 번들을 공유 폴더에서 확인했다.
+  ELF32 ARM hard-float flags0x5000400, 실행 파일 SHA
+  `84ca32add47553c9d492746092aa308e41daee930470f786fcdd52cdc3f641a4`가 일치했다.
+  manifest의 소스8개와 번들 artifact 전체 해시도 대조했다.
+  [빌드/준비 근거](../benchmarks/reports/2026-11-25-s1c-pc/arm_preparation.json).
+  새 S1c 보드 실행·정수 출력/CFAR 원본 회수는 아직 하지 않았다.
+- **보드 완료 후속:** `/opt/fft128/s1c_20261125_195231/run_board.sh` 실행 후 원본을
+  `build/s1c_board_results_20261125_195231/`로 회수했다. Ubuntu check에 이어 Windows에서
+  독립 재검산했고 `S1C_RECORDED_CHECK_PASS cases=6 hardware=True`를 확인했다.
+  artifact·소스8개 SHA, CPU0·ABI8·hardware 메타데이터 및 구성별100개 시간 표본을 확인했다.
+  6구성의 모든16384개 정수 bin·CFAR 피크 순서/전력/임계값이 독립 기준과 같고 float 검출 목록과 일치했다.
+  Hann 4표적4/4·오검출0, 근접 약표적1/3이다. multi4 Hann 중앙값은 PL1.670298ms,
+  CFAR3.533088ms이며 두 성분을 합산해 종단 지연으로 해석하지 않는다.
+  [보드 원본·독립 검증 근거](../benchmarks/reports/2026-11-25-s1c-board/README.md).
+  **S1c 완료**, 다음 S2a에서는 수신·Hann/양자화·FFT·CFAR·출력을 한 프로세스로 연결하고
+  프레임 ID·타임스탬프·드랍·CPU/메모리를 기록한다.
+
+---
+
+## S2a — 통합 연속 수신과 프레임·자원 계측 준비
+
+- **날짜/선행:** 2026-11-25 / S1c 보드 검증 완료. 구현/PC 검사 단계, 보드 측정 전이다.
+- **질문/가설:** 수신·입력 준비·FFT·CFAR·출력을 한 프로세스에 연결하고 프레임 ID로
+  누락과 큐 드랍을 구분하면, 성분별 반복 시간 대신 실제 연속 경로 지연을 관측할 수 있는가.
+- **변경:** `stream_receiver.cpp`, `stream_protocol.hpp`, `stream_pipeline.hpp`를 추가했다.
+  기존 S1b/S1c 실행 파일·소스·RTL/드라이버는 보존한다. 공유 CA-CFAR와 native 양자화/정수 모델을 재사용한다.
+  `replay_stream.py`는 v1 기록의 원래 float32 IQ payload에 v2 run/frame ID·송신 monotonic 시각을 붙인다.
+  `build_s2a.sh`, `smoke_s2a.py`, `analyze_stream.py`, `test_s2a.py`, portable `stream_driver.cpp`를 추가했다.
+- **구조/조건:** 수신 스레드의 partial 최대4, 완료 큐 최대4, 처리 스레드1개다.
+  partial이 차면 가장 작은 ID를 버리고, 완료 큐가 차면 새 완료 프레임을 버린다.
+  예상 ID1..N 모두 trace에 남긴다. 커널 수신 시각(SO_TIMESTAMPNS), 사용자 수신/조립 완료,
+  처리 시작·준비/FFT/CFAR/CSV flush 완료를 기록한다. 커널 overflow 통지와 시계 변동도 기록한다.
+  200ms 자원 표본은 process CPU(한 코어100%)·시스템 CPU·RSS다. `--cpu0`는 모든 스레드에 적용된다.
+- **수치/비교 조건 변화:** PS는 double FFTW 2D ESTIMATE plan을 지속 재사용하는 새 기준이다.
+  기존 S1b의 축별 FFT/전치 구현이나 최적화 NEON과 동일한 성능 조건이라고 주장하지 않는다.
+  PL은 E14 ABI8 요청을 지속 재사용하며 Hann→float32 반올림→최대 복소수 크기16384 양자화를
+  **수신기 안에서** 수행한다. S1c PC 준비/CSV 연결과 달리 이 비용이 프레임 측정에 포함된다.
+  `model`은 명시적인 소프트웨어 경로이며 PL 실패 시 대체하지 않는다.
+- **측정 범위:** 첫 커널 패킷→검출 CSV flush는 획득·소켓·조립·큐·준비를 포함한다.
+  조립 완료→출력, 각 내부 구간도 따로 기록한다. 두 호스트의 시각은 빼지 않는다.
+  flush는 fsync/표시/출력 소비자의 완료가 아니며 저장 위치(NFS/로컬)를 조건으로 기록해야 한다.
+  trace 파일은 drain 후 기록하며, 자원 샘플링·검출 IO는 운용 중 실행한다.
+  프레임 burst와 chirp100us 간격은 다른 부하이므로 송신 JSON에 구분한다.
+- **PC 검증/결과:** Windows GCC/G++에서 생산 pipeline 헤더를 직접 컴파일했다.
+  PS double FFTW와 C 정수 모델 각각 잡음3입력×none/hann의 모든 복소수16384 bin·전력·CFAR를
+  독립 NumPy/Python 모델과 대조했다. 역순·중복 chirp도 검증했다. 누락·잘림·NaN·프레임 정보 혼합은 거부했다.
+  실제 localhost UDP 송신 검사로 run/frame ID 및 의도한 chirp1개 누락(3프레임383패킷)을 확인했다.
+  합성 trace에서 ID 누락·역전 시각 거부, partial 드랍 집계, kernel drop 발생 시 결과 무효화를 확인했다.
+  총7개 unittest 통과. **생산 Linux socket/thread 코드 실행과 실제 FPGA 검증은 포함하지 않는다.**
+  [PC 근거](../benchmarks/reports/2026-11-25-s2a-pc/README.md).
+- **검증 중 수정:** 정수 전력 기대값을 `abs(z)**2`로 계산한 첫 검사는 sqrt/제곱 반올림 때문에
+  최대7.45e-9 차이를 보고했다. oracle을 정수 실수부²+허수부²로 고치고 복소수 bin 자체의 정확 일치를
+  추가해 통과했다. 계산 허용치를 느슨하게 해서 통과시킨 것이 아니다.
+- **다음:** Ubuntu에서 host 빌드와3개 스모크(PS/model 정상 각20프레임, 의도한 누락1프레임)를
+  실행하고 ARM 빌드한다. 새 보드 배포 경로에서 PS·PL 각각50ms 주기20프레임을 먼저 검증한다.
+  이 단계는 계측 검증이며 12.8ms/10,000프레임·최대 지속 fps 합격은 이후 S2b/S2c에서 판정한다.
+  [실행 절차·측정 계약](../tools/detection/S2A.md).
+- **Ubuntu/ARM 후속 (20:18):** 사용자 실행 결과에 이어 공유 폴더의 host/ARM 빌드 및
+  `build/s2a_smoke_20261125_201834/` 원본을 회수·독립 재검산했다.
+  PS/model 각각20프레임 모두 검출 목록·프레임 trace·자원 표본이 유효하고 드랍0이다.
+  의도한 frame2 chirp 누락은 정확히19처리·1 partial_evicted로 기록됐다.
+  모든 검사에서 invalid·kernel drop·clock error·실행 오류0, 자원 표본은 각6개다.
+  host는 cpu0=0인 Ubuntu VM localhost 검사이며 보드 성능으로 해석하지 않는다.
+  두 빌드의 소스7개 및 검사/송신 도구5개가 로컬 소스와 같고 ELF/실행 파일 SHA도 대조했다.
+  ARM ELF32 hard-float flags0x5000400, SHA
+  `21548ffb2ed04c89e271f4dd1a952eafabfd58d5c8e64c6cb895d9b855438371`.
+  [Ubuntu/ARM 원본·독립 검증 근거](../benchmarks/reports/2026-11-25-s2a-ubuntu/README.md).
+  다음은 새 `/opt/fft128/s2a_20261125_201834/` 경로에서 PS·E14 각각20프레임/50ms 보드 검사다.
+
+---
+
+## S2a-rxfix1 — ARM32 수신 보조 데이터 호환·거부 진단
+
+- **날짜/선행:** 2026-11-25 / S2a 초기 Ubuntu 스모크·ARM 빌드 후 보드 PS 실패.
+- **실패 근거 (사용자 콘솔):** run92002, `ps_02/counters.txt`의 invalid=2560, 나머지 제시 계수0,
+  검출 CSV는 헤더1줄이다. 송신 JSON은20프레임×128패킷·overrun0, Ubuntu 경로는ens33/src10.0.0.2,
+  ping2/2성공이다. 유효 패킷을 전혀 받아들이지 않아 초기5분 대기까지 유지됐다.
+  원래 invalid는 MSG_TRUNC·MSG_CTRUNC·decode 예외를 합친 값이므로 원인을 확정할 수 없다.
+  보드 전체 원본은 아직 회수 전이며 콘솔·송신 JSON을 근거로 구분 보존한다.
+- **가설:** ARM32의 원래 control 버퍼는36B(old timestamp20+overflow16)다.
+  glibc가 time64 timestamp28B를 덧붙이면 공간이 모자랄 수 있다.
+  [glibc 공식 수정 이력](https://sourceware.org/pipermail/glibc-cvs/2022q1/076544.html)은
+  32bit time_t 프로그램에서도 변환/MSG_CTRUNC가 발생한 사례를 설명한다.
+  이는 현재 증상과 일치하는 가설이며 실제 보드 msg_flags/controllen으로 아직 확인하지 않았다.
+- **변경:** `stream_receiver.cpp`와 새 `stream_timestamp.hpp`에512B aligned control 버퍼,
+  time32 8B/time64 16B 시각 해석, payload/control/decode별 계수·첫 거부 로그를 추가했다.
+  잘린 데이터는 계속 거부한다. 수신된 모든 datagram이 idle 시각을 갱신하게 해 all-invalid 입력도
+  마지막 패킷 뒤2초(기본값)에 종료한다. 입력이 전혀 없는 초기 대기는 별도 start deadline이다.
+  `--diagnose-first-packet`는 구버퍼 MSG_PEEK 후 확대 버퍼로 같은 패킷을 수신하여
+  구버퍼 truncation 여부·실제 cmsg형식·첫 유효 ID를 기록한다. 시각/버퍼 sizeof와 진단 flag도 저장한다.
+  `build_s2a.sh`의 소스 식별8개, `analyze_stream.py`의 진단 flag, `smoke_s2a.py`의 model probe 검사를 갱신했다.
+  새 `rebuild_s2a_rxfix1.sh`는 실패 원본을 회수하고 host smoke→ARM build→새 보드 경로 배포를 수행한다.
+- **측정 범위/보존:** peek·첫 패킷 콘솔 IO는 진단 flag를 켠 실행의 첫 프레임 지연에 포함된다.
+  해당 실행은 처리량 합격 근거로 쓰지 않는다. 원래 binary/7개 compiled source snapshot 및
+  초기 Ubuntu 합격 결과는 그대로 보존하며 새 빌드/배포/출력 경로를 쓴다.
+- **PC 검증:** 기존 PS/model6구성 FFT 모든 복소수 bin·CFAR 및 패킷/trace 검사에
+  time32/time64·2038년 이후·잘못된 시각/길이·ARM32 dual timestamp 공간 검사를 추가해8개 unittest 통과.
+  실제 recvmsg 및 수정된 host/ARM 빌드는 아직 실행하지 않았다.
+  [실패·PC 검사·소스 근거](../benchmarks/reports/2026-11-25-s2a-rxfix1/README.md).
+- **다음:** 새 host3스모크와ARM 빌드 후 보드20프레임 진단. 구버퍼 control_truncated가1이고
+  확대 버퍼에서는0이며 정상 처리되면 가설을 보드에서 확인한 것으로 기록한다.
+  그렇지 않으면 새 payload/control/decode 계수와 첫 로그로 다음 원인을 판단한다.
+- **수정 Ubuntu/ARM 후속:** `s2a_smoke_20261125_rxfix1` 원본과 host/ARM 빌드를 회수했다.
+  3개 스모크의 trace·피크·요약을 독립 재계산해 통과했고 model 정상 검사는 구버퍼 peek도 실행했다.
+  Ubuntu64에서는 구버퍼56B/flags0, 확대 버퍼도 flags0이다. 이는 ARM32 현상의 재현 근거가 아니다.
+  소스8개 SHA와 새 binary SHA가 일치하며 ARM SHA는
+  `e221f04d232780c9193ca7f8c03df253e9fdba533d2bf7305e0da7c5cd508387`이다.
+  초기 실패 `ps_02` 원본도 회수해 invalid2560·20개 missing ID·헤더뿐인 검출 CSV를 확인했다.
+  [새 Ubuntu/ARM 근거](../benchmarks/reports/2026-11-25-s2a-rxfix1/ubuntu/independent_summary.json).
+  이후 보드 run92003은 READY→processed0으로 끝났다고 사용자가 보고했다. 첫 패킷 로그가 없으며
+  지정된 `s2a_sender_ps_rxfix1_01.json`은 공유 폴더에 없다. 새 board counters 원본은 회수 전이다.
+  수신 대기 만료가 유력하나 계측 오류 가능성까지 현재 콘솔만으로 배제하지 않는다.
+  다음은 별도 Ubuntu 송신 터미널을 먼저 준비하고 보드 READY 뒤 송신하는 동기화 재실행이다.
+- **보드 원인 확인 후속 (사용자 콘솔):** 이전 run92003의 counters는 received_packets=0·failed0·
+  interrupted0으로 입력 없이 끝났음을 확인했다. 다음 run92004/ps_02를 송신과 동기화하니
+  구버퍼 MSG_PEEK는 bytes1076/flags8/control_truncated1/capacity36/controllen20,
+  확대 버퍼의 같은 패킷 수신은 flags0/controllen48/cmsg `1:35:20;1:64:28;`이었다.
+  첫 유효 run92004/frame1 후 `S2A_RECORDED processed=20 expected=20`을 출력했다.
+  **ARM32에서 구버퍼가 time32+time64 보조 데이터를 담지 못한 원인을 확인했다.**
+  [사용자 콘솔·송신 기록](../benchmarks/reports/2026-11-25-s2a-rxfix1/board_probe_console.txt).
+  송신 JSON은50ms/20프레임·overrun0이며 전체 PS trace·검출·자원 원본은 회수 전이다.
+  진단 IO를 포함한 시간은 성능 합격에 쓰지 않는다. 다음은 원본 검산 후 같은 입력의 PL 검사다.
+- **PS 원본 완료 후속:** 보드 배포 디렉터리와 run92004의 frames/detections/resources/counters,
+  사용자 Ubuntu summary 및 sender JSON을 회수했다. Windows에서 독립 재계산한 summary가 정확히 같고
+  20/20처리·2560수신·드랍0·invalid/kernel/clock/worker 오류0이다. 모든 프레임의4개 검출 위치 및
+  전력/임계값이 NumPy FFT/CA-CFAR와 일치한다. 각 프레임은4/4정답·오검출0이다.
+  CPU0·time_t4B/timespec8B·소스8개·binary/artifacts SHA도 확인했다.
+  진단 관측값은 첫 커널패킷→flush 중앙값22.4006925ms/P9924.7878909ms,
+  조립완료→flush 중앙값13.662444ms/P9914.19137802ms다. 진단 실행이므로 성능 합격에 쓰지 않는다.
+  자원22구간 중 활성 프레임과 겹치는 구간6개, 최대RSS5410816B다.
+  [실제 보드 원본·독립 검산](../benchmarks/reports/2026-11-25-s2a-board/README.md).
+  **S2a PS 계측/정확성 스모크 통과**, 다음은 같은50ms/20프레임·진단 설정의 PL 스모크다.
+- **PL 실행 후속 (사용자 콘솔):** E14 디바이스가 있는 상태에서 run92005/PL/pl_01이
+  구버퍼truncation·확대 버퍼flags0/48B·첫 유효 frame1을 기록하고20/20처리를 마쳤다.
+  [콘솔](../benchmarks/reports/2026-11-25-s2a-board/pl_user_console.txt).
+  PL 프레임별 검출/전력/임계값·trace/counters 원본은 아직 회수 전이므로 S2a 최종 완료 판정은 보류한다.
+- **PL 원본 완료 후속:** run92005/pl_01의 전체 원본을 회수하고 Windows에서 독립 재계산했다.
+  summary는 Ubuntu 결과와 같고20/20처리·2560수신·드랍0·모든 invalid/kernel/clock/worker 계수0이다.
+  Hann→float32 반올림→실제16384 양자화→Python 단계별 정수 FFT로 기준을 만들었으며,
+  모든 프레임의4개 검출 위치·80개 전력 값이 정수 기준과 정확히 같고 임계값도 NumPy와 일치한다.
+  각 프레임4/4정답·오검출0이다. CPU0/hardware=true·소스8개·binary/artifacts SHA도 확인했다.
+  [원본·독립 PL 검증](../benchmarks/reports/2026-11-25-s2a-board/pl_identity_and_correctness.json).
+  진단 관측은 조립완료→출력 중앙값18.5183285ms/P9918.65466576ms,
+  준비10.150683ms·FFT전달1.756872ms·전력/CFAR6.251232ms 각 중앙값이다.
+  PS의 준비2.350314ms·FFT5.22195ms·조립완료→출력13.662444ms와 비교하면
+  현재 PL 경로는 빠른 FFT에도 불구하고 입력 준비 추가 비용이 크다. 성분별 중앙값을 합산해 종단값으로 쓰지 않는다.
+  두 실행 모두 진단 조건이므로 처리량 합격 판정은 하지 않는다.
+  **S2a 완료:** PS/PL 통합 경로의 프레임ID·수신/준비/FFT/CFAR/출력 시각·드랍·CPU/RSS를 확인했다.
+  다음 S2b에서 진단flag를 끄고12.8ms 입력을 측정한다.
+
+---
+
+## S2b — 12.8ms 연속 부하 검사 준비
+
+- **날짜/선행:** 2026-11-25 / S2a PS/PL 계측·검출 원본 검증 완료.
+- **질문:** 입력을50ms에서12.8ms 주기로 높였을 때 같은 통합 수신기가 프레임 누락 없이 처리하는가.
+- **변경/조건:** 실행 파일은 rxfix1 SHA
+  `e221f04d232780c9193ca7f8c03df253e9fdba533d2bf7305e0da7c5cd508387`을 그대로 쓴다.
+  diagnostic flag를 끄고 같은128x128 multi4 noise/Hann·CPU0·warmup10·queue4/partial4·NFS 출력으로
+  PS200프레임 예비 부하를 실행할 준비를 했다. sender는 chirp gap0/burst, period12.8ms다.
+  input preparation·수신/reassembly·큐·CFAR·출력은 실제 경로 안에 유지한다.
+- **예비 명령:** 보드 `stream-receiver --cpu0 --backend ps --fftw-lib /opt/fft128/s1b_20261125_192718/libfftw3.so.3 --start-ms 120000 --run-id 92101 --frames 200 --out /opt/fft128/s2a_20261125_rxfix1/s2b_ps_200_01`.
+  Ubuntu `replay_stream.py ...multi4_noise.rspb --ip 10.0.0.3 --run-id 92101 --frames 200 --period-ms 12.8 --out build/s2b_sender_ps_200_01.json`.
+- **검증 범위:** 우선200프레임의 처리/누락 분류·유효 송신 부하·원본 검출·자원 기록을 확인한다.
+  첫 커널패킷→출력 및 조립완료→출력 P99를 모두 유지하고 서로 바꾸어 쓰지 않는다.
+  200프레임은10,000프레임 합격 근거가 아니며 본검사를 대체하지 않는다.
+- **현재 결과:** 준비만 완료, 아직 실측 없음. 과부하가 나타나면 실패 원본을 보존하고
+  입력 준비·수신/처리 CPU·큐 등 관측된 병목을 다음 단계의 검증 근거로 사용한다.
 
 ---
 

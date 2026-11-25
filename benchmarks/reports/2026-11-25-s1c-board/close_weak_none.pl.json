@@ -1,0 +1,21 @@
+{
+  "backend": "PL_DMA_FRAME",
+  "implementation": "native C",
+  "shape": [128, 128],
+  "fft_calls": 256,
+  "sample_rate_hz": 1600000,
+  "input_to_q15_scale": 2383552.0226977253,
+  "window": "none",
+  "per_fft_normalization": "1/128",
+  "total_normalization": "1/16384",
+  "fft_and_transfer_seconds": 0.00167955896,
+  "warmup": 10,
+  "repeats": 100,
+  "mismatched_complex_bins": 0,
+  "peak_unshifted": [107, 20],
+  "dropped_packets": 0,
+  "duplicate_packets": 0,
+  "profiling": false,
+  "pl_clock_hz_declared": 0,
+  "note": "Repeated same frame; includes host copies, one ioctl, coherent bounce copies, DMA, two FFT axes, PL transpose and PL output reorder. No PS transpose. Preallocated buffers. Excludes input IO, quantization, validation and files. Kernel/PL stages overlap ioctl."
+}

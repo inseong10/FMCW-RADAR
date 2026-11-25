@@ -1,0 +1,150 @@
+{
+  "evidence": "Windows native C++ CFAR kernel vs S1a NumPy, no complete Linux receiver/board execution",
+  "base_commit": "f884812274e91ed226f92820be0d192fdc2f9ffd",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.13 | packaged by Anaconda, Inc. | (main, Apr 14 2026, 06:12:50) [MSC v.1942 64 bit (AMD64)]",
+    "numpy": "2.5.0",
+    "compiler_target": "x86_64-w64-mingw32"
+  },
+  "tests": {
+    "total": 17,
+    "passed": 13,
+    "skipped": 4
+  },
+  "binary": {
+    "path": "build\\s1b_host_kernel\\cfar.exe",
+    "sha256": "b3d3a7d791da0d11e52a403a9dcfdb62a979a1ea059c81f0640142d0382f990b"
+  },
+  "runs": [
+    {
+      "record": "benchmarks\\fixtures\\radarsimpy_128x128_sim_single_noise.rspb",
+      "record_sha256": "dc25ac944391a1ae88f3988d171e271dc365038dbc745f12eaf48d32aaacfcb7",
+      "window": "none",
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "hits": 1,
+      "targets": 1,
+      "false_peaks": [],
+      "max_threshold_abs_error": 5.6288307348495437e-14,
+      "max_threshold_relative_error": 7.573801650200275e-14
+    },
+    {
+      "record": "benchmarks\\fixtures\\radarsimpy_128x128_sim_single_noise.rspb",
+      "record_sha256": "dc25ac944391a1ae88f3988d171e271dc365038dbc745f12eaf48d32aaacfcb7",
+      "window": "hann",
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "hits": 1,
+      "targets": 1,
+      "false_peaks": [],
+      "max_threshold_abs_error": 7.993605777301127e-15,
+      "max_threshold_relative_error": 7.644834836290243e-14
+    },
+    {
+      "record": "benchmarks\\fixtures\\radarsimpy_128x128_sim_multi4_noise.rspb",
+      "record_sha256": "450ffd3c05bf2570773c7fd3bf543a00d66e3ec531a05d07ef2747bb6a688413",
+      "window": "none",
+      "peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ],
+        [
+          34,
+          10
+        ]
+      ],
+      "hits": 4,
+      "targets": 4,
+      "false_peaks": [
+        [
+          34,
+          10
+        ]
+      ],
+      "max_threshold_abs_error": 3.2807090377673376e-13,
+      "max_threshold_relative_error": 4.086509135251465e-13
+    },
+    {
+      "record": "benchmarks\\fixtures\\radarsimpy_128x128_sim_multi4_noise.rspb",
+      "record_sha256": "450ffd3c05bf2570773c7fd3bf543a00d66e3ec531a05d07ef2747bb6a688413",
+      "window": "hann",
+      "peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ]
+      ],
+      "hits": 4,
+      "targets": 4,
+      "false_peaks": [],
+      "max_threshold_abs_error": 3.7539416020138106e-14,
+      "max_threshold_relative_error": 3.888170485045099e-13
+    },
+    {
+      "record": "benchmarks\\fixtures\\radarsimpy_128x128_sim_close_weak_noise.rspb",
+      "record_sha256": "d307901c4c040f462f8a49bffce9d409f530f347322421b5d5214d7b2d4310f6",
+      "window": "none",
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "hits": 1,
+      "targets": 3,
+      "false_peaks": [],
+      "max_threshold_abs_error": 5.806466418789569e-14,
+      "max_threshold_relative_error": 7.740253606330253e-14
+    },
+    {
+      "record": "benchmarks\\fixtures\\radarsimpy_128x128_sim_close_weak_noise.rspb",
+      "record_sha256": "d307901c4c040f462f8a49bffce9d409f530f347322421b5d5214d7b2d4310f6",
+      "window": "hann",
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "hits": 1,
+      "targets": 3,
+      "false_peaks": [],
+      "max_threshold_abs_error": 6.356026815979021e-15,
+      "max_threshold_relative_error": 6.461240947048538e-14
+    }
+  ]
+}

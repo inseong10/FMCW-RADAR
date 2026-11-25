@@ -1,0 +1,74 @@
+{
+  "scope": "Board same-frame repeated processing; not end-to-end UDP",
+  "repeat": 100,
+  "warmup": 10,
+  "cpu_affinity": 0,
+  "results": [
+    {
+      "case": "single_none",
+      "fft_median_ms": 5.505561,
+      "cfar_median_ms": 3.679449,
+      "processing_median_ms": 10.180551000000001,
+      "processing_p99_ms": 10.26478278,
+      "processing_max_ms": 10.311192,
+      "hits": 1,
+      "truth_count": 1,
+      "false_count": 0
+    },
+    {
+      "case": "single_hann",
+      "fft_median_ms": 5.507796,
+      "cfar_median_ms": 3.6843060000000003,
+      "processing_median_ms": 10.187451500000002,
+      "processing_p99_ms": 10.29464454,
+      "processing_max_ms": 10.383204,
+      "hits": 1,
+      "truth_count": 1,
+      "false_count": 0
+    },
+    {
+      "case": "multi4_none",
+      "fft_median_ms": 5.525019,
+      "cfar_median_ms": 3.687033,
+      "processing_median_ms": 10.212444000000001,
+      "processing_p99_ms": 10.28836866,
+      "processing_max_ms": 10.325262,
+      "hits": 4,
+      "truth_count": 4,
+      "false_count": 1
+    },
+    {
+      "case": "multi4_hann",
+      "fft_median_ms": 5.514525,
+      "cfar_median_ms": 3.690945,
+      "processing_median_ms": 10.206336,
+      "processing_p99_ms": 10.30867179,
+      "processing_max_ms": 10.328154,
+      "hits": 4,
+      "truth_count": 4,
+      "false_count": 0
+    },
+    {
+      "case": "close_weak_none",
+      "fft_median_ms": 5.457771,
+      "cfar_median_ms": 3.756648,
+      "processing_median_ms": 10.236099,
+      "processing_p99_ms": 10.309450830000001,
+      "processing_max_ms": 10.439916,
+      "hits": 1,
+      "truth_count": 3,
+      "false_count": 0
+    },
+    {
+      "case": "close_weak_hann",
+      "fft_median_ms": 5.496873,
+      "cfar_median_ms": 3.7455930000000004,
+      "processing_median_ms": 10.243331999999999,
+      "processing_p99_ms": 10.315180980000001,
+      "processing_max_ms": 10.426158,
+      "hits": 1,
+      "truth_count": 3,
+      "false_count": 0
+    }
+  ]
+}

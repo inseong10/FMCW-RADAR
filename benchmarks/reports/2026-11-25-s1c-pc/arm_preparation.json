@@ -1,0 +1,11 @@
+{
+  "evidence": "Ubuntu ARM cross-build and prepared bundle identities; no S1c board execution yet",
+  "sha256": "84ca32add47553c9d492746092aa308e41daee930470f786fcdd52cdc3f641a4",
+  "elf_flags": "0x5000400",
+  "hard_float": true,
+  "source_identities_matched": 8,
+  "bundle_artifacts_verified": true,
+  "expected_cases": 6,
+  "bundle": "build/s1c_board_20261125_195231",
+  "binary": "build/s1c_arm_20261125_195231/cfar-spectrum"
+}

@@ -23,6 +23,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "cfar_ca.hpp"
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <poll.h>
@@ -135,6 +136,7 @@ struct Plans {
 
 struct Options {
     std::string bind="0.0.0.0",source,output,fftw_lib,window="hann",input,timings,wisdom_in,wisdom_out,verify_spectrum;
+    std::string cfar="none",detections;
     int port=5000,channel=0,warmup=5,repeat=1;
     double timeout=15,max_frame_mb=128,bandwidth=100,chirp=80,prp=100,fc=24.05,plan_time_limit=-1;
     bool thread_cpu=false,measure_plan=false,q15_input=false,normalize_output=false,cpu0=false;
@@ -164,6 +166,7 @@ Options parse(int argc,char** argv) {
             "--q15-input --normalize-output --cpu0 (PS/PL comparison; preparation excluded)\n"
             "--plan-time-limit SECONDS (per FFTW plan; optional)\n"
             "--verify-spectrum reference.csv (each repeat; outside timing; Q15/none/normalized)\n";
+            std::cout << "--cfar none|ca --detections detections.csv (S1b: guard 2, train 8, Pfa 1e-6)\n";
             std::exit(0);
         }
         if(k=="--thread-cpu") {o.thread_cpu=true;continue;}
@@ -194,10 +197,14 @@ Options parse(int argc,char** argv) {
         else if(k=="--wisdom-in") o.wisdom_in=v;
         else if(k=="--wisdom-out") o.wisdom_out=v;
         else if(k=="--verify-spectrum") o.verify_spectrum=v;
+        else if(k=="--cfar") o.cfar=v;
+        else if(k=="--detections") o.detections=v;
         else if(k=="--plan-time-limit") o.plan_time_limit=positive(v);
         else throw std::runtime_error("Unknown option: "+k);
     }
     if(o.window!="hann" && o.window!="none") throw std::runtime_error("window must be hann or none");
+    if(o.cfar!="none" && o.cfar!="ca") throw std::runtime_error("cfar must be none or ca");
+    if(!o.detections.empty() && o.cfar=="none") throw std::runtime_error("--detections requires --cfar ca");
     if(!o.verify_spectrum.empty() && (!o.q15_input || !o.normalize_output || o.window!="none"))
         throw std::runtime_error("--verify-spectrum requires --q15-input --normalize-output --window none");
     return o;
@@ -494,11 +501,26 @@ void process(const Frame& f,const Options& o,Profiler& prof,FFTW& api) {
             for(int p=pb;p<pe;++p){size_t i=size_t(p)*f.samples+s;Real w=wd[p];
                 doppler_input.p[col+p][0]=range.p[i][0]*w;doppler_input.p[col+p][1]=range.p[i][1]*w;}}}};
     auto normalize_output=[&]{Real factor=Real(1)/Real(n);for(size_t i=0;i<n;++i){output.p[i][0]*=factor;output.p[i][1]*=factor;}};
-    for(int i=0;i<o.warmup;++i){range_window();api.execute(plans.range);doppler_window();api.execute(plans.doppler);if(o.normalize_output) normalize_output();}
+    std::unique_ptr<radar::CaCfar> cfar;
+    std::vector<double> power;
+    const std::vector<radar::CfarPeak>* detections=nullptr;
+    if(o.cfar=="ca") {
+        cfar=std::make_unique<radar::CaCfar>(f.pulses,f.samples);
+        power.resize(n);
+    }
+    auto detect=[&]{
+        for(int d=0;d<f.pulses;++d) for(int r=0;r<f.samples;++r) {
+            size_t i=size_t(r)*f.pulses+d;
+            double re=output.p[i][0],im=output.p[i][1];
+            power[size_t(d)*f.samples+r]=re*re+im*im;
+        }
+        detections=&cfar->detect(power);
+    };
+    for(int i=0;i<o.warmup;++i){range_window();api.execute(plans.range);doppler_window();api.execute(plans.doppler);if(o.normalize_output) normalize_output();if(cfar) detect();}
     size_t peak=0;double peak_power=0,beat=0,doppler=0,meters=0,velocity=0;
     // Reserve profiling storage before timed processing. fft_pipeline excludes
     // peak/axis calculations and includes the optimized Doppler transpose.
-    for(const auto* name:{"processing_total","fft_pipeline","range_window","range_fft","doppler_window","doppler_fft","normalize_output","postprocess","axis_calculation"})
+    for(const auto* name:{"processing_total","fft_pipeline","range_window","range_fft","doppler_window","doppler_fft","normalize_output","postprocess","axis_calculation","cfar"})
         prof.rows[name].samples.reserve(o.repeat);
     for(int iteration=0;iteration<o.repeat;++iteration) {
         prof.run("processing_total",[&]{
@@ -521,6 +543,7 @@ void process(const Frame& f,const Options& o,Profiler& prof,FFTW& api) {
                 meters=beat*C/(2*(o.bandwidth*1e6/(o.chirp*1e-6)));
                 velocity=doppler*C/(2*o.fc*1e9);
             });
+            if(cfar) prof.run("cfar",detect);
         });
         accuracy.check(output.p);
     }
@@ -537,6 +560,21 @@ void process(const Frame& f,const Options& o,Profiler& prof,FFTW& api) {
         std::cout<<"PS_VERIFY_PASS repeats="<<o.repeat<<" bins="<<n
                  <<" max_error_q15_lsb="<<accuracy.max_error<<" worst_rms_q15_lsb="<<accuracy.worst_rms
                  <<" worst_relative_l2="<<accuracy.worst_relative<<'\n';
+    if(detections) {
+        std::cout<<"CFAR: CA guard=(2,2) train=(8,8) Pfa=1e-6 peaks="<<detections->size()<<'\n';
+        if(!o.detections.empty()) {
+            std::ofstream out(o.detections);
+            if(!out) throw std::runtime_error("Cannot open detection CSV");
+            out<<"doppler_bin_unshifted,range_bin,power,threshold,range_m,velocity_mps\n"<<std::setprecision(17);
+            for(const auto& p:*detections) {
+                // Range bins follow S1a unsigned beat convention; Doppler is signed.
+                double range_m=p.range*f.fs/f.samples*C/(2*(o.bandwidth*1e6/(o.chirp*1e-6)));
+                double speed=signed_bin(p.doppler,f.pulses)/(f.pulses*o.prp*1e-6)*C/(2*o.fc*1e9);
+                out<<p.doppler<<','<<p.range<<','<<p.power<<','<<p.threshold<<','<<range_m<<','<<speed<<'\n';
+            }
+            if(!out) throw std::runtime_error("Failed writing detection CSV");
+        }
+    }
     if(!o.output.empty()) {
         std::ofstream out(o.output);if(!out)throw std::runtime_error("Cannot open output file");
         out<<"doppler_bin_unshifted,range_bin,real,imag\n"<<std::setprecision(17);
@@ -579,7 +617,7 @@ int main(int argc,char** argv) {
         std::cout<<"\nInput timing (offline: per-frame; UDP: per-call; CPU% uses summed times)\n";
         prof.report({"receive_total","socket_wait","decode","reassembly"});
         std::cout<<"\nProcessing timing (per-frame averages)\n";
-        prof.report({"range_window","range_fft","doppler_window","doppler_fft","normalize_output","fft_pipeline","postprocess","axis_calculation","processing_total"});
+        prof.report({"range_window","range_fft","doppler_window","doppler_fft","normalize_output","fft_pipeline","postprocess","axis_calculation","cfar","processing_total"});
         auto a=prof.rows.at("range_fft"),b=prof.rows.at("doppler_fft");
         std::cout<<"\nFFT only: wall="<<(a.wall+b.wall)/o.repeat<<" ms, CPU="<<(a.cpu+b.cpu)/o.repeat
                  <<" ms, CPU usage="<<100*(a.cpu+b.cpu)/(a.wall+b.wall)<<"%\n"

@@ -1,0 +1,22 @@
+Evidence: user-reported board console; full raw capture pending.
+Deployment: /opt/fft128/s2a_20261125_rxfix1
+Backend: ps, CPU0, FFTW /opt/fft128/s1b_20261125_192718/libfftw3.so.3
+Diagnostic probe enabled; run_id=92004; frames=20; output=ps_02.
+
+S2A_READY backend=ps run_id=92004 port=5000
+S2A_LEGACY_PROBE bytes=1076 flags=8 payload_truncated=0 control_truncated=1 capacity=36 controllen=20
+S2A_FIRST_PACKET bytes=1076 flags=0 controllen=48 cmsg=1:35:20;1:64:28;
+S2A_FIRST_VALID run_id=92004 frame_id=1
+S2A_RECORDED processed=20 expected=20
+
+The old-buffer MSG_PEEK and the enlarged-buffer receive observe the same
+first datagram. The 36-byte control buffer truncates; the 512-byte buffer
+receives both timestamp control records (20+28 bytes). This confirms the
+ancillary capacity failure on ARM32 in the reported probe. Frame trace,
+per-frame detections, resources and counters await raw-file collection.
+Diagnostic first-frame timings include console/probe work and are not used
+for throughput acceptance.
+
+Prior run92003/ps_01 counters were also reported: received_packets=0,
+invalid=0, failed=0, interrupted=0, all other supplied counters0, error empty.
+This confirms no datagrams were received in that earlier run.

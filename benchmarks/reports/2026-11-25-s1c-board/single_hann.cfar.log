@@ -1,0 +1,2 @@
+CPU_AFFINITY=0
+S1C_CFAR_COMPLETE peaks=1 repeat=100 scope=power+CA+cluster+sort; CSV IO excluded; no end-to-end timing

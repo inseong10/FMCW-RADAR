@@ -1,0 +1,11 @@
+{
+  "evidence": "ARM cross-build artifacts; no board execution",
+  "executable": "build/s1b_arm_20261125_192718/receiver",
+  "sha256": "f9320587d09f6e138c15595b9239047e2cd5a4799c0746e7345f57e69534c442",
+  "elf_class": 32,
+  "elf_machine": 40,
+  "elf_flags": "0x5000400",
+  "hard_float": true,
+  "receiver_source_matches_worktree": true,
+  "board_runtime_verified": false
+}

@@ -144,6 +144,15 @@ class PacketAndReferenceTests(unittest.TestCase):
 
 @unittest.skipUnless(BINARY.is_file(), "Build build/udp_radar_receiver for C++/FFTW checks")
 class CppReceiverTests(unittest.TestCase):
+    def test_recorded_cfar_matches_s1a(self):
+        with tempfile.TemporaryDirectory() as directory:
+            result = subprocess.run([
+                sys.executable, str(ROOT / "tools/detection/verify_receiver.py"),
+                "--binary", str(BINARY.resolve()), "--out", str(Path(directory) / "s1b"),
+                "--warmup", "1", "--repeat", "2"], capture_output=True, text=True, timeout=120)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertIn("S1B_RECORDED_CHECK_PASS cases=6", result.stdout)
+
     def test_q15_normalized_pipeline_matches_numpy(self):
         with tempfile.TemporaryDirectory() as directory:
             directory=Path(directory)

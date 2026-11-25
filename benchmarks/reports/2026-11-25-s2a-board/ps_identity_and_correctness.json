@@ -1,0 +1,39 @@
+{
+  "evidence": "board raw independently verified on Windows",
+  "frames": 20,
+  "detections_per_frame": 4,
+  "hit": 4,
+  "truth": 4,
+  "false": 0,
+  "all_peak_powers_thresholds_match_numpy": true,
+  "input_sha256": "450ffd3c05bf2570773c7fd3bf543a00d66e3ec531a05d07ef2747bb6a688413",
+  "binary_sha256": "e221f04d232780c9193ca7f8c03df253e9fdba533d2bf7305e0da7c5cd508387",
+  "sources": {
+    "src/PS/receiver/stream_receiver.cpp": "1b3c60fa3561d945a164107a6f473b1c9d73bc2c90ef5c10038ab5da30954833",
+    "src/PS/receiver/stream_protocol.hpp": "1e93ed28c8fd24bb963f1579738f960bd1bb2c6935642e7ce5ba1c5d2fcd4d84",
+    "src/PS/receiver/stream_pipeline.hpp": "9ba5832a19fb367580979680b0e925be92587ec0c124a6ddd5ab26f6ae0b8c60",
+    "src/PS/receiver/stream_timestamp.hpp": "da5a68b62f9532ae8a131eaca8a541aa8c4fa6c5a472d67c2f0cfde33041d2d3",
+    "src/PS/receiver/cfar_ca.hpp": "39cb59390a5c9e4f3aba0994e148956822e035bd90c703ab6fc917bc56e7661c",
+    "src/PS/fft128/native_core.c": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+    "src/PS/fft128/native_core.h": "a58054f0d251944c5ffd80abbf35726e67102e50eef3944d0fa3cbad673a17d8",
+    "src/PS/fft128/dma_frame/fft128_dma_frame_uapi.h": "e89d334c172f1d6df50738239c2261cc6cb7bd0ca2be43ce10bd92cc081953f3"
+  },
+  "raw_sha256": {
+    "artifacts.sha256": "2eb32f6bddbe621e81d2aada09c8fc78efca2d2130a01e312dfc812fc67c0418",
+    "build_environment.txt": "a664f01baf5ac381c3207b4dc7e8de73e723437ea6c85f01de4670e6a8e3a37b",
+    "ps_01/counters.txt": "535aefc64b79cc90b965de1f9c359f2d179aaa315e6877805dcc75039963411b",
+    "ps_01/detections.csv": "ffb4dcdc1ff77f384b5fafc0f74cc79b33032f12a09b8556490a2ac699b0dfc9",
+    "ps_01/environment.txt": "15b0e1fb5825d2fff188aa9f478a95a28fbbb5813e57244cf6f96d1a074c1bfd",
+    "ps_01/frames.csv": "1eed489e89c861c5c73e9fbd73c6eb71b55f7acdcd82bd055c2f22b7d0455cdb",
+    "ps_01/resources.csv": "75f8c226ecf539ffe0b46fc4a7052b256f30c5c8003e7fbe4d431fb60ee98f13",
+    "ps_01.console.log": "175183eb1aae0f80a64bcb68af04cf2cb6e05a4fc217b7d456d78cdf67dc8bcf",
+    "ps_02/counters.txt": "8044f7de30138babf67dd27108aff9ce009db1af65a9621c0b30fc9d7f4ac264",
+    "ps_02/detections.csv": "abc1b777e5976d537c7a99597f15c47122be0149eeb693b24dd5088d60247c48",
+    "ps_02/environment.txt": "c0d07b604d3acc1e3ac52f00f7fba9722d192c2e353d65295b4fe4d2b90ee2e9",
+    "ps_02/frames.csv": "fb48d6d2156a5ef2b79bbf5c74e296cd217e7b4b106b44ae5f7e30217beb7f65",
+    "ps_02/resources.csv": "8761618bbc06d3b227ce3fbb1281313fe8c891d18b2d5042d8bf0bdb409bfd9a",
+    "ps_02/summary.json": "6603fb2f849eef33dfa297f41070d1066ca5a780010a16e2316deb154a6f4170",
+    "ps_02.console.log": "6d06d76726f7a943c239d11ad7620a366151e63d119b515a684b58e04dfdb3a6",
+    "stream-receiver": "e221f04d232780c9193ca7f8c03df253e9fdba533d2bf7305e0da7c5cd508387"
+  }
+}

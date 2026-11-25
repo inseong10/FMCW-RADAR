@@ -1,0 +1,412 @@
+{
+  "evidence": "PC SOFTWARE_MODEL + C++ CFAR; no FPGA",
+  "scope": "E14 exported integer FFT -> separate C++ CFAR; correctness, no end-to-end timing",
+  "end_to_end_timing_measured": false,
+  "runs": [
+    {
+      "case": "single_none",
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "truth": [
+        {
+          "truth": {
+            "range_m": 30.0,
+            "speed_mps": -10.0
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 20.014,
+          "detected": [
+            107,
+            20
+          ],
+          "range_m": 29.9792458,
+          "speed_mps": -10.225509384745322,
+          "hit": true
+        }
+      ],
+      "false_peaks": [],
+      "matches_float_baseline": true,
+      "fft_component": {
+        "samples": 3,
+        "median_ms": 3.11709999,
+        "max_ms": 3.193
+      },
+      "cfar_component": {
+        "samples": 3,
+        "median_ms": 0.0983,
+        "max_ms": 0.0983
+      }
+    },
+    {
+      "case": "single_hann",
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "truth": [
+        {
+          "truth": {
+            "range_m": 30.0,
+            "speed_mps": -10.0
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 20.014,
+          "detected": [
+            107,
+            20
+          ],
+          "range_m": 29.9792458,
+          "speed_mps": -10.225509384745322,
+          "hit": true
+        }
+      ],
+      "false_peaks": [],
+      "matches_float_baseline": true,
+      "fft_component": {
+        "samples": 3,
+        "median_ms": 2.7023,
+        "max_ms": 2.70590001
+      },
+      "cfar_component": {
+        "samples": 3,
+        "median_ms": 0.0886,
+        "max_ms": 0.0886
+      }
+    },
+    {
+      "case": "multi4_none",
+      "peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ],
+        [
+          34,
+          10
+        ]
+      ],
+      "truth": [
+        {
+          "truth": {
+            "range_m": 15.0,
+            "speed_mps": 5.0
+          },
+          "expected_doppler_bin": 10.268,
+          "expected_range_bin": 10.007,
+          "detected": [
+            10,
+            10
+          ],
+          "range_m": 14.9896229,
+          "speed_mps": 4.869290183212058,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 30.0,
+            "speed_mps": -10.0
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 20.014,
+          "detected": [
+            107,
+            20
+          ],
+          "range_m": 29.9792458,
+          "speed_mps": -10.225509384745322,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 55.0,
+            "speed_mps": 2.0
+          },
+          "expected_doppler_bin": 4.107,
+          "expected_range_bin": 36.692,
+          "detected": [
+            4,
+            37
+          ],
+          "range_m": 55.46160473,
+          "speed_mps": 1.9477160732848233,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 80.0,
+            "speed_mps": -20.0
+          },
+          "expected_doppler_bin": -41.074,
+          "expected_range_bin": 53.37,
+          "detected": [
+            87,
+            53
+          ],
+          "range_m": 79.44500137,
+          "speed_mps": -19.96408975116944,
+          "hit": true
+        }
+      ],
+      "false_peaks": [
+        [
+          34,
+          10
+        ]
+      ],
+      "matches_float_baseline": true,
+      "fft_component": {
+        "samples": 3,
+        "median_ms": 3.0394,
+        "max_ms": 3.0412
+      },
+      "cfar_component": {
+        "samples": 3,
+        "median_ms": 0.0891,
+        "max_ms": 0.0891
+      }
+    },
+    {
+      "case": "multi4_hann",
+      "peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ]
+      ],
+      "truth": [
+        {
+          "truth": {
+            "range_m": 15.0,
+            "speed_mps": 5.0
+          },
+          "expected_doppler_bin": 10.268,
+          "expected_range_bin": 10.007,
+          "detected": [
+            10,
+            10
+          ],
+          "range_m": 14.9896229,
+          "speed_mps": 4.869290183212058,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 30.0,
+            "speed_mps": -10.0
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 20.014,
+          "detected": [
+            107,
+            20
+          ],
+          "range_m": 29.9792458,
+          "speed_mps": -10.225509384745322,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 55.0,
+            "speed_mps": 2.0
+          },
+          "expected_doppler_bin": 4.107,
+          "expected_range_bin": 36.692,
+          "detected": [
+            4,
+            37
+          ],
+          "range_m": 55.46160473,
+          "speed_mps": 1.9477160732848233,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 80.0,
+            "speed_mps": -20.0
+          },
+          "expected_doppler_bin": -41.074,
+          "expected_range_bin": 53.37,
+          "detected": [
+            87,
+            53
+          ],
+          "range_m": 79.44500137,
+          "speed_mps": -19.96408975116944,
+          "hit": true
+        }
+      ],
+      "false_peaks": [],
+      "matches_float_baseline": true,
+      "fft_component": {
+        "samples": 3,
+        "median_ms": 2.35820001,
+        "max_ms": 2.3668
+      },
+      "cfar_component": {
+        "samples": 3,
+        "median_ms": 0.0771,
+        "max_ms": 0.0871
+      }
+    },
+    {
+      "case": "close_weak_none",
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "truth": [
+        {
+          "truth": {
+            "range_m": 30.0,
+            "speed_mps": -10.0,
+            "rcs": 10
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 20.014,
+          "detected": [
+            107,
+            20
+          ],
+          "range_m": 29.9792458,
+          "speed_mps": -10.225509384745322,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 34.5,
+            "speed_mps": -10.0,
+            "rcs": 0
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 23.016,
+          "detected": null,
+          "range_m": null,
+          "speed_mps": null,
+          "hit": false
+        },
+        {
+          "truth": {
+            "range_m": 60.0,
+            "speed_mps": 8.0,
+            "rcs": -10
+          },
+          "expected_doppler_bin": 16.429,
+          "expected_range_bin": 40.028,
+          "detected": null,
+          "range_m": null,
+          "speed_mps": null,
+          "hit": false
+        }
+      ],
+      "false_peaks": [],
+      "matches_float_baseline": true,
+      "fft_component": {
+        "samples": 3,
+        "median_ms": 2.9573,
+        "max_ms": 3.1908
+      },
+      "cfar_component": {
+        "samples": 3,
+        "median_ms": 0.1311,
+        "max_ms": 0.1474
+      }
+    },
+    {
+      "case": "close_weak_hann",
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "truth": [
+        {
+          "truth": {
+            "range_m": 30.0,
+            "speed_mps": -10.0,
+            "rcs": 10
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 20.014,
+          "detected": [
+            107,
+            20
+          ],
+          "range_m": 29.9792458,
+          "speed_mps": -10.225509384745322,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 34.5,
+            "speed_mps": -10.0,
+            "rcs": 0
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 23.016,
+          "detected": null,
+          "range_m": null,
+          "speed_mps": null,
+          "hit": false
+        },
+        {
+          "truth": {
+            "range_m": 60.0,
+            "speed_mps": 8.0,
+            "rcs": -10
+          },
+          "expected_doppler_bin": 16.429,
+          "expected_range_bin": 40.028,
+          "detected": null,
+          "range_m": null,
+          "speed_mps": null,
+          "hit": false
+        }
+      ],
+      "false_peaks": [],
+      "matches_float_baseline": true,
+      "fft_component": {
+        "samples": 3,
+        "median_ms": 2.3353,
+        "max_ms": 2.352
+      },
+      "cfar_component": {
+        "samples": 3,
+        "median_ms": 0.0773,
+        "max_ms": 0.0786
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "evidence": "updated Ubuntu VM raw + ARM cross-build; no board packet probe yet",
+  "builds": {
+    "host": {
+      "binary_sha256": "bbf6d4dc1a2e914d4beeb4f3d4c65d8ef4ccfa0f22d11622ad9483002be8da5a",
+      "sources": {
+        "src/PS/receiver/stream_receiver.cpp": "1b3c60fa3561d945a164107a6f473b1c9d73bc2c90ef5c10038ab5da30954833",
+        "src/PS/receiver/stream_protocol.hpp": "1e93ed28c8fd24bb963f1579738f960bd1bb2c6935642e7ce5ba1c5d2fcd4d84",
+        "src/PS/receiver/stream_pipeline.hpp": "9ba5832a19fb367580979680b0e925be92587ec0c124a6ddd5ab26f6ae0b8c60",
+        "src/PS/receiver/stream_timestamp.hpp": "da5a68b62f9532ae8a131eaca8a541aa8c4fa6c5a472d67c2f0cfde33041d2d3",
+        "src/PS/receiver/cfar_ca.hpp": "39cb59390a5c9e4f3aba0994e148956822e035bd90c703ab6fc917bc56e7661c",
+        "src/PS/fft128/native_core.c": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+        "src/PS/fft128/native_core.h": "a58054f0d251944c5ffd80abbf35726e67102e50eef3944d0fa3cbad673a17d8",
+        "src/PS/fft128/dma_frame/fft128_dma_frame_uapi.h": "e89d334c172f1d6df50738239c2261cc6cb7bd0ca2be43ce10bd92cc081953f3"
+      }
+    },
+    "arm": {
+      "binary_sha256": "e221f04d232780c9193ca7f8c03df253e9fdba533d2bf7305e0da7c5cd508387",
+      "sources": {
+        "src/PS/receiver/stream_receiver.cpp": "1b3c60fa3561d945a164107a6f473b1c9d73bc2c90ef5c10038ab5da30954833",
+        "src/PS/receiver/stream_protocol.hpp": "1e93ed28c8fd24bb963f1579738f960bd1bb2c6935642e7ce5ba1c5d2fcd4d84",
+        "src/PS/receiver/stream_pipeline.hpp": "9ba5832a19fb367580979680b0e925be92587ec0c124a6ddd5ab26f6ae0b8c60",
+        "src/PS/receiver/stream_timestamp.hpp": "da5a68b62f9532ae8a131eaca8a541aa8c4fa6c5a472d67c2f0cfde33041d2d3",
+        "src/PS/receiver/cfar_ca.hpp": "39cb59390a5c9e4f3aba0994e148956822e035bd90c703ab6fc917bc56e7661c",
+        "src/PS/fft128/native_core.c": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+        "src/PS/fft128/native_core.h": "a58054f0d251944c5ffd80abbf35726e67102e50eef3944d0fa3cbad673a17d8",
+        "src/PS/fft128/dma_frame/fft128_dma_frame_uapi.h": "e89d334c172f1d6df50738239c2261cc6cb7bd0ca2be43ce10bd92cc081953f3"
+      }
+    }
+  }
+}

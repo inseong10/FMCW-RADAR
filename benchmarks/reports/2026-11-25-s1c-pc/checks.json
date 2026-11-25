@@ -1,0 +1,12 @@
+{
+  "evidence": "Windows PC C model + C++ CFAR; not FPGA",
+  "unit_tests": 3,
+  "unit_tests_passed": 3,
+  "pc_pipeline_cases": 6,
+  "pc_pipeline_cases_passed": 6,
+  "model_cannot_pass_hardware_check": true,
+  "host_warmup": 1,
+  "host_repeat": 3,
+  "board_build_verified": false,
+  "board_s1c_run_verified": false
+}

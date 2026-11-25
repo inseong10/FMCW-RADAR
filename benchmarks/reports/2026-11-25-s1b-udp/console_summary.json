@@ -1,0 +1,34 @@
+{
+  "evidence": "User-pasted board console; original UDP spectrum/detections/timings not yet collected",
+  "source": "user attachment, final successful receiver block",
+  "receiver": "/opt/fft128/s1b_20261125_192718/receiver",
+  "board_output_dir": "/opt/fft128/s1b_20261125_192718/udp_multi4_hann_20180309_135527",
+  "client_record_date": "2026-11-25",
+  "board_wall_clock_note": "Output directory uses board date 2018-03-09; not used to infer measurement date",
+  "sender": "10.0.0.2:41915",
+  "board_ipv4": "10.0.0.3",
+  "shape": [
+    128,
+    128
+  ],
+  "sample_rate_hz": 1600000,
+  "duplicates": 0,
+  "invalid": 0,
+  "ignored": 0,
+  "first_to_last_packet_ms": 335.079279,
+  "precision": "float64",
+  "window": "hann",
+  "cfar": "CA guard=(2,2) train=(8,8) Pfa=1e-6",
+  "cfar_peak_count": 4,
+  "peak_bin": [
+    10,
+    10
+  ],
+  "warmup": 0,
+  "repeat": 1,
+  "fft_pipeline_ms": 5.964432,
+  "cfar_ms": 3.890856,
+  "processing_total_ms": 10.884054,
+  "ground_truth_detection_list_checked": false,
+  "udp_continuous_test": false
+}

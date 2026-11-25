@@ -1,0 +1,12 @@
+test_integer_pipeline_six_cases_reordered_and_duplicate (test_s2a.IntegratedPipelineTests.test_integer_pipeline_six_cases_reordered_and_duplicate) ... ok
+test_ps_pipeline_six_cases_reordered_and_duplicate (test_s2a.IntegratedPipelineTests.test_ps_pipeline_six_cases_reordered_and_duplicate) ... ok
+test_rejects_missing_truncated_nonfinite_and_mixed_metadata (test_s2a.IntegratedPipelineTests.test_rejects_missing_truncated_nonfinite_and_mixed_metadata) ... ok
+test_local_udp_frame_ids_and_deliberate_packet_loss (test_s2a.SenderTests.test_local_udp_frame_ids_and_deliberate_packet_loss) ... ok
+test_missing_id_and_reversed_timestamps_rejected (test_s2a.TraceTests.test_missing_id_and_reversed_timestamps_rejected) ... ok
+test_partial_frame_counted_as_drop (test_s2a.TraceTests.test_partial_frame_counted_as_drop) ... ok
+test_valid_trace_and_kernel_drop_invalidation (test_s2a.TraceTests.test_valid_trace_and_kernel_drop_invalidation) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 6.042s
+
+OK

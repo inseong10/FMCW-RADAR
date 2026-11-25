@@ -1,0 +1,27 @@
+{
+  "evidence": "Windows portable tests; not Linux/FPGA",
+  "python": "3.13.13 | packaged by Anaconda, Inc. | (main, Apr 14 2026, 06:12:50) [MSC v.1942 64 bit (AMD64)]",
+  "numpy": "2.5.0",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "cc": "gcc.exe (Rev5, Built by MSYS2 project) 16.1.0\nCopyright (C) 2026 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "cxx": "g++.exe (Rev5, Built by MSYS2 project) 16.1.0\nCopyright (C) 2026 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "sha256": {
+    "src/PS/receiver/stream_pipeline.hpp": "9ba5832a19fb367580979680b0e925be92587ec0c124a6ddd5ab26f6ae0b8c60",
+    "src/PS/receiver/stream_protocol.hpp": "1e93ed28c8fd24bb963f1579738f960bd1bb2c6935642e7ce5ba1c5d2fcd4d84",
+    "src/PS/receiver/stream_receiver.cpp": "fec9618a66bd9ebfa16f570ebaacb70dbf64ac839cf61b1c0cd15c6637502fc7",
+    "src/PS/receiver/cfar_ca.hpp": "39cb59390a5c9e4f3aba0994e148956822e035bd90c703ab6fc917bc56e7661c",
+    "src/PS/receiver/tests/stream_driver.cpp": "a27a8df407a909e7158765aeccd842dcc7f2d0cb79779785010e482ef01622d0",
+    "src/PS/fft128/native_core.c": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+    "src/PS/fft128/native_core.h": "a58054f0d251944c5ffd80abbf35726e67102e50eef3944d0fa3cbad673a17d8",
+    "src/PS/fft128/dma_frame/fft128_dma_frame_uapi.h": "e89d334c172f1d6df50738239c2261cc6cb7bd0ca2be43ce10bd92cc081953f3",
+    "tools/sender/replay_stream.py": "f5f9197e690a302efd6043201c1c46c4d1f4ad2ba89f450c897b42af136e91ea",
+    "tools/sender/replay_udp.py": "3a66f53f0556596ec492a9384c2f8f3fbea89bed0d78723b1757f659563e15fb",
+    "tools/detection/build_s2a.sh": "f07ca1e11b24b1f13a307baa6630001a61ed23098f9c1dba3cca0ad4771d6164",
+    "tools/detection/analyze_stream.py": "90a3e1e0b4b364025fddca70a3a3028c0422e00019837cb8faf9106ae75692bd",
+    "tools/detection/smoke_s2a.py": "bef2b3414fd95043c352712fc9a6290597071093a359ec986412afa7bdbc816c",
+    "tools/detection/test_s2a.py": "a6a6a33ba82274e4c3b5a1f6090fdf2aa0fe9905142f33fa2bfe67677c10c684",
+    "build/fft128_ps_precision_host/libfftw3-3.dll": "001a835d2f25ac0661580d67db5622157c28481c06a7f3ef45ad939839bf54a1",
+    "build/s2a_host_validation/driver.exe": "9b2a33fcf5b0e2735c83088478f8aa6b72a1fb31cc3986612faab4c488f98536",
+    "build/s2a_host_validation/core.o": "9f72d3f579c986062c5af418b7d252973d20625d921e15ee40ac71518bd189dd"
+  }
+}

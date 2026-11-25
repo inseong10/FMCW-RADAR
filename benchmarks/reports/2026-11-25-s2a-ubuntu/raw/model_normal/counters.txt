@@ -1,0 +1,11 @@
+invalid=0
+foreign=0
+duplicates=0
+late=0
+metadata_errors=0
+kernel_drops=0
+kernel_missing=0
+clock_errors=0
+interrupted=0
+failed=0
+error=

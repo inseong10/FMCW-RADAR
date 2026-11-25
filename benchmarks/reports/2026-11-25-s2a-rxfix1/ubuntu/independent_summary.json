@@ -1,0 +1,264 @@
+[
+  {
+    "schema": 1,
+    "backend": "model",
+    "hardware": false,
+    "diagnostic_probe": true,
+    "expected": 20,
+    "status_counts": {
+      "processed": 20
+    },
+    "counters": {
+      "invalid": "0",
+      "foreign": "0",
+      "duplicates": "0",
+      "late": "0",
+      "received_packets": "2560",
+      "payload_truncated": "0",
+      "control_truncated": "0",
+      "decode_errors": "0",
+      "metadata_errors": "0",
+      "kernel_drops": "0",
+      "kernel_missing": "0",
+      "clock_errors": "0",
+      "interrupted": "0",
+      "failed": "0",
+      "error": ""
+    },
+    "trace_valid": true,
+    "invalidating_counters": [],
+    "zero_drops": true,
+    "metrics": {
+      "first_kernel_to_output": {
+        "count": 20,
+        "median_ms": 9.470468499999999,
+        "p99_ms": 14.058596129999996,
+        "max_ms": 14.605791
+      },
+      "complete_to_output": {
+        "count": 20,
+        "median_ms": 7.962027,
+        "p99_ms": 12.170411549999997,
+        "max_ms": 12.74369
+      },
+      "queue_wait": {
+        "count": 20,
+        "median_ms": 0.140143,
+        "p99_ms": 0.28009909999999993,
+        "max_ms": 0.293458
+      },
+      "preparation": {
+        "count": 20,
+        "median_ms": 1.053417,
+        "p99_ms": 1.14101586,
+        "max_ms": 1.145235
+      },
+      "fft_transfer": {
+        "count": 20,
+        "median_ms": 5.946873,
+        "p99_ms": 7.51466766,
+        "max_ms": 7.54326
+      },
+      "power_cfar": {
+        "count": 20,
+        "median_ms": 0.326959,
+        "p99_ms": 0.5671846699999998,
+        "max_ms": 0.591734
+      },
+      "output_flush": {
+        "count": 20,
+        "median_ms": 0.379767,
+        "p99_ms": 4.615177999999994,
+        "max_ms": 5.586382
+      }
+    },
+    "resource_samples": 6,
+    "active_resource_samples": 6,
+    "max_rss_bytes": 5488640,
+    "scope": "kernel first-packet -> per-frame CSV flush; includes acquisition/queue/preparation; no fsync",
+    "continuous_acceptance": "not evaluated by S2a",
+    "sender": {
+      "period_ms": 50.0,
+      "chirp_gap_us": 0,
+      "max_lateness_ms": 1.401534,
+      "overrun_frames": 0,
+      "drop_frame": 0
+    },
+    "offered_load_valid": true
+  },
+  {
+    "schema": 1,
+    "backend": "ps",
+    "hardware": false,
+    "diagnostic_probe": false,
+    "expected": 20,
+    "status_counts": {
+      "processed": 20
+    },
+    "counters": {
+      "invalid": "0",
+      "foreign": "0",
+      "duplicates": "0",
+      "late": "0",
+      "received_packets": "2560",
+      "payload_truncated": "0",
+      "control_truncated": "0",
+      "decode_errors": "0",
+      "metadata_errors": "0",
+      "kernel_drops": "0",
+      "kernel_missing": "0",
+      "clock_errors": "0",
+      "interrupted": "0",
+      "failed": "0",
+      "error": ""
+    },
+    "trace_valid": true,
+    "invalidating_counters": [],
+    "zero_drops": true,
+    "metrics": {
+      "first_kernel_to_output": {
+        "count": 20,
+        "median_ms": 3.445316,
+        "p99_ms": 7.844647509999994,
+        "max_ms": 8.64496
+      },
+      "complete_to_output": {
+        "count": 20,
+        "median_ms": 1.750429,
+        "p99_ms": 6.204522369999994,
+        "max_ms": 7.061494
+      },
+      "queue_wait": {
+        "count": 20,
+        "median_ms": 0.13680599999999998,
+        "p99_ms": 0.24798018999999993,
+        "max_ms": 0.258905
+      },
+      "preparation": {
+        "count": 20,
+        "median_ms": 0.3133205,
+        "p99_ms": 0.4316152799999999,
+        "max_ms": 0.447136
+      },
+      "fft_transfer": {
+        "count": 20,
+        "median_ms": 0.191789,
+        "p99_ms": 0.24693723999999997,
+        "max_ms": 0.252201
+      },
+      "power_cfar": {
+        "count": 20,
+        "median_ms": 0.5683005,
+        "p99_ms": 0.7906549,
+        "max_ms": 0.794263
+      },
+      "output_flush": {
+        "count": 20,
+        "median_ms": 0.486853,
+        "p99_ms": 5.107495109999993,
+        "max_ms": 6.010533
+      }
+    },
+    "resource_samples": 6,
+    "active_resource_samples": 6,
+    "max_rss_bytes": 8404992,
+    "scope": "kernel first-packet -> per-frame CSV flush; includes acquisition/queue/preparation; no fsync",
+    "continuous_acceptance": "not evaluated by S2a",
+    "sender": {
+      "period_ms": 50.0,
+      "chirp_gap_us": 0,
+      "max_lateness_ms": 1.363077,
+      "overrun_frames": 0,
+      "drop_frame": 0
+    },
+    "offered_load_valid": true
+  },
+  {
+    "schema": 1,
+    "backend": "model",
+    "hardware": false,
+    "diagnostic_probe": false,
+    "expected": 20,
+    "status_counts": {
+      "processed": 19,
+      "partial_evicted": 1
+    },
+    "counters": {
+      "invalid": "0",
+      "foreign": "0",
+      "duplicates": "0",
+      "late": "0",
+      "received_packets": "2559",
+      "payload_truncated": "0",
+      "control_truncated": "0",
+      "decode_errors": "0",
+      "metadata_errors": "0",
+      "kernel_drops": "0",
+      "kernel_missing": "0",
+      "clock_errors": "0",
+      "interrupted": "0",
+      "failed": "0",
+      "error": ""
+    },
+    "trace_valid": true,
+    "invalidating_counters": [],
+    "zero_drops": false,
+    "metrics": {
+      "first_kernel_to_output": {
+        "count": 19,
+        "median_ms": 8.371487,
+        "p99_ms": 10.27096702,
+        "max_ms": 10.406095
+      },
+      "complete_to_output": {
+        "count": 19,
+        "median_ms": 6.410107,
+        "p99_ms": 8.257301519999999,
+        "max_ms": 8.323944
+      },
+      "queue_wait": {
+        "count": 19,
+        "median_ms": 0.085874,
+        "p99_ms": 0.21232244000000003,
+        "max_ms": 0.228494
+      },
+      "preparation": {
+        "count": 19,
+        "median_ms": 0.982498,
+        "p99_ms": 1.19816826,
+        "max_ms": 1.201524
+      },
+      "fft_transfer": {
+        "count": 19,
+        "median_ms": 4.776381,
+        "p99_ms": 6.37729306,
+        "max_ms": 6.408367
+      },
+      "power_cfar": {
+        "count": 19,
+        "median_ms": 0.267764,
+        "p99_ms": 0.35861181999999997,
+        "max_ms": 0.360241
+      },
+      "output_flush": {
+        "count": 19,
+        "median_ms": 0.274354,
+        "p99_ms": 0.9047484000000001,
+        "max_ms": 0.991944
+      }
+    },
+    "resource_samples": 6,
+    "active_resource_samples": 6,
+    "max_rss_bytes": 5709824,
+    "scope": "kernel first-packet -> per-frame CSV flush; includes acquisition/queue/preparation; no fsync",
+    "continuous_acceptance": "not evaluated by S2a",
+    "sender": {
+      "period_ms": 50.0,
+      "chirp_gap_us": 0,
+      "max_lateness_ms": 1.274972,
+      "overrun_frames": 0,
+      "drop_frame": 2
+    },
+    "offered_load_valid": true
+  }
+]

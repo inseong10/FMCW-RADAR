@@ -1,0 +1,71 @@
+{
+  "evidence": "Ubuntu VM raw files, independently checked on Windows; no FPGA execution",
+  "builds": {
+    "host": {
+      "sha256": "f79e9d382c83586cb6cd4e6e97452410dbe6c4adfe9f8633613b0a5b8a215553",
+      "elf_class": 2,
+      "machine": 62,
+      "sources": {
+        "src/PS/receiver/stream_receiver.cpp": "fec9618a66bd9ebfa16f570ebaacb70dbf64ac839cf61b1c0cd15c6637502fc7",
+        "src/PS/receiver/stream_protocol.hpp": "1e93ed28c8fd24bb963f1579738f960bd1bb2c6935642e7ce5ba1c5d2fcd4d84",
+        "src/PS/receiver/stream_pipeline.hpp": "9ba5832a19fb367580979680b0e925be92587ec0c124a6ddd5ab26f6ae0b8c60",
+        "src/PS/receiver/cfar_ca.hpp": "39cb59390a5c9e4f3aba0994e148956822e035bd90c703ab6fc917bc56e7661c",
+        "src/PS/fft128/native_core.c": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+        "src/PS/fft128/native_core.h": "a58054f0d251944c5ffd80abbf35726e67102e50eef3944d0fa3cbad673a17d8",
+        "src/PS/fft128/dma_frame/fft128_dma_frame_uapi.h": "e89d334c172f1d6df50738239c2261cc6cb7bd0ca2be43ce10bd92cc081953f3"
+      }
+    },
+    "arm": {
+      "sha256": "21548ffb2ed04c89e271f4dd1a952eafabfd58d5c8e64c6cb895d9b855438371",
+      "elf_class": 1,
+      "machine": 40,
+      "sources": {
+        "src/PS/receiver/stream_receiver.cpp": "fec9618a66bd9ebfa16f570ebaacb70dbf64ac839cf61b1c0cd15c6637502fc7",
+        "src/PS/receiver/stream_protocol.hpp": "1e93ed28c8fd24bb963f1579738f960bd1bb2c6935642e7ce5ba1c5d2fcd4d84",
+        "src/PS/receiver/stream_pipeline.hpp": "9ba5832a19fb367580979680b0e925be92587ec0c124a6ddd5ab26f6ae0b8c60",
+        "src/PS/receiver/cfar_ca.hpp": "39cb59390a5c9e4f3aba0994e148956822e035bd90c703ab6fc917bc56e7661c",
+        "src/PS/fft128/native_core.c": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+        "src/PS/fft128/native_core.h": "a58054f0d251944c5ffd80abbf35726e67102e50eef3944d0fa3cbad673a17d8",
+        "src/PS/fft128/dma_frame/fft128_dma_frame_uapi.h": "e89d334c172f1d6df50738239c2261cc6cb7bd0ca2be43ce10bd92cc081953f3"
+      },
+      "elf_flags": "0x5000400"
+    }
+  },
+  "tools": {
+    "tools/detection/build_s2a.sh": "f07ca1e11b24b1f13a307baa6630001a61ed23098f9c1dba3cca0ad4771d6164",
+    "tools/detection/smoke_s2a.py": "bef2b3414fd95043c352712fc9a6290597071093a359ec986412afa7bdbc816c",
+    "tools/detection/analyze_stream.py": "90a3e1e0b4b364025fddca70a3a3028c0422e00019837cb8faf9106ae75692bd",
+    "tools/sender/replay_stream.py": "f5f9197e690a302efd6043201c1c46c4d1f4ad2ba89f450c897b42af136e91ea",
+    "tools/sender/replay_udp.py": "3a66f53f0556596ec492a9384c2f8f3fbea89bed0d78723b1757f659563e15fb"
+  },
+  "raw_sha256": {
+    "model_loss/counters.txt": "c0f85eae2a9da2f4557fa01f7286661d12da0a85dedf6de3ba8aa2cc17a8f8c4",
+    "model_loss/detections.csv": "3370bd6ae6b823a0344af0cfc570aa9eaec1196b4d4457e62cd0788375ce307e",
+    "model_loss/environment.txt": "74c12f86e223031a090ee29c8917f66a496cabfb7a53b0a90d8105e42175858d",
+    "model_loss/frames.csv": "edb977d32d4e301390426ef8c4048db8ef26e416e965db0aa2382e69283af857",
+    "model_loss/resources.csv": "befd18cc34ccf53338a98bd9f85b4663206683e47f1463e4eedfe7168fe05e40",
+    "model_loss/summary.json": "f8156f935895cd4dac0aa857d8e22aeb2038ab6f06b1fce30ee35831e4b0b000",
+    "model_loss_receiver.log": "f4dd857afc701916df1018e89d5f5fb2c38ecb4ffbe5214d40a2570899664fea",
+    "model_loss_sender.json": "9aeee4fe6b3462e356d33d07068b0494612b7b5d68eab861eac1d7c6e1583b72",
+    "model_loss_sender.log": "994329803e15aed7dc8cde27a92cbed169b10c77b7891d326a26858c3c74d7be",
+    "model_normal/counters.txt": "c0f85eae2a9da2f4557fa01f7286661d12da0a85dedf6de3ba8aa2cc17a8f8c4",
+    "model_normal/detections.csv": "438e2d1bbec34d1f63b369b2678cfb3cbafb777abee3d9ccdec4bd859e2d3008",
+    "model_normal/environment.txt": "278ab013259f11badd0efb11b41e8d1dac04d3720d6edab6503dcf830e8fbf6c",
+    "model_normal/frames.csv": "a87eff8963ed1b56b134b338c06b7ff7deea8a46560988399e5f78813d7165a8",
+    "model_normal/resources.csv": "ad0436d453e1537ad862be5203c3a8d428feef7f59a2e2ab9cde2479644d538f",
+    "model_normal/summary.json": "37481ecbdf8997cfb6b1442105ecbf531826340405c0d0a8bf7a261d7412fd6e",
+    "model_normal_receiver.log": "c43badb7a485929a48192c23deefd1f74122779c1f578f391a95739c9759f65e",
+    "model_normal_sender.json": "f9144f2b062afcea4a56b74a71612e8713f33ca10a2b2a9dc07dee4f3c41e235",
+    "model_normal_sender.log": "ce2f63dd454d19166483876c2346c6cdd0d82c4ab1b7196dca0972eac0cec700",
+    "ps_normal/counters.txt": "c0f85eae2a9da2f4557fa01f7286661d12da0a85dedf6de3ba8aa2cc17a8f8c4",
+    "ps_normal/detections.csv": "868587e050c2c6d511000201d53c43be060940c43b6064468088c2ac6a645fd4",
+    "ps_normal/environment.txt": "b2dbbd518ffe5983f40feb14b597302f850daba5f90fe756b187c9c2c3a1a6a6",
+    "ps_normal/frames.csv": "ffc35b1356a79ccf86d088a3e2f5e303cead8f9cc867007f2a5921d5160450ed",
+    "ps_normal/resources.csv": "89c368b56a69fea3428a4b20a6927d38f1a4396380b98384dcd81caa4fc73f27",
+    "ps_normal/summary.json": "9090c4b39c276d19b67bf3949934eff55680a9b311a926bf1b764b6927bc542b",
+    "ps_normal_receiver.log": "1decd62e69fa8b043a43e360846180cc564fe92b1a0f8b816594fe8e01fa564b",
+    "ps_normal_sender.json": "c3b8332c5793e80f41b8b9707e10d79eb02868ee653ea15f11fc378f602e936a",
+    "ps_normal_sender.log": "58a46e25d65199a5f6f98c33afb5b816a4dac7928fa939d6d128b80f82f27f43",
+    "smoke_summary.json": "8b28a0f92d784352556592bf57e885309fdf50393e316a5c82f96889a1dac5c5"
+  }
+}

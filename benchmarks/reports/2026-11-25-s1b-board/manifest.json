@@ -1,0 +1,272 @@
+{
+  "scope": "S1b offline recorded frames, original IQ, double FFTW",
+  "base_commit": null,
+  "sources": {
+    "src/PS/receiver/udp_radar_receiver.cpp": "1282ad1762ca1f40595528557b6761da4a47ff03d010481ec34f3582c141ca87",
+    "src/PS/receiver/cfar_ca.hpp": "39cb59390a5c9e4f3aba0994e148956822e035bd90c703ab6fc917bc56e7661c",
+    "tools/detection/verify_receiver.py": "f8ee2a642bdb5d525025cd666cf5757022e3b916aea46f9f79c74d5c92d21ec0",
+    "tools/detection/cfar_reference.py": "d46119bd88532791a356c1e2dabf453b9df905fd7893ff1b9b8ec0e75e5e72c7"
+  },
+  "preparation_python": "3.8.10 (default, Mar 18 2025, 20:04:55) \n[GCC 9.4.0]",
+  "numpy": "1.24.4",
+  "repeat": 100,
+  "warmup": 10,
+  "cases": [
+    {
+      "name": "single_none",
+      "record": "radarsimpy_128x128_sim_single_noise.rspb",
+      "sha256": "dc25ac944391a1ae88f3988d171e271dc365038dbc745f12eaf48d32aaacfcb7",
+      "window": "none",
+      "shape": [
+        128,
+        128
+      ],
+      "fs_hz": 1600000.0,
+      "targets": [
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        }
+      ],
+      "arguments": [
+        "--input",
+        "radarsimpy_128x128_sim_single_noise.rspb",
+        "--window",
+        "none",
+        "--cfar",
+        "ca",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100",
+        "--output",
+        "single_none.spectrum.csv",
+        "--detections",
+        "single_none.detections.csv",
+        "--timings",
+        "single_none.timings.csv"
+      ]
+    },
+    {
+      "name": "single_hann",
+      "record": "radarsimpy_128x128_sim_single_noise.rspb",
+      "sha256": "dc25ac944391a1ae88f3988d171e271dc365038dbc745f12eaf48d32aaacfcb7",
+      "window": "hann",
+      "shape": [
+        128,
+        128
+      ],
+      "fs_hz": 1600000.0,
+      "targets": [
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        }
+      ],
+      "arguments": [
+        "--input",
+        "radarsimpy_128x128_sim_single_noise.rspb",
+        "--window",
+        "hann",
+        "--cfar",
+        "ca",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100",
+        "--output",
+        "single_hann.spectrum.csv",
+        "--detections",
+        "single_hann.detections.csv",
+        "--timings",
+        "single_hann.timings.csv"
+      ]
+    },
+    {
+      "name": "multi4_none",
+      "record": "radarsimpy_128x128_sim_multi4_noise.rspb",
+      "sha256": "450ffd3c05bf2570773c7fd3bf543a00d66e3ec531a05d07ef2747bb6a688413",
+      "window": "none",
+      "shape": [
+        128,
+        128
+      ],
+      "fs_hz": 1600000.0,
+      "targets": [
+        {
+          "range_m": 15.0,
+          "speed_mps": 5.0
+        },
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        },
+        {
+          "range_m": 55.0,
+          "speed_mps": 2.0
+        },
+        {
+          "range_m": 80.0,
+          "speed_mps": -20.0
+        }
+      ],
+      "arguments": [
+        "--input",
+        "radarsimpy_128x128_sim_multi4_noise.rspb",
+        "--window",
+        "none",
+        "--cfar",
+        "ca",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100",
+        "--output",
+        "multi4_none.spectrum.csv",
+        "--detections",
+        "multi4_none.detections.csv",
+        "--timings",
+        "multi4_none.timings.csv"
+      ]
+    },
+    {
+      "name": "multi4_hann",
+      "record": "radarsimpy_128x128_sim_multi4_noise.rspb",
+      "sha256": "450ffd3c05bf2570773c7fd3bf543a00d66e3ec531a05d07ef2747bb6a688413",
+      "window": "hann",
+      "shape": [
+        128,
+        128
+      ],
+      "fs_hz": 1600000.0,
+      "targets": [
+        {
+          "range_m": 15.0,
+          "speed_mps": 5.0
+        },
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        },
+        {
+          "range_m": 55.0,
+          "speed_mps": 2.0
+        },
+        {
+          "range_m": 80.0,
+          "speed_mps": -20.0
+        }
+      ],
+      "arguments": [
+        "--input",
+        "radarsimpy_128x128_sim_multi4_noise.rspb",
+        "--window",
+        "hann",
+        "--cfar",
+        "ca",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100",
+        "--output",
+        "multi4_hann.spectrum.csv",
+        "--detections",
+        "multi4_hann.detections.csv",
+        "--timings",
+        "multi4_hann.timings.csv"
+      ]
+    },
+    {
+      "name": "close_weak_none",
+      "record": "radarsimpy_128x128_sim_close_weak_noise.rspb",
+      "sha256": "d307901c4c040f462f8a49bffce9d409f530f347322421b5d5214d7b2d4310f6",
+      "window": "none",
+      "shape": [
+        128,
+        128
+      ],
+      "fs_hz": 1600000.0,
+      "targets": [
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0,
+          "rcs": 10
+        },
+        {
+          "range_m": 34.5,
+          "speed_mps": -10.0,
+          "rcs": 0
+        },
+        {
+          "range_m": 60.0,
+          "speed_mps": 8.0,
+          "rcs": -10
+        }
+      ],
+      "arguments": [
+        "--input",
+        "radarsimpy_128x128_sim_close_weak_noise.rspb",
+        "--window",
+        "none",
+        "--cfar",
+        "ca",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100",
+        "--output",
+        "close_weak_none.spectrum.csv",
+        "--detections",
+        "close_weak_none.detections.csv",
+        "--timings",
+        "close_weak_none.timings.csv"
+      ]
+    },
+    {
+      "name": "close_weak_hann",
+      "record": "radarsimpy_128x128_sim_close_weak_noise.rspb",
+      "sha256": "d307901c4c040f462f8a49bffce9d409f530f347322421b5d5214d7b2d4310f6",
+      "window": "hann",
+      "shape": [
+        128,
+        128
+      ],
+      "fs_hz": 1600000.0,
+      "targets": [
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0,
+          "rcs": 10
+        },
+        {
+          "range_m": 34.5,
+          "speed_mps": -10.0,
+          "rcs": 0
+        },
+        {
+          "range_m": 60.0,
+          "speed_mps": 8.0,
+          "rcs": -10
+        }
+      ],
+      "arguments": [
+        "--input",
+        "radarsimpy_128x128_sim_close_weak_noise.rspb",
+        "--window",
+        "hann",
+        "--cfar",
+        "ca",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100",
+        "--output",
+        "close_weak_hann.spectrum.csv",
+        "--detections",
+        "close_weak_hann.detections.csv",
+        "--timings",
+        "close_weak_hann.timings.csv"
+      ]
+    }
+  ]
+}

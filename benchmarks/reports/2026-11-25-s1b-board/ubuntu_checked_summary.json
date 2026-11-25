@@ -1,0 +1,466 @@
+{
+  "scope": "S1b offline recorded frames, original IQ, double FFTW",
+  "timing_scope": "same-frame repeats; not continuous UDP/P99 acceptance",
+  "checked_on": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+  "runs": [
+    {
+      "case": "single_none",
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "truth": [
+        {
+          "truth": {
+            "range_m": 30.0,
+            "speed_mps": -10.0
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 20.014,
+          "detected": [
+            107,
+            20
+          ],
+          "range_m": 29.9792458,
+          "speed_mps": -10.225509384745322,
+          "hit": true
+        }
+      ],
+      "false_peaks": [],
+      "timings": {
+        "fft_pipeline": {
+          "samples": 100,
+          "median_ms": 5.505561,
+          "p99_ms": 5.55361092,
+          "max_ms": 5.590926
+        },
+        "cfar": {
+          "samples": 100,
+          "median_ms": 3.679449,
+          "p99_ms": 3.79502676,
+          "max_ms": 3.82797
+        },
+        "processing_total": {
+          "samples": 100,
+          "median_ms": 10.180551000000001,
+          "p99_ms": 10.26478278,
+          "max_ms": 10.311192
+        }
+      }
+    },
+    {
+      "case": "single_hann",
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "truth": [
+        {
+          "truth": {
+            "range_m": 30.0,
+            "speed_mps": -10.0
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 20.014,
+          "detected": [
+            107,
+            20
+          ],
+          "range_m": 29.9792458,
+          "speed_mps": -10.225509384745322,
+          "hit": true
+        }
+      ],
+      "false_peaks": [],
+      "timings": {
+        "fft_pipeline": {
+          "samples": 100,
+          "median_ms": 5.507796,
+          "p99_ms": 5.59638756,
+          "max_ms": 5.64228
+        },
+        "cfar": {
+          "samples": 100,
+          "median_ms": 3.6843060000000003,
+          "p99_ms": 3.76925772,
+          "max_ms": 3.788634
+        },
+        "processing_total": {
+          "samples": 100,
+          "median_ms": 10.187451500000002,
+          "p99_ms": 10.29464454,
+          "max_ms": 10.383204
+        }
+      }
+    },
+    {
+      "case": "multi4_none",
+      "peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ],
+        [
+          34,
+          10
+        ]
+      ],
+      "truth": [
+        {
+          "truth": {
+            "range_m": 15.0,
+            "speed_mps": 5.0
+          },
+          "expected_doppler_bin": 10.268,
+          "expected_range_bin": 10.007,
+          "detected": [
+            10,
+            10
+          ],
+          "range_m": 14.9896229,
+          "speed_mps": 4.869290183212058,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 30.0,
+            "speed_mps": -10.0
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 20.014,
+          "detected": [
+            107,
+            20
+          ],
+          "range_m": 29.9792458,
+          "speed_mps": -10.225509384745322,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 55.0,
+            "speed_mps": 2.0
+          },
+          "expected_doppler_bin": 4.107,
+          "expected_range_bin": 36.692,
+          "detected": [
+            4,
+            37
+          ],
+          "range_m": 55.46160473,
+          "speed_mps": 1.9477160732848233,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 80.0,
+            "speed_mps": -20.0
+          },
+          "expected_doppler_bin": -41.074,
+          "expected_range_bin": 53.37,
+          "detected": [
+            87,
+            53
+          ],
+          "range_m": 79.44500137,
+          "speed_mps": -19.96408975116944,
+          "hit": true
+        }
+      ],
+      "false_peaks": [
+        [
+          34,
+          10
+        ]
+      ],
+      "timings": {
+        "fft_pipeline": {
+          "samples": 100,
+          "median_ms": 5.525019,
+          "p99_ms": 5.5941477,
+          "max_ms": 5.608968
+        },
+        "cfar": {
+          "samples": 100,
+          "median_ms": 3.687033,
+          "p99_ms": 3.7636569000000004,
+          "max_ms": 3.775626
+        },
+        "processing_total": {
+          "samples": 100,
+          "median_ms": 10.212444000000001,
+          "p99_ms": 10.28836866,
+          "max_ms": 10.325262
+        }
+      }
+    },
+    {
+      "case": "multi4_hann",
+      "peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ]
+      ],
+      "truth": [
+        {
+          "truth": {
+            "range_m": 15.0,
+            "speed_mps": 5.0
+          },
+          "expected_doppler_bin": 10.268,
+          "expected_range_bin": 10.007,
+          "detected": [
+            10,
+            10
+          ],
+          "range_m": 14.9896229,
+          "speed_mps": 4.869290183212058,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 30.0,
+            "speed_mps": -10.0
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 20.014,
+          "detected": [
+            107,
+            20
+          ],
+          "range_m": 29.9792458,
+          "speed_mps": -10.225509384745322,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 55.0,
+            "speed_mps": 2.0
+          },
+          "expected_doppler_bin": 4.107,
+          "expected_range_bin": 36.692,
+          "detected": [
+            4,
+            37
+          ],
+          "range_m": 55.46160473,
+          "speed_mps": 1.9477160732848233,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 80.0,
+            "speed_mps": -20.0
+          },
+          "expected_doppler_bin": -41.074,
+          "expected_range_bin": 53.37,
+          "detected": [
+            87,
+            53
+          ],
+          "range_m": 79.44500137,
+          "speed_mps": -19.96408975116944,
+          "hit": true
+        }
+      ],
+      "false_peaks": [],
+      "timings": {
+        "fft_pipeline": {
+          "samples": 100,
+          "median_ms": 5.514525,
+          "p99_ms": 5.57575891,
+          "max_ms": 5.627527
+        },
+        "cfar": {
+          "samples": 100,
+          "median_ms": 3.690945,
+          "p99_ms": 3.77763186,
+          "max_ms": 3.78732
+        },
+        "processing_total": {
+          "samples": 100,
+          "median_ms": 10.206336,
+          "p99_ms": 10.30867179,
+          "max_ms": 10.328154
+        }
+      }
+    },
+    {
+      "case": "close_weak_none",
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "truth": [
+        {
+          "truth": {
+            "range_m": 30.0,
+            "speed_mps": -10.0,
+            "rcs": 10
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 20.014,
+          "detected": [
+            107,
+            20
+          ],
+          "range_m": 29.9792458,
+          "speed_mps": -10.225509384745322,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 34.5,
+            "speed_mps": -10.0,
+            "rcs": 0
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 23.016,
+          "detected": null,
+          "range_m": null,
+          "speed_mps": null,
+          "hit": false
+        },
+        {
+          "truth": {
+            "range_m": 60.0,
+            "speed_mps": 8.0,
+            "rcs": -10
+          },
+          "expected_doppler_bin": 16.429,
+          "expected_range_bin": 40.028,
+          "detected": null,
+          "range_m": null,
+          "speed_mps": null,
+          "hit": false
+        }
+      ],
+      "false_peaks": [],
+      "timings": {
+        "fft_pipeline": {
+          "samples": 100,
+          "median_ms": 5.457771,
+          "p99_ms": 5.54204772,
+          "max_ms": 5.556078
+        },
+        "cfar": {
+          "samples": 100,
+          "median_ms": 3.756648,
+          "p99_ms": 3.830205240000001,
+          "max_ms": 4.002786
+        },
+        "processing_total": {
+          "samples": 100,
+          "median_ms": 10.236099,
+          "p99_ms": 10.309450830000001,
+          "max_ms": 10.439916
+        }
+      }
+    },
+    {
+      "case": "close_weak_hann",
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "truth": [
+        {
+          "truth": {
+            "range_m": 30.0,
+            "speed_mps": -10.0,
+            "rcs": 10
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 20.014,
+          "detected": [
+            107,
+            20
+          ],
+          "range_m": 29.9792458,
+          "speed_mps": -10.225509384745322,
+          "hit": true
+        },
+        {
+          "truth": {
+            "range_m": 34.5,
+            "speed_mps": -10.0,
+            "rcs": 0
+          },
+          "expected_doppler_bin": -20.537,
+          "expected_range_bin": 23.016,
+          "detected": null,
+          "range_m": null,
+          "speed_mps": null,
+          "hit": false
+        },
+        {
+          "truth": {
+            "range_m": 60.0,
+            "speed_mps": 8.0,
+            "rcs": -10
+          },
+          "expected_doppler_bin": 16.429,
+          "expected_range_bin": 40.028,
+          "detected": null,
+          "range_m": null,
+          "speed_mps": null,
+          "hit": false
+        }
+      ],
+      "false_peaks": [],
+      "timings": {
+        "fft_pipeline": {
+          "samples": 100,
+          "median_ms": 5.496873,
+          "p99_ms": 5.5645603800000005,
+          "max_ms": 5.591724
+        },
+        "cfar": {
+          "samples": 100,
+          "median_ms": 3.7455930000000004,
+          "p99_ms": 3.823092240000001,
+          "max_ms": 3.979932
+        },
+        "processing_total": {
+          "samples": 100,
+          "median_ms": 10.243331999999999,
+          "p99_ms": 10.315180980000001,
+          "max_ms": 10.426158
+        }
+      }
+    }
+  ]
+}

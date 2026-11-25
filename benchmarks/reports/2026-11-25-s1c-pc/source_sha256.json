@@ -1,0 +1,12 @@
+{
+  "tools/detection/verify_s1c.py": "7ecf5e04f39a08cbf860e5095a4267df264b87eeb3b10c93ea6533a163333bb4",
+  "tools/detection/cfar_spectrum.cpp": "602afde0cce05fcfdad537ff6b619c980c4d86517e1395fe386963b26afd2d1e",
+  "tools/detection/build_s1c.sh": "bbdfefa341b1d9dd569b7f750e1d619caa5357c5533f1fad9d5a73be85d7578c",
+  "tools/detection/test_s1c.py": "cbb8289187d89eae702b06c7a2299c34af3b3ad587613814c8668109f91b23dc",
+  "src/PS/receiver/cfar_ca.hpp": "39cb59390a5c9e4f3aba0994e148956822e035bd90c703ab6fc917bc56e7661c",
+  "src/PS/fft128/native_core.c": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+  "src/PS/fft128/native_receiver.c": "2ccb90fd6c27965f6695c2db40e7b4e92cf1ffc4365603756cd4622be26bb9a1",
+  "src/PS/fft128/receiver.py": "4a08a9d3c08f5b3af68cca2e37eb549d3c71251c68e38b03e15bb3f3892015fe",
+  "tools/detection/cfar_reference.py": "d46119bd88532791a356c1e2dabf453b9df905fd7893ff1b9b8ec0e75e5e72c7",
+  "tools/detection/make_fixture.py": "66e7f7bc3ed0d0fc6d97342c9045e55a874ec2df7e288ab333e4581bd54500a9"
+}

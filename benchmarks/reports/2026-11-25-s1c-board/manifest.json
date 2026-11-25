@@ -1,0 +1,575 @@
+{
+  "experiment": "S1c",
+  "scope": "E14 exported integer FFT -> separate C++ CFAR; correctness, no end-to-end timing",
+  "window_policy": "PC symmetric Hann on original IQ -> float32 RSPB -> board Q15; no additional E14 window",
+  "quantization": "max complex magnitude -> 16384, ties to even; per-stage floor/saturation, total 1/16384",
+  "warmup": 10,
+  "repeat": 100,
+  "numpy": "1.24.4",
+  "sources": {
+    "tools/detection/verify_s1c.py": "7ecf5e04f39a08cbf860e5095a4267df264b87eeb3b10c93ea6533a163333bb4",
+    "tools/detection/cfar_spectrum.cpp": "602afde0cce05fcfdad537ff6b619c980c4d86517e1395fe386963b26afd2d1e",
+    "tools/detection/cfar_reference.py": "d46119bd88532791a356c1e2dabf453b9df905fd7893ff1b9b8ec0e75e5e72c7",
+    "tools/detection/make_fixture.py": "66e7f7bc3ed0d0fc6d97342c9045e55a874ec2df7e288ab333e4581bd54500a9",
+    "src/PS/receiver/cfar_ca.hpp": "39cb59390a5c9e4f3aba0994e148956822e035bd90c703ab6fc917bc56e7661c",
+    "src/PS/fft128/receiver.py": "4a08a9d3c08f5b3af68cca2e37eb549d3c71251c68e38b03e15bb3f3892015fe",
+    "src/PS/fft128/native_core.c": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+    "src/PS/fft128/native_receiver.c": "2ccb90fd6c27965f6695c2db40e7b4e92cf1ffc4365603756cd4622be26bb9a1"
+  },
+  "cases": [
+    {
+      "name": "single_none",
+      "window": "none",
+      "original_record": "radarsimpy_128x128_sim_single_noise.rspb",
+      "original_sha256": "dc25ac944391a1ae88f3988d171e271dc365038dbc745f12eaf48d32aaacfcb7",
+      "record": "single_none.rspb",
+      "record_sha256": "dc25ac944391a1ae88f3988d171e271dc365038dbc745f12eaf48d32aaacfcb7",
+      "expected_file": "single_none.expected.npy",
+      "expected_sha256": "b78f8000ce8cffb03366bcacd3f7f471b6ac25d48b38c01311447ba28b3d35c3",
+      "targets": [
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        }
+      ],
+      "fs_hz": 1600000.0,
+      "input_to_q15_scale": 2360019.3983566454,
+      "float_baseline_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "float_wire_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "q15_ideal_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "integer_model_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "integer_vs_ideal_max_q15_lsb": 9.71149612532472,
+      "integer_vs_ideal_relative_l2": 0.04714396588779488,
+      "pl_arguments": [
+        "--input",
+        "single_none.rspb",
+        "--output",
+        "single_none.pl",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100"
+      ],
+      "cfar_arguments": [
+        "--input",
+        "single_none.pl.csv",
+        "--output",
+        "single_none.detections.csv",
+        "--timings",
+        "single_none.cfar.timings.csv",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100"
+      ]
+    },
+    {
+      "name": "single_hann",
+      "window": "hann",
+      "original_record": "radarsimpy_128x128_sim_single_noise.rspb",
+      "original_sha256": "dc25ac944391a1ae88f3988d171e271dc365038dbc745f12eaf48d32aaacfcb7",
+      "record": "single_hann.rspb",
+      "record_sha256": "e85f9c31a334aaf835fcb554a73e49880a7cf7c755b6434c9c720b181496d9f1",
+      "expected_file": "single_hann.expected.npy",
+      "expected_sha256": "3486bf25e390b43fc9254776a9a3115796f4961850dcd3e56d71425e64ea0892",
+      "targets": [
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        }
+      ],
+      "fs_hz": 1600000.0,
+      "input_to_q15_scale": 3528700.74038106,
+      "float_baseline_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "float_wire_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "q15_ideal_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "integer_model_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "integer_vs_ideal_max_q15_lsb": 9.763283938755285,
+      "integer_vs_ideal_relative_l2": 0.08405387985909551,
+      "pl_arguments": [
+        "--input",
+        "single_hann.rspb",
+        "--output",
+        "single_hann.pl",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100"
+      ],
+      "cfar_arguments": [
+        "--input",
+        "single_hann.pl.csv",
+        "--output",
+        "single_hann.detections.csv",
+        "--timings",
+        "single_hann.cfar.timings.csv",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100"
+      ]
+    },
+    {
+      "name": "multi4_none",
+      "window": "none",
+      "original_record": "radarsimpy_128x128_sim_multi4_noise.rspb",
+      "original_sha256": "450ffd3c05bf2570773c7fd3bf543a00d66e3ec531a05d07ef2747bb6a688413",
+      "record": "multi4_none.rspb",
+      "record_sha256": "450ffd3c05bf2570773c7fd3bf543a00d66e3ec531a05d07ef2747bb6a688413",
+      "expected_file": "multi4_none.expected.npy",
+      "expected_sha256": "b83356f5b07355109a6bccec7bfb3634ca8433f8019eb8751150dcdfc75fac19",
+      "targets": [
+        {
+          "range_m": 15.0,
+          "speed_mps": 5.0
+        },
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        },
+        {
+          "range_m": 55.0,
+          "speed_mps": 2.0
+        },
+        {
+          "range_m": 80.0,
+          "speed_mps": -20.0
+        }
+      ],
+      "fs_hz": 1600000.0,
+      "input_to_q15_scale": 1707820.3112112372,
+      "float_baseline_peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ],
+        [
+          34,
+          10
+        ]
+      ],
+      "float_wire_peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ],
+        [
+          34,
+          10
+        ]
+      ],
+      "q15_ideal_peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ],
+        [
+          34,
+          10
+        ]
+      ],
+      "integer_model_peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ],
+        [
+          34,
+          10
+        ]
+      ],
+      "integer_vs_ideal_max_q15_lsb": 10.041922277051428,
+      "integer_vs_ideal_relative_l2": 0.03002942604625212,
+      "pl_arguments": [
+        "--input",
+        "multi4_none.rspb",
+        "--output",
+        "multi4_none.pl",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100"
+      ],
+      "cfar_arguments": [
+        "--input",
+        "multi4_none.pl.csv",
+        "--output",
+        "multi4_none.detections.csv",
+        "--timings",
+        "multi4_none.cfar.timings.csv",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100"
+      ]
+    },
+    {
+      "name": "multi4_hann",
+      "window": "hann",
+      "original_record": "radarsimpy_128x128_sim_multi4_noise.rspb",
+      "original_sha256": "450ffd3c05bf2570773c7fd3bf543a00d66e3ec531a05d07ef2747bb6a688413",
+      "record": "multi4_hann.rspb",
+      "record_sha256": "131ff171da1aea45a3115a82e0d8bc121e59d655a4eaee6b2e71c3b61568060b",
+      "expected_file": "multi4_hann.expected.npy",
+      "expected_sha256": "3de05c5032bdb717595d112b11405b8c13d3a5cbe097d6be80d0ea60cf433ff6",
+      "targets": [
+        {
+          "range_m": 15.0,
+          "speed_mps": 5.0
+        },
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        },
+        {
+          "range_m": 55.0,
+          "speed_mps": 2.0
+        },
+        {
+          "range_m": 80.0,
+          "speed_mps": -20.0
+        }
+      ],
+      "fs_hz": 1600000.0,
+      "input_to_q15_scale": 1990540.0163187506,
+      "float_baseline_peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ]
+      ],
+      "float_wire_peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ]
+      ],
+      "q15_ideal_peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ]
+      ],
+      "integer_model_peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ]
+      ],
+      "integer_vs_ideal_max_q15_lsb": 9.999519043398223,
+      "integer_vs_ideal_relative_l2": 0.06862305098545195,
+      "pl_arguments": [
+        "--input",
+        "multi4_hann.rspb",
+        "--output",
+        "multi4_hann.pl",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100"
+      ],
+      "cfar_arguments": [
+        "--input",
+        "multi4_hann.pl.csv",
+        "--output",
+        "multi4_hann.detections.csv",
+        "--timings",
+        "multi4_hann.cfar.timings.csv",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100"
+      ]
+    },
+    {
+      "name": "close_weak_none",
+      "window": "none",
+      "original_record": "radarsimpy_128x128_sim_close_weak_noise.rspb",
+      "original_sha256": "d307901c4c040f462f8a49bffce9d409f530f347322421b5d5214d7b2d4310f6",
+      "record": "close_weak_none.rspb",
+      "record_sha256": "d307901c4c040f462f8a49bffce9d409f530f347322421b5d5214d7b2d4310f6",
+      "expected_file": "close_weak_none.expected.npy",
+      "expected_sha256": "7de52a40e4e7ed3935f0f0f296493b0e5eaf03ce13b6c4d6bd631b0e4a7983a4",
+      "targets": [
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0,
+          "rcs": 10
+        },
+        {
+          "range_m": 34.5,
+          "speed_mps": -10.0,
+          "rcs": 0
+        },
+        {
+          "range_m": 60.0,
+          "speed_mps": 8.0,
+          "rcs": -10
+        }
+      ],
+      "fs_hz": 1600000.0,
+      "input_to_q15_scale": 2383552.0226977253,
+      "float_baseline_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "float_wire_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "q15_ideal_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "integer_model_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "integer_vs_ideal_max_q15_lsb": 10.208094343685218,
+      "integer_vs_ideal_relative_l2": 0.04631363720004387,
+      "pl_arguments": [
+        "--input",
+        "close_weak_none.rspb",
+        "--output",
+        "close_weak_none.pl",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100"
+      ],
+      "cfar_arguments": [
+        "--input",
+        "close_weak_none.pl.csv",
+        "--output",
+        "close_weak_none.detections.csv",
+        "--timings",
+        "close_weak_none.cfar.timings.csv",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100"
+      ]
+    },
+    {
+      "name": "close_weak_hann",
+      "window": "hann",
+      "original_record": "radarsimpy_128x128_sim_close_weak_noise.rspb",
+      "original_sha256": "d307901c4c040f462f8a49bffce9d409f530f347322421b5d5214d7b2d4310f6",
+      "record": "close_weak_hann.rspb",
+      "record_sha256": "1ac6d2df48c82a45e48437b9d3739d9c92082f6cf8af73b2b54fa1bc816f6cab",
+      "expected_file": "close_weak_hann.expected.npy",
+      "expected_sha256": "eff73f1462f7f1f62dc7d14a47869f3d8d28dcd90071cdd10107d7eda9ab346d",
+      "targets": [
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0,
+          "rcs": 10
+        },
+        {
+          "range_m": 34.5,
+          "speed_mps": -10.0,
+          "rcs": 0
+        },
+        {
+          "range_m": 60.0,
+          "speed_mps": 8.0,
+          "rcs": -10
+        }
+      ],
+      "fs_hz": 1600000.0,
+      "input_to_q15_scale": 3363470.6147044436,
+      "float_baseline_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "float_wire_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "q15_ideal_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "integer_model_peaks": [
+        [
+          107,
+          20
+        ]
+      ],
+      "integer_vs_ideal_max_q15_lsb": 8.798142448788255,
+      "integer_vs_ideal_relative_l2": 0.08774373158049367,
+      "pl_arguments": [
+        "--input",
+        "close_weak_hann.rspb",
+        "--output",
+        "close_weak_hann.pl",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100"
+      ],
+      "cfar_arguments": [
+        "--input",
+        "close_weak_hann.pl.csv",
+        "--output",
+        "close_weak_hann.detections.csv",
+        "--timings",
+        "close_weak_hann.cfar.timings.csv",
+        "--warmup",
+        "10",
+        "--repeat",
+        "100"
+      ]
+    }
+  ]
+}

@@ -157,6 +157,53 @@ max-frame-mb는 전체 프로세스 메모리 제한이 아닙니다.
 프로토콜에 frame ID가 없으므로 실행 중 여러 시뮬레이션을 겹쳐 보내지 마세요.
 수신기는 완료 후 종료합니다. 한 번 실행할 때 채널 하나만 처리합니다.
 
+## S1b CA-CFAR (보드 검증 전)
+
+`--cfar ca`로 FFT 뒤에 2D CA-CFAR를 실행하고 `--detections detections.csv`로
+최종 반복의 검출 목록을 저장합니다. 기본값은 `--cfar none`입니다.
+S1a와 같은 guard=(2,2), train=(8,8), Pfa=1e-6, square-law,
+Doppler 원형 경계·Range 가용 셀 평균·3×3 지역 최대를 사용합니다.
+동일 전력 피크는 Doppler/Range 순서로 보고합니다. 창은 `--window`를 따릅니다.
+
+```bash
+./build/udp_radar_receiver --input benchmarks/fixtures/radarsimpy_128x128_sim_multi4_noise.rspb \
+  --window hann --cfar ca --detections build/detections.csv --timings build/s1b.timings.csv
+```
+
+`cfar` 시간에는 전력 맵 생성·배열 배치 변환·임계값·피크 묶기·정렬이 포함되고
+`processing_total`에도 포함됩니다. `fft_pipeline` 범위는 기존과 같습니다.
+CFAR 버퍼 할당·계수 준비·CSV 저장은 측정 밖입니다.
+검출 CSV 열은 `doppler_bin_unshifted,range_bin,power,threshold,range_m,velocity_mps`입니다.
+거리 열은 S1a의 unsigned Range bin 규약을, 속도는 signed Doppler 규약을 사용합니다.
+
+Linux PC에서 잡음 기록 3개 × 창 2개를 FFT·검출 목록·시간 표본까지 검증합니다.
+
+```bash
+bash tools/detection/build_s1b.sh host build/s1b_host_build_01
+python tools/detection/verify_receiver.py --binary build/s1b_host_build_01/receiver --out build/s1b_host_01
+```
+
+ARM Linux 빌드는 Ubuntu에서 `bash tools/detection/build_s1b.sh arm build/s1b_arm_build_01`로
+별도 생성합니다. 기본 컴파일러는 `arm-linux-gnueabihf-g++`이며 `S1B_CXX`로 바꿀 수 있습니다.
+보드의 glibc·libstdc++ 및 FFTW3와 호환되는 툴체인이 필요합니다.
+
+보드에 Python이 없으면 PC에서 번들을 준비합니다. `run_board.sh`에는 CPU0 고정이 포함됩니다.
+새 수신기 실행 파일과 FFTW 라이브러리는 따로 빌드/확보해야 합니다.
+
+```bash
+python tools/detection/verify_receiver.py --prepare-only --out build/s1b_board_01 --warmup 10 --repeat 100
+# 번들 디렉터리를 보드에 복사한 뒤 보드에서 실행:
+sh run_board.sh /absolute/path/to/new/receiver /absolute/path/to/libfftw3.so.3
+# 실행 결과를 PC에 회수한 뒤:
+python tools/detection/verify_receiver.py --check-only --out build/s1b_board_01
+```
+
+원본 IQ·배정밀도 경로를 S1b 기준으로 비교합니다. 현재 S1a `quantize_q15`는
+최대 I/Q 성분→32767, 보드/수신기는 최대 복소수 크기→16384로 양자화 규칙이 다릅니다.
+Q15 및 Hann의 PL 적용은 S1c에서 맞춰 검증해야 합니다.
+이 실행은 같은 프레임 반복이며 S2 연속 UDP 처리량이나 P99 합격 검사가 아닙니다.
+S1b 완료 판정에는 보드에서 실제 UDP 수신으로도 같은 검출이 나오는지 확인해야 합니다.
+
 ## CSV 출력
 
 ```bash

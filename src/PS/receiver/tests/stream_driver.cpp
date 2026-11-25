@@ -1,0 +1,30 @@
+// Portable test boundary: real v2 wire packets -> the production pipeline.
+#include "../stream_protocol.hpp"
+#include "../stream_pipeline.hpp"
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+int main(int argc,char** argv) {try {
+    if(argc!=6)throw std::runtime_error("wire backend window fftw output-prefix");
+    std::ifstream wire(argv[1],std::ios::binary);
+    if(!wire)throw std::runtime_error("wire open");
+    stream128::Frame f;f.id=1;
+    std::array<unsigned char,stream128::packet_bytes> bytes{};
+    while(wire.read(reinterpret_cast<char*>(bytes.data()),bytes.size()) || wire.gcount()) {
+        auto p=stream128::decode(bytes.data(),static_cast<size_t>(wire.gcount()));
+        if(p.run!=9)throw std::runtime_error("wrong run");
+        f.add(p);
+    }
+    if(f.count!=128)throw std::runtime_error("incomplete frame");
+    stream128::Pipeline pipeline(argv[2],std::string(argv[3])=="hann",argv[4]);
+    pipeline.prepare(f.iq.data());pipeline.transform();const auto& peaks=pipeline.detect();
+    std::ofstream power(std::string(argv[5])+".power.csv");power<<std::setprecision(17);
+    for(auto v:pipeline.power())power<<v<<'\n';
+    std::ofstream bins(std::string(argv[5])+".bins.csv");bins<<std::setprecision(17);
+    for(size_t i=0;i<16384;++i){auto z=pipeline.spectrum_at(i);bins<<z.real<<','<<z.imag<<'\n';}
+    std::ofstream ds(std::string(argv[5])+".peaks.csv");ds<<std::setprecision(17);
+    ds<<"doppler,range,power,threshold\n";
+    for(const auto& p:peaks)ds<<p.doppler<<','<<p.range<<','<<p.power<<','<<p.threshold<<'\n';
+    if(!power || !ds || !bins)throw std::runtime_error("write failed");
+    return 0;
+}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

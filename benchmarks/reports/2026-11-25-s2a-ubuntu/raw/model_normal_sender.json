@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "run_id": 91001,
+  "destination": [
+    "127.0.0.1",
+    49370
+  ],
+  "record": "/home/user/fmcw_share/FMCW-FFT-test/benchmarks/fixtures/radarsimpy_128x128_sim_multi4_noise.rspb",
+  "record_sha256": "450ffd3c05bf2570773c7fd3bf543a00d66e3ec531a05d07ef2747bb6a688413",
+  "fs": 1600000.0,
+  "frames": 20,
+  "period_ms": 50.0,
+  "chirp_gap_us": 0,
+  "drop_frame": 0,
+  "max_lateness_ms": 1.192797,
+  "overrun_frames": 0,
+  "schedule": [
+    {
+      "frame_id": 1,
+      "intended_ns": 4837005469627,
+      "first_send_ns": 4837006168139,
+      "last_send_ns": 4837007768682,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 2,
+      "intended_ns": 4837055469627,
+      "first_send_ns": 4837055803425,
+      "last_send_ns": 4837057760149,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 3,
+      "intended_ns": 4837105469627,
+      "first_send_ns": 4837106144927,
+      "last_send_ns": 4837107927095,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 4,
+      "intended_ns": 4837155469627,
+      "first_send_ns": 4837155953647,
+      "last_send_ns": 4837156689562,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 5,
+      "intended_ns": 4837205469627,
+      "first_send_ns": 4837206662424,
+      "last_send_ns": 4837207750406,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 6,
+      "intended_ns": 4837255469627,
+      "first_send_ns": 4837255854930,
+      "last_send_ns": 4837257698712,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 7,
+      "intended_ns": 4837305469627,
+      "first_send_ns": 4837305849555,
+      "last_send_ns": 4837306731640,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 8,
+      "intended_ns": 4837355469627,
+      "first_send_ns": 4837355972788,
+      "last_send_ns": 4837357888531,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 9,
+      "intended_ns": 4837405469627,
+      "first_send_ns": 4837406245322,
+      "last_send_ns": 4837408329312,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 10,
+      "intended_ns": 4837455469627,
+      "first_send_ns": 4837456137230,
+      "last_send_ns": 4837458007266,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 11,
+      "intended_ns": 4837505469627,
+      "first_send_ns": 4837506622254,
+      "last_send_ns": 4837508637004,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 12,
+      "intended_ns": 4837555469627,
+      "first_send_ns": 4837556278007,
+      "last_send_ns": 4837557868076,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 13,
+      "intended_ns": 4837605469627,
+      "first_send_ns": 4837605844853,
+      "last_send_ns": 4837607908501,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 14,
+      "intended_ns": 4837655469627,
+      "first_send_ns": 4837655843829,
+      "last_send_ns": 4837657706912,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 15,
+      "intended_ns": 4837705469627,
+      "first_send_ns": 4837705727101,
+      "last_send_ns": 4837707907936,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 16,
+      "intended_ns": 4837755469627,
+      "first_send_ns": 4837756168005,
+      "last_send_ns": 4837757868046,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 17,
+      "intended_ns": 4837805469627,
+      "first_send_ns": 4837805692687,
+      "last_send_ns": 4837807697145,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 18,
+      "intended_ns": 4837855469627,
+      "first_send_ns": 4837856146743,
+      "last_send_ns": 4837858122298,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 19,
+      "intended_ns": 4837905469627,
+      "first_send_ns": 4837905776522,
+      "last_send_ns": 4837907267397,
+      "bytes": 137728
+    },
+    {
+      "frame_id": 20,
+      "intended_ns": 4837955469627,
+      "first_send_ns": 4837955942587,
+      "last_send_ns": 4837958005071,
+      "bytes": 137728
+    }
+  ]
+}

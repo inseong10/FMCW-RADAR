@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "backend": "ps",
+  "hardware": false,
+  "diagnostic_probe": false,
+  "expected": 20,
+  "status_counts": {
+    "missing": 20
+  },
+  "counters": {
+    "invalid": "2560",
+    "foreign": "0",
+    "duplicates": "0",
+    "late": "0",
+    "metadata_errors": "0",
+    "kernel_drops": "0",
+    "kernel_missing": "0",
+    "clock_errors": "0",
+    "interrupted": "0",
+    "failed": "0",
+    "error": ""
+  },
+  "trace_valid": false,
+  "invalidating_counters": [
+    "invalid"
+  ],
+  "zero_drops": false,
+  "metrics": {
+    "first_kernel_to_output": null,
+    "complete_to_output": null,
+    "queue_wait": null,
+    "preparation": null,
+    "fft_transfer": null,
+    "power_cfar": null,
+    "output_flush": null
+  },
+  "resource_samples": 1498,
+  "active_resource_samples": 0,
+  "max_rss_bytes": 5111808,
+  "scope": "kernel first-packet -> per-frame CSV flush; includes acquisition/queue/preparation; no fsync",
+  "continuous_acceptance": "not evaluated by S2a",
+  "sender": {
+    "period_ms": 50.0,
+    "chirp_gap_us": 0,
+    "max_lateness_ms": 0.985032,
+    "overrun_frames": 0,
+    "drop_frame": 0
+  },
+  "offered_load_valid": true
+}

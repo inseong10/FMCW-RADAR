@@ -1,0 +1,136 @@
+{
+  "evidence": "Board UDP original spectrum/detections/timings/log with independent Windows NumPy comparison",
+  "scope": "One paced UDP frame, not continuous real-time acceptance",
+  "warmup": 0,
+  "repeat": 1,
+  "fixture": "benchmarks/fixtures/radarsimpy_128x128_sim_multi4_noise.rspb",
+  "fixture_sha256": "450ffd3c05bf2570773c7fd3bf543a00d66e3ec531a05d07ef2747bb6a688413",
+  "all_16384_fft_bins_checked": true,
+  "max_fft_complex_error": 1.9860273225978185e-15,
+  "relative_fft_l2": 4.695164787484549e-16,
+  "identical_to_offline_board_fft": true,
+  "identical_to_offline_board_detection_csv": true,
+  "detected_bins": [
+    [
+      10,
+      10
+    ],
+    [
+      107,
+      20
+    ],
+    [
+      4,
+      37
+    ],
+    [
+      87,
+      53
+    ]
+  ],
+  "truth": [
+    {
+      "truth": {
+        "range_m": 15.0,
+        "speed_mps": 5.0
+      },
+      "expected_doppler_bin": 10.268,
+      "expected_range_bin": 10.007,
+      "detected": [
+        10,
+        10
+      ],
+      "range_m": 14.9896229,
+      "speed_mps": 4.869290183212058,
+      "hit": true
+    },
+    {
+      "truth": {
+        "range_m": 30.0,
+        "speed_mps": -10.0
+      },
+      "expected_doppler_bin": -20.537,
+      "expected_range_bin": 20.014,
+      "detected": [
+        107,
+        20
+      ],
+      "range_m": 29.9792458,
+      "speed_mps": -10.225509384745322,
+      "hit": true
+    },
+    {
+      "truth": {
+        "range_m": 55.0,
+        "speed_mps": 2.0
+      },
+      "expected_doppler_bin": 4.107,
+      "expected_range_bin": 36.692,
+      "detected": [
+        4,
+        37
+      ],
+      "range_m": 55.46160473,
+      "speed_mps": 1.9477160732848233,
+      "hit": true
+    },
+    {
+      "truth": {
+        "range_m": 80.0,
+        "speed_mps": -20.0
+      },
+      "expected_doppler_bin": -41.074,
+      "expected_range_bin": 53.37,
+      "detected": [
+        87,
+        53
+      ],
+      "range_m": 79.44500137,
+      "speed_mps": -19.96408975116944,
+      "hit": true
+    }
+  ],
+  "false_peaks": [],
+  "duplicates": 0,
+  "invalid": 0,
+  "ignored": 0,
+  "stage_timings": {
+    "decode": {
+      "samples": 128,
+      "total_ms": 2.196606
+    },
+    "reassembly": {
+      "samples": 128,
+      "total_ms": 1.8870179999999999
+    },
+    "fft_pipeline": {
+      "samples": 1,
+      "total_ms": 5.964432
+    },
+    "cfar": {
+      "samples": 1,
+      "total_ms": 3.890856
+    },
+    "processing_total": {
+      "samples": 1,
+      "total_ms": 10.884054
+    },
+    "receive_total": {
+      "samples": 1,
+      "total_ms": 6324.44342
+    }
+  },
+  "original_spectrum": "build/s1b_udp_multi4_hann_20261125_01/multi4_hann.spectrum.csv",
+  "raw_sha256": {
+    "multi4_hann.detections.csv": "d317de313fcf677c740383024f09166b6d23eb9f26ce2cf128695844cae592fe",
+    "multi4_hann.spectrum.csv": "0df302c9e384ca5bbe3e967534806441648e5286f2e5658526b5244d11fe6641",
+    "multi4_hann.timings.csv": "9dd9e46a721f968476fcecd11ae8396be14b89897168c55ced377f8e69cb9df2",
+    "receiver.log": "213201e9fb2a6d741a3c9083f1e9c3f06da2a5829ecc1f8eb70ae81da3a31943"
+  },
+  "checker_environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.13 | packaged by Anaconda, Inc. | (main, Apr 14 2026, 06:12:50) [MSC v.1942 64 bit (AMD64)]",
+    "numpy": "2.5.0"
+  },
+  "reference_source_sha256": "d46119bd88532791a356c1e2dabf453b9df905fd7893ff1b9b8ec0e75e5e72c7"
+}
