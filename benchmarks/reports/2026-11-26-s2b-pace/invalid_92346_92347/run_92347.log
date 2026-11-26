@@ -1,0 +1,2 @@
+/opt/fft128/s2a_int16_20261126_adc01/run_board.sh: line 35: devmem: command not found
+AGENT_RUN_DONE run_id=92347 status=127

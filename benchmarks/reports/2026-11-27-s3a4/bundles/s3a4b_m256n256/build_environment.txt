@@ -1,0 +1,21 @@
+arm-linux-gnueabihf-gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+arm-linux-gnueabihf-g++ (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+target=arm precision=double opt=-O2 tune_flags= definitions=
+C=-std=c11 CXX=-std=c++17 -Wall -Wextra -Werror -pthread -ldl; no fast-math
+8dc69e919668e204d9515e378adea26ed1cb3180628fe55c8c79befccf6d37d9  /home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp
+971a370e0d4c54e676886399827702012678101524bba6dad5b9dd321d65edab  /home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_protocol.hpp
+103bf9a78511bb1cc19bdb36b96c5e5e19bed6f4a98abea4c62accd4ca264404  /home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_pipeline.hpp
+da5a68b62f9532ae8a131eaca8a541aa8c4fa6c5a472d67c2f0cfde33041d2d3  /home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_timestamp.hpp
+597b26d678c421c686ba64490c33c0762fccf38ebe44e2de3aecdd1b0b257d5a  /home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_adc16.hpp
+ee12fba9fea10407f97d069b280ef48e8f3571d181ecec091ab41f038079b975  /home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/cfar_ca.hpp
+2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c  /home/user/fmcw_share/FMCW-FFT-test/src/PS/fft128/native_core.c
+a58054f0d251944c5ffd80abbf35726e67102e50eef3944d0fa3cbad673a17d8  /home/user/fmcw_share/FMCW-FFT-test/src/PS/fft128/native_core.h
+e89d334c172f1d6df50738239c2261cc6cb7bd0ca2be43ce10bd92cc081953f3  /home/user/fmcw_share/FMCW-FFT-test/src/PS/fft128/dma_frame/fft128_dma_frame_uapi.h

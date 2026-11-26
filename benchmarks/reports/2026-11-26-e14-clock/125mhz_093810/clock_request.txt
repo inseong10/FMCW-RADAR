@@ -1,0 +1,2 @@
+requested_mhz=125
+vivado_status=1

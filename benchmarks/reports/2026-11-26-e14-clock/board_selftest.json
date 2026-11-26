@@ -1,0 +1,20 @@
+{
+  "status": "100MHZ_BOARD_SELFTEST_USER_CONSOLE_PASS",
+  "evidence_kind": "user_console",
+  "date": "2026-11-26 Asia/Seoul",
+  "board_path": "/opt/fft128/e14_clock_100000000_20261126_095418",
+  "selected_clock_hz": 100000000,
+  "clock_basis": "validated 100MHz bitstream and DT bundle; loader checks artifact manifest",
+  "physical_frequency_counter_measurement": false,
+  "client_trials": 4,
+  "client_bit_exact_bins_per_trial": 16384,
+  "profiled_trial_phase_cycles": [[17788,17771,16385],[17789,17771,16385],[17786,17771,16385]],
+  "overwrite_errors": 0,
+  "receiver_selftest_frames": 4,
+  "receiver_selftest_bins": 65536,
+  "raw_board_log_collected": false,
+  "boot_id_collected": false,
+  "post_reboot_cpu_clock_verified": false,
+  "performance_measured": false,
+  "maximum_clock_claim": false
+}

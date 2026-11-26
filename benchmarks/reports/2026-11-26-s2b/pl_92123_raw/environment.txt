@@ -1,0 +1,17 @@
+backend=pl
+hardware=1
+window=hann
+run_id=92123
+frames=200
+cpu0=0
+queue=4
+partial=4
+socket_rcvbuf=360448
+warmup=10
+time_t_bytes=4
+timespec_bytes=8
+control_capacity=512
+diagnostic_probe=0
+PS=double FFTW 2D ESTIMATE; PL=E14 ABI8; model=software only
+output=per-frame detections CSV flush (no fsync)
+sender_ns=opaque remote monotonic timestamp; never subtracted

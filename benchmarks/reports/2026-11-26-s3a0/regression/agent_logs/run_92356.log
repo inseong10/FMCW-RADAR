@@ -1,0 +1,2 @@
+bundle=/opt/fft128/s2a_int16_20261126_s3a0_01 store=nfs out=/opt/fft128/s2a_int16_20261126_s3a0_01/pl_s3a0_main_04
+S2A_READY backend=pl run_id=92356 port=5000

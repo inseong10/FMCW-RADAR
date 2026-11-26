@@ -1,0 +1,13 @@
+{
+  "run_id": 92121,
+  "requested_cpu_mode": "both cores allowed by omitting --cpu0",
+  "actual_online_cpu_and_affinity_capture": "not supplied",
+  "processed_frames_user_console": 150,
+  "expected_frames": 200,
+  "receiver_raw_collected": false,
+  "offered_load_valid": false,
+  "sender_sha256": "d64061b738c3376d7691d7d2066b2a3e69e158d372563bebe0826ae63fa1ddab",
+  "sender_overrun_frames": 35,
+  "sender_max_lateness_ms": 16.692511,
+  "scope": "failed preliminary attempt; not maximum sustainable FPS; no speedup ratio established"
+}

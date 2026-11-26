@@ -9,9 +9,13 @@ E15-memory는 S3b의 메모리 구조 후보이며, 아래 E15a → E15b → E15
 PS02·E11c·E11d는 S2c에서 병목으로 확인될 때만 실행한다.
 
 - 계획 수립 2026-11-15, PS 목표 갱신 2026-11-16, E11b 결과 반영 2026-11-19, E12·E13 완료 반영 2026-11-21.
-- 최신 보드 검증 구성: E14-frame (전용 7단계 FFT 재사용·PL 전치/최종 재배열 / 50MHz / Q15 / 전체 프레임 HP0 Simple DMA).
-  각300회 중앙값 PL **1.657914ms**, 같은 회차 NEON **3.489441ms** / double **5.706612ms**.
-  [최신 결과](../benchmarks/reports/2026-11-21-e14-frame-board/README.md).
+- 최신 보드 검증 구성: E14-clock (같은 E14 전용7단계 FFT·PL 전치/최종 배열 복원 / 100MHz / Q15 / 전체 프레임 HP0 Simple DMA).
+- 11-26 사용자 요청: S2b 전에 [E14-clock](../tools/clock/README.md)으로 같은 회로의 검증된 클럭 상한을 탐색한다.
+  현재 CPU는 약667MHz 설정을 확인했고 PL100MHz PASS/125MHz setup실패 원본을 보존했다.
+  사용자 결정으로100MHz를 선택하고 추가 탐색을 중단했다. 원본83개·CPU 전후·profile20회·
+  paired 각300회·정확성·신원을 독립 검증했다. 기존50MHz 성능은 보존한다.
+  최신 중앙값 PL **1.124817ms**, 같은 회차 NEON **3.563415ms** / double **5.631855ms**,
+  NEON 대비 **3.167995배** 빠르다. [최신 결과](../benchmarks/reports/2026-11-26-e14-clock/README.md).
 
 ## 1. 목표
 
@@ -37,6 +41,7 @@ PS02·E11c·E11d는 S2c에서 병목으로 확인될 때만 실행한다.
 | E13-bf2 | 기존 4코어 각각 버터플라이 1→2개 | E12 FIFO·스케줄·Q15·50 MHz·전송 | **완료** 11-21 | PL 2.841720 ms ([보고서](../benchmarks/reports/2026-11-21-e13-bf2-board/README.md)) |
 | E13-stream | 반복형 4코어 → 전용 DIT 7단계 단일 파이프라인 | Q15·50 MHz·단일 DMA·복사·PS 전치 | **완료** 11-21 | PL 2.787411 ms ([보고서](../benchmarks/reports/2026-11-21-e13-stream-board/README.md)) |
 | E14-frame | PL 내부 중간 결과 보관·전치, 두 축 단일 요청 | Q15·50 MHz·단일 FFT·외부 출력 배열 | **완료** 11-21 | PL1.657914ms/NEON 대비2.104718배. profile20회·paired 각300회·원시82파일 독립검증 ([보고서](../benchmarks/reports/2026-11-21-e14-frame-board/README.md)) |
+| E14-clock | 같은 E14 회로를100MHz로 변경 | RTL·Q15·HP0·DMA·ARM 바이너리 | **완료** 11-26 | PL1.124817ms/같은 회차 NEON 대비3.167995배. 원시83파일·CPU 전후·profile20회·각300회 검증 ([보고서](../benchmarks/reports/2026-11-26-e14-clock/README.md)) |
 | 분리 실험 (선택) | serial/pipeline × 20/50 MHz 4구성 | 입력·측정 조건 | 계획 | E10의 결합 효과를 나눌 때만 |
 | E15-memory | RAM 배치 효율 → 작은 크기 BRAM·OCM → 큰 크기 DDR 타일 전치 | 크기별 같은 산술·입력·측정 범위, E14 기준선 보존 | 계획 | 기존 utilization 점검, 새 구현·측정 미실시 |
 

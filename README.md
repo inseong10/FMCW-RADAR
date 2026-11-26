@@ -35,9 +35,13 @@ RTL·host53개·ARM/Vivado·보드 자체 검사·20회 profile·paired 원시 �
 |---|---|---|
 | PS vs PL 처리 | 입력 크기(chirp·sample 수) | 처리 시간, 최대 프레임률, CPU 사용률, 교차점 |
 | DMA 오버헤드 vs PL 연산 이득 | 프레임 크기, 전송 방식 | end-to-end 지연, 전송 시간 비중 |
-| 정밀도 vs 정확도 | int16 스케일 계수 S, 고정소수점 | 검출 거리·속도 오차, 포화 비율 |
+| 정밀도 vs 정확도 | ADC16 고정 스케일 S=1,600,000 codes/unit(profile1), 고정소수점 | 검출 거리·속도 오차, 포화 비율 |
 | PL 자원 vs 지원 크기 | 최대 N_CHIRPS·N_SAMPLES | LUT·BRAM·DSP 사용량, 타이밍 |
 | 실시간성 vs 부하 | 프레임 주기, 부하 주입 | P99 지연, 드랍율, 큐 대기 |
+
+새 시스템 입력은 ADC 모사 고정 이득 int16 IQ다. ADC 변환은 측정 밖, Hann과 PS int16→double 변환은 수신기 안이다.
+기존 float 입력 실험은 보존하며, [S2a-int16 검증](benchmarks/reports/2026-11-26-s2a-int16/README.md)과
+[Ubuntu·보드 실행 순서](docs/adc16_runbook.md)를 별도 기록한다. 스케일 스윕은 후속 실험으로 분리한다.
 
 
 ## 목표
@@ -87,14 +91,28 @@ FFT 두 축·필요한 복사·전송·전치·배열 복원을 포함하고 UDP
 | E13-bf2/50 MHz + 코어당2 butterfly | 5.708 ms | 3.520 ms | 2.842 ms |
 | E13-stream/50 MHz + 전용7단계 | 5.826 ms | 3.653 ms | 2.787 ms |
 | E14-frame/50 MHz + PL 전치·최종 배열 복원 | 5.707 ms | 3.489 ms | **1.658 ms** |
+| E14-clock/100 MHz + 같은 E14 회로 | 5.632 ms | 3.563 ms | **1.125 ms** |
+
+최신100MHz 회차에서 CPU 설정은 전후 약666.67MHz로 같았으며 PL은 NEON 대비 **3.168배** 빠름.
+원본83개·반복별 정확성·배포 신원·IRQ·클럭을 검증함.100MHz는 사용자가 선택한 비교 클럭임.
 
 E10에서 PL은 이전보다 3.225배 개선됐지만 당시 PS double보다 4.545배 느렸음. 매 반복 16,384 bin이
 정수 모델과 일치했고, 저장 출력의 NumPy 대비 상대 L2 오차는 1.361%임.
 [E10 결과](benchmarks/reports/2026-11-15-pipeline50-benchmark/README.md),
-[최신 E14-frame 결과·조건·원시 시간 CSV](benchmarks/reports/2026-11-21-e14-frame-board/README.md),
+[최신100MHz 결과·조건·원시 시간 CSV](benchmarks/reports/2026-11-26-e14-clock/README.md),
+[기존50MHz 결과](benchmarks/reports/2026-11-21-e14-frame-board/README.md),
 [변경 이유와 실험 일지](docs/experiment_log.md), [벤치마크 재현 절차](benchmarks/README.md)를 참고함.
 
 ## 코드와 실행 안내
+
+### PS / PL 시각화 대시보드
+
+`python tools/dashboard/server.py --open` 또는 Windows의
+`tools/dashboard/run_dashboard.bat`로 로컬 대시보드를 실행합니다.
+기준 프레임의 PS·PL 히트맵과 오차, 단계별 처리 구조, 기존 보드 성능 기록을 볼 수 있습니다.
+합성 표적 / 프로젝트 RadarSimPy 입력 생성과 PS·PL CSV 가져오기도 지원합니다.
+새 입력의 PL 결과는 소프트웨어 모델이며 보드 실측과 구분합니다.
+[실행·데이터 출처·CSV 형식](tools/dashboard/README.md).
 
 | 경로 | 내용 |
 |---|---|

@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "backend": "pl",
+  "hardware": true,
+  "diagnostic_probe": true,
+  "expected": 20,
+  "status_counts": {
+    "processed": 20
+  },
+  "counters": {
+    "invalid": "0",
+    "foreign": "0",
+    "duplicates": "0",
+    "late": "0",
+    "received_packets": "5120",
+    "payload_truncated": "0",
+    "control_truncated": "0",
+    "decode_errors": "0",
+    "metadata_errors": "0",
+    "kernel_drops": "0",
+    "kernel_missing": "0",
+    "clock_errors": "0",
+    "interrupted": "0",
+    "failed": "0",
+    "error": ""
+  },
+  "trace_valid": true,
+  "invalidating_counters": [],
+  "zero_drops": true,
+  "metrics": {
+    "first_kernel_to_output": {
+      "count": 20,
+      "median_ms": 41.068355499999996,
+      "p99_ms": 45.52913795999999,
+      "max_ms": 46.519839
+    },
+    "complete_to_output": {
+      "count": 20,
+      "median_ms": 15.939357000000001,
+      "p99_ms": 16.00268802,
+      "max_ms": 16.007256
+    },
+    "queue_wait": {
+      "count": 20,
+      "median_ms": 0.088629,
+      "p99_ms": 0.12613475999999996,
+      "max_ms": 0.132708
+    },
+    "preparation": {
+      "count": 20,
+      "median_ms": 1.903407,
+      "p99_ms": 1.98083622,
+      "max_ms": 1.99221
+    },
+    "fft_transfer": {
+      "count": 20,
+      "median_ms": 9.313092000000001,
+      "p99_ms": 9.37255548,
+      "max_ms": 9.375768
+    },
+    "power_cfar": {
+      "count": 20,
+      "median_ms": 4.4094750000000005,
+      "p99_ms": 4.43424126,
+      "max_ms": 4.4352
+    },
+    "output_flush": {
+      "count": 20,
+      "median_ms": 0.217455,
+      "p99_ms": 0.2548775399999999,
+      "max_ms": 0.26313
+    }
+  },
+  "resource_samples": 64,
+  "active_resource_samples": 6,
+  "max_rss_bytes": 5492736,
+  "scope": "kernel first-packet -> per-frame CSV flush; includes acquisition/queue/preparation; no fsync",
+  "continuous_acceptance": "not evaluated by S2a",
+  "sender": {
+    "period_ms": 50.0,
+    "chirp_gap_us": 100.0,
+    "max_lateness_ms": 0.019865,
+    "overrun_frames": 0,
+    "drop_frame": 0,
+    "chirp_pacing": {
+      "gap_us": 100.0,
+      "late_p99_limit_us": 10.0,
+      "late_max_limit_ms": 5.0,
+      "chirps": 5120,
+      "late_median_ms": 0.000141,
+      "late_p99_ms": 0.028299,
+      "late_p99_9_ms": 0.240616,
+      "late_max_ms": 0.47287,
+      "late_total_max_ms": 0.479094,
+      "chirps_ge_100us": 19,
+      "frames_with_chirp_ge_100us": 5,
+      "frame_boundary_overruns": 0,
+      "sendto_max_ms": 0.543582,
+      "detail": false,
+      "valid": false,
+      "schedule": "absolute"
+    }
+  },
+  "offered_load_valid": false
+}

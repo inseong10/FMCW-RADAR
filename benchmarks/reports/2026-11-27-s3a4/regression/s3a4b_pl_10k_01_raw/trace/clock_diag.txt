@@ -1,0 +1,13 @@
+clock_errors=2
+offset_errors=1
+kernel_errors=1
+samples=2559951
+span_max_ns=6399132
+span_over_20us=37377
+span_over_1ms=35
+offset_dev_max_ns=3198408
+events_recorded=2
+# kind o=offset moved >2ms, k=kernel time >1ms after user receive; dev=offset-first offset; lag=kernel(converted)-received; span=after-before of the offset sample (ns)
+kind,packet_index,frame_id,chirp,dev_ns,lag_ns,span_ns
+o,103044,403,131,-3198408,3072312,6399132
+k,103044,403,131,-3198408,3072312,6399132

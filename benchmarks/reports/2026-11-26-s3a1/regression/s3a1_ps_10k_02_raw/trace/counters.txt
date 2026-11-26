@@ -1,0 +1,15 @@
+invalid=0
+foreign=0
+duplicates=0
+late=0
+received_packets=1279982
+payload_truncated=0
+control_truncated=0
+decode_errors=0
+metadata_errors=0
+kernel_drops=18
+kernel_missing=0
+clock_errors=0
+interrupted=0
+failed=0
+error=

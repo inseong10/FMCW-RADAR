@@ -1,0 +1,28 @@
+{
+  "file": "radarsimpy_128x128_adc16.rspb",
+  "record_sha256": "70931e2da879778d386e635e24f665a9f8a057b036535697b54917d5c431f332",
+  "source_file": "radarsimpy_128x128.rspb",
+  "source_sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+  "sample_rate_hz": 1600000.0,
+  "profile": {
+    "profile": 1,
+    "bits": 16,
+    "scale_codes_per_unit": 1600000.0,
+    "window_applied": false,
+    "payload_bytes_per_frame": 65536
+  },
+  "targets": [
+    {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+    }
+  ],
+  "noise": false,
+  "clipped_components": 0,
+  "clipped_complex_samples": 0,
+  "total_components": 32768,
+  "peak_source_complex": 0.0009916450425319421,
+  "peak_source_component": 0.0009915608679875731,
+  "peak_quantized_component": 1586,
+  "rounding_error_complex_rms_lsb": 0.4093557127019857
+}

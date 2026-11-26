@@ -1,0 +1,5 @@
+bundle=/opt/fft128/s2a_int16_20261126_s3a1_01 store=nfs out=/opt/fft128/s2a_int16_20261126_s3a1_01/s3a1_ps_10k_01
+S2A_READY backend=ps run_id=92405 port=5000
+S2A_RECORDED processed=9998 expected=10000
+ADC16_RECORDED backend=ps exit=2 out=/opt/fft128/s2a_int16_20261126_s3a1_01/s3a1_ps_10k_01
+AGENT_RUN_DONE run_id=92405 status=2

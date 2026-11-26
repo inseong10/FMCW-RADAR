@@ -1,0 +1,52 @@
+[
+ {
+  "input": "radarsimpy_128x128_adc16.rspb",
+  "window": "hann",
+  "equal": true
+ },
+ {
+  "input": "radarsimpy_128x128_adc16.rspb",
+  "window": "none",
+  "equal": true
+ },
+ {
+  "input": "radarsimpy_128x128_sim_close_weak_noise_adc16.rspb",
+  "window": "hann",
+  "equal": true
+ },
+ {
+  "input": "radarsimpy_128x128_sim_close_weak_noise_adc16.rspb",
+  "window": "none",
+  "equal": true
+ },
+ {
+  "input": "radarsimpy_128x128_sim_multi4_noise_adc16.rspb",
+  "window": "hann",
+  "equal": true
+ },
+ {
+  "input": "radarsimpy_128x128_sim_multi4_noise_adc16.rspb",
+  "window": "none",
+  "equal": true
+ },
+ {
+  "input": "radarsimpy_128x128_sim_single_noise_adc16.rspb",
+  "window": "hann",
+  "equal": true
+ },
+ {
+  "input": "radarsimpy_128x128_sim_single_noise_adc16.rspb",
+  "window": "none",
+  "equal": true
+ },
+ {
+  "input": "edge_values",
+  "window": "hann",
+  "equal": true
+ },
+ {
+  "input": "edge_values",
+  "window": "none",
+  "equal": true
+ }
+]

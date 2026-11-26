@@ -1,0 +1,129 @@
+"""Recalculate the failed S2b attempt; preserve invalid timing as diagnostic evidence."""
+import csv
+import hashlib
+import json
+from pathlib import Path
+import platform
+import shutil
+import sys
+from collections import Counter
+
+import numpy as np
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'tools/detection'))
+import analyze_stream as analyzer
+import cfar_reference as ref
+
+RAW = ROOT / 'build/s2b_ps_2core_spin_12p8ms_200_01'
+REPORT = ROOT / 'benchmarks/reports/2026-11-26-s2b'
+SENDER = REPORT / 'ps_92122_sender.json'
+SOURCE = Path(r'C:\Users\user\Documents\share\FMCW-FFT-test\build\s2b_ps_2core_spin_12p8ms_200_01')
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def read_csv(path):
+    with path.open(newline='') as f:
+        return list(csv.DictReader(f))
+
+
+def stats(values):
+    return analyzer.statistics(values)
+
+
+names = ['environment.txt', 'counters.txt', 'frames.csv', 'detections.csv', 'resources.csv']
+for name in names:
+    assert sha(SOURCE/name) == sha(RAW/name), name
+result = analyzer.analyze(RAW, SENDER)
+assert result['status_counts'] == {
+    'processed': 179, 'queue_full': 21}
+assert result['invalidating_counters'] == []
+assert result['trace_valid'] and not result['zero_drops'] and result['offered_load_valid']
+rows = read_csv(RAW/'frames.csv')
+processed = [r for r in rows if r['status'] == 'processed']
+counters = result['counters']
+assert sum(int(r['packets']) for r in rows) == int(counters['received_packets'])
+assert int(counters['received_packets']) == 25600
+assert int(counters['kernel_drops']) == 0
+assert 200*128-int(counters['received_packets'])-int(counters['kernel_drops']) == 0
+
+record = ROOT/'benchmarks/fixtures/radarsimpy_128x128_sim_multi4_noise.rspb'
+meta = json.loads(record.with_suffix('.json').read_text())
+sender = json.loads(SENDER.read_text())
+assert sha(record) == sender['record_sha256'] == meta['record_sha256']
+frame, fs = ref.read_rspb(record)
+# The stream PS spectrum divides complex FFT values by the frame bin count.
+power = ref.range_doppler_power(frame, 'hann') / (16384.0**2)
+mask, threshold = ref.ca_cfar_2d(power, (2, 2), (8, 8), 1e-6)
+peaks = ref.cluster_peaks(power, mask)
+truth, false = ref.evaluate(peaks, meta['targets'], 128, 128, fs)
+assert all(t['hit'] for t in truth) and not false
+grouped = {}
+for r in read_csv(RAW/'detections.csv'):
+    grouped.setdefault(int(r['frame_id']), []).append(r)
+assert set(grouped) == {int(r['frame_id']) for r in processed}
+max_power_rel = max_threshold_rel = 0.0
+for detections in grouped.values():
+    bins = [(int(r['doppler_bin']), int(r['range_bin'])) for r in detections]
+    assert bins == peaks
+    for r, (d, b) in zip(detections, peaks):
+        actual = float(r['power']); expected = float(power[d, b])
+        np.testing.assert_allclose(actual, expected, rtol=1e-9, atol=1e-18)
+        max_power_rel = max(max_power_rel, abs(actual-expected)/expected)
+        actual = float(r['threshold']); expected = float(threshold[d, b])
+        np.testing.assert_allclose(actual, expected, rtol=1e-8, atol=1e-18)
+        max_threshold_rel = max(max_threshold_rel, abs(actual-expected)/expected)
+
+resources = read_csv(RAW/'resources.csv')
+active = [r for r in resources if int(r['end_ns']) > min(int(p['first_rx_ns']) for p in processed)
+          and int(r['start_ns']) < max(int(p['output_done_ns']) for p in processed)]
+weights = [int(r['end_ns'])-int(r['start_ns']) for r in active]
+def weighted(key):
+    return sum(float(r[key])*w for r, w in zip(active, weights))/sum(weights)
+
+verified = {
+    'evidence': 'five original receiver files and sender schedule independently verified',
+    'run_id': 92122, 'backend': result['backend'], 'status': 'failed zero-drop/latency acceptance; offered load valid',
+    'receiver_raw_sha256': {name: sha(RAW/name) for name in names},
+    'receiver_raw_bytes': sum((RAW/name).stat().st_size for name in names),
+    'processed': 179, 'expected': 200, 'unprocessed': 21,
+    'status_counts': result['status_counts'],
+    'packet_accounting': {'received': 25600, 'kernel_drops': 0, 'expected': 25600, 'unreceived': 0, 'not_explained_by_recorded_kernel_counter': 0,
+                          'received_plus_kernel_drops_equals_expected': True,
+                          'all_received_packets_accounted_in_frame_trace': True},
+    'queue_depth_counts_processed': dict(Counter(int(r['queue_depth']) for r in processed)),
+    'metrics': result['metrics'],
+    'metric_qualification': 'valid offered load and trace; timings cover processed survivors only; all missing frames are processing queue drops',
+    'worker_wall_ms': stats([(int(r['output_done_ns'])-int(r['process_start_ns']))/1e6 for r in processed]),
+    'active_resources': {'intervals': len(active),
+        'process_cpu_pct_one_core_weighted': weighted('process_cpu_pct_one_core'),
+        'system_cpu_pct_weighted': weighted('system_cpu_pct'),
+        'max_rss_bytes': result['max_rss_bytes'],
+        'scope': 'duration-weighted whole sample intervals overlapping processed-frame activity; includes boundary margins'},
+    'correctness_processed_only': {'frames': len(grouped), 'detections': sum(map(len, grouped.values())),
+        'expected_peaks_in_order': peaks, 'hits_per_processed_frame': 4, 'false_per_processed_frame': 0,
+        'all_peak_powers_thresholds_match_numpy': True, 'max_peak_power_relative_error': max_power_rel,
+        'max_threshold_relative_error': max_threshold_rel, 'record_sha256': sha(record),
+        'full_fft_bins_exported': False, 'missing_frames_not_evaluated': True},
+    'sender': result['sender'], 'offered_load_valid': True, 'clock_errors': 0,
+    'clock_error_cause': 'none recorded in this attempt',
+    'runtime_identity': 'binary/source and CPU clock captures from this run not collected; reported existing rxfix1 reused; historical identity is not a current capture',
+    'analysis_runtime': {'python': platform.python_version(), 'numpy': np.__version__},
+    'analysis_sources_sha256': {str(p.relative_to(ROOT)): sha(p) for p in
+        [ROOT/'tools/detection/analyze_stream.py', ROOT/'tools/detection/cfar_reference.py', Path(__file__)]},
+    'next': 'compare PS and PL valid-spin baselines, then validate float/NEON PS candidate; no final optimized throughput claim',
+}
+target = REPORT/'ps_92122_raw'
+target.mkdir(exist_ok=True)
+for name in names:
+    if (target/name).exists(): assert sha(target/name) == sha(RAW/name)
+    else: shutil.copyfile(RAW/name, target/name)
+(REPORT/'ps_92122_trace_summary.json').write_text(json.dumps(result, indent=2)+'\n', encoding='utf-8')
+(REPORT/'ps_92122_verified.json').write_text(json.dumps(verified, indent=2)+'\n', encoding='utf-8')
+shutil.copyfile(__file__, REPORT/'verify_s2b_92122.py.txt')
+for name in ('analyze_stream.py', 'cfar_reference.py'):
+    shutil.copyfile(ROOT/'tools/detection'/name, REPORT/(name+'.txt'))
+print(json.dumps({k:verified[k] for k in ('status_counts','worker_wall_ms','active_resources','correctness_processed_only')},indent=2))

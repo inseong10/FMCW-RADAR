@@ -1,0 +1,15 @@
+clock_errors=0
+offset_errors=0
+kernel_errors=0
+samples=2559998
+span_max_ns=17592
+span_over_20us=0
+span_over_1ms=0
+offset_dev_max_ns=6957
+first_span_max_ns=1483854
+first_span_over_20us=39581
+offset_resampled=39581
+offset_unresolved=0
+events_recorded=0
+# kind o=offset moved >2ms, k=kernel time >1ms after user receive; dev=offset-first offset; lag=kernel(converted)-received; span=after-before of the offset sample used (ns); first_span=before S3a-4c resampling
+kind,packet_index,frame_id,chirp,dev_ns,lag_ns,span_ns

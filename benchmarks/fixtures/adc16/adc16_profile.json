@@ -1,0 +1,150 @@
+{
+  "experiment": "S2a-int16",
+  "adc_profile": 1,
+  "adc_bits": 16,
+  "scale_codes_per_unit": 1600000.0,
+  "gain_policy": "fixed across all samples/frames/scenarios",
+  "rounding": "nearest ties to even, then signed16 saturation",
+  "window_applied": false,
+  "frame_normalization": false,
+  "noise_model_complex_rms_lsb": 2864.0,
+  "records": [
+    {
+      "file": "radarsimpy_128x128_adc16.rspb",
+      "record_sha256": "70931e2da879778d386e635e24f665a9f8a057b036535697b54917d5c431f332",
+      "source_file": "radarsimpy_128x128.rspb",
+      "source_sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+      "sample_rate_hz": 1600000.0,
+      "profile": {
+        "profile": 1,
+        "bits": 16,
+        "scale_codes_per_unit": 1600000.0,
+        "window_applied": false,
+        "payload_bytes_per_frame": 65536
+      },
+      "targets": [
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        }
+      ],
+      "noise": false,
+      "clipped_components": 0,
+      "clipped_complex_samples": 0,
+      "total_components": 32768,
+      "peak_source_complex": 0.0009916450425319421,
+      "peak_source_component": 0.0009915608679875731,
+      "peak_quantized_component": 1586,
+      "rounding_error_complex_rms_lsb": 0.4093557127019857
+    },
+    {
+      "file": "radarsimpy_128x128_sim_single_noise_adc16.rspb",
+      "record_sha256": "7d30092ad5b439251f351039e6d466c4210a2d0fe24be682634af7f5f1aef84e",
+      "source_file": "radarsimpy_128x128_sim_single_noise.rspb",
+      "source_sha256": "dc25ac944391a1ae88f3988d171e271dc365038dbc745f12eaf48d32aaacfcb7",
+      "sample_rate_hz": 1600000.0,
+      "profile": {
+        "profile": 1,
+        "bits": 16,
+        "scale_codes_per_unit": 1600000.0,
+        "window_applied": false,
+        "payload_bytes_per_frame": 65536
+      },
+      "targets": [
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        }
+      ],
+      "noise": true,
+      "clipped_components": 0,
+      "clipped_complex_samples": 0,
+      "total_components": 32768,
+      "peak_source_complex": 0.00694231581800077,
+      "peak_source_component": 0.0065408204682171345,
+      "peak_quantized_component": 10465,
+      "rounding_error_complex_rms_lsb": 0.4074017601316688
+    },
+    {
+      "file": "radarsimpy_128x128_sim_multi4_noise_adc16.rspb",
+      "record_sha256": "d3d5160cb8b5f56e24bf60369801d3bc85dea47684d088fb203680c8bb6b91cf",
+      "source_file": "radarsimpy_128x128_sim_multi4_noise.rspb",
+      "source_sha256": "450ffd3c05bf2570773c7fd3bf543a00d66e3ec531a05d07ef2747bb6a688413",
+      "sample_rate_hz": 1600000.0,
+      "profile": {
+        "profile": 1,
+        "bits": 16,
+        "scale_codes_per_unit": 1600000.0,
+        "window_applied": false,
+        "payload_bytes_per_frame": 65536
+      },
+      "targets": [
+        {
+          "range_m": 15.0,
+          "speed_mps": 5.0
+        },
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        },
+        {
+          "range_m": 55.0,
+          "speed_mps": 2.0
+        },
+        {
+          "range_m": 80.0,
+          "speed_mps": -20.0
+        }
+      ],
+      "noise": true,
+      "clipped_components": 0,
+      "clipped_complex_samples": 0,
+      "total_components": 32768,
+      "peak_source_complex": 0.009593515132970855,
+      "peak_source_component": 0.009237358346581459,
+      "peak_quantized_component": 14780,
+      "rounding_error_complex_rms_lsb": 0.4108327152005803
+    },
+    {
+      "file": "radarsimpy_128x128_sim_close_weak_noise_adc16.rspb",
+      "record_sha256": "1fdd94aafba9f690aa99cdd3fd7fc39c8c8deab9e196c52468363fde202f3d9c",
+      "source_file": "radarsimpy_128x128_sim_close_weak_noise.rspb",
+      "source_sha256": "d307901c4c040f462f8a49bffce9d409f530f347322421b5d5214d7b2d4310f6",
+      "sample_rate_hz": 1600000.0,
+      "profile": {
+        "profile": 1,
+        "bits": 16,
+        "scale_codes_per_unit": 1600000.0,
+        "window_applied": false,
+        "payload_bytes_per_frame": 65536
+      },
+      "targets": [
+        {
+          "range_m": 30.0,
+          "speed_mps": -10.0,
+          "rcs": 10
+        },
+        {
+          "range_m": 34.5,
+          "speed_mps": -10.0,
+          "rcs": 0
+        },
+        {
+          "range_m": 60.0,
+          "speed_mps": 8.0,
+          "rcs": -10
+        }
+      ],
+      "noise": true,
+      "clipped_components": 0,
+      "clipped_complex_samples": 0,
+      "total_components": 32768,
+      "peak_source_complex": 0.006873774872115627,
+      "peak_source_component": 0.006396003067493439,
+      "peak_quantized_component": 10234,
+      "rounding_error_complex_rms_lsb": 0.40759641614243475
+    }
+  ],
+  "calibration_peak_complex": 0.009593515132970855,
+  "calibration_complex_headroom_db": 6.586778670641943
+}

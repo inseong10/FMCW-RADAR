@@ -1,0 +1,19 @@
+{
+  "run_id": 92111,
+  "backend": "ps",
+  "period_ms": 12.8,
+  "expected_frames": 200,
+  "processed_frames_user_console": 91,
+  "receiver_raw_collected": false,
+  "receiver_cause": "pending raw trace and counters",
+  "sender_evidence": "raw schedule independently recalculated",
+  "sender_sha256": "f80f996ee37d6031da1a888d1f71c5401084f83137a13d14cfab7efc3aac1c4a",
+  "max_lateness_ms": 14.697306,
+  "overrun_frames": 32,
+  "first_send_gap_min_ms": 2.263128,
+  "first_send_gap_max_ms": 26.108878,
+  "offered_load_valid": false,
+  "sustained_acceptance": false,
+  "latency_p99_ms": null,
+  "configured_context": "continue after selected PL100MHz offline comparison; PS backend does not execute PL; current-run clock capture pending"
+}

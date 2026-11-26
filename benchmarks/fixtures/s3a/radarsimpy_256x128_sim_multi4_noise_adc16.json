@@ -1,0 +1,49 @@
+{
+  "file": "radarsimpy_256x128_sim_multi4_noise_adc16.rspb",
+  "record_sha256": "d5ffcbc91e20e98ccb0f3014e9c4a9ded589dabbb7876f81e7a914fcdb219f52",
+  "source": "RadarSimPy 15.5.0 per-target baseband sum + NumPy seed-42 noise (make_s3a_fixture.py)",
+  "scenario": "sim_multi4_noise",
+  "chirps": 256,
+  "samples": 128,
+  "sample_rate_hz": 1600000.0,
+  "profile": {
+    "profile": 1,
+    "bits": 16,
+    "scale_codes_per_unit": 1600000.0,
+    "window_applied": false,
+    "payload_bytes_per_frame": 131072,
+    "chirps": 256,
+    "samples": 128
+  },
+  "adc_profile": 1,
+  "scale_codes_per_unit": 1600000.0,
+  "targets": [
+    {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+    },
+    {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+    },
+    {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+    },
+    {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+    }
+  ],
+  "noise": true,
+  "window_applied": false,
+  "source_file": "radarsimpy_256x128_sim_multi4_noise.rspb",
+  "source_sha256": "8cc1cf790d0554dfaacae71ec869d44e89e87c2068215fdadb210e60249b92c9",
+  "clipped_components": 0,
+  "clipped_complex_samples": 0,
+  "total_components": 65536,
+  "peak_source_complex": 0.009541848347527328,
+  "peak_source_component": 0.009341645054519176,
+  "peak_quantized_component": 14947,
+  "rounding_error_complex_rms_lsb": 0.4087671053403812
+}

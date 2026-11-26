@@ -1,0 +1,4 @@
+Evidence: user-pasted console, 2026-11-26. Receiver raw files not yet collected.
+S2A_READY backend=ps run_id=92111 port=5000
+S2A_RECORDED processed=91 expected=200
+S2A_SENT frames=200 run_id=92111 overruns=32

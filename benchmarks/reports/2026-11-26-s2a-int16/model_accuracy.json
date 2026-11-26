@@ -1,0 +1,383 @@
+[
+  {
+    "case": "single_none",
+    "backend": "model",
+    "hits": 1,
+    "targets": 1,
+    "false": 0,
+    "peaks": [
+      [
+        107,
+        20
+      ]
+    ],
+    "truth": [
+      {
+        "truth": {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        },
+        "expected_doppler_bin": -20.537,
+        "expected_range_bin": 20.014,
+        "detected": [
+          107,
+          20
+        ],
+        "range_m": 29.9792458,
+        "speed_mps": -10.225509384745322,
+        "hit": true
+      }
+    ],
+    "false_peaks": [],
+    "float_hits": 1,
+    "float_false": 0,
+    "same_peak_bins_as_float": true
+  },
+  {
+    "case": "single_hann",
+    "backend": "model",
+    "hits": 1,
+    "targets": 1,
+    "false": 0,
+    "peaks": [
+      [
+        107,
+        20
+      ]
+    ],
+    "truth": [
+      {
+        "truth": {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        },
+        "expected_doppler_bin": -20.537,
+        "expected_range_bin": 20.014,
+        "detected": [
+          107,
+          20
+        ],
+        "range_m": 29.9792458,
+        "speed_mps": -10.225509384745322,
+        "hit": true
+      }
+    ],
+    "false_peaks": [],
+    "float_hits": 1,
+    "float_false": 0,
+    "same_peak_bins_as_float": true
+  },
+  {
+    "case": "multi4_none",
+    "backend": "model",
+    "hits": 4,
+    "targets": 4,
+    "false": 1,
+    "peaks": [
+      [
+        10,
+        10
+      ],
+      [
+        107,
+        20
+      ],
+      [
+        4,
+        37
+      ],
+      [
+        87,
+        53
+      ],
+      [
+        34,
+        10
+      ]
+    ],
+    "truth": [
+      {
+        "truth": {
+          "range_m": 15.0,
+          "speed_mps": 5.0
+        },
+        "expected_doppler_bin": 10.268,
+        "expected_range_bin": 10.007,
+        "detected": [
+          10,
+          10
+        ],
+        "range_m": 14.9896229,
+        "speed_mps": 4.869290183212058,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        },
+        "expected_doppler_bin": -20.537,
+        "expected_range_bin": 20.014,
+        "detected": [
+          107,
+          20
+        ],
+        "range_m": 29.9792458,
+        "speed_mps": -10.225509384745322,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 55.0,
+          "speed_mps": 2.0
+        },
+        "expected_doppler_bin": 4.107,
+        "expected_range_bin": 36.692,
+        "detected": [
+          4,
+          37
+        ],
+        "range_m": 55.46160473,
+        "speed_mps": 1.9477160732848233,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 80.0,
+          "speed_mps": -20.0
+        },
+        "expected_doppler_bin": -41.074,
+        "expected_range_bin": 53.37,
+        "detected": [
+          87,
+          53
+        ],
+        "range_m": 79.44500137,
+        "speed_mps": -19.96408975116944,
+        "hit": true
+      }
+    ],
+    "false_peaks": [
+      [
+        34,
+        10
+      ]
+    ],
+    "float_hits": 4,
+    "float_false": 1,
+    "same_peak_bins_as_float": true
+  },
+  {
+    "case": "multi4_hann",
+    "backend": "model",
+    "hits": 4,
+    "targets": 4,
+    "false": 0,
+    "peaks": [
+      [
+        10,
+        10
+      ],
+      [
+        107,
+        20
+      ],
+      [
+        4,
+        37
+      ],
+      [
+        87,
+        53
+      ]
+    ],
+    "truth": [
+      {
+        "truth": {
+          "range_m": 15.0,
+          "speed_mps": 5.0
+        },
+        "expected_doppler_bin": 10.268,
+        "expected_range_bin": 10.007,
+        "detected": [
+          10,
+          10
+        ],
+        "range_m": 14.9896229,
+        "speed_mps": 4.869290183212058,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        },
+        "expected_doppler_bin": -20.537,
+        "expected_range_bin": 20.014,
+        "detected": [
+          107,
+          20
+        ],
+        "range_m": 29.9792458,
+        "speed_mps": -10.225509384745322,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 55.0,
+          "speed_mps": 2.0
+        },
+        "expected_doppler_bin": 4.107,
+        "expected_range_bin": 36.692,
+        "detected": [
+          4,
+          37
+        ],
+        "range_m": 55.46160473,
+        "speed_mps": 1.9477160732848233,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 80.0,
+          "speed_mps": -20.0
+        },
+        "expected_doppler_bin": -41.074,
+        "expected_range_bin": 53.37,
+        "detected": [
+          87,
+          53
+        ],
+        "range_m": 79.44500137,
+        "speed_mps": -19.96408975116944,
+        "hit": true
+      }
+    ],
+    "false_peaks": [],
+    "float_hits": 4,
+    "float_false": 0,
+    "same_peak_bins_as_float": true
+  },
+  {
+    "case": "close_weak_none",
+    "backend": "model",
+    "hits": 1,
+    "targets": 3,
+    "false": 0,
+    "peaks": [
+      [
+        107,
+        20
+      ]
+    ],
+    "truth": [
+      {
+        "truth": {
+          "range_m": 30.0,
+          "speed_mps": -10.0,
+          "rcs": 10
+        },
+        "expected_doppler_bin": -20.537,
+        "expected_range_bin": 20.014,
+        "detected": [
+          107,
+          20
+        ],
+        "range_m": 29.9792458,
+        "speed_mps": -10.225509384745322,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 34.5,
+          "speed_mps": -10.0,
+          "rcs": 0
+        },
+        "expected_doppler_bin": -20.537,
+        "expected_range_bin": 23.016,
+        "detected": null,
+        "range_m": null,
+        "speed_mps": null,
+        "hit": false
+      },
+      {
+        "truth": {
+          "range_m": 60.0,
+          "speed_mps": 8.0,
+          "rcs": -10
+        },
+        "expected_doppler_bin": 16.429,
+        "expected_range_bin": 40.028,
+        "detected": null,
+        "range_m": null,
+        "speed_mps": null,
+        "hit": false
+      }
+    ],
+    "false_peaks": [],
+    "float_hits": 1,
+    "float_false": 0,
+    "same_peak_bins_as_float": true
+  },
+  {
+    "case": "close_weak_hann",
+    "backend": "model",
+    "hits": 1,
+    "targets": 3,
+    "false": 0,
+    "peaks": [
+      [
+        107,
+        20
+      ]
+    ],
+    "truth": [
+      {
+        "truth": {
+          "range_m": 30.0,
+          "speed_mps": -10.0,
+          "rcs": 10
+        },
+        "expected_doppler_bin": -20.537,
+        "expected_range_bin": 20.014,
+        "detected": [
+          107,
+          20
+        ],
+        "range_m": 29.9792458,
+        "speed_mps": -10.225509384745322,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 34.5,
+          "speed_mps": -10.0,
+          "rcs": 0
+        },
+        "expected_doppler_bin": -20.537,
+        "expected_range_bin": 23.016,
+        "detected": null,
+        "range_m": null,
+        "speed_mps": null,
+        "hit": false
+      },
+      {
+        "truth": {
+          "range_m": 60.0,
+          "speed_mps": 8.0,
+          "rcs": -10
+        },
+        "expected_doppler_bin": 16.429,
+        "expected_range_bin": 40.028,
+        "detected": null,
+        "range_m": null,
+        "speed_mps": null,
+        "hit": false
+      }
+    ],
+    "false_peaks": [],
+    "float_hits": 1,
+    "float_false": 0,
+    "same_peak_bins_as_float": true
+  }
+]

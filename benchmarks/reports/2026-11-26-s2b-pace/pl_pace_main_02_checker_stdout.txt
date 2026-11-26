@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\FMCW\FMCW-RADAR\tools\detection\check_adc16_stream.py", line 106, in <module>
+    result=check(a.out,a.sender,a.record,allow_loss=a.allow_loss)
+  File "C:\Users\user\Desktop\FMCW\FMCW-RADAR\tools\detection\check_adc16_stream.py", line 28, in check
+    raise ValueError('Invalid trace or dropped frames; raw summary retained')
+ValueError: Invalid trace or dropped frames; raw summary retained
+rc=1

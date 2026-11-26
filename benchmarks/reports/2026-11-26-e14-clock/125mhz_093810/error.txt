@@ -1,0 +1,9 @@
+Timing violation; inspect timing.rpt
+    while executing
+"error "Timing violation; inspect timing.rpt""
+    (procedure "finish_build" line 15)
+    invoked from within
+"finish_build"
+    (procedure "fft128::dma_main" line 81)
+    invoked from within
+"fft128::dma_main"

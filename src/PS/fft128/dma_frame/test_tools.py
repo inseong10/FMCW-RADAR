@@ -66,7 +66,7 @@ int main(int argc,char **argv) {
         cls.prefix=cls.work/'frame';subprocess.run([str(exe),str(cls.prefix)],check=True,capture_output=True,text=True)
         cls.path=cls.prefix.with_suffix('.profile.csv')
         with cls.path.open() as f:cls.row=next(csv.DictReader(f))
-        cls.config=json.loads(re.search(r'puts \$f \{(\{"experiment":"E14-frame".*?\})\}',(ROOT/'src/PL/fft128_ps/build_dma_frame.tcl').read_text()).group(1))
+        cls.config=json.loads(re.search(r'set frame_config \{(\{"experiment":"E14-frame".*?\})\}',(ROOT/'src/PL/fft128_ps/build_dma_frame.tcl').read_text()).group(1))
         cls.contract=json.loads(cls.prefix.with_suffix('.batch.json').read_text())
 
     def mutate(self,**changes):

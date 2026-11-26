@@ -1,0 +1,24 @@
+{
+ "rule": "jitter P99 < 10us and total max (frame start late + chirp late) < 10% period; overrun reported only (2026-11-26)",
+ "evidence": "Windows recomputation from --chirp-detail arrays of sender JSONs produced by f3806e43 (old rule fields)",
+ "probes": {
+  "92330": {
+   "jitter_p99_us": 4.141,
+   "total_max_ms": 0.713404,
+   "frame_start_late_max_ms": 0.063155,
+   "chirps_ge_100us": 34,
+   "frame_boundary_overruns": 1,
+   "valid_new_rule": true,
+   "valid_old_rule": false
+  },
+  "92335": {
+   "jitter_p99_us": 4.687,
+   "total_max_ms": 36.943438,
+   "frame_start_late_max_ms": 31.919716,
+   "chirps_ge_100us": 119,
+   "frame_boundary_overruns": 66,
+   "valid_new_rule": false,
+   "valid_old_rule": false
+  }
+ }
+}

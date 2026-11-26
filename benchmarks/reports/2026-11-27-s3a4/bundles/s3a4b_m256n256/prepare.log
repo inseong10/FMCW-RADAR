@@ -1,0 +1,26 @@
+S2A_BUILD_PASS target=host precision=double executable=/home/user/fmcw_share/FMCW-FFT-test/build/s2a_int16_20261127_s3a4b_m256n256/host/stream-receiver
+S2A_SMOKE_CASE_PASS backend=model deliberate_loss=False
+S2A_SMOKE_CASE_PASS backend=ps deliberate_loss=False
+S2A_SMOKE_CASE_PASS backend=model deliberate_loss=True
+S2A_HOST_SMOKE_PASS cases=3 (no board/throughput claim)
+ADC16_SMOKE_PASS backend=model deliberate_loss=False
+ADC16_SMOKE_PASS backend=ps deliberate_loss=False
+ADC16_SMOKE_PASS backend=model deliberate_loss=True
+ADC16_HOST_SMOKE_PASS cases=3; no board/throughput claim
+S3A1_ORACLE_128_EQUAL cases=10
+S3A1_SMOKE_PASS shape=256x128 backend=model hits=4/4 false=0
+S3A1_SMOKE_PASS shape=256x128 backend=ps hits=4/4 false=0
+S3A1_SMOKE_PASS shape=128x256 backend=model hits=4/4 false=0
+S3A1_SMOKE_PASS shape=128x256 backend=ps hits=4/4 false=0
+S3A1_SMOKE_PASS shape=256x256 backend=model hits=4/4 false=0
+S3A1_SMOKE_PASS shape=256x256 backend=ps hits=4/4 false=0
+S3A1_SMOKE_PASS shape=512x128 backend=model hits=4/4 false=0
+S3A1_SMOKE_PASS shape=512x128 backend=ps hits=4/4 false=0
+S3A1_HOST_SMOKE_PASS cases=8 (no board/throughput claim)
+S2A_BUILD_PASS target=arm precision=double executable=/home/user/fmcw_share/FMCW-FFT-test/build/s2a_int16_20261127_s3a4b_m256n256/arm/stream-receiver
+stream-receiver: OK
+libfftw3.so.3: OK
+build_environment.txt: OK
+source.sha256: OK
+run_board.sh: OK
+shape.txt: OK

@@ -1,0 +1,78 @@
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:381:48: error: missing terminating " character [-Werror]
+  381 |     clock_diag<<"clock_errors="<<clock_errors<<"
+      |                                                ^
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:381:48: error: missing terminating " character
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:383:15: error: missing terminating " character [-Werror]
+  383 | kernel_errors="<<clock_kernel_errors
+      |               ^
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:383:15: error: missing terminating " character
+  383 | kernel_errors="<<clock_kernel_errors
+      |               ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:384:11: error: missing terminating " character [-Werror]
+  384 |         <<"
+      |           ^
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:384:11: error: missing terminating " character
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:387:16: error: missing terminating " character [-Werror]
+  387 | span_over_20us="<<span_over_20us
+      |                ^
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:387:16: error: missing terminating " character
+  387 | span_over_20us="<<span_over_20us
+      |                ^~~~~~~~~~~~~~~~~
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:388:11: error: missing terminating " character [-Werror]
+  388 |         <<"
+      |           ^
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:388:11: error: missing terminating " character
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:391:17: error: missing terminating " character [-Werror]
+  391 | events_recorded="<<clock_events.size()
+      |                 ^
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:391:17: error: missing terminating " character
+  391 | events_recorded="<<clock_events.size()
+      |                 ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:392:11: error: missing terminating " character [-Werror]
+  392 |         <<"
+      |           ^
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:392:11: error: missing terminating " character
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:393:3: error: invalid preprocessing directive #kind
+  393 | # kind o=offset moved >2ms, k=kernel time >1ms after user receive; dev=offset-first offset; "
+      |   ^~~~
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:393:93: error: missing terminating " character [-Werror]
+  393 | # kind o=offset moved >2ms, k=kernel time >1ms after user receive; dev=offset-first offset; "
+      |                                                                                             ^
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:394:11: error: missing terminating " character [-Werror]
+  394 |           "lag=kernel(converted)-received; span=after-before of the offset sample (ns)
+      |           ^
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:394:11: error: missing terminating " character
+  394 |           "lag=kernel(converted)-received; span=after-before of the offset sample (ns)
+      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:395:1: error: missing terminating " character [-Werror]
+  395 | "
+      | ^
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:395:1: error: missing terminating " character
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:396:11: error: missing terminating " character [-Werror]
+  396 |           "kind,packet_index,frame_id,chirp,dev_ns,lag_ns,span_ns
+      |           ^
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:396:11: error: missing terminating " character
+  396 |           "kind,packet_index,frame_id,chirp,dev_ns,lag_ns,span_ns
+      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:397:1: error: missing terminating " character [-Werror]
+  397 | ";
+      | ^
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:397:1: error: missing terminating " character
+  397 | ";
+      | ^~
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:398:136: error: missing terminating ' character [-Werror]
+  398 |     for(const auto& c:clock_events)clock_diag<<c.kind<<','<<c.packet<<','<<c.frame<<','<<c.chirp<<','<<c.dev<<','<<c.lag<<','<<c.span<<'
+      |                                                                                                                                        ^
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:398:136: error: missing terminating ' character
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:399:1: error: missing terminating ' character [-Werror]
+  399 | ';
+      | ^
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:399:1: error: missing terminating ' character
+  399 | ';
+      | ^~
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp: In function ‘int run(const Options&)’:
+/home/user/fmcw_share/FMCW-FFT-test/src/PS/receiver/stream_receiver.cpp:382:1: error: ‘offset_errors’ was not declared in this scope; did you mean ‘clock_offset_errors’?
+  382 | offset_errors="<<clock_offset_errors<<"
+      | ^~~~~~~~~~~~~
+      | clock_offset_errors
+cc1plus: all warnings being treated as errors

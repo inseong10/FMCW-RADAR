@@ -1,0 +1,16 @@
+CFAR_INTEGER_EQUIV_PASS cases=45
+ADC_WINDOW_EXHAUSTIVE_PASS weights=2017 values=65536 checked=132186112 exact_ties=0
+ADC_WINDOW_SYNTHETIC_PASS weights=20221 checked=1325203456 exact_ties=73727
+== model old prepare_adc16 median_us=2180.5 detect_power_cfar median_us=5933.8  exit=0
+== model s3a1b prepare_adc16 median_us=1031.2 detect_power_cfar median_us=2173.6  exit=0
+== model old_b prepare_adc16 median_us=2182.8 detect_power_cfar median_us=5938.0  exit=0
+== model s3a1b_b prepare_adc16 median_us=1030.4 detect_power_cfar median_us=2168.1  exit=0
+S3A0_BOARD_model_s3a1b_BITEXACT
+== ps old prepare_adc16 median_us=558.2 detect_power_cfar median_us=5009.3  exit=0
+== ps s3a1b prepare_adc16 median_us=560.4 detect_power_cfar median_us=3792.3  exit=0
+== ps old_b prepare_adc16 median_us=555.9 detect_power_cfar median_us=4998.9  exit=0
+== ps s3a1b_b prepare_adc16 median_us=560.0 detect_power_cfar median_us=3812.7  exit=0
+S3A0_BOARD_ps_s3a1b_BITEXACT
+S3A0_EXACT detect_integer=1 sep_u64=1 sep_double=1 window_magic=1 peaks=4
+S3A0_MICRO cfar_detect_integer_us=1867.5
+S3A0_MICRO sep_u64_threshold_us=1377.5

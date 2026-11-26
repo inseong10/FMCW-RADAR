@@ -1,0 +1,39 @@
+{
+ "processed": 9997,
+ "queue_wait": {
+  "median": 0.077,
+  "p99": 0.178,
+  "max": 9.1
+ },
+ "prepare": {
+  "median": 2.375,
+  "p99": 2.498,
+  "max": 10.818
+ },
+ "fft": {
+  "median": 4.862,
+  "p99": 5.036,
+  "max": 8.032
+ },
+ "cfar": {
+  "median": 4.722,
+  "p99": 4.907,
+  "max": 14.433
+ },
+ "flush": {
+  "median": 0.218,
+  "p99": 0.284,
+  "max": 11.135
+ },
+ "process_total": {
+  "median": 12.199,
+  "p99": 12.472,
+  "max": 23.078
+ },
+ "complete_to_output": {
+  "median": 12.279,
+  "p99": 12.569,
+  "max": 23.163
+ },
+ "c2o_over_12p8": 21
+}

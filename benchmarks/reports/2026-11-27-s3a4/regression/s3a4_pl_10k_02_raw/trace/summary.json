@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "backend": "pl",
+  "hardware": true,
+  "diagnostic_probe": false,
+  "expected": 10000,
+  "status_counts": {
+    "processed": 9998,
+    "partial": 2
+  },
+  "counters": {
+    "invalid": "0",
+    "foreign": "0",
+    "duplicates": "0",
+    "late": "0",
+    "received_packets": "2559894",
+    "payload_truncated": "0",
+    "control_truncated": "0",
+    "decode_errors": "0",
+    "metadata_errors": "0",
+    "kernel_drops": "106",
+    "kernel_missing": "0",
+    "clock_errors": "1",
+    "interrupted": "0",
+    "failed": "0",
+    "error": ""
+  },
+  "trace_valid": false,
+  "invalidating_counters": [
+    "kernel_drops",
+    "clock_errors"
+  ],
+  "zero_drops": false,
+  "metrics": {
+    "first_kernel_to_output": {
+      "count": 9998,
+      "median_ms": 48.336621,
+      "p99_ms": 49.923519160000005,
+      "max_ms": 105.793123
+    },
+    "complete_to_output": {
+      "count": 9998,
+      "median_ms": 22.720444,
+      "p99_ms": 23.0496258,
+      "max_ms": 37.340821
+    },
+    "queue_wait": {
+      "count": 9998,
+      "median_ms": 0.12131700000000001,
+      "p99_ms": 0.18803724000000008,
+      "max_ms": 6.13854
+    },
+    "preparation": {
+      "count": 9998,
+      "median_ms": 3.068832,
+      "p99_ms": 3.24087408,
+      "max_ms": 10.955208
+    },
+    "fft_transfer": {
+      "count": 9998,
+      "median_ms": 9.137013499999998,
+      "p99_ms": 9.369247620000001,
+      "max_ms": 19.495272
+    },
+    "power_cfar": {
+      "count": 9998,
+      "median_ms": 10.141488,
+      "p99_ms": 10.379065740000001,
+      "max_ms": 19.906134
+    },
+    "output_flush": {
+      "count": 9998,
+      "median_ms": 0.22273500000000002,
+      "p99_ms": 0.28307580000000004,
+      "max_ms": 9.500082
+    }
+  },
+  "resource_samples": 1295,
+  "active_resource_samples": 1281,
+  "max_rss_bytes": 8892416,
+  "scope": "kernel first-packet -> per-frame CSV flush; includes acquisition/queue/preparation; no fsync",
+  "continuous_acceptance": "not evaluated by S2a",
+  "sender": {
+    "period_ms": 25.6,
+    "chirp_gap_us": 100.0,
+    "max_lateness_ms": 1.011496,
+    "overrun_frames": 2366,
+    "drop_frame": 0,
+    "chirp_pacing": {
+      "gap_us": 100.0,
+      "late_p99_limit_us": 10.0,
+      "late_max_limit_ms": 2.56,
+      "chirps": 2560000,
+      "late_median_ms": 0.00017,
+      "late_p99_ms": 0.007598,
+      "late_p99_9_ms": 0.064419,
+      "late_max_ms": 34.282031,
+      "late_total_max_ms": 34.282326,
+      "chirps_ge_100us": 1461,
+      "frames_with_chirp_ge_100us": 716,
+      "frame_boundary_overruns": 2366,
+      "sendto_max_ms": 34.329447,
+      "detail": false,
+      "valid": true,
+      "schedule": "reanchor",
+      "reanchor_threshold_us": 10.0,
+      "stall_threshold_ms": 2.56,
+      "stall_frames": 9,
+      "stall_frames_limit": 100,
+      "stall_max_ms": 34.282031,
+      "chirp_reanchors": 18018,
+      "frame_reanchors": 9999,
+      "min_chirp_spacing_us": 90.144,
+      "min_frame_spacing_ms": 25.600253,
+      "effective_period_ms": 25.711708984498447
+    }
+  },
+  "offered_load_valid": true
+}

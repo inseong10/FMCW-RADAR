@@ -2,6 +2,8 @@
 set -eu
 here=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 out=${1:-"$here/profiles_e14_frame_$(date +%Y%m%d_%H%M%S)"}
+hz=$(sed -n 's/.*"clock_hz":[[:space:]]*\([0-9][0-9]*\).*/\1/p' "$here/dma_config.json")
+test -n "$hz" || { echo 'Missing PL clock in dma_config.json' >&2; exit 1; }
 test ! -e "$out" || { echo 'Use a fresh profile directory' >&2; exit 1; }
 mkdir -p "$out"
 (cd "$here"; sha256sum -c artifacts.sha256) > "$out/artifact_check.txt"
@@ -14,7 +16,7 @@ cp "$here/artifacts.sha256" "$here/dma_config.json" "$here/fft128_e14_frame.json
 } > "$out/environment.txt"
 cat /proc/interrupts > "$out/interrupts_before.txt"
 "$here/fft128-receiver" --cpu0 --input "$here/frame.rspb" \
-    --warmup 2 --repeat 20 --profile-dma --pl-clock-hz 50000000 \
+    --warmup 2 --repeat 20 --profile-dma --pl-clock-hz "$hz" \
     --output "$out/pl" > "$out/profile.log" 2>&1 || { tail -n 30 "$out/profile.log"; exit 1; }
 cat "$out/profile.log"
 cat /proc/interrupts > "$out/interrupts_after.txt"

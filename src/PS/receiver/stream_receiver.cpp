@@ -32,11 +32,12 @@ static uint64_t ns(clockid_t clock=CLOCK_MONOTONIC) {
 static volatile std::sig_atomic_t interrupted=0;
 static void stop(int){interrupted=1;}
 struct Options {
-    std::string backend="ps",bind="0.0.0.0",out,library,window="hann";
+    std::string backend="ps",bind="0.0.0.0",out,library,window="hann",input_format="float32";
     uint64_t run=0;
     unsigned frames=0,port=5000,queue=4,partial=4,warmup=10;
     unsigned idle_ms=2000,start_ms=300000;
-    bool cpu0=false,diagnose_first=false;
+    unsigned pulses=128,samples=128; // S3a-1 frame shape (M chirps x N samples)
+    bool cpu0=false,diagnose_first=false,measure_plan=false,require_neon=false,diagnostic_spectrum=false;
 };
 static Options options(int argc,char** argv) {
     Options o;
@@ -44,11 +45,14 @@ static Options options(int argc,char** argv) {
         std::string k=argv[i];
         if(k=="--cpu0"){o.cpu0=true;continue;}
         if(k=="--diagnose-first-packet"){o.diagnose_first=true;continue;}
+        if(k=="--diagnostic-spectrum"){o.diagnostic_spectrum=true;continue;}
+        if(k=="--measure-plan"){o.measure_plan=true;continue;}
+        if(k=="--require-neon"){o.require_neon=true;continue;}
         if(k=="--help") {
             std::cout<<"--backend ps|pl|model --run-id ID --frames N --out NEW_DIR "
-                "[--bind IP --port N --window hann|none --queue 4 --partial 4 "
+                "[--input-format float32|adc16 --pulses 128|256|512 --samples 128|256 --bind IP --port N --window hann|none --queue 4 --partial 4 "
                 "--warmup 10 --idle-ms 2000 --start-ms 300000 --fftw-lib PATH --cpu0 "
-                "--diagnose-first-packet]\n";
+                "--diagnose-first-packet --diagnostic-spectrum --measure-plan --require-neon]\n";
             std::exit(0);
         }
         if(++i==argc) throw std::runtime_error("Missing option value");
@@ -63,6 +67,7 @@ static Options options(int argc,char** argv) {
         else if(k=="--out")o.out=v;
         else if(k=="--fftw-lib")o.library=v;
         else if(k=="--window")o.window=v;
+        else if(k=="--input-format")o.input_format=v;
         else if(k=="--run-id")o.run=integer();
         else {
             auto x=integer();if(x>1000000)throw std::runtime_error("Option too large");
@@ -73,12 +78,20 @@ static Options options(int argc,char** argv) {
             else if(k=="--warmup")o.warmup=x;
             else if(k=="--idle-ms")o.idle_ms=x;
             else if(k=="--start-ms")o.start_ms=x;
+            else if(k=="--pulses")o.pulses=x;
+            else if(k=="--samples")o.samples=x;
             else throw std::runtime_error("Unknown option: "+k);
         }
     }
     if(!o.run || !o.frames || o.frames>100000 || !o.port || o.port>65535 ||
        !o.queue || o.queue>1024 || !o.partial || o.partial>1024 || o.out.empty() ||
-       !o.idle_ms || !o.start_ms || (o.window!="hann" && o.window!="none"))
+       !o.idle_ms || !o.start_ms || (o.window!="hann" && o.window!="none") ||
+       (o.input_format!="float32" && o.input_format!="adc16") ||
+       (o.input_format=="adc16" && (o.queue!=4 || o.partial!=4)) ||
+       !valid_shape(o.pulses,o.samples) ||
+       ((o.pulses!=128 || o.samples!=128) && o.input_format!="adc16") ||
+       (o.diagnostic_spectrum && !o.diagnose_first) ||
+       (o.backend!="ps" && (o.measure_plan || o.require_neon)))
         throw std::runtime_error("Invalid arguments; see --help");
     return o;
 }
@@ -111,9 +124,16 @@ static int run(const Options& o) {
         f.exceptions(std::ios::failbit|std::ios::badbit);f<<std::setprecision(17);return f;};
     auto detections=file("detections.csv");
     detections<<"run_id,frame_id,doppler_bin,range_bin,power,threshold\n";
-    Pipeline pipeline(o.backend,o.window=="hann",o.library);
+    Pipeline pipeline(o.backend,o.window=="hann",o.library,o.measure_plan,o.require_neon,o.pulses,o.samples);
+    const size_t cells=size_t(o.pulses)*o.samples;
+    if(o.backend=="ps") {auto plan_file=file("fftw_plan.txt");plan_file<<pipeline.fftw_plan()<<'\n';}
     std::array<fft128_sample,16384> zero{};
-    for(unsigned i=0;i<o.warmup;++i){pipeline.prepare(zero.data());pipeline.transform();pipeline.detect();}
+    std::vector<Iq16> adc_zero(cells);
+    for(unsigned i=0;i<o.warmup;++i){
+        if(o.input_format=="adc16")pipeline.prepare_adc16(adc_zero.data());
+        else pipeline.prepare(zero.data());
+        pipeline.transform();pipeline.detect();
+    }
     Socket sock;int one=1,requested=4*1024*1024,actual=0;socklen_t size=sizeof(actual);
     if(setsockopt(sock.fd,SOL_SOCKET,SO_TIMESTAMPNS,&one,sizeof(one)) ||
        setsockopt(sock.fd,SOL_SOCKET,SO_RXQ_OVFL,&one,sizeof(one)) ||
@@ -126,16 +146,27 @@ static int run(const Options& o) {
         throw std::runtime_error("UDP bind failed");
     auto environment=file("environment.txt");
     environment<<"backend="<<o.backend<<"\nhardware="<<(o.backend=="pl")
-        <<"\nwindow="<<o.window<<"\nrun_id="<<o.run<<"\nframes="<<o.frames
+        <<"\nwindow="<<o.window<<"\ninput_format="<<o.input_format
+        <<"\nprotocol_version="<<(o.input_format=="adc16"?3:2)
+        <<"\nadc_profile="<<(o.input_format=="adc16"?adc_profile_id:0)
+        <<"\nadc_bits="<<(o.input_format=="adc16"?adc_bits:0)
+        <<"\nadc_scale="<<(o.input_format=="adc16"?adc_scale:0)
+        <<"\npulses="<<o.pulses<<"\nsamples="<<o.samples
+        <<"\nrun_id="<<o.run<<"\nframes="<<o.frames
         <<"\ncpu0="<<o.cpu0<<"\nqueue="<<o.queue<<"\npartial="<<o.partial
         <<"\nsocket_rcvbuf="<<actual<<"\nwarmup="<<o.warmup
         <<"\ntime_t_bytes="<<sizeof(time_t)<<"\ntimespec_bytes="<<sizeof(timespec)
         <<"\ncontrol_capacity="<<control_capacity<<"\ndiagnostic_probe="<<o.diagnose_first
-        <<"\nPS=double FFTW 2D ESTIMATE; PL=E14 ABI8; model=software only"
+        <<"\ndiagnostic_spectrum="<<o.diagnostic_spectrum
+        <<"\nps_precision="<<fft_precision<<"\nps_plan="<<(o.measure_plan?"MEASURE":"ESTIMATE")
+        <<"\nps_neon_plan="<<pipeline.uses_neon()<<"\nrequire_neon="<<o.require_neon
+        <<"\nPS=FFTW 2D single worker; PL=E14 ABI8; model=software only"
         <<"\noutput=per-frame detections CSV flush (no fsync)"
         <<"\nsender_ns=opaque remote monotonic timestamp; never subtracted\n";
     environment.close();
     std::vector<Event> events(o.frames+1);
+    std::vector<fft128_sample> first_spectrum;
+    uint64_t first_spectrum_id=0;
     std::map<uint64_t,std::unique_ptr<Frame>> partial;
     std::deque<std::unique_ptr<Frame>> queue;
     std::mutex lock;std::condition_variable cv;
@@ -169,7 +200,10 @@ static int run(const Options& o) {
                 if(failed || (queue.empty() && done))break;
                 f=std::move(queue.front());queue.pop_front();e=events[f->id];
             }
-            e.start=ns();pipeline.prepare(f->iq.data());e.prepared=ns();
+            e.start=ns();
+            if(f->format==InputFormat::Adc16)pipeline.prepare_adc16(f->adc_iq.data());
+            else pipeline.prepare(f->iq.data());
+            e.prepared=ns();
             pipeline.transform();e.fft=ns();const auto& peaks=pipeline.detect();e.cfar=ns();
             e.peaks=static_cast<unsigned>(peaks.size());
             // A sentinel records an output even when there are no detections.
@@ -177,6 +211,12 @@ static int run(const Options& o) {
             for(const auto& p:peaks)detections<<o.run<<','<<f->id<<','<<p.doppler<<','<<p.range
                 <<','<<p.power<<','<<p.threshold<<'\n';
             detections.flush();e.output=ns();e.status="processed";
+            // Diagnostic runs only: capture after the measured output timestamp.
+            // This extra work can delay later frames, so never use for acceptance.
+            if(o.diagnostic_spectrum && first_spectrum.empty()) {
+                first_spectrum.resize(cells);first_spectrum_id=f->id;
+                for(size_t i=0;i<cells;++i)first_spectrum[i]=pipeline.spectrum_at(i);
+            }
             std::lock_guard<std::mutex> guard(lock);events[f->id]=std::move(e);
         }
     } catch(const std::exception& e){failure(e.what());}});
@@ -185,6 +225,13 @@ static int run(const Options& o) {
     uint64_t received_packets=0,payload_truncated=0,control_truncated=0,decode_errors=0;
     bool probed=false;
     int64_t clock_offset=0;bool calibrated=false;
+    // S3a-4b diagnostics only (clock_diag.txt): clock_errors, counters.txt and the exit code are unchanged.
+    // offset = the REALTIME-MONOTONIC offset sampled per packet; span = after-before of that sample.
+    struct ClockEvent {char kind;uint64_t packet,frame;unsigned chirp;int64_t dev,lag;uint64_t span;};
+    std::vector<ClockEvent> clock_events;
+    uint64_t clock_offset_errors=0,clock_kernel_errors=0,span_max=0,span_over_20us=0,span_over_1ms=0;
+    int64_t dev_max=0;
+    uint64_t first_span_max=0,first_span_over_20us=0,offset_resampled=0,offset_unresolved=0;
     std::cout<<"S2A_READY backend="<<o.backend<<" run_id="<<o.run<<" port="<<o.port<<std::endl;
     try {
         while(!interrupted && finalized<o.frames) {
@@ -197,7 +244,7 @@ static int run(const Options& o) {
             if(!ready)continue;
             if(o.diagnose_first && !probed) {
                 // Observe the original ARM32 failure without consuming a packet.
-                std::array<unsigned char,packet_bytes+1> probe_bytes{};
+                std::array<unsigned char,max_packet_bytes+1> probe_bytes{};
                 alignas(cmsghdr) unsigned char old_control[CMSG_SPACE(sizeof(timespec))+CMSG_SPACE(sizeof(uint32_t))]{};
                 iovec probe_io{probe_bytes.data(),probe_bytes.size()};msghdr probe{};
                 probe.msg_iov=&probe_io;probe.msg_iovlen=1;probe.msg_control=old_control;
@@ -211,7 +258,7 @@ static int run(const Options& o) {
                     probed=true;
                 }
             }
-            std::array<unsigned char,packet_bytes+1> bytes{};
+            std::array<unsigned char,max_packet_bytes+1> bytes{};
             alignas(cmsghdr) unsigned char control[control_capacity]{};
             iovec io{bytes.data(),bytes.size()};msghdr message{};
             message.msg_iov=&io;message.msg_iovlen=1;message.msg_control=control;message.msg_controllen=sizeof(control);
@@ -234,12 +281,15 @@ static int run(const Options& o) {
                 continue;
             }
             Packet p;
-            try {p=decode(bytes.data(),static_cast<size_t>(n));}
+            try {p=decode(bytes.data(),static_cast<size_t>(n),o.pulses,o.samples);}
             catch(const std::exception& e){++invalid;++decode_errors;
                 if(decode_errors==1)std::cerr<<"S2A_REJECT decode bytes="<<n<<" reason="<<e.what()<<std::endl;
                 continue;
             }
             if(p.run!=o.run || p.id>o.frames){++foreign;continue;}
+            if((p.format==InputFormat::Adc16)!=(o.input_format=="adc16")) {
+                ++invalid;++decode_errors;continue;
+            }
             if(o.diagnose_first && !calibrated)
                 std::cout<<"S2A_FIRST_VALID run_id="<<p.run<<" frame_id="<<p.id<<std::endl;
             uint64_t kernel_real=0;
@@ -260,14 +310,39 @@ static int run(const Options& o) {
                     uint32_t count=0;std::memcpy(&count,CMSG_DATA(c),sizeof(count));kernel_drops=count;
                 }
             }
+            // S3a-4c: the offset is the midpoint of before/after around one REALTIME read. A thread preempted
+            // inside that window shifts the midpoint by up to span/2 (92438: span 6.4ms -> offset -3.2ms), so a
+            // sample with span > 20us is retaken (at most 3 more times) and the shortest one is used. The 2ms and
+            // 1ms clock_errors limits are unchanged, so a real clock step is still counted.
             uint64_t before=ns(),real=ns(CLOCK_REALTIME),after=ns();
+            const uint64_t first_span=after-before;
+            first_span_max=std::max(first_span_max,first_span);first_span_over_20us+=first_span>20000;
+            if(first_span>20000) {
+                ++offset_resampled;
+                for(int retry=0;retry<3 && after-before>20000;++retry) {
+                    const uint64_t b=ns(),r=ns(CLOCK_REALTIME),a=ns();
+                    if(a-b<after-before){before=b;real=r;after=a;}
+                }
+                if(after-before>20000)++offset_unresolved;
+            }
             int64_t offset=static_cast<int64_t>(real)-static_cast<int64_t>(before+(after-before)/2);
             if(!calibrated){clock_offset=offset;calibrated=true;}
-            if(std::llabs(offset-clock_offset)>2000000)++clock_errors;
+            const uint64_t span=after-before;const int64_t dev=offset-clock_offset;
+            span_max=std::max(span_max,span);span_over_20us+=span>20000;span_over_1ms+=span>1000000;
+            dev_max=std::max<int64_t>(dev_max,std::llabs(dev));
+            if(std::llabs(offset-clock_offset)>2000000) {
+                ++clock_errors;++clock_offset_errors;
+                if(clock_events.size()<256)clock_events.push_back({'o',received_packets,p.id,p.chirp,dev,
+                    kernel_real?static_cast<int64_t>(kernel_real)-offset-static_cast<int64_t>(received):0,span});
+            }
             uint64_t kernel=0;
             if(kernel_real && static_cast<int64_t>(kernel_real)>offset) {
                 kernel=static_cast<uint64_t>(static_cast<int64_t>(kernel_real)-offset);
-                if(kernel>received+1000000){kernel=0;++clock_errors;}
+                if(kernel>received+1000000) {
+                    if(clock_events.size()<256)clock_events.push_back({'k',received_packets,p.id,p.chirp,dev,
+                        static_cast<int64_t>(kernel)-static_cast<int64_t>(received),span});
+                    kernel=0;++clock_errors;++clock_kernel_errors;
+                }
             } else ++kernel_missing;
             std::lock_guard<std::mutex> guard(lock);
             auto& event=events[p.id];
@@ -286,7 +361,7 @@ static int run(const Options& o) {
             try {added=found->second->add(p);}catch(const std::exception&){++metadata_errors;continue;}
             if(!added){++duplicates;continue;}
             event.packets=found->second->count;
-            if(event.packets==128) {
+            if(event.packets==o.pulses) {
                 event.complete=ns();found->second->complete_ns=event.complete;
                 event.depth=static_cast<unsigned>(queue.size());
                 if(queue.size()==o.queue)event.status="queue_full";
@@ -297,6 +372,12 @@ static int run(const Options& o) {
     } catch(const std::exception& e){failure(e.what());}
     {std::lock_guard<std::mutex> guard(lock);done=true;cv.notify_all();}
     worker.join();sample_done=true;cv.notify_all();sampler.join();detections.close();
+    if(!first_spectrum.empty()) {
+        auto diagnostic=file("diagnostic_spectrum.csv");
+        diagnostic<<"frame_id,doppler,range,real,imag\n";
+        for(size_t i=0;i<cells;++i)diagnostic<<first_spectrum_id<<','<<i/o.samples<<','<<i%o.samples
+            <<','<<first_spectrum[i].real<<','<<first_spectrum[i].imag<<'\n';
+    }
     auto frames=file("frames.csv");
     frames<<"frame_id,status,packets,first_rx_ns,first_kernel_ns,complete_ns,process_start_ns,prepared_ns,fft_done_ns,cfar_done_ns,output_done_ns,sender_ns,queue_depth,peaks\n";
     unsigned processed=0;
@@ -311,6 +392,19 @@ static int run(const Options& o) {
         <<"\nkernel_missing="<<kernel_missing<<"\nclock_errors="<<clock_errors
         <<"\ninterrupted="<<interrupted<<"\nfailed="<<failed<<"\nerror="<<error<<'\n';
     counters.close();
+    auto clock_diag=file("clock_diag.txt");
+    clock_diag<<"clock_errors="<<clock_errors<<"\noffset_errors="<<clock_offset_errors<<"\nkernel_errors="<<clock_kernel_errors
+        <<"\nsamples="<<received_packets<<"\nspan_max_ns="<<span_max<<"\nspan_over_20us="<<span_over_20us
+        <<"\nspan_over_1ms="<<span_over_1ms<<"\noffset_dev_max_ns="<<dev_max
+        <<"\nfirst_span_max_ns="<<first_span_max<<"\nfirst_span_over_20us="<<first_span_over_20us
+        <<"\noffset_resampled="<<offset_resampled<<"\noffset_unresolved="<<offset_unresolved
+        <<"\nevents_recorded="<<clock_events.size()
+        <<"\n# kind o=offset moved >2ms, k=kernel time >1ms after user receive; dev=offset-first offset; "
+          "lag=kernel(converted)-received; span=after-before of the offset sample used (ns); first_span=before "
+          "S3a-4c resampling\n"
+          "kind,packet_index,frame_id,chirp,dev_ns,lag_ns,span_ns\n";
+    for(const auto& c:clock_events)clock_diag<<c.kind<<','<<c.packet<<','<<c.frame<<','<<c.chirp<<','<<c.dev<<','<<c.lag<<','<<c.span<<'\n';
+    clock_diag.close();
     std::cout<<"S2A_RECORDED processed="<<processed<<" expected="<<o.frames<<std::endl;
     return failed || interrupted || processed!=o.frames || invalid || metadata_errors || kernel_missing || clock_errors || kernel_drops ? 2:0;
 }

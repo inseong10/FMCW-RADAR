@@ -1,0 +1,23 @@
+E14-frame trial 1/3: double
+PS_VERIFY_PASS repeats=100 bins=16384 max_error_q15_lsb=0.00000000000183315 worst_rms_q15_lsb=0.00000000000003736 worst_relative_l2=0.00000000000000029
+E14-frame trial 1/3: float_neon
+PS_VERIFY_PASS repeats=100 bins=16384 max_error_q15_lsb=0.00042680867292000 worst_rms_q15_lsb=0.00001380469694028 worst_relative_l2=0.00000010831022571
+E14-frame trial 1/3: pl
+PIPELINE_TIMING backend=PL_DMA_FRAME mean_ms=1.115340 median_ms=1.113696 min_ms=1.104408 max_ms=1.156302 repeats=100
+FRAME_PASS backend=PL_DMA_FRAME bit_exact_bins=16384
+E14-frame trial 2/3: float_neon
+PS_VERIFY_PASS repeats=100 bins=16384 max_error_q15_lsb=0.00042680867292000 worst_rms_q15_lsb=0.00001380469694028 worst_relative_l2=0.00000010831022571
+E14-frame trial 2/3: pl
+PIPELINE_TIMING backend=PL_DMA_FRAME mean_ms=1.133873 median_ms=1.129707 min_ms=1.120596 max_ms=1.210825 repeats=100
+FRAME_PASS backend=PL_DMA_FRAME bit_exact_bins=16384
+E14-frame trial 2/3: double
+PS_VERIFY_PASS repeats=100 bins=16384 max_error_q15_lsb=0.00000000000183315 worst_rms_q15_lsb=0.00000000000003736 worst_relative_l2=0.00000000000000029
+E14-frame trial 3/3: pl
+PIPELINE_TIMING backend=PL_DMA_FRAME mean_ms=1.128516 median_ms=1.125576 min_ms=1.116642 max_ms=1.181892 repeats=100
+FRAME_PASS backend=PL_DMA_FRAME bit_exact_bins=16384
+E14-frame trial 3/3: double
+PS_VERIFY_PASS repeats=100 bins=16384 max_error_q15_lsb=0.00000000000183315 worst_rms_q15_lsb=0.00000000000003736 worst_relative_l2=0.00000000000000029
+E14-frame trial 3/3: float_neon
+PS_VERIFY_PASS repeats=100 bins=16384 max_error_q15_lsb=0.00042680867292000 worst_rms_q15_lsb=0.00001380469694028 worst_relative_l2=0.00000010831022571
+E14_FRAME_BENCHMARK_COMPLETE: /opt/fft128/e14_clock_100000000_20261126_095418/compare_100mhz_01/paired
+Compare fft_pipeline wall times; per-repeat validation excluded. No UDP.

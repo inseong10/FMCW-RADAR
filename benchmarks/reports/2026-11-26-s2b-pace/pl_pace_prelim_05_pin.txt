@@ -1,0 +1,16 @@
+pid=1739 tasks=1739 1749 1750
+tid=1739 mask=1
+tid=1749 mask=1
+tid=1750 mask=2
+T 12221.50
+cpu0 4286 0 1771 1214503 166 0 914 0 0 0
+cpu1 1561 0 1866 1218122 97 0 0 0 0 0
+T 12233.44
+cpu0 4301 0 1829 1215410 168 0 1125 0 0 0
+cpu1 1766 0 1906 1219064 97 0 0 0 0 0
+1739 30 107 0
+1749 1 3 0
+1750 172 9 1
+tid=1739 get failed: No such process
+tid=1749 get failed: No such process
+tid=1750 get failed: No such process

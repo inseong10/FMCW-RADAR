@@ -1,0 +1,10 @@
+S3A0_PIN cpu1=ok
+S3A0_EXACT detect_integer=1 sep_u64=1 sep_double=1 window_magic=1 peaks=4
+S3A0_MICRO window_int_us=868.4
+S3A0_MICRO window_magic_us=1159.7
+S3A0_MICRO power_decode_us=434.0
+S3A0_MICRO cfar_double_ref_us=2881.5
+S3A0_MICRO cfar_detect_integer_us=1987.7
+S3A0_MICRO sep_u64_threshold_us=1366.3
+S3A0_MICRO sep_double_threshold_us=1764.0
+S3A0_MICRO compare_scan_us=402.3

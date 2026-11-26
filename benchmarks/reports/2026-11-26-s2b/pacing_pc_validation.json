@@ -1,0 +1,12 @@
+{
+  "experiment": "S2b-pacing",
+  "pc_tests_passed": 3,
+  "test_scope": "deterministic fake clocks: oversleep/catch-up preservation, absolute-deadline spin, expired deadline",
+  "vm_execution": false,
+  "network_execution": false,
+  "sources_sha256": {
+    "tools\\sender\\check_pacing.py": "e7cbeef727c0de57d2e498e318c77b8011104675ab8ea546bc52cbd91accadf0",
+    "tools\\sender\\test_check_pacing.py": "f5ce8c9c811531cb7cea4d8d2c24ece625e0abb918d409bdbf1e14ba5206e897",
+    "tools\\sender\\replay_stream.py": "f5f9197e690a302efd6043201c1c46c4d1f4ad2ba89f450c897b42af136e91ea"
+  }
+}

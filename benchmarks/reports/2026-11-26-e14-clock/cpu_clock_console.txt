@@ -1,0 +1,16 @@
+User-provided console excerpts, 2026-11-26 Asia/Seoul.
+Read-only devmem values; no direct board connection by the agent.
+
+0xF8000100: 0x00028000
+0xF8000104: 0x00020000
+0xF8000108: 0x0001E000
+0xF800010C: 0x0000003F
+0xF8000120: 0x1F000200
+
+/sys/firmware/devicetree/base/axi/slcr@f8000000/clkc@100/ps-clk-frequency
+od -b:
+0000000  001 374 240 125
+0000004
+
+Earlier debugfs attempt: /sys/kernel/debug absent; mkdir Operation not permitted.
+Earlier od -An -t x1 attempt: BusyBox v1.34.1 does not support -A.

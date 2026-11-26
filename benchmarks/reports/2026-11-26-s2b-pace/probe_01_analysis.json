@@ -1,0 +1,87 @@
+{
+ "experiment": "S2b-pace probe 92330",
+ "evidence": "user Ubuntu console + sender JSON recovered from share; no receiver running",
+ "sender_json_sha256": "d9f26ecc8b20bc9cd8121ed70e2493408d2e396f3a91fb6259f5f3e70ad97d4c",
+ "sender_source_sha256": "f3806e43dd063dd6407c2525ee7e88a6d71b96eb83a31f162304c92075dd0a37",
+ "conditions": {
+  "period_ms": 12.8,
+  "frames": 200,
+  "chirp_gap_us": 100,
+  "wait_mode": "spin",
+  "late_limit_us": 10,
+  "destination": "10.0.0.3:5000 (no listener)"
+ },
+ "chirp_late_us": {
+  "median": 0.141,
+  "p90": 0.233,
+  "p99": 4.141,
+  "p99_9": 160.849,
+  "max": 713.261
+ },
+ "late_over_limit": 151,
+ "frames_with_late_chirp": 58,
+ "stall_events": 111,
+ "stall_events_ge_100us": [
+  {
+   "frame": 1,
+   "first_chirp": 0,
+   "chirps": 6,
+   "peak_us": 204.055
+  },
+  {
+   "frame": 25,
+   "first_chirp": 120,
+   "chirps": 3,
+   "peak_us": 114.595
+  },
+  {
+   "frame": 46,
+   "first_chirp": 0,
+   "chirps": 10,
+   "peak_us": 713.261
+  },
+  {
+   "frame": 56,
+   "first_chirp": 5,
+   "chirps": 10,
+   "peak_us": 632.172
+  },
+  {
+   "frame": 76,
+   "first_chirp": 115,
+   "chirps": 5,
+   "peak_us": 304.87
+  },
+  {
+   "frame": 83,
+   "first_chirp": 127,
+   "chirps": 1,
+   "peak_us": 134.94
+  },
+  {
+   "frame": 134,
+   "first_chirp": 15,
+   "chirps": 7,
+   "peak_us": 529.824
+  },
+  {
+   "frame": 197,
+   "first_chirp": 91,
+   "chirps": 2,
+   "peak_us": 117.325
+  }
+ ],
+ "stall_peak_us_counts": {
+  "10-20": 49,
+  "20-50": 48,
+  "50-100": 6,
+  ">=100": 8
+ },
+ "sendto_max_us": 620.7819999999999,
+ "overrun_frames": 1,
+ "overrun_frame_ids": [
+  83
+ ],
+ "frame_start_late_max_us": 63.155,
+ "valid": false
+}

@@ -1,0 +1,23 @@
+User-provided console excerpts after loading the selected 100 MHz bundle.
+Board path: /opt/fft128/e14_clock_100000000_20261126_095418
+Date: 2026-11-26 Asia/Seoul. Wrapped console lines joined for readability.
+The complete on-board load_board.console.log has not been collected yet.
+
+fpga_manager fpga0: writing fft128_e14_frame.bin to Xilinx Zynq FPGA Manager
+OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/fft128_e14_frame_clock
+OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/fft128_e14_frame_dma
+xilinx-vdma 40400000.dma: Xilinx AXI DMA Engine Driver Probed!!
+fft128_dma_frame: loading out-of-tree module taints kernel.
+fft128-dma-frame 43c60000.fft: E14-frame ready: 128x128 frame/ioctl, PL transpose, 1 reused streaming FFT, 64KiB each direction
+FRAME_MATRIX_PASS reads=32768 writes=32768 range=16384 doppler_in=16384 doppler_out=16384 overwrite_errors=0 phase_cycles=17788/17771/16385
+FRAME_PACKET_PASS trial=0 bytes_each_direction=65536 completed_ffts=256 profile=1 bit_exact_bins=16384
+FRAME_MATRIX_PASS reads=32768 writes=32768 range=16384 doppler_in=16384 doppler_out=16384 overwrite_errors=0 phase_cycles=17789/17771/16385
+FRAME_PACKET_PASS trial=1 bytes_each_direction=65536 completed_ffts=256 profile=1 bit_exact_bins=16384
+FRAME_MATRIX_PASS reads=32768 writes=32768 range=16384 doppler_in=16384 doppler_out=16384 overwrite_errors=0 phase_cycles=17786/17771/16385
+FRAME_PACKET_PASS trial=2 bytes_each_direction=65536 completed_ffts=256 profile=1 bit_exact_bins=16384
+FRAME_PACKET_PASS trial=3 bytes_each_direction=65536 completed_ffts=256 profile=0 bit_exact_bins=16384
+DMA_FRAME_CLIENT_PASS exclusive_owner invalid_ABI timeout flags fixed_frame repeated_frames integer_2D phase_matrix_stage_counters
+DMA: E14 complete 128x128 frame; PL transpose/output reorder, 1 reused streaming FFT, 64KiB per direction, 1 ioctl/2 channels; coherent bounce copies retained
+BACKEND=PL_DMA_FRAME implementation=native_C
+SELFTEST_PASS backend=PL_DMA_FRAME frames=4 bins=65536
+DMA_E14_FRAME_SELFTEST_READY: next run full frame/profile before benchmarking

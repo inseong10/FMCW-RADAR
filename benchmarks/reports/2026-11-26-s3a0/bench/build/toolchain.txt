@@ -1,0 +1,2 @@
+arm-linux-gnueabihf-g++ (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+g++ (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0

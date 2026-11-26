@@ -1,0 +1,6 @@
+S3A0_PIN cpu1=ok
+S3A0_BENCH backend=model reps=500 timing_input=radarsimpy_128x128_sim_multi4_noise_adc16.rspb
+S3A0_STAGE prepare_adc16 median_us=2176.4 p99_us=2259.8 min_us=2122.2 per_cell_us=0.1328 n=500
+S3A0_STAGE transform median_us=47397.6 p99_us=47889.4 min_us=47006.6 per_cell_us=2.8929 n=500
+S3A0_STAGE detect_power_cfar median_us=5958.2 p99_us=6248.6 min_us=5919.9 per_cell_us=0.3637 n=500
+exit=0

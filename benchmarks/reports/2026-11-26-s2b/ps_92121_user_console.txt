@@ -1,0 +1,5 @@
+Evidence: user-pasted console, 2026-11-26. Receiver raw files not yet collected.
+S2A_READY backend=ps run_id=92121 port=5000
+S2A_RECORDED processed=150 expected=200
+S2A_SENT frames=200 run_id=92121 overruns=35
+Command omitted --cpu0. CPU online and inherited affinity output not supplied.

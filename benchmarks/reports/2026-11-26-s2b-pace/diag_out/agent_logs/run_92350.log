@@ -1,0 +1,5 @@
+store=nfs out=/opt/fft128/s2a_int16_20261126_adc01/pl_diag_out_nfs_01
+S2A_READY backend=pl run_id=92350 port=5000
+S2A_RECORDED processed=9999 expected=10000
+ADC16_RECORDED backend=pl exit=2 out=/opt/fft128/s2a_int16_20261126_adc01/pl_diag_out_nfs_01
+AGENT_RUN_DONE run_id=92350 status=2

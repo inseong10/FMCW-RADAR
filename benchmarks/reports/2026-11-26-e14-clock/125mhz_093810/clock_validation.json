@@ -1,0 +1,7 @@
+{
+  "status": "E14_CLOCK_BUILD_REJECTED",
+  "clock_hz": 125000000,
+  "error": "Vivado recorded error.txt",
+  "hardware_verified": false,
+  "maximum_clock_claim": false
+}

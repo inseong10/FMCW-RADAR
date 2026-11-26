@@ -1,0 +1,33 @@
+Linux Petalinux-2022 5.15.19-xilinx #1 SMP PREEMPT Wed Aug 26 11:47:56 KST 2026 armv7l GNU/Linux
+87d0bd24-5ffa-435e-8919-fee083d76b6f
+processor	: 0
+model name	: ARMv7 Processor rev 0 (v7l)
+BogoMIPS	: 333.33
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x3
+CPU part	: 0xc09
+CPU revision	: 0
+
+processor	: 1
+model name	: ARMv7 Processor rev 0 (v7l)
+BogoMIPS	: 333.33
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x3
+CPU part	: 0xc09
+CPU revision	: 0
+
+Hardware	: Xilinx Zynq Platform
+Revision	: 0003
+Serial		: 0000000000000000
+E14-frame CPU0 warmup=10 repeats=100 trials=3, coherent HP0, PL_CLOCK_HZ=100000000 1streaming_core 7dedicated_stages, full-frame ioctl, PL transpose/reorder, inplace_matrix
+{"experiment":"E14-frame","core":"pipeline","clock_hz":100000000,"fft_control_base":"0x43c60000","dma_base":"0x40400000","irq_f2p_bits":[6,7],"dt_spi":[35,36],"memory_port":"HP0","memory_width":64,"stream_width":32,"sg":false,"dre":false,"burst":16,"length_width":17,"register_abi":8,"parallel_cores":1,"streaming_stages":7,"total_butterflies":7,"frame_initiation_interval":128,"group_barrier":false,"next_group_prefetch":false,"external_ping_pong":false,"external_buffers":false,"buffering":"per_stage_double_frame_slots_and_inplace_matrix","input_frame_slots_per_stage":2,"output_frame_slots_per_stage":2,"fft_per_request":256,"frame_words":16384,"bytes_per_direction":65536,"board_verified":false,"next_vector_prefetch":true,"stage_frame_slots":true,"pl_transpose":true,"pl_output_reorder":true,"matrix_bytes":65536,"in_place_matrix":true,"cpu_transpose":false,"dma_requests_per_frame":1,"dma_channel_submissions_per_frame":2,"payload_bytes_per_frame":131072,"output_order":"doppler-major/range-minor","fft_vector_initiation_interval":128,"full_frame_overlap":false,"frame_schedule":"range_then_doppler_then_row_major_drain"}
+f27f47bb4b4f183cfc6dad06a3052de3ea80c6bd2b219b9767c850c22d343f80  /opt/fft128/e14_clock_100000000_20261126_095418/fft128_e14_frame.bin
+a7a37e11c805a8850e4086b72f13ad472cc458d5758367eefeb96e995a0cb178  /opt/fft128/e14_clock_100000000_20261126_095418/fft128_dma_frame.ko
+21128056810a6e195ec90f12cdea86f869108adc5f4b960669653cb615becaec  /opt/fft128/e14_clock_100000000_20261126_095418/fft128-receiver
+aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976  /opt/fft128/e14_clock_100000000_20261126_095418/frame.rspb
+/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor: unavailable
+/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: unavailable

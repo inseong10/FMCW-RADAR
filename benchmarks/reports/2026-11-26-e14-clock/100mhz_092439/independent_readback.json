@@ -1,0 +1,18 @@
+{
+  "status": "INDEPENDENT_SHARED_BUILD_READBACK_PASS",
+  "run": "/home/user/fmcw_share/FMCW-FFT-test/build/vivado/fft128_dma_e14_clock_100p000mhz_20261126_092439_245",
+  "artifacts_verified": 11,
+  "sources_verified": 14,
+  "timing": {
+    "setup_wns_ns": 0.726,
+    "hold_whs_ns": 0.023,
+    "pulse_width_wpws_ns": 2.0,
+    "clock_name": "clk_out1_system_clock_gen_0",
+    "period_ns": 10.0,
+    "frequency_mhz": 100.0,
+    "unconstrained_internal_endpoints": 0
+  },
+  "hardware_verified": false,
+  "maximum_clock_claim": false,
+  "large_files_retained_in_shared_build": true
+}

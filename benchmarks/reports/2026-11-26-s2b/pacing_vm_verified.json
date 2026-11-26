@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "experiment": "S2b-pacing",
+  "scope": "deadline wakeups only; no packets; no receiver or offered-load claim",
+  "python": "3.8.10",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+  "cpu_count": 4,
+  "allowed_cpus": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "monotonic_resolution_seconds": 1e-09,
+  "period_ms": 12.8,
+  "frames": 200,
+  "source_sha256": "e7cbeef727c0de57d2e498e318c77b8011104675ab8ea546bc52cbd91accadf0",
+  "cases": [
+    {
+      "mode": "sleep",
+      "frames": 200,
+      "median_lateness_ms": 4.881992,
+      "max_lateness_ms": 15.732412,
+      "lateness_ge_10pct_period": 169,
+      "deadline_wakeup_valid": false,
+      "process_cpu_pct_one_core": 0.37843331291213284
+    },
+    {
+      "mode": "spin",
+      "frames": 200,
+      "median_lateness_ms": 0.000404,
+      "max_lateness_ms": 0.010425,
+      "lateness_ge_10pct_period": 0,
+      "deadline_wakeup_valid": true,
+      "process_cpu_pct_one_core": 99.97274858654328
+    }
+  ],
+  "raw_sha256": "99b46611a655c3a947dd1d9122b580bd079b665e5289b67eabe28331a08070d9",
+  "independent_wakeup_recalculation": true,
+  "network_load_verified": false
+}

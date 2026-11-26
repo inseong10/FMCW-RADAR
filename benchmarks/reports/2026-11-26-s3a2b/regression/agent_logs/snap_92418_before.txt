@@ -1,0 +1,13 @@
+uptime 7534.01
+Udp: InDatagrams NoPorts InErrors OutDatagrams RcvbufErrors SndbufErrors InCsumErrors IgnoredMulti MemErrors
+Udp: 11626749 0 1276 505 1276 0 0 0 0
+UdpLite: InDatagrams NoPorts InErrors OutDatagrams RcvbufErrors SndbufErrors InCsumErrors IgnoredMulti MemErrors
+UdpLite: 0 0 0 0 0 0 0 0 0
+  eth0: 2899065146 11890341    0    0    0     0          0         1 323559956  307081    0    0    0     0       0          0
+net 0 0 0 0
+rpc 149799 2 149784
+cpu  208757 0 44377 1202072 530 0 40181 0 0 0
+cpu0 78189 0 37655 587426 147 0 40181 0 0 0
+cpu1 130568 0 6722 614645 383 0 0 0 0 0
+nr_dirty 0
+nr_writeback 0

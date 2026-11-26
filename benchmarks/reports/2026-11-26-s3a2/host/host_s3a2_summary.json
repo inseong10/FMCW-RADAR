@@ -1,0 +1,56 @@
+[
+ {
+  "run_id": 92411,
+  "backend": "model",
+  "frames_checked": 20,
+  "hits": 4,
+  "false": 0,
+  "peaks": [
+   [
+    21,
+    10
+   ],
+   [
+    215,
+    20
+   ],
+   [
+    8,
+    37
+   ],
+   [
+    174,
+    53
+   ]
+  ],
+  "all_bins": true,
+  "complete_to_output_p99_ms": 9.2009587
+ },
+ {
+  "run_id": 92412,
+  "backend": "ps",
+  "frames_checked": 20,
+  "hits": 4,
+  "false": 0,
+  "peaks": [
+   [
+    21,
+    10
+   ],
+   [
+    215,
+    20
+   ],
+   [
+    8,
+    37
+   ],
+   [
+    174,
+    53
+   ]
+  ],
+  "all_bins": true,
+  "complete_to_output_p99_ms": 2.803968899999999
+ }
+]

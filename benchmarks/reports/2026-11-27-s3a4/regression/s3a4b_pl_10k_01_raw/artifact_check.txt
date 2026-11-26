@@ -1,0 +1,6 @@
+stream-receiver: OK
+libfftw3.so.3: OK
+build_environment.txt: OK
+source.sha256: OK
+run_board.sh: OK
+shape.txt: OK

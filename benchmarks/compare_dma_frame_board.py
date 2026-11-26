@@ -84,7 +84,8 @@ def validate_frame_contract(batch):
     require(all(batch.get(k)==v for k,v in expected.items()),'Actual E14 hardware full-frame contract required')
 
 
-def analyze(folder):
+def analyze(folder, clock_hz=50000000):
+    require(50000000 <= clock_hz <= 200000000, 'Invalid expected PL clock')
     expected, q, scale = reference(ROOT/'benchmarks/fixtures/radarsimpy_128x128.rspb')
     integer = integer_reference(q)
     env = (folder/'environment.txt').read_text()
@@ -109,7 +110,7 @@ def analyze(folder):
     validate_config(config)
     require((config['experiment'], config['core'], config['clock_hz'], config['memory_port'],
              config['fft_per_request'], config['bytes_per_direction'], config['sg'], config['dre']) ==
-            ('E14-frame', 'pipeline', 50000000, 'HP0', 256, 65536, False, False), 'DMA architecture differs')
+            ('E14-frame', 'pipeline', clock_hz, 'HP0', 256, 65536, False, False), 'DMA architecture differs')
     variants = ('double', 'float_neon', 'pl')
     orders = (folder/'order.txt').read_text().splitlines()
     require(orders == [f'trial={i+1} order={" ".join(variants[i:]+variants[:i])}' for i in range(3)],
@@ -191,7 +192,8 @@ def analyze(folder):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('results', type=Path)
+    parser.add_argument('--clock-hz', type=int, default=50000000)
     args = parser.parse_args()
-    result = analyze(args.results)
+    result = analyze(args.results, args.clock_hz)
     (args.results/'comparison.json').write_text(json.dumps(result, indent=2)+'\n', encoding='utf-8')
     print(json.dumps(result, indent=2))

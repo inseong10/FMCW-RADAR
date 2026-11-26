@@ -1,0 +1,125 @@
+{
+  "experiment": "S2a-int16",
+  "evidence": "Windows PC portable production wire/pipeline correctness",
+  "git_base": "5b5123ff885499aa85c9f2340b7cdccfd70989fd",
+  "python": "3.13.13",
+  "numpy": "2.5.0",
+  "compiler": "g++.exe (Rev5, Built by MSYS2 project) 16.1.0",
+  "adc_tests_passed": 13,
+  "legacy_float_regression_tests_passed": 11,
+  "staged_shared_adc_tests_passed": 13,
+  "staged_legacy_user_test_preserved": true,
+  "flags": "C -O2 -std=c11; C++ -O2 -std=c++17; -Wall -Wextra -Werror; no fast-math",
+  "adc_cases_per_backend": 6,
+  "adc_bins_checked_per_case": 16384,
+  "adc_ps_oracle": "NumPy double FFT; full complex bins atol1e-9 rtol1e-9",
+  "adc_pl_oracle": "native fft128_process model vs independent Python integer Hann/FFT; exact all bins",
+  "cfar": {
+    "guard": [
+      2,
+      2
+    ],
+    "train": [
+      8,
+      8
+    ],
+    "pfa": 1e-06,
+    "truth_tolerance_bins": 1
+  },
+  "numeric_model_comparison": [
+    {
+      "case": "single_none",
+      "evidence": "Python model/NumPy, no board",
+      "adc_ps_vs_source_scaled_max_complex_code_error": 0.011502523863041885,
+      "adc_pl_model_vs_adc_ps_max_complex_code_error": 10.545273302457295,
+      "adc_pl_model_vs_adc_ps_relative_l2": 0.06938335246973253
+    },
+    {
+      "case": "single_hann",
+      "evidence": "Python model/NumPy, no board",
+      "adc_ps_vs_source_scaled_max_complex_code_error": 0.0037705527654823003,
+      "adc_pl_model_vs_adc_ps_max_complex_code_error": 9.14984402344164,
+      "adc_pl_model_vs_adc_ps_relative_l2": 0.18494981028698101
+    },
+    {
+      "case": "multi4_none",
+      "evidence": "Python model/NumPy, no board",
+      "adc_ps_vs_source_scaled_max_complex_code_error": 0.00985891973214272,
+      "adc_pl_model_vs_adc_ps_max_complex_code_error": 10.182493109023467,
+      "adc_pl_model_vs_adc_ps_relative_l2": 0.032058891629918054
+    },
+    {
+      "case": "multi4_hann",
+      "evidence": "Python model/NumPy, no board",
+      "adc_ps_vs_source_scaled_max_complex_code_error": 0.003632744624124501,
+      "adc_pl_model_vs_adc_ps_max_complex_code_error": 9.1506545615461,
+      "adc_pl_model_vs_adc_ps_relative_l2": 0.08527437761608185
+    },
+    {
+      "case": "close_weak_none",
+      "evidence": "Python model/NumPy, no board",
+      "adc_ps_vs_source_scaled_max_complex_code_error": 0.009392670429258931,
+      "adc_pl_model_vs_adc_ps_max_complex_code_error": 9.751605837731313,
+      "adc_pl_model_vs_adc_ps_relative_l2": 0.06890641530905742
+    },
+    {
+      "case": "close_weak_hann",
+      "evidence": "Python model/NumPy, no board",
+      "adc_ps_vs_source_scaled_max_complex_code_error": 0.003703578775985814,
+      "adc_pl_model_vs_adc_ps_max_complex_code_error": 9.149624319414816,
+      "adc_pl_model_vs_adc_ps_relative_l2": 0.18372622782412631
+    }
+  ],
+  "source_sha256": {
+    "src/PS/receiver/stream_adc16.hpp": "ffae26d9c04c07c3724dae72eace1778c1f97536ed984d28c2ab5bff34ac57b5",
+    "src/PS/receiver/stream_pipeline.hpp": "c2f6f213d89549be887011d29dd2bb05e01514ac091db74a7f45c8e5a1e31838",
+    "src/PS/receiver/stream_protocol.hpp": "e989ce3aa4831973b1b36a10639433833b36a0268c2a0af76e2345fa0f22117b",
+    "src/PS/receiver/stream_receiver.cpp": "ba167cd6ff86967c287cc394d2e20d4e313778043d8021853a7fdfb95253f9fb",
+    "src/PS/receiver/stream_timestamp.hpp": "da5a68b62f9532ae8a131eaca8a541aa8c4fa6c5a472d67c2f0cfde33041d2d3",
+    "src/PS/receiver/cfar_ca.hpp": "39cb59390a5c9e4f3aba0994e148956822e035bd90c703ab6fc917bc56e7661c",
+    "src/PS/receiver/tests/stream_driver.cpp": "3573769195cdeea13f0ed5011a393992be2b99c4edaeb55fc7c3f3acd0716afa",
+    "src/PS/receiver/tests/adc16_driver.cpp": "8609de4f249b35a85b57af2e872d3b925bd636426f3e746094a9eed1b7688ea1",
+    "src/PS/fft128/native_core.c": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+    "src/PS/fft128/native_core.h": "a58054f0d251944c5ffd80abbf35726e67102e50eef3944d0fa3cbad673a17d8",
+    "src/PS/fft128/receiver.py": "4a08a9d3c08f5b3af68cca2e37eb549d3c71251c68e38b03e15bb3f3892015fe",
+    "src/PS/fft128/dma_frame/fft128_dma_frame_uapi.h": "e89d334c172f1d6df50738239c2261cc6cb7bd0ca2be43ce10bd92cc081953f3",
+    "src/PL/fft128_ps/butterfly_pipeline.v": "8152035a94ef0a7761e463c18a0011def3c7f239572ee9f928c6305287546297",
+    "tools/detection/adc16_reference.py": "f70b31f70a2b93279bc3adaf3cddc7497cb9562dc29f1e8dcbb34a8eebddc1a3",
+    "tools/detection/make_adc16_fixture.py": "d29e233c9dc900e04448e020cbd1f757c72d4c6467faf37f668ead61053b1c42",
+    "tools/detection/test_adc16.py": "2b8a7fb402ac75f5f840c77cac4cce506c561a6d2e02c73588a17efd8c60dedb",
+    "tools/detection/test_s2a.py": "aa501a8293635e4534c16879224dfb1f1ea5bff1e6c77718886e8b9d6f9a53d1",
+    "tools/detection/cfar_reference.py": "d46119bd88532791a356c1e2dabf453b9df905fd7893ff1b9b8ec0e75e5e72c7",
+    "tools/detection/verify_s1c.py": "7ecf5e04f39a08cbf860e5095a4267df264b87eeb3b10c93ea6533a163333bb4",
+    "tools/detection/check_adc16_stream.py": "967ad9f9c78f2c2cc3da41a073b0f8a6e57570c62130327710c5e2b10f93d618",
+    "tools/detection/analyze_stream.py": "60c286eb305e0c0c7d0cf450848e279e53fae869700c6acfdc667625531fd11e",
+    "tools/detection/smoke_adc16.py": "df05ddc1f4c514ec92f4023ba1cdd2d66d3f1fb10b9bc0e29509cbd97b32b3e0",
+    "tools/detection/smoke_s2a.py": "45c0d377050546cb97cbb94c549a8038271b510f7df75e49c41d8a3bfa4ff9f6",
+    "tools/detection/build_s2a.sh": "524e6ba197be7302946df33a1ade8bcaa0ea5de95554f539bc2e4d968451f6af",
+    "tools/detection/prepare_adc16.sh": "055fb4c0ec4f19302ab0f68424184f0332822d104e9c6ae07a7c3166f5fa7027",
+    "tools/detection/run_adc16_board.sh": "b8eb507f15794b42ddd1c6c71102bfd5bb656e3439cca294afec318fe5b349f9",
+    "tools/sender/replay_stream.py": "798375e71dd077fffdc9debb96386fda985a6732b2dafb04806eb87eedd4ef4d",
+    "tools/sender/adc16_record.py": "9ba984ec24fdd28d5af222a9eff1263e4bb041b73c513fb4cc5e87da27e03ea6",
+    "tools/sender/replay_udp.py": "3a66f53f0556596ec492a9384c2f8f3fbea89bed0d78723b1757f659563e15fb"
+  },
+  "fixture_sha256": {
+    "benchmarks/fixtures/adc16/radarsimpy_128x128_adc16.rspb": "70931e2da879778d386e635e24f665a9f8a057b036535697b54917d5c431f332",
+    "benchmarks/fixtures/adc16/radarsimpy_128x128_sim_close_weak_noise_adc16.rspb": "1fdd94aafba9f690aa99cdd3fd7fc39c8c8deab9e196c52468363fde202f3d9c",
+    "benchmarks/fixtures/adc16/radarsimpy_128x128_sim_multi4_noise_adc16.rspb": "d3d5160cb8b5f56e24bf60369801d3bc85dea47684d088fb203680c8bb6b91cf",
+    "benchmarks/fixtures/adc16/radarsimpy_128x128_sim_single_noise_adc16.rspb": "7d30092ad5b439251f351039e6d466c4210a2d0fe24be682634af7f5f1aef84e"
+  },
+  "pc_binary_sha256": {
+    "build/adc16_pc_20261126_final/binaries/adc.exe": "af25b13695d833c827b416a7b6a4e423e086de81dfa0ef5b4a53f1dc566f468e",
+    "build/adc16_pc_20261126_final/binaries/core.o": "9f72d3f579c986062c5af418b7d252973d20625d921e15ee40ac71518bd189dd",
+    "build/adc16_pc_20261126_final/binaries/stream.exe": "19ab00ce46ac3b09cc31bc8f9f8b2a163d3d5fc41cfe77d46d386a06b0960eec"
+  },
+  "pc_fftw_sha256": {
+    "build/fft128_ps_precision_host/libfftw3-3.dll": "001a835d2f25ac0661580d67db5622157c28481c06a7f3ef45ad939839bf54a1",
+    "build/fft128_ps_precision_host/libfftw3f-3.dll": "42ca18fff35dd12890e04478bc990005b3969cb744f6843976bd436ccd7f0a4c"
+  },
+  "ubuntu_host_build": "pending user console",
+  "arm_build": "pending user console",
+  "board_ps_20_frames": "pending raw files",
+  "board_pl_20_frames": "pending raw files",
+  "board_preparation_times": null,
+  "throughput_or_clock_maximum_claim": false
+}

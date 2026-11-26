@@ -1,0 +1,20 @@
+S3A2B_MICRO gather shape=256x128 median_us=707.1 min_us=705.8 n=100
+S3A2B_MICRO place shape=256x128 median_us=227.2 min_us=224.6 n=100
+S3A2B_MICRO combine shape=256x128 median_us=2401.7 min_us=2399.4 n=100
+S3A2B_MICRO gather shape=128x256 median_us=880.6 min_us=879.8 n=100
+S3A2B_MICRO place shape=128x256 median_us=238.5 min_us=236.3 n=100
+S3A2B_MICRO combine shape=128x256 median_us=2866.8 min_us=2833.8 n=100
+S3A2B_MICRO gather shape=256x256 median_us=1883.3 min_us=1864.2 n=100
+S3A2B_MICRO place shape=256x256 median_us=472.6 min_us=463.4 n=100
+S3A2B_MICRO combine shape=256x256 median_us=10458.4 min_us=10441.1 n=100
+S3A2B_MICRO_DONE checksum=596199928835
+S3A2B_MICRO gather shape=256x128 median_us=710.0 min_us=705.9 n=100
+S3A2B_MICRO place shape=256x128 median_us=228.0 min_us=224.8 n=100
+S3A2B_MICRO combine shape=256x128 median_us=2401.6 min_us=2399.7 n=100
+S3A2B_MICRO gather shape=128x256 median_us=887.7 min_us=876.6 n=100
+S3A2B_MICRO place shape=128x256 median_us=241.2 min_us=238.3 n=100
+S3A2B_MICRO combine shape=128x256 median_us=2871.0 min_us=2841.9 n=100
+S3A2B_MICRO gather shape=256x256 median_us=1893.8 min_us=1882.9 n=100
+S3A2B_MICRO place shape=256x256 median_us=474.0 min_us=460.7 n=100
+S3A2B_MICRO combine shape=256x256 median_us=10453.3 min_us=10431.4 n=100
+S3A2B_MICRO_DONE checksum=596199928835

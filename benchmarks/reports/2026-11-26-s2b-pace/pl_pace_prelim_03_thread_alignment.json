@@ -1,0 +1,227 @@
+{
+ "note": "processor field is instantaneous at each ~0.19s sample; tick-based utime/stime (USER_HZ); uptime aligned to receiver CLOCK_MONOTONIC ns assuming no suspend",
+ "worker_tid": 1178,
+ "main_rx_tid": 1171,
+ "intervals": [
+  {
+   "t0": 11652.49,
+   "frames": [
+    1,
+    4
+   ],
+   "cfar_med_ms": 9.2595035,
+   "prep_med_ms": 3.752835,
+   "worker_cpu_start_end": [
+    1,
+    0
+   ],
+   "rx_cpu_start_end": [
+    1,
+    0
+   ],
+   "worker_dutime_dstime": [
+    2,
+    7
+   ],
+   "cpu0_softirq_share": 0.5
+  },
+  {
+   "t0": 11652.68,
+   "frames": [
+    5,
+    16
+   ],
+   "cfar_med_ms": 9.417345000000001,
+   "prep_med_ms": 3.574287,
+   "worker_cpu_start_end": [
+    0,
+    1
+   ],
+   "rx_cpu_start_end": [
+    0,
+    0
+   ],
+   "worker_dutime_dstime": [
+    3,
+    10
+   ],
+   "cpu0_softirq_share": 0.75
+  },
+  {
+   "t0": 11652.88,
+   "frames": [
+    17,
+    31
+   ],
+   "cfar_med_ms": 9.314277,
+   "prep_med_ms": 3.507099,
+   "worker_cpu_start_end": [
+    1,
+    0
+   ],
+   "rx_cpu_start_end": [
+    0,
+    1
+   ],
+   "worker_dutime_dstime": [
+    5,
+    11
+   ],
+   "cpu0_softirq_share": 0.6818181818181818
+  },
+  {
+   "t0": 11653.08,
+   "frames": [
+    33,
+    52
+   ],
+   "cfar_med_ms": 6.696663,
+   "prep_med_ms": 2.612457,
+   "worker_cpu_start_end": [
+    0,
+    1
+   ],
+   "rx_cpu_start_end": [
+    1,
+    0
+   ],
+   "worker_dutime_dstime": [
+    19,
+    3
+   ],
+   "cpu0_softirq_share": 0.42857142857142855
+  },
+  {
+   "t0": 11653.31,
+   "frames": [
+    54,
+    75
+   ],
+   "cfar_med_ms": 6.6735240000000005,
+   "prep_med_ms": 2.570004,
+   "worker_cpu_start_end": [
+    1,
+    0
+   ],
+   "rx_cpu_start_end": [
+    0,
+    1
+   ],
+   "worker_dutime_dstime": [
+    16,
+    4
+   ],
+   "cpu0_softirq_share": 0.44
+  },
+  {
+   "t0": 11653.59,
+   "frames": [
+    76,
+    88
+   ],
+   "cfar_med_ms": 9.041931,
+   "prep_med_ms": 3.503349,
+   "worker_cpu_start_end": [
+    0,
+    1
+   ],
+   "rx_cpu_start_end": [
+    1,
+    0
+   ],
+   "worker_dutime_dstime": [
+    19,
+    0
+   ],
+   "cpu0_softirq_share": 0.16
+  },
+  {
+   "t0": 11653.8,
+   "frames": [
+    89,
+    113
+   ],
+   "cfar_med_ms": 6.751752,
+   "prep_med_ms": 2.57709,
+   "worker_cpu_start_end": [
+    1,
+    1
+   ],
+   "rx_cpu_start_end": [
+    0,
+    0
+   ],
+   "worker_dutime_dstime": [
+    23,
+    5
+   ],
+   "cpu0_softirq_share": 0.45161290322580644
+  },
+  {
+   "t0": 11654.09,
+   "frames": [
+    115,
+    138
+   ],
+   "cfar_med_ms": 6.7665185,
+   "prep_med_ms": 2.573943,
+   "worker_cpu_start_end": [
+    1,
+    1
+   ],
+   "rx_cpu_start_end": [
+    0,
+    0
+   ],
+   "worker_dutime_dstime": [
+    23,
+    1
+   ],
+   "cpu0_softirq_share": 0.28125
+  },
+  {
+   "t0": 11654.39,
+   "frames": [
+    140,
+    161
+   ],
+   "cfar_med_ms": 6.693830999999999,
+   "prep_med_ms": 2.5942860000000003,
+   "worker_cpu_start_end": [
+    1,
+    0
+   ],
+   "rx_cpu_start_end": [
+    0,
+    1
+   ],
+   "worker_dutime_dstime": [
+    19,
+    3
+   ],
+   "cpu0_softirq_share": 0.25
+  },
+  {
+   "t0": 11654.68,
+   "frames": [
+    163,
+    175
+   ],
+   "cfar_med_ms": 9.016614,
+   "prep_med_ms": 3.599898,
+   "worker_cpu_start_end": [
+    0,
+    0
+   ],
+   "rx_cpu_start_end": [
+    1,
+    0
+   ],
+   "worker_dutime_dstime": [
+    14,
+    2
+   ],
+   "cpu0_softirq_share": 0.2857142857142857
+  }
+ ]
+}

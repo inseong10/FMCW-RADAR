@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+"""Gate E14 clock candidates on routed timing, exact clocks and build identities.
+
+Build validation is not a board correctness test or a maximum-frequency claim.
+"""
+import argparse
+import hashlib
+import json
+import math
+from pathlib import Path
+import re
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def sha256(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def timing_summary(text, hz):
+    require('report_timing_summary -delay_type min_max' in text,
+            'Expected routed min/max timing report')
+    require('All user specified timing constraints are met.' in text,
+            'Timing constraints are not all met')
+    values = None
+    lines = text.splitlines()
+    for index, line in enumerate(lines):
+        if line.strip().startswith('WNS(ns)'):
+            for row in lines[index + 1:index + 5]:
+                fields = row.split()
+                if len(fields) == 12 and re.fullmatch(r'-?\d+(?:\.\d+)?', fields[0]):
+                    values = [float(value) for value in fields]
+                    break
+            break
+    require(values is not None and all(math.isfinite(v) for v in values),
+            'Missing complete setup/hold/pulse-width summary')
+    for offset, label in ((0, 'setup'), (4, 'hold'), (8, 'pulse-width')):
+        slack, total, failed, endpoints = values[offset:offset + 4]
+        require(slack >= 0 and total == 0 and failed == 0 and endpoints > 0,
+                label + ' checks failed or have no endpoints')
+    for name in ('no_clock', 'unconstrained_internal_endpoints', 'generated_clocks',
+                 'multiple_clock', 'loops', 'latch_loops', 'no_input_delay',
+                 'no_output_delay', 'partial_input_delay', 'partial_output_delay'):
+        counts = re.findall(r'checking ' + name + r' \((\d+)\)', text)
+        require(counts and all(int(count) == 0 for count in counts),
+                'Missing or nonzero check_timing: ' + name)
+    clocks = re.findall(r'^\s*(clk_out1\S*)\s+\{[^}\n]+\}\s+'
+                        r'(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\s*$', text, re.M)
+    require(len(clocks) == 1, 'Expected exactly one FFT generated clock')
+    name, period, frequency = clocks[0]
+    period, frequency = float(period), float(frequency)
+    require(abs(frequency * 1e6 - hz) <= 1000 and
+            abs(period - 1e9 / hz) <= 0.002,
+            'Timing report clock differs from requested candidate')
+    return dict(setup_wns_ns=values[0], hold_whs_ns=values[4],
+                pulse_width_wpws_ns=values[8], clock_name=name,
+                period_ns=period, frequency_mhz=frequency,
+                unconstrained_internal_endpoints=0)
+
+
+def validate_build(run, hz):
+    run = Path(run)
+    require(not (run / 'error.txt').exists(), 'Vivado recorded error.txt')
+    timing = timing_summary((run / 'timing.rpt').read_text(), hz)
+    config = json.loads((run / 'dma_config.json').read_text())
+    build = json.loads((run / 'build_config.json').read_text())
+    # Everything except frequency must match the original E14 architecture.
+    root = Path(__file__).resolve().parents[2]
+    source = (root / 'src/PL/fft128_ps/build_dma_frame.tcl').read_text()
+    baseline = json.loads(re.search(r'set frame_config \{(\{.*?\})\}', source).group(1))
+    expected = dict(baseline, clock_hz=hz)
+    require(config == expected, 'E14 architecture/configuration differs')
+    require(build == dict(core='pipeline', pl_clock_hz=hz, board_verified=False),
+            'Generated build clock/configuration differs')
+    require('dedicated_stages=7;' in (run / 'frame_core_check.txt').read_text(),
+            'Missing post-route E14 core checks')
+    require('done=1 passed=1;' in (run / 'reset_simulation.txt').read_text(),
+            'Generated reset/lock-loss simulation did not pass')
+    artifacts = {}
+    for name in ('timing.rpt', 'dma_config.json', 'build_config.json', 'frame_core_check.txt',
+                 'reset_simulation.txt', 'clock_source.txt', 'source.sha256', 'utilization.rpt',
+                 'frame_utilization.rpt', 'system.xsa',
+                 'fft128_ps.runs/impl_1/system_wrapper.bit'):
+        path = run / name
+        require(path.is_file() and path.stat().st_size > 0, 'Missing build artifact: ' + name)
+        artifacts[name] = sha256(path)
+    sources = {}
+    for line in (run / 'source.sha256').read_text().splitlines():
+        digest, name = line.split(maxsplit=1)
+        name = name.lstrip('*')
+        require(re.fullmatch('[0-9a-f]{64}', digest) and name not in sources,
+                'Invalid source manifest')
+        require(sha256(name) == digest, 'Source changed after build: ' + name)
+        sources[name] = digest
+    require(len(sources) >= 13, 'Incomplete source manifest')
+    return dict(status='E14_CLOCK_BUILD_PASS', clock_hz=hz, timing=timing,
+                artifact_sha256=artifacts, source_sha256=sources,
+                hardware_verified=False, maximum_clock_claim=False,
+                scope='routed timing and reset simulation only; board and throughput pending')
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('run', type=Path)
+    parser.add_argument('--mhz', type=float, required=True)
+    parser.add_argument('--verbose', action='store_true', help='Print full validation JSON; always saved to file')
+    args = parser.parse_args()
+    require(math.isfinite(args.mhz) and 50 <= args.mhz <= 200, 'MHz must be in [50, 200]')
+    hz = round(args.mhz * 1e6)
+    out = args.run / 'clock_validation.json'
+    require(not out.exists(), 'Preserve existing clock_validation.json')
+    try:
+        result = validate_build(args.run, hz)
+    except (ValueError, OSError, KeyError, AttributeError) as error:
+        result = dict(status='E14_CLOCK_BUILD_REJECTED', clock_hz=hz, error=str(error),
+                      hardware_verified=False, maximum_clock_claim=False)
+    out.write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
+    if args.verbose:
+        print(json.dumps(result, indent=2))
+    elif result['status'] == 'E14_CLOCK_BUILD_PASS':
+        t = result['timing']
+        print('%s MHz=%g WNS=%.3fns WHS=%.3fns PW=%.3fns' %
+              (result['status'], hz/1e6, t['setup_wns_ns'], t['hold_whs_ns'], t['pulse_width_wpws_ns']))
+    else:
+        print('%s MHz=%g reason=%s' %
+              (result['status'], hz/1e6, result['error'].replace('\n', ' ')[:300]))
+    raise SystemExit(0 if result['status'] == 'E14_CLOCK_BUILD_PASS' else 1)
+
+
+if __name__ == '__main__':
+    main()

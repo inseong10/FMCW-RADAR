@@ -1,0 +1,8 @@
+S3A3B_MICRO prepare shape=128x256 median_us=2033.5 min_us=2028.0 n=200
+S3A3B_MICRO old_gather shape=128x256 median_us=628.4 min_us=609.2 n=200
+S3A3B_MICRO old_place_combine shape=128x256 median_us=2037.0 min_us=2028.0 n=200
+S3A3B_MICRO new_gather shape=128x256 median_us=351.8 min_us=345.1 n=200
+S3A3B_MICRO new_place_fused shape=128x256 median_us=1838.3 min_us=1833.0 n=200
+S3A3B_MICRO neon_place_fused shape=128x256 median_us=676.6 min_us=672.7 n=200
+S3A3B_MICRO neon_doppler_256x128 shape=128x256 median_us=572.9 min_us=569.8 n=200
+S3A3B_MICRO_DONE checksum=2063865032148

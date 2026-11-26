@@ -1,0 +1,18 @@
+test_adc_full_scale_identity_and_integer_hann (test_adc16.AdcPipelineTests.test_adc_full_scale_identity_and_integer_hann) ... ok
+test_adc_model_all_bins_six_cases (test_adc16.AdcPipelineTests.test_adc_model_all_bins_six_cases) ... ok
+test_adc_protocol_mixed_profile_truncation_rejected (test_adc16.AdcPipelineTests.test_adc_protocol_mixed_profile_truncation_rejected) ... ok
+test_adc_ps_all_bins_six_cases (test_adc16.AdcPipelineTests.test_adc_ps_all_bins_six_cases) ... ok
+test_integer_window_ties_and_abi_packing (test_adc16.AdcPipelineTests.test_integer_window_ties_and_abi_packing) ... ok
+test_independent_checker_accepts_valid_bins_and_rejects_corruption (test_adc16.AdcTraceTests.test_independent_checker_accepts_valid_bins_and_rejects_corruption) ... ok
+test_missing_id_and_reversed_timestamps_rejected (test_adc16.AdcTraceTests.test_missing_id_and_reversed_timestamps_rejected) ... ok
+test_partial_frame_counted_as_drop (test_adc16.AdcTraceTests.test_partial_frame_counted_as_drop) ... ok
+test_valid_trace_and_kernel_drop_invalidation (test_adc16.AdcTraceTests.test_valid_trace_and_kernel_drop_invalidation) ... ok
+test_all_frozen_records_sha_gain_and_no_window (test_adc16.BoundaryTests.test_all_frozen_records_sha_gain_and_no_window) ... ok
+test_record_strictness_and_exclusive_write (test_adc16.BoundaryTests.test_record_strictness_and_exclusive_write) ... ok
+test_ties_even_and_saturation (test_adc16.BoundaryTests.test_ties_even_and_saturation) ... ok
+test_udp_sender_keeps_unwindowed_signed16_payload (test_adc16.BoundaryTests.test_udp_sender_keeps_unwindowed_signed16_payload) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 7.527s
+
+OK

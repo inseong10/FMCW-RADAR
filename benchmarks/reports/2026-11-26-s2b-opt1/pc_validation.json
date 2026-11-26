@@ -1,0 +1,132 @@
+{
+  "experiment": "S2b-opt1",
+  "scope": "PC portable wire/pipeline correctness; no ARM/NEON/throughput claim",
+  "unittest_tests_passed": 11,
+  "python": "3.13.13",
+  "numpy": "2.5.0",
+  "cpp_float_flags": "-O3 -flto -DFFT128_SINGLE=1 -std=c++17 -Wall -Wextra -Werror",
+  "c_core_test_flags": "-O2 -std=c11 -Wall -Wextra -Werror",
+  "float_cases": 12,
+  "double_cases": 6,
+  "integer_cases": 6,
+  "float_limits": {
+    "spectrum_relative_l2": 2e-06,
+    "max_spectrum_error_over_peak": 2e-06,
+    "power_relative_l2": 5e-06
+  },
+  "original_vs_float_input_reference": [
+    {
+      "scenario": "single",
+      "window": "none",
+      "double_and_float_input_reference_peaks_equal": true,
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ]
+    },
+    {
+      "scenario": "single",
+      "window": "hann",
+      "double_and_float_input_reference_peaks_equal": true,
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ]
+    },
+    {
+      "scenario": "multi4",
+      "window": "none",
+      "double_and_float_input_reference_peaks_equal": true,
+      "peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ],
+        [
+          34,
+          10
+        ]
+      ]
+    },
+    {
+      "scenario": "multi4",
+      "window": "hann",
+      "double_and_float_input_reference_peaks_equal": true,
+      "peaks": [
+        [
+          10,
+          10
+        ],
+        [
+          107,
+          20
+        ],
+        [
+          4,
+          37
+        ],
+        [
+          87,
+          53
+        ]
+      ]
+    },
+    {
+      "scenario": "close_weak",
+      "window": "none",
+      "double_and_float_input_reference_peaks_equal": true,
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ]
+    },
+    {
+      "scenario": "close_weak",
+      "window": "hann",
+      "double_and_float_input_reference_peaks_equal": true,
+      "peaks": [
+        [
+          107,
+          20
+        ]
+      ]
+    }
+  ],
+  "arm_build": "pending Ubuntu",
+  "board_neon_plan": "pending --require-neon",
+  "board_correctness_and_performance": "pending",
+  "source_sha256": {
+    "src/PS/receiver/stream_pipeline.hpp": "ce6f4207fdabc6254bfed1e84ef1f92e630da34eba5a6ab9bc844c7c82a06086",
+    "src/PS/receiver/stream_receiver.cpp": "075b2c1332f94eaf86b3ea4f2382297c4bd58bda42532cddec78aaf088d25bbb",
+    "src/PS/receiver/tests/stream_driver.cpp": "26aadaa2a71c3433a19604f41667e757af7e81dfad21b5c33aea45b6431a51d7",
+    "tools/detection/build_s2a.sh": "4f84ba2c8a77f282f0c413a5aa378d33fa2e4414442223785a813238038a16b5",
+    "tools/detection/prepare_s2b_opt1.sh": "00b68fd18c10cfc4aa04f617f072b65ec1f6b4ad488975a68db261a551b83040",
+    "tools/detection/run_s2b_opt1.sh": "7dbc486693809d1f67fefdd1b3ba621a71676ba0deb53a0d69c9a174a2ca005a",
+    "tools/detection/test_s2a.py": "aa501a8293635e4534c16879224dfb1f1ea5bff1e6c77718886e8b9d6f9a53d1",
+    "src/PS/receiver/cfar_ca.hpp": "39cb59390a5c9e4f3aba0994e148956822e035bd90c703ab6fc917bc56e7661c",
+    "src/PS/fft128/native_core.c": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+    "src/PS/fft128/native_core.h": "a58054f0d251944c5ffd80abbf35726e67102e50eef3944d0fa3cbad673a17d8"
+  },
+  "runtime_sha256": {
+    "build\\fft128_ps_precision_host\\libfftw3-3.dll": "001a835d2f25ac0661580d67db5622157c28481c06a7f3ef45ad939839bf54a1",
+    "build\\fft128_ps_precision_host\\libfftw3f-3.dll": "42ca18fff35dd12890e04478bc990005b3969cb744f6843976bd436ccd7f0a4c"
+  }
+}

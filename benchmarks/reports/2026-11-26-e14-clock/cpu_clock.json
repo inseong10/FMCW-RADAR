@@ -1,0 +1,18 @@
+{
+  "evidence_kind": "user_console_current_register_configuration",
+  "date": "2026-11-26 Asia/Seoul",
+  "board": "Zybo Z7-10 / XC7Z010-1CLG400C",
+  "ps_reference_clock_dt_bytes_octal": ["001", "374", "240", "125"],
+  "ps_reference_clock_dt_hz": 33333333,
+  "arm_pll_ctrl": "0x00028000",
+  "arm_clk_ctrl": "0x1F000200",
+  "pll_status": "0x0000003F",
+  "cpu_source": "ARM PLL, bypass disabled",
+  "arm_pll_multiplier": 40,
+  "cpu_divisor": 2,
+  "calculated_cpu_clock_hz": 666666660,
+  "physical_frequency_counter_measurement": false,
+  "historical_run_cpu_frequency_verified": false,
+  "pl_clock_current_design_hz": 50000000,
+  "pl_max_clock_verified": false
+}

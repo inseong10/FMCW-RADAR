@@ -1,0 +1,145 @@
+{
+  "evidence": "five original receiver files and sender schedule independently verified",
+  "run_id": 92111,
+  "status": "failed preliminary attempt; offered load invalid",
+  "receiver_raw_sha256": {
+    "environment.txt": "8e6a3e525149596a12cffacfc9176f8bdb976da1164a5a60337a74c288a01f2f",
+    "counters.txt": "32afd0d4662408ff1932805a2372149200c2f6824241f83eacfbbd0aeefca9a2",
+    "frames.csv": "c82093f076a29eb1abd04e46c278ab7c0c29a535060e76d25c09f3b66eb79db4",
+    "detections.csv": "6fc5189a7a629e2c495af5632a5fa33b600ad1108286e67590674a23e2b6f832",
+    "resources.csv": "de09f2c1bbe853cb8bfa96bc80d384686624a6b043ecfa9385c5f8d56ad0e24b"
+  },
+  "receiver_raw_bytes": 49040,
+  "processed": 91,
+  "expected": 200,
+  "unprocessed": 109,
+  "status_counts": {
+    "processed": 91,
+    "partial_evicted": 50,
+    "queue_full": 52,
+    "missing": 4,
+    "partial": 3
+  },
+  "packet_accounting": {
+    "received": 21794,
+    "kernel_drops": 3806,
+    "expected": 25600,
+    "received_plus_kernel_drops_equals_expected": true,
+    "all_received_packets_accounted_in_frame_trace": true
+  },
+  "queue_depth_counts_processed": {
+    "0": 3,
+    "1": 1,
+    "2": 6,
+    "3": 81
+  },
+  "metrics": {
+    "first_kernel_to_output": {
+      "count": 91,
+      "median_ms": 142.090342,
+      "p99_ms": 167.2789714,
+      "max_ms": 168.643321
+    },
+    "complete_to_output": {
+      "count": 91,
+      "median_ms": 131.645827,
+      "p99_ms": 149.47630429999998,
+      "max_ms": 150.667826
+    },
+    "queue_wait": {
+      "count": 91,
+      "median_ms": 101.381077,
+      "p99_ms": 117.7805356,
+      "max_ms": 118.727593
+    },
+    "preparation": {
+      "count": 91,
+      "median_ms": 2.38161,
+      "p99_ms": 12.286502399999996,
+      "max_ms": 12.799632
+    },
+    "fft_transfer": {
+      "count": 91,
+      "median_ms": 12.713731,
+      "p99_ms": 19.842955799999967,
+      "max_ms": 25.07109
+    },
+    "power_cfar": {
+      "count": 91,
+      "median_ms": 13.284504,
+      "p99_ms": 25.8785065,
+      "max_ms": 25.943437
+    },
+    "output_flush": {
+      "count": 91,
+      "median_ms": 0.186264,
+      "p99_ms": 0.4302617999999963,
+      "max_ms": 1.011966
+    }
+  },
+  "metric_qualification": "diagnostic survivors only; four clock mapping errors invalidate kernel latency acceptance; retain original values",
+  "worker_wall_ms": {
+    "count": 91,
+    "median_ms": 29.069874,
+    "p99_ms": 40.98527489999999,
+    "max_ms": 41.139714
+  },
+  "active_resources": {
+    "intervals": 13,
+    "process_cpu_pct_one_core_weighted": 94.01733460326541,
+    "system_cpu_pct_weighted": 50.187444809059365,
+    "max_rss_bytes": 7335936,
+    "scope": "duration-weighted whole sample intervals overlapping processed-frame activity; includes boundary margins"
+  },
+  "correctness_processed_only": {
+    "frames": 91,
+    "detections": 364,
+    "expected_peaks_in_order": [
+      [
+        10,
+        10
+      ],
+      [
+        107,
+        20
+      ],
+      [
+        4,
+        37
+      ],
+      [
+        87,
+        53
+      ]
+    ],
+    "hits_per_processed_frame": 4,
+    "false_per_processed_frame": 0,
+    "all_peak_powers_thresholds_match_numpy": true,
+    "max_peak_power_relative_error": 4.056866875968086e-16,
+    "max_threshold_relative_error": 9.816652309610181e-14,
+    "record_sha256": "450ffd3c05bf2570773c7fd3bf543a00d66e3ec531a05d07ef2747bb6a688413",
+    "full_fft_bins_exported": false,
+    "missing_frames_not_evaluated": true
+  },
+  "sender": {
+    "period_ms": 12.8,
+    "chirp_gap_us": 0,
+    "max_lateness_ms": 14.697306,
+    "overrun_frames": 32,
+    "drop_frame": 0
+  },
+  "offered_load_valid": false,
+  "clock_errors": 4,
+  "clock_error_cause": "unresolved; raw per-packet realtime/monotonic samples were not logged",
+  "runtime_identity": "binary/source and CPU clock captures from this run not collected; reported existing rxfix1 reused; historical identity is not a current capture",
+  "analysis_runtime": {
+    "python": "3.13.13",
+    "numpy": "2.5.0"
+  },
+  "analysis_sources_sha256": {
+    "tools\\detection\\analyze_stream.py": "cb10439a49b3ebb24b117a38aa6d03b8c8c85fba4da5f59482d16db56702b92c",
+    "tools\\detection\\cfar_reference.py": "d46119bd88532791a356c1e2dabf453b9df905fd7893ff1b9b8ec0e75e5e72c7",
+    "build\\verify_s2b_92111.py": "c6af33de1554b854fe4499347f5c83b5e8a821d8a93c4deb74b6bcff87a4bd73"
+  },
+  "next": "non-diagnostic PS 200-frame 50ms baseline to check zero drops, clock counters and valid sender load before PL and a period sweep; do not enlarge buffers or change CPU affinity in this baseline"
+}

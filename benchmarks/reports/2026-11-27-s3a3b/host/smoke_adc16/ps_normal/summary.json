@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "backend": "ps",
+  "hardware": false,
+  "diagnostic_probe": true,
+  "expected": 20,
+  "status_counts": {
+    "processed": 20
+  },
+  "counters": {
+    "invalid": "0",
+    "foreign": "0",
+    "duplicates": "0",
+    "late": "0",
+    "received_packets": "2560",
+    "payload_truncated": "0",
+    "control_truncated": "0",
+    "decode_errors": "0",
+    "metadata_errors": "0",
+    "kernel_drops": "0",
+    "kernel_missing": "0",
+    "clock_errors": "0",
+    "interrupted": "0",
+    "failed": "0",
+    "error": ""
+  },
+  "trace_valid": true,
+  "invalidating_counters": [],
+  "zero_drops": true,
+  "metrics": {
+    "first_kernel_to_output": {
+      "count": 20,
+      "median_ms": 1.915672,
+      "p99_ms": 4.386624909999999,
+      "max_ms": 4.469144
+    },
+    "complete_to_output": {
+      "count": 20,
+      "median_ms": 0.9342425,
+      "p99_ms": 2.3309527899999987,
+      "max_ms": 2.501033
+    },
+    "queue_wait": {
+      "count": 20,
+      "median_ms": 0.0728975,
+      "p99_ms": 0.22956075999999995,
+      "max_ms": 0.238623
+    },
+    "preparation": {
+      "count": 20,
+      "median_ms": 0.039968000000000004,
+      "p99_ms": 0.06775672999999999,
+      "max_ms": 0.069188
+    },
+    "fft_transfer": {
+      "count": 20,
+      "median_ms": 0.1084865,
+      "p99_ms": 0.20051375999999996,
+      "max_ms": 0.205852
+    },
+    "power_cfar": {
+      "count": 20,
+      "median_ms": 0.210827,
+      "p99_ms": 0.6079953899999998,
+      "max_ms": 0.637753
+    },
+    "output_flush": {
+      "count": 20,
+      "median_ms": 0.4376425,
+      "p99_ms": 1.5334450099999994,
+      "max_ms": 1.620127
+    }
+  },
+  "resource_samples": 6,
+  "active_resource_samples": 6,
+  "max_rss_bytes": 8298496,
+  "scope": "kernel first-packet -> per-frame CSV flush; includes acquisition/queue/preparation; no fsync",
+  "continuous_acceptance": "not evaluated by S2a",
+  "sender": {
+    "period_ms": 50.0,
+    "chirp_gap_us": 0,
+    "max_lateness_ms": 14.812641,
+    "overrun_frames": 0,
+    "drop_frame": 0
+  },
+  "offered_load_valid": false
+}

@@ -1,0 +1,2 @@
+ADC_WINDOW_EXHAUSTIVE_PASS weights=2017 values=65536 checked=132186112 exact_ties=0
+ADC_WINDOW_SYNTHETIC_PASS weights=20221 checked=1325203456 exact_ties=73727

@@ -1,21 +1,39 @@
-# E14-frame only: one FFT pipeline with seven dedicated stages/50 MHz, double frame slots per stage, one full-frame packet and in-place transpose RAM.
+# E14-frame: same RTL/data path; default 50 MHz, explicit clock candidates are isolated.
 # Source from Vivado 2022.1 Tcl console. Does not program hardware.
+set fft_frame_variant [info exists ::fft128_frame_clock_mhz]
+set fft_frame_mhz 50.0
+if {$fft_frame_variant} {
+ set fft_frame_mhz $::fft128_frame_clock_mhz
+ if {![string is double -strict $fft_frame_mhz] || !($fft_frame_mhz>=50.0 && $fft_frame_mhz<=200.0)} {
+  error "E14 clock candidate must be a finite frequency between 50 and 200 MHz"
+ }
+}
 set ::fft128_load_only 1
 set ::fft128_build_core pipeline
-set ::fft128_build_mhz 50.0
+set ::fft128_build_mhz $fft_frame_mhz
 set fft_dma_code [catch {source [file join [file dirname [info script]] build.tcl]} fft_dma_msg fft_dma_opts]
 unset ::fft128_load_only ::fft128_build_core ::fft128_build_mhz
 if {$fft_dma_code} {return -options $fft_dma_opts $fft_dma_msg}
 set ::fft128::out [file join $::fft128::root build vivado fft128_dma_e14_frame_[clock format [clock seconds] -format %Y%m%d_%H%M%S]]
 set ::fft128::latest_file fft128_dma_frame_latest.txt
+set ::fft128::clock_variant $fft_frame_variant
+if {$fft_frame_variant} {
+ set fft_frame_key [string map {. p} [format %.3f $fft_frame_mhz]]
+ set ::fft128::out [file join $::fft128::root build vivado fft128_dma_e14_clock_${fft_frame_key}mhz_[clock format [clock seconds] -format %Y%m%d_%H%M%S]_[expr {[clock milliseconds]%1000}]]
+ set ::fft128::latest_file fft128_dma_frame_clock_${fft_frame_key}mhz_latest.txt
+ if {[file exists $::fft128::out]} {error "Preserve existing clock candidate: $::fft128::out"}
+ puts "FFT128_CLOCK_RUN: $::fft128::out"
+}
 # Build independent ARM userspace/module prerequisites while Vivado implements
 # this design. This never installs a kernel, deploys or programs the FPGA.
-set fft_batch_host_dir [file join $::fft128::root build fft128_dma_frame_preparation]
-file mkdir $fft_batch_host_dir
-set fft_batch_host_pid [exec bash [file join $::fft128::root src PS fft128 dma_frame prepare_all.sh] >[file join $fft_batch_host_dir launcher.log] 2>@1 &]
-puts "E14_FRAME_ARM_BUILD_STARTED: pid=$fft_batch_host_pid log=$fft_batch_host_dir/arm_build.log"
+if {!$fft_frame_variant} {
+ set fft_batch_host_dir [file join $::fft128::root build fft128_dma_frame_preparation]
+ file mkdir $fft_batch_host_dir
+ set fft_batch_host_pid [exec bash [file join $::fft128::root src PS fft128 dma_frame prepare_all.sh] >[file join $fft_batch_host_dir launcher.log] 2>@1 &]
+ puts "E14_FRAME_ARM_BUILD_STARTED: pid=$fft_batch_host_pid log=$fft_batch_host_dir/arm_build.log"
+}
 proc fft128::dma_main {} {
- variable here; variable root; variable out
+ variable here; variable root; variable out; variable clock_mhz; variable clock_variant
  file mkdir $out
  if {[llength [get_projects -quiet]]} {close_project}
  set_param board.repoPaths [concat [list [file join $here board_files]] [get_param board.repoPaths]]
@@ -34,7 +52,7 @@ proc fft128::dma_main {} {
  apply_bd_automation -rule xilinx.com:bd_rule:processing_system7 -config {make_external "FIXED_IO, DDR" apply_board_preset "1" Master "Disable" Slave "Disable"} $ps
  set_property -dict [list CONFIG.PCW_USE_M_AXI_GP0 {1} CONFIG.PCW_USE_S_AXI_HP0 {1} CONFIG.PCW_S_AXI_HP0_DATA_WIDTH {64} CONFIG.PCW_USE_FABRIC_INTERRUPT {1} CONFIG.PCW_IRQ_F2P_INTR {1} CONFIG.PCW_EN_CLK0_PORT {0} CONFIG.PCW_EN_RST0_PORT {0}] $ps
  set clk [create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clock_gen]
- set_property -dict [list CONFIG.PRIM_IN_FREQ {125.000} CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {50.000} CONFIG.USE_LOCKED {true} CONFIG.USE_RESET {true} CONFIG.RESET_TYPE {ACTIVE_HIGH}] $clk
+ set_property -dict [list CONFIG.PRIM_IN_FREQ {125.000} CONFIG.CLKOUT1_REQUESTED_OUT_FREQ $clock_mhz CONFIG.USE_LOCKED {true} CONFIG.USE_RESET {true} CONFIG.RESET_TYPE {ACTIVE_HIGH}] $clk
  set sysclk [create_bd_port -dir I -type clk sysclk]
  set_property CONFIG.FREQ_HZ {125000000} $sysclk
  connect_bd_net $sysclk [get_bd_pins clock_gen/clk_in1]
@@ -92,6 +110,7 @@ proc fft128::dma_main {} {
  foreach name {build_dma_frame.tcl build.tcl reset_dma_frame_tb.v reset_sim_sources.tcl zybo_sysclk.xdc fft128_frame_ram.v fft128_dma_frame_ctrl.v fft128_streaming.v fft128_stream_stage.v fft128_twiddle.v butterfly_pipeline.v fft_working_ram.v address_generator.v} {
   lappend sources [file join $here $name]
  }
+ if {$clock_variant} {lappend sources [file join $here build_dma_frame_clock.tcl]}
  set f [open [file join $out source.sha256] w]; puts $f [exec sha256sum {*}$sources]; close $f
  finish_build
  report_utilization -hierarchical -file [file join $out frame_utilization.rpt]
@@ -113,7 +132,8 @@ proc fft128::dma_main {} {
  puts $f "streaming_cores=1; dedicated_stages=[llength $stage_cells]; DSP48E1=[llength $dsp_cells]; frame_initiation_interval=128; matrix_bytes=65536; matrix_half_blocks=$matrix_halves; total_half_blocks=$total_halves; board counters pending"
  close $f
  set f [open [file join $out dma_config.json] w]
- puts $f {{"experiment":"E14-frame","core":"pipeline","clock_hz":50000000,"fft_control_base":"0x43c60000","dma_base":"0x40400000","irq_f2p_bits":[6,7],"dt_spi":[35,36],"memory_port":"HP0","memory_width":64,"stream_width":32,"sg":false,"dre":false,"burst":16,"length_width":17,"register_abi":8,"parallel_cores":1,"streaming_stages":7,"total_butterflies":7,"frame_initiation_interval":128,"group_barrier":false,"next_group_prefetch":false,"external_ping_pong":false,"external_buffers":false,"buffering":"per_stage_double_frame_slots_and_inplace_matrix","input_frame_slots_per_stage":2,"output_frame_slots_per_stage":2,"fft_per_request":256,"frame_words":16384,"bytes_per_direction":65536,"board_verified":false,"next_vector_prefetch":true,"stage_frame_slots":true,"pl_transpose":true,"pl_output_reorder":true,"matrix_bytes":65536,"in_place_matrix":true,"cpu_transpose":false,"dma_requests_per_frame":1,"dma_channel_submissions_per_frame":2,"payload_bytes_per_frame":131072,"output_order":"doppler-major/range-minor","fft_vector_initiation_interval":128,"full_frame_overlap":false,"frame_schedule":"range_then_doppler_then_row_major_drain"}}
+ set frame_config {{"experiment":"E14-frame","core":"pipeline","clock_hz":50000000,"fft_control_base":"0x43c60000","dma_base":"0x40400000","irq_f2p_bits":[6,7],"dt_spi":[35,36],"memory_port":"HP0","memory_width":64,"stream_width":32,"sg":false,"dre":false,"burst":16,"length_width":17,"register_abi":8,"parallel_cores":1,"streaming_stages":7,"total_butterflies":7,"frame_initiation_interval":128,"group_barrier":false,"next_group_prefetch":false,"external_ping_pong":false,"external_buffers":false,"buffering":"per_stage_double_frame_slots_and_inplace_matrix","input_frame_slots_per_stage":2,"output_frame_slots_per_stage":2,"fft_per_request":256,"frame_words":16384,"bytes_per_direction":65536,"board_verified":false,"next_vector_prefetch":true,"stage_frame_slots":true,"pl_transpose":true,"pl_output_reorder":true,"matrix_bytes":65536,"in_place_matrix":true,"cpu_transpose":false,"dma_requests_per_frame":1,"dma_channel_submissions_per_frame":2,"payload_bytes_per_frame":131072,"output_order":"doppler-major/range-minor","fft_vector_initiation_interval":128,"full_frame_overlap":false,"frame_schedule":"range_then_doppler_then_row_major_drain"}}
+ puts $f [string map [list {"clock_hz":50000000} [format {"clock_hz":%d} [expr {round($clock_mhz*1000000)}]]] $frame_config]
  close $f
  puts "FFT128_DMA_FRAME_BUILD_PASS: $out"
 }

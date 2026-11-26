@@ -1,0 +1,14 @@
+pid=1546 tasks=1546 1554 1555
+/tmp/pin_92338.sh: line 4: taskset: command not found
+/tmp/pin_92338.sh: line 4: taskset: command not found
+/tmp/pin_92338.sh: line 4: taskset: command not found
+/tmp/pin_92338.sh: line 5: taskset: command not found
+/tmp/pin_92338.sh: line 5: taskset: command not found
+/tmp/pin_92338.sh: line 5: taskset: command not found
+T 11949.78
+cpu0 4115 0 1557 1187754 160 0 880 0 0 0
+cpu1 1372 0 1739 1191291 92 0 0 0 0 0
+T 11958.37
+cpu0 4249 0 1710 1188313 163 0 909 0 0 0
+cpu1 1543 0 1791 1191917 94 0 0 0 0 0
+1546 65 91 1

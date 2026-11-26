@@ -1,0 +1,271 @@
+{
+  "status": "E14_FRAME_PAIRED_SAME_BOARD_VALIDATED",
+  "results": {
+    "double": {
+      "timing": {
+        "count": 300,
+        "mean_ms": 5.630927896666666,
+        "median_ms": 5.631855,
+        "p05_ms": 5.5690068,
+        "p95_ms": 5.6958165,
+        "min_ms": 5.553846,
+        "max_ms": 5.978268
+      },
+      "trials": [
+        {
+          "trial": 1,
+          "timing": {
+            "count": 100,
+            "mean_ms": 5.62730904,
+            "median_ms": 5.632614,
+            "p05_ms": 5.5621635000000005,
+            "p95_ms": 5.690344799999999,
+            "min_ms": 5.553846,
+            "max_ms": 5.978268
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 1.8331451766013172e-12,
+            "rms_q15_lsb": 3.705134990033928e-14,
+            "relative_l2": 2.90701062686393e-16
+          }
+        },
+        {
+          "trial": 2,
+          "timing": {
+            "count": 100,
+            "mean_ms": 5.626532880000001,
+            "median_ms": 5.630259499999999,
+            "p05_ms": 5.5684422,
+            "p95_ms": 5.6855556,
+            "min_ms": 5.561994,
+            "max_ms": 5.898102
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 1.8331451766013172e-12,
+            "rms_q15_lsb": 3.705134990033928e-14,
+            "relative_l2": 2.90701062686393e-16
+          }
+        },
+        {
+          "trial": 3,
+          "timing": {
+            "count": 100,
+            "mean_ms": 5.63894177,
+            "median_ms": 5.640153,
+            "p05_ms": 5.57737145,
+            "p95_ms": 5.7030672000000004,
+            "min_ms": 5.565954,
+            "max_ms": 5.931072
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 1.8331451766013172e-12,
+            "rms_q15_lsb": 3.705134990033928e-14,
+            "relative_l2": 2.90701062686393e-16
+          }
+        }
+      ]
+    },
+    "float_neon": {
+      "timing": {
+        "count": 300,
+        "mean_ms": 3.5769346000000004,
+        "median_ms": 3.563415,
+        "p05_ms": 3.5343708,
+        "p95_ms": 3.6329426999999996,
+        "min_ms": 3.431382,
+        "max_ms": 3.838056
+      },
+      "trials": [
+        {
+          "trial": 1,
+          "timing": {
+            "count": 100,
+            "mean_ms": 3.5841321899999996,
+            "median_ms": 3.56616,
+            "p05_ms": 3.554013,
+            "p95_ms": 3.63912005,
+            "min_ms": 3.444936,
+            "max_ms": 3.757903
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 0.00042680867197479784,
+            "rms_q15_lsb": 1.3804696940779287e-05,
+            "relative_l2": 1.0831022571491762e-07
+          }
+        },
+        {
+          "trial": 2,
+          "timing": {
+            "count": 100,
+            "mean_ms": 3.5650880300000005,
+            "median_ms": 3.552813,
+            "p05_ms": 3.5305773,
+            "p95_ms": 3.6209382000000003,
+            "min_ms": 3.431382,
+            "max_ms": 3.68739
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 0.00042680867197479784,
+            "rms_q15_lsb": 1.3804696940779287e-05,
+            "relative_l2": 1.0831022571491762e-07
+          }
+        },
+        {
+          "trial": 3,
+          "timing": {
+            "count": 100,
+            "mean_ms": 3.58158358,
+            "median_ms": 3.5634119999999996,
+            "p05_ms": 3.5471931,
+            "p95_ms": 3.6318375,
+            "min_ms": 3.455934,
+            "max_ms": 3.838056
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 0.00042680867197479784,
+            "rms_q15_lsb": 1.3804696940779287e-05,
+            "relative_l2": 1.0831022571491762e-07
+          }
+        }
+      ]
+    },
+    "pl": {
+      "timing": {
+        "count": 300,
+        "mean_ms": 1.1259097533333333,
+        "median_ms": 1.1248170000000002,
+        "p05_ms": 1.1082291,
+        "p95_ms": 1.1471733000000002,
+        "min_ms": 1.104408,
+        "max_ms": 1.210825
+      },
+      "trials": [
+        {
+          "trial": 1,
+          "timing": {
+            "count": 100,
+            "mean_ms": 1.11534031,
+            "median_ms": 1.113696,
+            "p05_ms": 1.1059587,
+            "p95_ms": 1.126263,
+            "min_ms": 1.104408,
+            "max_ms": 1.156302
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 8.749842363453245,
+            "rms_q15_lsb": 1.734691375725571,
+            "relative_l2": 0.013610209282866829
+          }
+        },
+        {
+          "trial": 2,
+          "timing": {
+            "count": 100,
+            "mean_ms": 1.13387336,
+            "median_ms": 1.129707,
+            "p05_ms": 1.1224406999999998,
+            "p95_ms": 1.1606478,
+            "min_ms": 1.120596,
+            "max_ms": 1.210825
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 8.749842363453245,
+            "rms_q15_lsb": 1.734691375725571,
+            "relative_l2": 0.013610209282866829
+          }
+        },
+        {
+          "trial": 3,
+          "timing": {
+            "count": 100,
+            "mean_ms": 1.1285155900000001,
+            "median_ms": 1.125576,
+            "p05_ms": 1.1192847000000001,
+            "p95_ms": 1.1478833999999998,
+            "min_ms": 1.116642,
+            "max_ms": 1.181892
+          },
+          "accuracy": {
+            "max_complex_q15_lsb": 8.749842363453245,
+            "rms_q15_lsb": 1.734691375725571,
+            "relative_l2": 0.013610209282866829
+          }
+        }
+      ]
+    }
+  },
+  "parallel_cores": 1,
+  "streaming_stages": 7,
+  "group_barrier": false,
+  "dma_irq_deltas": {
+    "68": [
+      330,
+      0
+    ],
+    "67": [
+      330,
+      0
+    ]
+  },
+  "dma_requests_per_frame": 1,
+  "dma_channel_submissions_per_frame": 2,
+  "payload_bytes_per_frame": 131072,
+  "pl_transpose": true,
+  "pl_output_reorder": true,
+  "double_over_pl": 5.006907790333893,
+  "float_neon_over_pl": 3.1679953272398973,
+  "fixture_sha256": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+  "dma_artifacts": {
+    "baseline_artifacts.sha256": "251ccf9f87ada3a415b1312f71fbecaedf7f587b5932e078a9ff00b2b76f5e81",
+    "build_config.json": "800cfd65d92101de54954db5af7a59beb26818146e07d78f6eb7e91d52cd295f",
+    "clock_source.txt": "4ff2388f5d31bc3555904a7217f7a61105cea41ec7026301d191238f3f351abc",
+    "clock_tools.sha256": "a2d150eb6547e6afd90c6919623e779367233d426a515e7f24e9a2ed85040f61",
+    "clock_validation.json": "924274a1649e61f658d77c76f44ae2fddcbcf057d09821f183dee3205edc2a1a",
+    "dma_config.json": "6a0aa8a3aa64b5c65fe9d9a20ed55fe47ea636f204e8735e6ffd022a129e29b5",
+    "dtc.log": "373bb4e0fbe1577d2de09c1a5a70aaa1f7c41da11aafdc4f84e9d3ac4d65811b",
+    "fft128-receiver": "21128056810a6e195ec90f12cdea86f869108adc5f4b960669653cb615becaec",
+    "fft128_dma_frame.ko": "a7a37e11c805a8850e4086b72f13ad472cc458d5758367eefeb96e995a0cb178",
+    "fft128_e14_frame.bin": "f27f47bb4b4f183cfc6dad06a3052de3ea80c6bd2b219b9767c850c22d343f80",
+    "fft128_e14_frame.dtbo": "aa87e9d773f62d9bef1ce4bb8ec0374e21ef1cc504e0ae7ea62b120759eb553c",
+    "fft128_e14_frame.dts": "f015d31c02607c7d1537e671adbd8b599934fa273caf989ebc9ed2ea58e3e848",
+    "fft128_e14_frame.json": "e5a3e214442915be04ae2c1d9e7531fac5bfa22d4d844bd68637b3a7cc9ff94b",
+    "frame.rspb": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "frame_core_check.txt": "11fa1d9134101f151b1b92fd2ab23c65f9236fbbf5992d481d2ff7b9a57f5ce0",
+    "frame_utilization.rpt": "ff64d9c34278a003e1ac935abd0ea75a8509516877aeaa42cd9bcd080798ad1b",
+    "gic_path.txt": "1c6c83c7ef115c7a7d6bd02696ca4f5a64e2ae24beabac820da66ff111b90faa",
+    "gic_phandle.bin": "1bc5d0e3df0ea12c4d0078668d14924f95106bbe173e196de50fe13a900b0937",
+    "host_source.sha256": "18d4cb777c9bd385209fb3275cafeb3542b8ff3946cf4e106d1f16f32d59ed66",
+    "kernelrelease.txt": "b1fc844b1ee87f48cd89d857eb48ae13b9a1e5bd6d366112a8cb8972fc01034d",
+    "load_board.sh": "676eba4d62efd20d582a02cf7da898f448450c667064f978ef9830f0a4e8cbf9",
+    "merged_validation.dtb": "8bd0f605ec064465b9676be4812867c881a53b6afe4610c0b97d59767bd342cb",
+    "module_build_environment.txt": "ae26f86c9f21ced0bebec7a2d7491ac2a7fe3e600a996d6a4d7c0cebd311763b",
+    "module_source.sha256": "11bec81c8a47d5d64d21f199f6fab7862777611bbd9abe10dc7b139265fa6893",
+    "pl_source.sha256": "ed4fbf507f57b8ed3ad8adca034a9bfd3b72da33624adeb70ba2873203a2b979",
+    "profile_board.sh": "0cb981e8067ac426474b5214f8e42e6061f6814cf3e03e2bfc020b8d18e5dd87",
+    "run_board.sh": "1691262eb0f13f71f394a92d1545eca5f7de8f1aaa08c98f1b5513c56d4bcf3a",
+    "test-dma-frame-client": "8dad9451676678862362259f50d22be801db92d68935b6ed92f5e6de50102641",
+    "timing.rpt": "4e40cb0f7bf18b97decc521c4c38a309f76aeea646d7839e15d75108ae7230c5",
+    "utilization.rpt": "cb4d95e59152c23b64c5e36e4e79cde2021f00045021c7fae6fd2bbd298707e8"
+  },
+  "ps_artifacts": {
+    "frame.rspb": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "reference.csv": "3de9c2b73979b89ece211543d0b13da9eb7192a2c7a00e73b7fbc05d6668f553",
+    "reference.json": "b5b41a758ed8f7dcbc02f9253085f7118d426371bd5ed0803ab71a280e67521b",
+    "run_board.sh": "5f2ddb5096efdb23b5083977c840153c96736b61f7b91f64078d0a762c903433",
+    "double/bin/receiver": "a238b98b8d43b4f26bf1c8bf1bac43050bbde26a5b2a71be196837db50f24e85",
+    "double/lib/libfftw3.so.3": "182f6f5317bf1480aeee92d9a93958c5c5cc24fdccf36217d3ce253b01cb3c6b",
+    "double/build_environment.txt": "60091ff3a3a81c3399821febf8f34179c9f6558bda56644269a9159df14ee282",
+    "double/fftw_build_environment.txt": "6877a0cbbef7cfd027b27e52fe101086485657c20de2c6c8dc1ebb7db9de6d85",
+    "float_scalar/bin/receiver": "e9dce02870b541a2028ec01cea38dd219da2c1b6a860cf86a4b49f359ccf06a4",
+    "float_scalar/lib/libfftw3f.so.3": "bfb57f35aab07931c3932ab7918f7fd0e390310d0434585f23a013194dd719fa",
+    "float_scalar/build_environment.txt": "a11ca79e697ad050f16e046ef44ad764bffafcdd5a666c483f031cea57902e7d",
+    "float_scalar/fftw_build_environment.txt": "8e249f92cbec400d773f360ab64a3502bc27d4eb1fbeff0bdbb58f8785d5a132",
+    "float_neon/bin/receiver": "1feda3b947f5e2421b30179c0183fdce3fcf540050d19e88ac9ef7c8a09451e4",
+    "float_neon/lib/libfftw3f.so.3": "9c06dfa6f7e6f686b5eabda0845b75d38c5f05b852234364edfd84c423315653",
+    "float_neon/build_environment.txt": "64cce6a4db6b36b166b4184c80c70806d5f7a848c8cd09f23e70f82546a3a013",
+    "float_neon/fftw_build_environment.txt": "77c2cd82f944d6ba0fe68491cc0068e51f87872f8039833d3803f4acf127f429"
+  },
+  "scope": "Q15 input to CPU-available 2D FFT output; required copies, DMA, IRQ wait, transpose and normalization included; IO/planning/validation excluded",
+  "limitation": "Same recorded warm-cache frame, CPU0, one ioctl/full frame, coherent HP0 bounce buffers; one reused seven-stage DIT FFT, in-place 64KiB PL transpose and row-major output drain; no continuous-stream throughput claim",
+  "environment": "Linux Petalinux-2022 5.15.19-xilinx #1 SMP PREEMPT Wed Aug 26 11:47:56 KST 2026 armv7l GNU/Linux\n87d0bd24-5ffa-435e-8919-fee083d76b6f\nprocessor\t: 0\nmodel name\t: ARMv7 Processor rev 0 (v7l)\nBogoMIPS\t: 333.33\nFeatures\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 \nCPU implementer\t: 0x41\nCPU architecture: 7\nCPU variant\t: 0x3\nCPU part\t: 0xc09\nCPU revision\t: 0\n\nprocessor\t: 1\nmodel name\t: ARMv7 Processor rev 0 (v7l)\nBogoMIPS\t: 333.33\nFeatures\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 \nCPU implementer\t: 0x41\nCPU architecture: 7\nCPU variant\t: 0x3\nCPU part\t: 0xc09\nCPU revision\t: 0\n\nHardware\t: Xilinx Zynq Platform\nRevision\t: 0003\nSerial\t\t: 0000000000000000\nE14-frame CPU0 warmup=10 repeats=100 trials=3, coherent HP0, PL_CLOCK_HZ=100000000 1streaming_core 7dedicated_stages, full-frame ioctl, PL transpose/reorder, inplace_matrix\n{\"experiment\":\"E14-frame\",\"core\":\"pipeline\",\"clock_hz\":100000000,\"fft_control_base\":\"0x43c60000\",\"dma_base\":\"0x40400000\",\"irq_f2p_bits\":[6,7],\"dt_spi\":[35,36],\"memory_port\":\"HP0\",\"memory_width\":64,\"stream_width\":32,\"sg\":false,\"dre\":false,\"burst\":16,\"length_width\":17,\"register_abi\":8,\"parallel_cores\":1,\"streaming_stages\":7,\"total_butterflies\":7,\"frame_initiation_interval\":128,\"group_barrier\":false,\"next_group_prefetch\":false,\"external_ping_pong\":false,\"external_buffers\":false,\"buffering\":\"per_stage_double_frame_slots_and_inplace_matrix\",\"input_frame_slots_per_stage\":2,\"output_frame_slots_per_stage\":2,\"fft_per_request\":256,\"frame_words\":16384,\"bytes_per_direction\":65536,\"board_verified\":false,\"next_vector_prefetch\":true,\"stage_frame_slots\":true,\"pl_transpose\":true,\"pl_output_reorder\":true,\"matrix_bytes\":65536,\"in_place_matrix\":true,\"cpu_transpose\":false,\"dma_requests_per_frame\":1,\"dma_channel_submissions_per_frame\":2,\"payload_bytes_per_frame\":131072,\"output_order\":\"doppler-major/range-minor\",\"fft_vector_initiation_interval\":128,\"full_frame_overlap\":false,\"frame_schedule\":\"range_then_doppler_then_row_major_drain\"}\nf27f47bb4b4f183cfc6dad06a3052de3ea80c6bd2b219b9767c850c22d343f80  /opt/fft128/e14_clock_100000000_20261126_095418/fft128_e14_frame.bin\na7a37e11c805a8850e4086b72f13ad472cc458d5758367eefeb96e995a0cb178  /opt/fft128/e14_clock_100000000_20261126_095418/fft128_dma_frame.ko\n21128056810a6e195ec90f12cdea86f869108adc5f4b960669653cb615becaec  /opt/fft128/e14_clock_100000000_20261126_095418/fft128-receiver\naa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976  /opt/fft128/e14_clock_100000000_20261126_095418/frame.rspb\n/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor: unavailable\n/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: unavailable\n"
+}

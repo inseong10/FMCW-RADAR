@@ -1,0 +1,1 @@
+WINDOW_S3A3B_NEON_EQUIV_PASS checked=205232624 weights_in_use=64895 frames=20

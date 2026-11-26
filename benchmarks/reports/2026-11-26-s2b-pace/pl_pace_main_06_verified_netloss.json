@@ -1,0 +1,225 @@
+{
+  "experiment": "S2a-int16",
+  "evidence": "board raw independently recomputed",
+  "backend": "pl",
+  "hardware": true,
+  "record_sha256": "d3d5160cb8b5f56e24bf60369801d3bc85dea47684d088fb203680c8bb6b91cf",
+  "sender_sha256": "ab51e78e9edd8101affca6b1321ca4deb4916e079fee2aa499c2e5c284dbd2b6",
+  "processed_frames_checked": 9996,
+  "accuracy": {
+    "hits": 4,
+    "targets": 4,
+    "false": 0,
+    "peaks": [
+      [
+        10,
+        10
+      ],
+      [
+        107,
+        20
+      ],
+      [
+        4,
+        37
+      ],
+      [
+        87,
+        53
+      ]
+    ],
+    "truth": [
+      {
+        "truth": {
+          "range_m": 15.0,
+          "speed_mps": 5.0
+        },
+        "expected_doppler_bin": 10.268,
+        "expected_range_bin": 10.007,
+        "detected": [
+          10,
+          10
+        ],
+        "range_m": 14.9896229,
+        "speed_mps": 4.869290183212058,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        },
+        "expected_doppler_bin": -20.537,
+        "expected_range_bin": 20.014,
+        "detected": [
+          107,
+          20
+        ],
+        "range_m": 29.9792458,
+        "speed_mps": -10.225509384745322,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 55.0,
+          "speed_mps": 2.0
+        },
+        "expected_doppler_bin": 4.107,
+        "expected_range_bin": 36.692,
+        "detected": [
+          4,
+          37
+        ],
+        "range_m": 55.46160473,
+        "speed_mps": 1.9477160732848233,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 80.0,
+          "speed_mps": -20.0
+        },
+        "expected_doppler_bin": -41.074,
+        "expected_range_bin": 53.37,
+        "detected": [
+          87,
+          53
+        ],
+        "range_m": 79.44500137,
+        "speed_mps": -19.96408975116944,
+        "hit": true
+      }
+    ],
+    "false_peaks": []
+  },
+  "first_frame_all_bins_checked": false,
+  "trace_valid": false,
+  "zero_drops": false,
+  "offered_load_valid": true,
+  "diagnostic_only": false,
+  "metrics": {
+    "first_kernel_to_output": {
+      "count": 9996,
+      "median_ms": 23.783558499999998,
+      "p99_ms": 24.54403535,
+      "max_ms": 50.009479
+    },
+    "complete_to_output": {
+      "count": 9996,
+      "median_ms": 10.934439000000001,
+      "p99_ms": 11.098819199999998,
+      "max_ms": 29.625145
+    },
+    "queue_wait": {
+      "count": 9996,
+      "median_ms": 0.073302,
+      "p99_ms": 0.1610649,
+      "max_ms": 12.547776
+    },
+    "preparation": {
+      "count": 9996,
+      "median_ms": 2.536887,
+      "p99_ms": 2.6132667,
+      "max_ms": 2.78955
+    },
+    "fft_transfer": {
+      "count": 9996,
+      "median_ms": 1.552836,
+      "p99_ms": 1.6513700999999998,
+      "max_ms": 2.29281
+    },
+    "power_cfar": {
+      "count": 9996,
+      "median_ms": 6.542457000000001,
+      "p99_ms": 6.65313185,
+      "max_ms": 14.928042
+    },
+    "output_flush": {
+      "count": 9996,
+      "median_ms": 0.217809,
+      "p99_ms": 0.2825958,
+      "max_ms": 16.052125
+    }
+  },
+  "sender": {
+    "period_ms": 12.8,
+    "chirp_gap_us": 100.0,
+    "max_lateness_ms": 0.288195,
+    "overrun_frames": 734,
+    "drop_frame": 0,
+    "chirp_pacing": {
+      "gap_us": 100.0,
+      "late_p99_limit_us": 10.0,
+      "late_max_limit_ms": 1.28,
+      "chirps": 1280000,
+      "late_median_ms": 0.000157,
+      "late_p99_ms": 0.004702,
+      "late_p99_9_ms": 0.052657,
+      "late_max_ms": 8.21593,
+      "late_total_max_ms": 8.283451,
+      "chirps_ge_100us": 582,
+      "frames_with_chirp_ge_100us": 397,
+      "frame_boundary_overruns": 734,
+      "sendto_max_ms": 8.26625,
+      "detail": false,
+      "valid": true,
+      "schedule": "reanchor",
+      "reanchor_threshold_us": 10.0,
+      "stall_threshold_ms": 1.28,
+      "stall_frames": 5,
+      "stall_frames_limit": 100,
+      "stall_max_ms": 8.21593,
+      "chirp_reanchors": 5775,
+      "frame_reanchors": 9999,
+      "min_chirp_spacing_us": 90.135,
+      "min_frame_spacing_ms": 12.800246,
+      "effective_period_ms": 12.834858967496748
+    }
+  },
+  "realtime_criterion": {
+    "definition": "P99(receiver assembly complete of frame N -> frame N CSV flush) < period; equivalently frame N output before frame N+1 assembly completes (user decision 2026-11-26)",
+    "start": "complete_ns = receiver user-space time after the last chirp is assembled (not a kernel timestamp)",
+    "period_ms": 12.8,
+    "sender_pacing": "chirp gap 100us, reanchor schedule",
+    "period_basis": "nominal period_ms; a reanchor schedule only lengthens intervals, so this is the stricter bound",
+    "complete_to_output_p99_ms": 11.098819199999998,
+    "meets": true,
+    "secondary_first_kernel_to_output_p99_ms": 24.54403535,
+    "secondary_first_kernel_meets": false,
+    "note": "200-frame or lossy runs are preliminary; acceptance needs 10,000 frames"
+  },
+  "raw_sha256": {
+    "artifacts.sha256": "8d03927760e44054354adad32ccc7e680fa8663765f9d006e13afab371d12afa",
+    "artifact_check.txt": "d9a570c9d4dfb83356f796f4c19cb9aa2371482c4a579147d829acaa5044f41c",
+    "build_environment.txt": "8e0c5e48971584a004e5cb836dbb521b1784c89ab9be5133f915c14154dd0d65",
+    "clock_after.txt": "8dd0e557150f3b785d086279c8699c369f0172a4c37362e1080e127b65a0a8a8",
+    "clock_before.txt": "8dd0e557150f3b785d086279c8699c369f0172a4c37362e1080e127b65a0a8a8",
+    "interrupts_after.txt": "ca88a4fd42f22e3ae51e27ff4e8659cff27703cc3a7955c208f5ddedb95f10e5",
+    "interrupts_before.txt": "864e29260caa6b3d6e51d7053342e80d560687ddaf81a9f38bf8fd408f9e8cc4",
+    "receiver_exit.txt": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+    "runtime.txt": "15cd1eab2b9955ee57270222b2da7c0912138f015cbff5adc84ff04afdb6f4f4",
+    "source.sha256": "e7dab77e1e1c54f0a47b088ebba06ca82014770c9032f265d1c1557a8a5a90a1",
+    "trace\\counters.txt": "207b89a85dbd2d767cad8b50b1240fe49faecb0a7e144ec5ebc8fd4a0e2d136c",
+    "trace\\detections.csv": "f2064cfc2f75a7764b6dd09d9319cca1e0f60887d8b8fa9801327b63fccbc849",
+    "trace\\environment.txt": "957b383ef34bedadb3d844d53974ad3068f460b2a51cbadb4e3d9a0cb2015e9d",
+    "trace\\frames.csv": "e1ebc69eb879970efcd0a4f425d4c7d013e9cd3ba78f96dbab8c9ba394693a1a",
+    "trace\\resources.csv": "4c81d3c69ffb9e7763b50e741e495055592cb5cb17a780a240836c2b186670dd"
+  },
+  "acceptance_10000_frames": false,
+  "processing_realtime": {
+    "definition": "user decision 2026-11-26: continuous run of the expected frames; P99(assembly complete -> CSV flush) < period; no queue_full; valid offered load; all counters other than kernel_drops zero. UDP network loss (kernel_drops and the partial/evicted frames it causes) is reported, not a processing failure",
+    "frames_expected": 10000,
+    "frames_processed": 9996,
+    "network_lost_frames": [
+      4906,
+      5458,
+      5459,
+      5463
+    ],
+    "kernel_drops": 108,
+    "queue_full": 0,
+    "complete_to_output_p99_ms": 11.098819199999998,
+    "period_ms": 12.8,
+    "meets": true
+  }
+}

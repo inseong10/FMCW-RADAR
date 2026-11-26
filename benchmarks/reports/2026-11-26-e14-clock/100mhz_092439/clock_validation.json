@@ -1,0 +1,45 @@
+{
+  "status": "E14_CLOCK_BUILD_PASS",
+  "clock_hz": 100000000,
+  "timing": {
+    "setup_wns_ns": 0.726,
+    "hold_whs_ns": 0.023,
+    "pulse_width_wpws_ns": 2.0,
+    "clock_name": "clk_out1_system_clock_gen_0",
+    "period_ns": 10.0,
+    "frequency_mhz": 100.0,
+    "unconstrained_internal_endpoints": 0
+  },
+  "artifact_sha256": {
+    "timing.rpt": "4e40cb0f7bf18b97decc521c4c38a309f76aeea646d7839e15d75108ae7230c5",
+    "dma_config.json": "6a0aa8a3aa64b5c65fe9d9a20ed55fe47ea636f204e8735e6ffd022a129e29b5",
+    "build_config.json": "800cfd65d92101de54954db5af7a59beb26818146e07d78f6eb7e91d52cd295f",
+    "frame_core_check.txt": "11fa1d9134101f151b1b92fd2ab23c65f9236fbbf5992d481d2ff7b9a57f5ce0",
+    "reset_simulation.txt": "476fa9a32143d214772f4533a51aff5ea0a7671f936a953f089362db544573b3",
+    "clock_source.txt": "4ff2388f5d31bc3555904a7217f7a61105cea41ec7026301d191238f3f351abc",
+    "source.sha256": "ed4fbf507f57b8ed3ad8adca034a9bfd3b72da33624adeb70ba2873203a2b979",
+    "utilization.rpt": "cb4d95e59152c23b64c5e36e4e79cde2021f00045021c7fae6fd2bbd298707e8",
+    "frame_utilization.rpt": "ff64d9c34278a003e1ac935abd0ea75a8509516877aeaa42cd9bcd080798ad1b",
+    "system.xsa": "0f7a8af23f191a1f9b6d157c1cfb93e85b8365ee8c654d1622564bba3d110ecb",
+    "fft128_ps.runs/impl_1/system_wrapper.bit": "ae7c436879eb6dba827dc93b7134e4762df2a876e954591d8200914785903452"
+  },
+  "source_sha256": {
+    "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/build_dma_frame.tcl": "385b1185dec427a9fa5ef2c9838dd3b1f2ebed516ab07dfbdd3af2d3a647beb5",
+    "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/build.tcl": "62febe110530628f44335de4efdb825be1a5b0632bd2c1adcb95333fce08168e",
+    "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/reset_dma_frame_tb.v": "2ccfd9b051e3a2952a7cd49fd701c425a9897df200f39545bb4ca723956718a8",
+    "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/reset_sim_sources.tcl": "a823ed935910af4922779d2a7596ef3f072bb7a9e7aba073c57dccc8c09e57e5",
+    "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/zybo_sysclk.xdc": "c889d72c6ab907a373332b77bcdbd10429983104522b69266f520e05e0214457",
+    "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft128_frame_ram.v": "ecdf01459b6311a2223cabf10a967cad93c8bccff6d03078a2f5e0c69f078221",
+    "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft128_dma_frame_ctrl.v": "0c511f9350949671fd6cdf3e65d2a0aa8e4891483ae467a1d179a24b17594524",
+    "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft128_streaming.v": "9d46dc81cffe1775c70df72e9e9ea17f00d16d25239e4ca89ad8a7ba33d80566",
+    "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft128_stream_stage.v": "db94cc98094c455faf5b9b92152a42faa55648840b78c2f6b800cbce9b156c4e",
+    "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft128_twiddle.v": "26c81c3038907f29cffa17a6d066c84613ebdcd22b0e5770765ea4dedb48f874",
+    "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/butterfly_pipeline.v": "8152035a94ef0a7761e463c18a0011def3c7f239572ee9f928c6305287546297",
+    "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft_working_ram.v": "5464b1b0a57e663a1cdc58406c0fc73f3d27829f1ecd9f267bcd66a5211d9eb0",
+    "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/address_generator.v": "9757d675e1564a9985a01b08726fae90f6eecd294b7bb10d9e6dd8e55685606d",
+    "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/build_dma_frame_clock.tcl": "3e0501105619122417295ffbdbd9c2066935772007de00bdf05ba1bf57d1f2a5"
+  },
+  "hardware_verified": false,
+  "maximum_clock_claim": false,
+  "scope": "routed timing and reset simulation only; board and throughput pending"
+}

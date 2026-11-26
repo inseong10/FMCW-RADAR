@@ -1,0 +1,27 @@
+boot_id=393f85b0-fca7-4456-8d1f-72befe9bf513
+0xF8000100: 0x00028000
+0xF8000104: 0x00020000
+0xF8000108: 0x0001E000
+0xF800010C: 0x0000003F
+0xF8000120: 0x1F000200
+/sys/firmware/devicetree/base/axi/slcr@f8000000/clkc@100/ps-clk-frequency
+0000000  001 374 240 125                                                
+0000004
+/sys/firmware/devicetree/base/fft128-e14_frame-clock/clock-frequency
+0000000  005 365 341 000                                                
+0000004
+/sys/firmware/devicetree/base/amba_pl/misc_clk_0/clock-frequency
+0000000  007 362 201 140                                                
+0000004
+/sys/firmware/devicetree/base/amba_pl/misc_clk_1/clock-frequency
+0000000  005 365 341 000                                                
+0000004
+/sys/firmware/devicetree/base/amba_pl/i2s_clk/clock-frequency
+0000000  000 267 033 000                                                
+0000004
+/sys/firmware/devicetree/base/axi/i2c@e0005000/clock-frequency
+0000000  000 006 032 200                                                
+0000004
+/sys/firmware/devicetree/base/axi/i2c@e0004000/clock-frequency
+0000000  000 001 206 240                                                
+0000004

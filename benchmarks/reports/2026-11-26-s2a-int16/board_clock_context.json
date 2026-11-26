@@ -1,0 +1,39 @@
+{
+  "experiment": "S2a-int16",
+  "runtime_context": {
+    "ps": {
+      "boot_id": "87d0bd24-5ffa-435e-8919-fee083d76b6f",
+      "ps_reference_hz": 33333333,
+      "arm_pll_multiplier": 40,
+      "cpu_divisor": 2,
+      "cpu_configured_hz": 666666660.0,
+      "pl_declared_clock_hz": 100000000,
+      "registers": {
+        "0xF8000100": 163840,
+        "0xF8000104": 131072,
+        "0xF8000108": 122880,
+        "0xF800010C": 63,
+        "0xF8000120": 520094208
+      },
+      "scope": "CPU register-derived setting; PL device-tree declaration; no frequency counter measurement"
+    },
+    "pl": {
+      "boot_id": "87d0bd24-5ffa-435e-8919-fee083d76b6f",
+      "ps_reference_hz": 33333333,
+      "arm_pll_multiplier": 40,
+      "cpu_divisor": 2,
+      "cpu_configured_hz": 666666660.0,
+      "pl_declared_clock_hz": 100000000,
+      "registers": {
+        "0xF8000100": 163840,
+        "0xF8000104": 131072,
+        "0xF8000108": 122880,
+        "0xF800010C": 63,
+        "0xF8000120": 520094208
+      },
+      "scope": "CPU register-derived setting; PL device-tree declaration; no frequency counter measurement"
+    }
+  },
+  "before_after_and_cross_run_equal": true,
+  "maximum_frequency_claim": false
+}

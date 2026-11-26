@@ -1,0 +1,121 @@
+ADC16_INDEPENDENT_CHECK_PASS backend=pl frames=200 all_bins=False
+{
+  "accuracy": {
+    "hits": 4,
+    "targets": 4,
+    "false": 0,
+    "peaks": [
+      [
+        21,
+        10
+      ],
+      [
+        215,
+        20
+      ],
+      [
+        8,
+        37
+      ],
+      [
+        174,
+        53
+      ]
+    ],
+    "truth": [
+      {
+        "truth": {
+          "range_m": 15.0,
+          "speed_mps": 5.0
+        },
+        "expected_doppler_bin": 20.537,
+        "expected_range_bin": 10.007,
+        "detected": [
+          21,
+          10
+        ],
+        "range_m": 14.9896229,
+        "speed_mps": 5.112754692372661,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        },
+        "expected_doppler_bin": -41.074,
+        "expected_range_bin": 20.014,
+        "detected": [
+          215,
+          20
+        ],
+        "range_m": 29.9792458,
+        "speed_mps": -9.98204487558472,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 55.0,
+          "speed_mps": 2.0
+        },
+        "expected_doppler_bin": 8.215,
+        "expected_range_bin": 36.692,
+        "detected": [
+          8,
+          37
+        ],
+        "range_m": 55.46160473,
+        "speed_mps": 1.9477160732848233,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 80.0,
+          "speed_mps": -20.0
+        },
+        "expected_doppler_bin": -82.147,
+        "expected_range_bin": 53.37,
+        "detected": [
+          174,
+          53
+        ],
+        "range_m": 79.44500137,
+        "speed_mps": -19.96408975116944,
+        "hit": true
+      }
+    ],
+    "false_peaks": []
+  },
+  "preparation": {
+    "count": 200,
+    "median_ms": 2.2677810000000003,
+    "p99_ms": 2.3526393,
+    "max_ms": 2.37495
+  },
+  "zero_drops": true,
+  "offered_load_valid": true,
+  "realtime_criterion": {
+    "definition": "P99(receiver assembly complete of frame N -> frame N CSV flush) < period; equivalently frame N output before frame N+1 assembly completes (user decision 2026-11-26)",
+    "start": "complete_ns = receiver user-space time after the last chirp is assembled (not a kernel timestamp)",
+    "period_ms": 25.6,
+    "sender_pacing": "chirp gap 100us, reanchor schedule",
+    "period_basis": "nominal period_ms; a reanchor schedule only lengthens intervals, so this is the stricter bound",
+    "complete_to_output_p99_ms": 17.493056099999997,
+    "meets": true,
+    "secondary_first_kernel_to_output_p99_ms": 43.85594208,
+    "secondary_first_kernel_meets": false,
+    "note": "200-frame or lossy runs are preliminary; acceptance needs 10,000 frames"
+  },
+  "processing_realtime": {
+    "definition": "user decision 2026-11-26: continuous run of the expected frames; P99(assembly complete -> CSV flush) < period; no queue_full; valid offered load; all counters other than kernel_drops zero. UDP network loss (kernel_drops and the partial/evicted/missing frames it causes, lost packets == kernel_drops) is reported, not a processing failure",
+    "frames_expected": 200,
+    "frames_processed": 200,
+    "network_lost_frames": [],
+    "kernel_drops": 0,
+    "lost_packets": 0,
+    "queue_full": 0,
+    "complete_to_output_p99_ms": 17.493056099999997,
+    "period_ms": 25.6,
+    "meets": false
+  }
+}

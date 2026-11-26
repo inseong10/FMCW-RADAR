@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "backend": "ps",
+  "hardware": false,
+  "diagnostic_probe": false,
+  "expected": 20,
+  "status_counts": {
+    "processed": 20
+  },
+  "counters": {
+    "invalid": "0",
+    "foreign": "0",
+    "duplicates": "0",
+    "late": "0",
+    "received_packets": "2560",
+    "payload_truncated": "0",
+    "control_truncated": "0",
+    "decode_errors": "0",
+    "metadata_errors": "0",
+    "kernel_drops": "0",
+    "kernel_missing": "0",
+    "clock_errors": "0",
+    "interrupted": "0",
+    "failed": "0",
+    "error": ""
+  },
+  "trace_valid": true,
+  "invalidating_counters": [],
+  "zero_drops": true,
+  "metrics": {
+    "first_kernel_to_output": {
+      "count": 20,
+      "median_ms": 1.8531825,
+      "p99_ms": 6.017864149999995,
+      "max_ms": 6.710208
+    },
+    "complete_to_output": {
+      "count": 20,
+      "median_ms": 0.956486,
+      "p99_ms": 5.130994239999994,
+      "max_ms": 6.01839
+    },
+    "queue_wait": {
+      "count": 20,
+      "median_ms": 0.09383549999999999,
+      "p99_ms": 0.2248724599999999,
+      "max_ms": 0.236
+    },
+    "preparation": {
+      "count": 20,
+      "median_ms": 0.041905,
+      "p99_ms": 0.13235726999999992,
+      "max_ms": 0.147532
+    },
+    "fft_transfer": {
+      "count": 20,
+      "median_ms": 0.090363,
+      "p99_ms": 0.24807161,
+      "max_ms": 0.2486
+    },
+    "power_cfar": {
+      "count": 20,
+      "median_ms": 0.1733055,
+      "p99_ms": 0.43170707999999997,
+      "max_ms": 0.433772
+    },
+    "output_flush": {
+      "count": 20,
+      "median_ms": 0.316617,
+      "p99_ms": 4.759452079999994,
+      "max_ms": 5.67232
+    }
+  },
+  "resource_samples": 6,
+  "active_resource_samples": 6,
+  "max_rss_bytes": 8785920,
+  "scope": "kernel first-packet -> per-frame CSV flush; includes acquisition/queue/preparation; no fsync",
+  "continuous_acceptance": "not evaluated by S2a",
+  "sender": {
+    "period_ms": 50.0,
+    "chirp_gap_us": 0,
+    "max_lateness_ms": 14.496221,
+    "overrun_frames": 0,
+    "drop_frame": 0
+  },
+  "offered_load_valid": false
+}

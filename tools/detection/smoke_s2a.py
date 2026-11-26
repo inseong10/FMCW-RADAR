@@ -37,15 +37,22 @@ def check_peaks(folder):
         raise ValueError("Loopback detections differ from S1b/S1c multi4 Hann baseline")
 
 
-def case(binary, out, backend, run_id, loss=False, diagnostic=False):
+def case(binary, out, backend, run_id, loss=False, diagnostic=False, adc16=False,
+         record=None, shape=(128, 128), period_ms=50, frames=20, chirp_gap_us=0):
+    # S3a-1: record/shape/period/frames are optional; defaults reproduce the S2a/S2a-int16 smoke exactly.
     chosen = port()
     result = out/f"{backend}_{'loss' if loss else 'normal'}"
     sender_log = out/f"{result.name}_sender.json"
-    command = [str(binary), "--backend", backend, "--run-id", str(run_id), "--frames", "20",
+    command = [str(binary), "--backend", backend, "--run-id", str(run_id), "--frames", str(frames),
                "--bind", "127.0.0.1", "--port", str(chosen), "--out", str(result),
-               "--partial", "1" if loss else "4", "--idle-ms", "500", "--start-ms", "10000"]
+               "--partial", "1" if loss and not adc16 else "4", "--idle-ms", "500", "--start-ms", "10000"]
+    if adc16:
+        command += ["--input-format", "adc16", "--queue", "4"]
+    if tuple(shape) != (128, 128):
+        command += ["--pulses", str(shape[0]), "--samples", str(shape[1])]
     if diagnostic:
         command.append("--diagnose-first-packet")
+        if adc16:command.append("--diagnostic-spectrum")
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                                text=True, bufsize=1)
     lines = []
@@ -70,12 +77,15 @@ def case(binary, out, backend, run_id, loss=False, diagnostic=False):
                 raise RuntimeError("Receiver exited before ready: "+"".join(lines))
             if line.startswith("S2A_READY"):
                 break
-        send_command = [sys.executable, str(ROOT/"tools/sender/replay_stream.py"),
-                        str(ROOT/"benchmarks/fixtures/radarsimpy_128x128_sim_multi4_noise.rspb"),
-                        "--ip", "127.0.0.1", "--port", str(chosen), "--frames", "20",
-                        "--run-id", str(run_id), "--period-ms", "50", "--out", str(sender_log)]
+        source = record or ROOT/("benchmarks/fixtures/adc16/radarsimpy_128x128_sim_multi4_noise_adc16.rspb" if adc16 else
+                                 "benchmarks/fixtures/radarsimpy_128x128_sim_multi4_noise.rspb")
+        send_command = [sys.executable, str(ROOT/"tools/sender/replay_stream.py"), str(source),
+                        "--ip", "127.0.0.1", "--port", str(chosen), "--frames", str(frames),
+                        "--run-id", str(run_id), "--period-ms", f"{period_ms:g}", "--out", str(sender_log)]
         if loss:
             send_command += ["--drop-frame", "2"]
+        if chirp_gap_us:
+            send_command += ["--chirp-gap-us", f"{chirp_gap_us:g}"]
         sent = subprocess.run(send_command, capture_output=True, text=True, timeout=10)
         (out/f"{result.name}_sender.log").write_text(sent.stdout+sent.stderr, encoding="utf-8")
         if sent.returncode:
@@ -86,11 +96,13 @@ def case(binary, out, backend, run_id, loss=False, diagnostic=False):
         if diagnostic and (not summary["diagnostic_probe"] or
                            not any(line.startswith("S2A_LEGACY_PROBE") for line in lines)):
             raise ValueError("First-packet compatibility probe did not run")
-        check_peaks(result)
+        if record is None:
+            check_peaks(result)
         if not summary["trace_valid"]:
             raise ValueError("Invalid monitor counters")
         if loss:
-            if status != 2 or summary["status_counts"] != {"processed": 19, "partial_evicted": 1}:
+            loss_status = "partial" if adc16 else "partial_evicted"
+            if status != 2 or summary["status_counts"] != {"processed": 19, loss_status: 1}:
                 raise ValueError("Intentional loss was not accounted for exactly")
         elif status != 0 or not summary["zero_drops"]:
             raise ValueError("Normal loopback dropped frames")

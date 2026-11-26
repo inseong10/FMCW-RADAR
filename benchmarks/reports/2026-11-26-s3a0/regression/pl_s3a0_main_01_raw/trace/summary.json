@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "backend": "pl",
+  "hardware": true,
+  "diagnostic_probe": false,
+  "expected": 10000,
+  "status_counts": {
+    "processed": 9997,
+    "partial": 3
+  },
+  "counters": {
+    "invalid": "0",
+    "foreign": "0",
+    "duplicates": "0",
+    "late": "0",
+    "received_packets": "1279901",
+    "payload_truncated": "0",
+    "control_truncated": "0",
+    "decode_errors": "0",
+    "metadata_errors": "0",
+    "kernel_drops": "99",
+    "kernel_missing": "0",
+    "clock_errors": "1",
+    "interrupted": "0",
+    "failed": "0",
+    "error": ""
+  },
+  "trace_valid": false,
+  "invalidating_counters": [
+    "kernel_drops",
+    "clock_errors"
+  ],
+  "zero_drops": false,
+  "metrics": {
+    "first_kernel_to_output": {
+      "count": 9997,
+      "median_ms": 18.249456,
+      "p99_ms": 19.697069079999995,
+      "max_ms": 55.683585
+    },
+    "complete_to_output": {
+      "count": 9997,
+      "median_ms": 5.363778,
+      "p99_ms": 5.5132581599999995,
+      "max_ms": 22.291152
+    },
+    "queue_wait": {
+      "count": 9997,
+      "median_ms": 0.073032,
+      "p99_ms": 0.16231848,
+      "max_ms": 16.860882
+    },
+    "preparation": {
+      "count": 9997,
+      "median_ms": 1.196352,
+      "p99_ms": 1.2803128799999999,
+      "max_ms": 1.608114
+    },
+    "fft_transfer": {
+      "count": 9997,
+      "median_ms": 1.46586,
+      "p99_ms": 1.5519158399999993,
+      "max_ms": 1.840326
+    },
+    "power_cfar": {
+      "count": 9997,
+      "median_ms": 2.381874,
+      "p99_ms": 2.4983409599999997,
+      "max_ms": 3.314688
+    },
+    "output_flush": {
+      "count": 9997,
+      "median_ms": 0.22479,
+      "p99_ms": 0.289236,
+      "max_ms": 5.187984
+    }
+  },
+  "resource_samples": 661,
+  "active_resource_samples": 646,
+  "max_rss_bytes": 5402624,
+  "scope": "kernel first-packet -> per-frame CSV flush; includes acquisition/queue/preparation; no fsync",
+  "continuous_acceptance": "not evaluated by S2a",
+  "sender": {
+    "period_ms": 12.8,
+    "chirp_gap_us": 100.0,
+    "max_lateness_ms": 1.492237,
+    "overrun_frames": 3843,
+    "drop_frame": 0,
+    "chirp_pacing": {
+      "gap_us": 100.0,
+      "late_p99_limit_us": 10.0,
+      "late_max_limit_ms": 1.28,
+      "chirps": 1280000,
+      "late_median_ms": 0.000211,
+      "late_p99_ms": 0.028193,
+      "late_p99_9_ms": 0.15073,
+      "late_max_ms": 26.604652,
+      "late_total_max_ms": 26.60539,
+      "chirps_ge_100us": 2440,
+      "frames_with_chirp_ge_100us": 1369,
+      "frame_boundary_overruns": 3843,
+      "sendto_max_ms": 26.647342,
+      "detail": false,
+      "valid": false,
+      "schedule": "reanchor",
+      "reanchor_threshold_us": 10.0,
+      "stall_threshold_ms": 1.28,
+      "stall_frames": 25,
+      "stall_frames_limit": 100,
+      "stall_max_ms": 26.604652,
+      "chirp_reanchors": 27266,
+      "frame_reanchors": 9999,
+      "min_chirp_spacing_us": 90.176,
+      "min_frame_spacing_ms": 12.800312,
+      "effective_period_ms": 12.954387683568356
+    }
+  },
+  "offered_load_valid": false
+}

@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-26 Asia/Seoul",
+  "evidence_kind": "user_console_before_raw_collection",
+  "board_result_path": "/opt/fft128/e14_clock_100000000_20261126_095418/compare_100mhz_01",
+  "profile": {
+    "backend": "PL_DMA_FRAME",
+    "repeats": 20,
+    "mean_ms": 1.154095,
+    "median_ms": 1.146114,
+    "min_ms": 1.130040,
+    "max_ms": 1.230546,
+    "frame_pass_bit_exact_bins": 16384,
+    "completion_marker": "DMA_PROFILE_COMPLETE"
+  },
+  "paired_completion_marker": "E14_FRAME_BENCHMARK_COMPLETE",
+  "one_displayed_ps_verification": {
+    "repeats": 100,
+    "bins": 16384,
+    "max_error_q15_lsb": 0.00042680867292000,
+    "worst_rms_q15_lsb": 0.00001380469694028,
+    "worst_relative_l2": 0.00000010831022571
+  },
+  "raw_results_collected": false,
+  "post_reboot_cpu_clock_independently_verified": false,
+  "paired_statistics_available": false,
+  "scope": "profile and offline paired completion only; no continuous UDP throughput claim"
+}

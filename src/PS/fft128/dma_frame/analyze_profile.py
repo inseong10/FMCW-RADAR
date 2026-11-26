@@ -13,7 +13,8 @@ COUNTERS=('range_cycles','doppler_cycles','drain_cycles','matrix_reads','matrix_
           'overwrite_errors','io_overlap_cycles','matrix_words','stage_busy_cycles','multi_stage_cycles','vector_overlap_cycles',
           *[f'stage{s}_issue' for s in range(7)],*[f'stage{s}_retire' for s in range(7)])
 
-def analyze(path):
+def analyze(path, clock_hz=50000000):
+    if not 50000000 <= clock_hz <= 200000000:raise ValueError('Invalid expected PL clock')
     with Path(path).open() as source:rows=list(csv.DictReader(source))
     if not rows:raise ValueError('Empty frame profile')
     for index,row in enumerate(rows,1):
@@ -21,7 +22,7 @@ def analyze(path):
         if int(row['iteration'])!=index or tuple(int(row[k]) for k in contract)!=(256,1,2,256,65536,131072,0,1,7):
             raise ValueError('E14 full-frame contract differs')
         hz,cycles=int(row['pl_clock_hz_declared']),int(row['pl_active_cycles'])
-        if hz!=50000000 or cycles<=0 or int(row['min_active_cycles'])!=cycles or int(row['max_active_cycles'])!=cycles:
+        if hz!=clock_hz or cycles<=0 or int(row['min_active_cycles'])!=cycles or int(row['max_active_cycles'])!=cycles:
             raise ValueError('Invalid frame clock/cycles')
         phase=[int(row[k]) for k in ('range_cycles','doppler_cycles','drain_cycles')]
         if min(phase)<=0 or phase[2]<16385 or sum(phase)!=cycles:raise ValueError('Phase cycles do not partition active cycles')
@@ -47,7 +48,7 @@ def analyze(path):
                 host_residual_ms=means['wall_ms']-sum(means[k] for k in HOST),
                 ioctl_residual_ms=means['ioctl_ms']-sum(means[k] for k in KERNEL),
                 frame_counters_mean={k:statistics.mean(int(row[k]) for row in rows) for k in COUNTERS},
-                phase_ms={k:statistics.mean(int(row[k]) for row in rows)/50000 for k in ('range_cycles','doppler_cycles','drain_cycles')},
+                phase_ms={k:statistics.mean(int(row[k]) for row in rows)*1000/clock_hz for k in ('range_cycles','doppler_cycles','drain_cycles')},
                 payload_bytes_per_frame=131072,
                 interpretation='One reused FFT for both axes, one in-place 64KiB matrix, PL transpose and row-major drain. '
                     'Range/Doppler/drain cycles partition PL active; seven stage CALC counters overlap. '
@@ -55,6 +56,7 @@ def analyze(path):
                     'Copies are retained for the initial input and final output. Separate paired trials measure offline latency; continuous UDP is unverified.')
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('profile',type=Path);args=parser.parse_args()
-    result=analyze(args.profile);args.profile.with_suffix('.summary.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('profile',type=Path)
+    parser.add_argument('--clock-hz',type=int,default=50000000);args=parser.parse_args()
+    result=analyze(args.profile,args.clock_hz);args.profile.with_suffix('.summary.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(result,indent=2))

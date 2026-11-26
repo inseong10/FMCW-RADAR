@@ -1,0 +1,4 @@
+Evidence: user-pasted console, 2026-11-26.
+S2A_READY backend=pl run_id=92123 port=5000
+S2A_RECORDED processed=123 expected=200
+S2A_SENT frames=200 run_id=92123 overruns=0 wait=spin max_late_ms=0.042

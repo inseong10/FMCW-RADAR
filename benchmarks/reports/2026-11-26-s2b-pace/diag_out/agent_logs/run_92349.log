@@ -1,0 +1,6 @@
+store=ram out=/var/volatile/fft128_agent/pl_diag_out_ram_01
+S2A_READY backend=pl run_id=92349 port=5000
+S2A_RECORDED processed=9998 expected=10000
+ADC16_RECORDED backend=pl exit=2 out=/var/volatile/fft128_agent/pl_diag_out_ram_01
+RAM_COPY_OK files=15
+AGENT_RUN_DONE run_id=92349 status=2

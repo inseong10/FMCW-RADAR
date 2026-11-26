@@ -1,0 +1,10 @@
+S3A2B_MICRO gather shape=256x128 median_us=710.8 min_us=706.3 n=100
+S3A2B_MICRO place shape=256x128 median_us=227.8 min_us=224.6 n=100
+S3A2B_MICRO combine shape=256x128 median_us=5428.1 min_us=5383.1 n=100
+S3A2B_MICRO gather shape=128x256 median_us=881.4 min_us=875.2 n=100
+S3A2B_MICRO place shape=128x256 median_us=241.3 min_us=234.6 n=100
+S3A2B_MICRO combine shape=128x256 median_us=6107.5 min_us=6067.5 n=100
+S3A2B_MICRO gather shape=256x256 median_us=1927.5 min_us=1911.5 n=100
+S3A2B_MICRO place shape=256x256 median_us=475.2 min_us=470.0 n=100
+S3A2B_MICRO combine shape=256x256 median_us=23140.5 min_us=23048.4 n=100
+S3A2B_MICRO_DONE checksum=596199928835

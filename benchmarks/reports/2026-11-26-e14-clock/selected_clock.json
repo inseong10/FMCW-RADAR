@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-26 Asia/Seoul",
+  "selection": "user_requested_100mhz",
+  "selected_pl_clock_hz": 100000000,
+  "selected_vivado_run": "fft128_dma_e14_clock_100p000mhz_20261126_092439_245",
+  "cpu_current_configuration_hz": 666666660,
+  "further_clock_search": false,
+  "candidate_112_5mhz_run": false,
+  "maximum_clock_claim": false,
+  "hardware_100mhz_selftest_user_console_pass": true,
+  "hardware_raw_log_collected": true,
+  "measurement_completion_user_console": true,
+  "hardware_measurements_independently_verified": true,
+  "next": "S2b/S2c continuous UDP and CFAR validation at the selected 100MHz"
+}

@@ -1,0 +1,27 @@
+{
+  "file": "synthetic_256x128_adc16.rspb",
+  "record_sha256": "8a0c43debe3859fd37372d87385d2f0f0607f235711d8ea2afad30a091e36779",
+  "sample_rate_hz": 1599999.9999999998,
+  "chirps": 256,
+  "samples": 128,
+  "seed": 20261126,
+  "targets": [
+    {
+      "range_m": 14.989622899999997,
+      "speed_mps": 2.434645091606029
+    },
+    {
+      "range_m": 59.95849159999999,
+      "speed_mps": -5.112754692372661
+    },
+    {
+      "range_m": 121.41594548999997,
+      "speed_mps": 0.9738580366424117
+    },
+    {
+      "range_m": 146.89830442,
+      "speed_mps": -25.563773461863306
+    }
+  ],
+  "note": "S3a-1 synthetic smoke record, not a radarsimpy scenario"
+}

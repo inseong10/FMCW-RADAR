@@ -1,0 +1,40 @@
+{
+  "file": "radarsimpy_128x128_sim_multi4_noise_adc16.rspb",
+  "record_sha256": "d3d5160cb8b5f56e24bf60369801d3bc85dea47684d088fb203680c8bb6b91cf",
+  "source_file": "radarsimpy_128x128_sim_multi4_noise.rspb",
+  "source_sha256": "450ffd3c05bf2570773c7fd3bf543a00d66e3ec531a05d07ef2747bb6a688413",
+  "sample_rate_hz": 1600000.0,
+  "profile": {
+    "profile": 1,
+    "bits": 16,
+    "scale_codes_per_unit": 1600000.0,
+    "window_applied": false,
+    "payload_bytes_per_frame": 65536
+  },
+  "targets": [
+    {
+      "range_m": 15.0,
+      "speed_mps": 5.0
+    },
+    {
+      "range_m": 30.0,
+      "speed_mps": -10.0
+    },
+    {
+      "range_m": 55.0,
+      "speed_mps": 2.0
+    },
+    {
+      "range_m": 80.0,
+      "speed_mps": -20.0
+    }
+  ],
+  "noise": true,
+  "clipped_components": 0,
+  "clipped_complex_samples": 0,
+  "total_components": 32768,
+  "peak_source_complex": 0.009593515132970855,
+  "peak_source_component": 0.009237358346581459,
+  "peak_quantized_component": 14780,
+  "rounding_error_complex_rms_lsb": 0.4108327152005803
+}

@@ -1,0 +1,6 @@
+(dft-rank>=2/1
+  (dft-vrank>=1-x128/1
+    (dft-ct-dit/16
+      (dftw-direct-16/16 "t3fv_16_avx")
+      (dft-direct-16-x16 "n2fv_16_avx")))
+  (dft-direct-128-x256 "n1fv_128_avx"))

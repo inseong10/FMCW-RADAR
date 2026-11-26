@@ -1,0 +1,34 @@
+Linux Petalinux-2022 5.15.19-xilinx #1 SMP PREEMPT Wed Aug 26 11:47:56 KST 2026 armv7l GNU/Linux
+experiment=S2a-int16
+cpu_online=0-1
+allowed_cpus=0-1
+mode=measure
+pulses=256
+samples=128
+processor	: 0
+model name	: ARMv7 Processor rev 0 (v7l)
+BogoMIPS	: 333.33
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x3
+CPU part	: 0xc09
+CPU revision	: 0
+
+processor	: 1
+model name	: ARMv7 Processor rev 0 (v7l)
+BogoMIPS	: 333.33
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpd32 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x3
+CPU part	: 0xc09
+CPU revision	: 0
+
+Hardware	: Xilinx Zynq Platform
+Revision	: 0003
+Serial		: 0000000000000000
+f5aafa2ecffdc0efed27b5a9fd8b8aa9dcf59e0991e9f0c203c262cf65716071  /opt/fft128/s2a_int16_20261126_s3a2_m256/stream-receiver
+182f6f5317bf1480aeee92d9a93958c5c5cc24fdccf36217d3ce253b01cb3c6b  /opt/fft128/s2a_int16_20261126_s3a2_m256/libfftw3.so.3
+crw-------    1 root     root       10, 124 Mar  9 14:28 /dev/fft128-dma-frame
+/sys/module/fft128_dma_frame

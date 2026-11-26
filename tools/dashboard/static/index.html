@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>FMCW Radar Lab · PS / PL Visualizer</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+<header class="app-header">
+  <a class="brand" href="/" aria-label="FMCW Radar Lab 홈"><span class="brand-mark" aria-hidden="true">◉</span><span>FMCW <b>RADAR LAB</b><small>PS / PL SIGNAL EXPLORER</small></span></a>
+  <div class="header-meta"><span class="chip">ZYBO Z7-10</span><span class="muted">128 × 128 · E14</span><span class="offline">로컬 분석</span></div>
+</header>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="section-label">DATA SOURCE</div>
+    <h1>프레임 탐색</h1>
+    <label for="session">활성 프레임</label>
+    <select id="session"><option value="recording">RadarSimPy 기준 기록</option></select>
+    <button id="reload" class="button secondary full">기준 기록 다시 불러오기</button>
+    <div class="source-note" id="source-note">기록을 불러오는 중…</div>
+    <hr>
+    <form id="simulation-form">
+      <div class="section-label">SOFTWARE SIMULATION</div>
+      <h2>표적 설정</h2>
+      <p class="muted small" id="engine-note">복소 beat-tone + 잡음 모델<br>NumPy와 PL Q15 모델 비교</p>
+      <label for="engine">입력 생성 엔진</label><select id="engine"><option value="tone">빠른 합성 모델</option><option value="radarsimpy">프로젝트 RadarSimPy</option></select>
+      <label for="target-range">거리 <output id="range-output">30 m</output></label>
+      <input id="target-range" type="range" min="1" max="180" value="30" step="1">
+      <label for="target-speed">속도 <output id="speed-output">−10 m/s</output></label>
+      <input id="target-speed" type="range" min="-30" max="30" value="-10" step="0.5">
+      <label for="target-snr">SNR <output id="snr-output">35 dB</output></label>
+      <input id="target-snr" type="range" min="0" max="80" value="35" step="1">
+      <div class="fixed-config"><span>Chirps / samples</span><strong>128 / 128</strong><span>대역폭 / 중심 주파수</span><strong>100 MHz / 24.05 GHz</strong><span>Chirp / PRP</span><strong>80 / 100 μs</strong></div>
+      <button id="simulate" class="button primary full" type="submit">시뮬레이션 실행</button>
+    </form>
+    <hr>
+    <button id="open-import" class="button secondary full">PS / PL CSV 가져오기</button>
+    <button id="export" class="button ghost full" disabled>현재 분석 JSON 저장</button>
+    <div class="sidebar-foot">보드 제어 없이 기록을 읽습니다.<br>시뮬레이션은 보드 측정과 분리됩니다.</div>
+  </aside>
+  <main>
+    <div class="page-top"><div><div class="section-label">SIGNAL PROCESSING WORKSPACE</div><h2 id="frame-title">RadarSimPy 기준 기록</h2></div><span id="source-badge" class="badge">불러오는 중</span></div>
+    <div id="message" class="message" role="status" aria-live="polite">입력과 검증된 보드 결과를 읽고 있습니다.</div>
+    <nav class="tabs" aria-label="분석 화면" role="tablist">
+      <button id="tab-signal" role="tab" aria-selected="true" aria-controls="view-signal" class="active" data-view="signal">신호 & 검출</button>
+      <button id="tab-architecture" role="tab" aria-selected="false" aria-controls="view-architecture" data-view="architecture">PS · PL 아키텍처</button>
+      <button id="tab-performance" role="tab" aria-selected="false" aria-controls="view-performance" data-view="performance">보드 성능 기록</button>
+    </nav>
+
+    <section id="view-signal" role="tabpanel" aria-labelledby="tab-signal">
+      <div class="signal-toolbar"><div><h3>Range–Doppler 비교</h3><p class="muted small">같은 축 · 같은 기준 peak · 같은 dB 색상 범위</p></div><div class="toolbar-actions"><label class="inline-field">비교 대상<select id="ps-variant"><option value="double">PS double</option></select></label><button id="difference" class="button secondary" aria-pressed="false">오차 맵</button><button id="fit" class="button secondary" aria-pressed="false">표적 주변 확대</button></div></div>
+      <div class="heatmap-grid">
+        <article class="plot-panel"><div class="plot-heading"><span class="dot ps"></span><h4 id="ps-label">PS double</h4><span class="plot-unit">dB / reference peak</span></div><canvas id="ps-map" class="heatmap" role="img" aria-label="PS 거리 속도 히트맵. 클릭해 bin 선택"></canvas></article>
+        <article class="plot-panel"><div class="plot-heading"><span class="dot pl"></span><h4 id="pl-label">PL E14</h4><span class="plot-unit">dB / reference peak</span></div><canvas id="pl-map" class="heatmap" role="img" aria-label="PL 거리 속도 히트맵. 클릭해 bin 선택"></canvas></article>
+      </div>
+      <div class="map-footer"><span>＋ 기준 표적 &nbsp; ◇ 선택 bin <span class="muted">· 축은 겉보기 거리, Doppler 결합 미보정</span></span><div class="color-legend"><span>−70</span><div></div><span>0 dB</span></div></div>
+      <div class="detection-grid">
+        <article class="metric"><span>기준 표적</span><strong id="truth-value">—</strong><small id="truth-note">시뮬레이션 설정값</small></article>
+        <article class="metric"><span>PL 피크 검출</span><strong id="peak-value">—</strong><small id="peak-bin">—</small></article>
+        <article class="metric"><span>검출 − 기준</span><strong id="truth-error">—</strong><small id="resolution">—</small></article>
+        <article class="metric"><span>PL 상대 L2 오차</span><strong id="l2-value">—</strong><small id="max-error">PS double 기준</small></article>
+      </div>
+      <div class="selection-strip"><div><span class="section-label">SELECTED BIN</span><strong id="selected-bin">—</strong></div><div><span id="selected-ps-label">PS double</span><strong id="selected-ps">—</strong></div><div><span>PL / Q15 모델</span><strong id="selected-pl">—</strong></div><div><span>복소 오차 크기</span><strong id="selected-error">—</strong></div><div class="bin-inputs"><label class="inline-field">Range bin<input id="range-bin" type="number" min="0" max="127" value="20"></label><label class="inline-field">Doppler bin<input id="doppler-bin" type="number" min="0" max="127" value="107"></label></div><button id="select-peak" class="button secondary">피크 선택</button></div>
+      <div class="detail-grid">
+        <article class="plot-panel"><div class="plot-heading"><h4>선택 Doppler의 거리 스펙트럼</h4><span class="small muted">PS / PL</span></div><canvas id="range-chart" class="line-chart" role="img" aria-label="선택 속도에서 PS와 PL의 거리별 크기 비교"></canvas></article>
+        <article class="plot-panel"><div class="plot-heading"><h4>입력 I / Q</h4><label class="inline-field">Chirp <input id="chirp" type="number" min="0" max="127" value="0"></label></div><canvas id="iq-chart" class="line-chart" role="img" aria-label="선택 chirp의 Q15 입력 I Q 파형"></canvas></article>
+      </div>
+      <p id="normalization" class="small muted"></p>
+    </section>
+
+    <section id="view-architecture" role="tabpanel" aria-labelledby="tab-architecture" hidden>
+      <div class="signal-toolbar"><div><h3>한 프레임의 PS · PL 여정</h3><p class="muted small">E14 구조 설명용 단계 재생 · 실시간 회로 신호가 아닙니다.</p></div><div class="toolbar-actions"><button id="play" class="button primary">재생</button><button id="step" class="button secondary">다음 단계</button><button id="reset" class="button secondary">처음으로</button></div></div>
+      <div class="architecture-switch"><button id="arch-e14" class="button secondary" aria-pressed="true">E14 · PL 전치</button><button id="arch-e13" class="button secondary" aria-pressed="false">E13 · PS 전치와 비교</button><span class="muted small" id="architecture-caption">현재 구현 · 전체 프레임당 1 ioctl / 입출력 합 128 KiB</span></div>
+      <div class="flow-layout">
+        <article class="processor ps-processor"><div class="processor-heading"><span>PROCESSING SYSTEM</span><strong>PS · ARM</strong></div><div class="flow-node" data-phase="0"><b>입력 준비</b><span>128×128 · Q15 입력 버퍼</span></div><div class="flow-node" data-phase="1"><b>DMA 제출</b><span>사용자 / 커널 / coherent 복사</span></div><div id="ps-transpose" class="flow-node" hidden><b>중간 gather / scatter</b><span>E13: 두 축 사이 PS 전치</span></div><div class="flow-node" data-phase="6"><b>결과 사용</b><span>출력 복사 · 피크 / 좌표 계산</span></div></article>
+        <div class="dma-lane"><div class="transfer" data-phase="1"><b>MM2S</b><span id="tx-size">64 KiB 입력</span><div class="transfer-track"></div></div><span class="muted small">DDR ↔ HP0<br>AXI DMA / AXIS32</span><div class="transfer" data-phase="5"><b>S2MM</b><span id="rx-size">64 KiB 출력</span><div class="transfer-track reverse"></div></div></div>
+        <article class="processor pl-processor"><div class="processor-heading"><span>PROGRAMMABLE LOGIC</span><strong>PL · FPGA <small>50 MHz</small></strong></div><div class="flow-node" data-phase="2,4"><b id="fft-role">Range FFT → Doppler FFT</b><span>같은 128-point 코어를 재사용</span><div class="stages" aria-label="7단계 FFT 파이프라인"><span>S0</span><span>S1</span><span>S2</span><span>S3</span><span>S4</span><span>S5</span><span>S6</span></div></div><div class="flow-node matrix-node" data-phase="3,4,5"><div><b>64 KiB in-place 행렬</b><span id="matrix-role">행 저장 → 열 읽기 → 출력 순서 복원</span></div><div class="matrix" aria-hidden="true"></div></div><div class="flow-node" data-phase="5"><b>최종 배열 배출</b><span>Doppler-major / range-minor</span></div></article>
+      </div>
+      <div class="phase-description" aria-live="polite"><span id="phase-number">01 / 07</span><div><h4 id="phase-title">PS 입력 준비</h4><p id="phase-description"></p></div></div>
+      <div class="architecture-facts"><div><span>전체 2D 프레임</span><b>Range → Doppler → 배출 순차 처리</b></div><div><span>단계 병렬성</span><b>7개 FFT 단계의 활동은 겹칠 수 있음</b></div><div><span>프레임 간 중첩</span><b>현재 E14 구조에서는 없음</b></div></div>
+      <div class="section-label spaced">E14 보드 PROFILE · 20회 평균 카운터</div><div id="counter-grid" class="counter-grid"></div>
+      <p class="small muted">카운터는 저장된 보드 기록입니다. 활성 프레임이나 설명용 재생에 따라 변하지 않습니다. 단계별 누적 CALC 합은 벽시간이 아닙니다.</p>
+    </section>
+
+    <section id="view-performance" role="tabpanel" aria-labelledby="tab-performance" hidden>
+      <div class="signal-toolbar"><div><h3>E14 보드 성능 기록</h3><p class="muted small">2026-11-21 · 고정 입력의 오프라인 반복 · 활성 프레임의 처리 시간과 별개</p></div><span class="badge">보드 실측 기록</span></div>
+      <div class="performance-grid"><article class="plot-panel"><h4>같은 회차 PS / PL 지연</h4><p class="small muted">각 300회 중앙값 · 가로 선은 p05–p95</p><div id="latency-bars"></div><div class="performance-takeaway"><strong id="speedup">—</strong><span>PS NEON 대비 가속</span></div></article><article class="plot-panel"><h4>별도 profile의 시간 분해</h4><p class="small muted">20회 평균 · 중첩 구간은 별도 층에 표시</p><div id="profile-bars"></div><p id="profile-note" class="small muted"></p></article></div>
+      <div class="table-wrap"><table><caption>비계측 지연 분포 · ms</caption><thead><tr><th scope="col">경로</th><th scope="col">표본</th><th scope="col">평균</th><th scope="col">중앙값</th><th scope="col">p05</th><th scope="col">p95</th><th scope="col">최대</th></tr></thead><tbody id="timing-table"></tbody></table></div>
+      <div class="history-panel"><h4>E13 → E14 · 데이터 이동 개선</h4><div id="history-facts" class="architecture-facts"></div><p class="small muted">서로 다른 부팅·회차의 과거 비교입니다. 한 변수만의 효과로 해석하지 않습니다.</p></div>
+      <p id="measurement-scope" class="small muted"></p><p class="small muted">연속 UDP 처리량·P99 실시간성·드랍률·가변 크기는 이 기록으로 검증하지 않았습니다. 지연의 역수를 실시간 FPS로 표시하지 않습니다.</p>
+    </section>
+    <details class="provenance"><summary>데이터 출처 & 해석</summary><ul id="sources"></ul><p class="small muted">거리 축은 beat 주파수 기반의 겉보기 거리이며 Doppler 결합을 보정하지 않습니다. 속도 부호는 현재 I/Q 규약을 따릅니다. 히트맵과 오차는 정규화된 복소 FFT 결과에서 계산합니다.</p></details>
+    <footer>FMCW RADAR LAB <span>RECORD → COMPARE → UNDERSTAND</span></footer>
+  </main>
+</div>
+<dialog id="import-dialog">
+  <form id="import-form"><div class="dialog-heading"><h2>PS / PL 결과 가져오기</h2><button id="close-import" class="button ghost" type="button" aria-label="닫기">✕</button></div><p class="muted">같은 입력의 128×128 결과를 선택하세요. 파일은 로컬에서만 처리합니다.</p><label for="ps-file">PS 스펙트럼 CSV<input type="file" id="ps-file" accept=".csv" required></label><label for="pl-file">PL 스펙트럼 CSV<input type="file" id="pl-file" accept=".csv" required></label><label for="input-file">입력 I/Q CSV · 선택<input type="file" id="input-file" accept=".csv"></label><div class="import-radar"><label>샘플링 주파수 / MHz<input id="import-fs" type="number" min="0.001" step="any" value="1.6" required></label><label>대역폭 / MHz<input id="import-bandwidth" type="number" min="0.001" step="any" value="100" required></label><label>Chirp / μs<input id="import-chirp" type="number" min="0.001" step="any" value="80" required></label><label>PRP / μs<input id="import-prp" type="number" min="0.001" step="any" value="100" required></label><label>중심 주파수 / GHz<input id="import-fc" type="number" min="0.001" step="any" value="24.05" required></label></div><label class="check-label"><input type="checkbox" id="normalization-confirm" required>양쪽이 같은 Q15 입력·창 없음·1/16384 정규화임을 확인했습니다.</label><p class="small muted">열: doppler_bin_unshifted, range_bin, real, imag<br>PL의 real_q15, imag_q15 열도 지원합니다.</p><p id="import-error" role="alert"></p><button id="import-submit" class="button primary full">불러오기</button></form>
+</dialog>
+</body>
+</html>

@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "backend": "ps",
+  "hardware": false,
+  "diagnostic_probe": false,
+  "expected": 200,
+  "status_counts": {
+    "processed": 194,
+    "queue_full": 6
+  },
+  "counters": {
+    "invalid": "0",
+    "foreign": "0",
+    "duplicates": "0",
+    "late": "0",
+    "received_packets": "25600",
+    "payload_truncated": "0",
+    "control_truncated": "0",
+    "decode_errors": "0",
+    "metadata_errors": "0",
+    "kernel_drops": "0",
+    "kernel_missing": "0",
+    "clock_errors": "0",
+    "interrupted": "0",
+    "failed": "0",
+    "error": ""
+  },
+  "trace_valid": true,
+  "invalidating_counters": [],
+  "zero_drops": false,
+  "metrics": {
+    "first_kernel_to_output": {
+      "count": 194,
+      "median_ms": 61.5751445,
+      "p99_ms": 71.09738244,
+      "max_ms": 71.672431
+    },
+    "complete_to_output": {
+      "count": 194,
+      "median_ms": 56.67081,
+      "p99_ms": 66.41495336999999,
+      "max_ms": 66.91695
+    },
+    "queue_wait": {
+      "count": 194,
+      "median_ms": 43.53003,
+      "p99_ms": 53.118618090000005,
+      "max_ms": 53.482692
+    },
+    "preparation": {
+      "count": 194,
+      "median_ms": 0.555849,
+      "p99_ms": 2.8345282199999997,
+      "max_ms": 2.946918
+    },
+    "fft_transfer": {
+      "count": 194,
+      "median_ms": 6.162291,
+      "p99_ms": 7.8995156699999995,
+      "max_ms": 8.17752
+    },
+    "power_cfar": {
+      "count": 194,
+      "median_ms": 5.077337999999999,
+      "p99_ms": 7.79939862,
+      "max_ms": 7.972369
+    },
+    "output_flush": {
+      "count": 194,
+      "median_ms": 0.218709,
+      "p99_ms": 1.3163099999999994,
+      "max_ms": 2.393196
+    }
+  },
+  "resource_samples": 70,
+  "active_resource_samples": 14,
+  "max_rss_bytes": 5468160,
+  "scope": "kernel first-packet -> per-frame CSV flush; includes acquisition/queue/preparation; no fsync",
+  "continuous_acceptance": "not evaluated by S2a",
+  "sender": {
+    "period_ms": 12.8,
+    "chirp_gap_us": 0,
+    "max_lateness_ms": 5.041713,
+    "overrun_frames": 1,
+    "drop_frame": 0
+  },
+  "offered_load_valid": false
+}

@@ -5,19 +5,33 @@
 #include <iomanip>
 #include <iostream>
 int main(int argc,char** argv) {try {
-    if(argc!=6)throw std::runtime_error("wire backend window fftw output-prefix");
+    if(argc<6)throw std::runtime_error("wire backend window fftw output-prefix [--measure-plan --require-neon]");
+    bool measure=false,require_neon=false;
+    for(int i=6;i<argc;++i) {
+        std::string option=argv[i];
+        if(option=="--measure-plan")measure=true;
+        else if(option=="--require-neon")require_neon=true;
+        else throw std::runtime_error("Invalid test option");
+    }
     std::ifstream wire(argv[1],std::ios::binary);
     if(!wire)throw std::runtime_error("wire open");
     stream128::Frame f;f.id=1;
     std::array<unsigned char,stream128::packet_bytes> bytes{};
-    while(wire.read(reinterpret_cast<char*>(bytes.data()),bytes.size()) || wire.gcount()) {
-        auto p=stream128::decode(bytes.data(),static_cast<size_t>(wire.gcount()));
+    while(wire.peek()!=std::char_traits<char>::eof()) {
+        wire.read(reinterpret_cast<char*>(bytes.data()),6);
+        if(wire.gcount()!=6)throw std::runtime_error("Truncated packet prefix");
+        size_t length=bytes[4]==3?stream128::adc_packet_bytes:stream128::packet_bytes;
+        wire.read(reinterpret_cast<char*>(bytes.data()+6),length-6);
+        if(static_cast<size_t>(wire.gcount())!=length-6)throw std::runtime_error("Truncated packet");
+        auto p=stream128::decode(bytes.data(),length);
         if(p.run!=9)throw std::runtime_error("wrong run");
         f.add(p);
     }
     if(f.count!=128)throw std::runtime_error("incomplete frame");
-    stream128::Pipeline pipeline(argv[2],std::string(argv[3])=="hann",argv[4]);
-    pipeline.prepare(f.iq.data());pipeline.transform();const auto& peaks=pipeline.detect();
+    stream128::Pipeline pipeline(argv[2],std::string(argv[3])=="hann",argv[4],measure,require_neon);
+    if(f.format==stream128::InputFormat::Adc16)pipeline.prepare_adc16(f.adc_iq.data());
+    else pipeline.prepare(f.iq.data());
+    pipeline.transform();const auto& peaks=pipeline.detect();
     std::ofstream power(std::string(argv[5])+".power.csv");power<<std::setprecision(17);
     for(auto v:pipeline.power())power<<v<<'\n';
     std::ofstream bins(std::string(argv[5])+".bins.csv");bins<<std::setprecision(17);

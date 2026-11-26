@@ -1,0 +1,17 @@
+{
+  "experiment": "S2b-spin",
+  "pc_passed": 8,
+  "tests": [
+    "deadline fake-clock checks 6",
+    "real local UDP sleep/spin wire and deliberate-loss checks 2"
+  ],
+  "ubuntu_syntax": "Python3.8 grammar checked separately",
+  "actual_vm_udp_spin_run": "pending",
+  "production_default": "sleep unchanged; spin selected explicitly",
+  "sources_sha256": {
+    "tools\\sender\\replay_stream.py": "fb70b6a17454d4ad54f8b662dd0658736935b6b83dde162384d9158ee2405489",
+    "tools\\sender\\check_pacing.py": "e7cbeef727c0de57d2e498e318c77b8011104675ab8ea546bc52cbd91accadf0",
+    "tools\\sender\\test_check_pacing.py": "105e52514c4250737fc214031f4f69210129c246f575cae63e36f43bd450a13f",
+    "tools\\detection\\test_s2a.py": "6a4b8ebef36dc620d7b748d65b1086f319aa57f0e6a8cec507d76bdca49daf25"
+  }
+}

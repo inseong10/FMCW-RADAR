@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-26 Asia/Seoul",
+  "evidence_kind": "local_PC_checks",
+  "clock_tool_tests": {"command": "python tools/clock/test_clock.py -v", "passed": 7},
+  "existing_e14_regression": {"command": "python src/PS/fft128/dma_frame/test_tools.py -v", "passed": 10},
+  "shell_syntax": {"passed_files": 5, "shell": "C:/msys64/usr/bin/bash.exe -n"},
+  "diff_check": "PASS",
+  "vivado_new_frequency_run": false,
+  "board_new_frequency_run": false,
+  "throughput_claim": false,
+  "note": "The 100MHz profile fixture is a mutation test, not board evidence. Plain Tcl entry tests intentionally stop at the first unavailable Vivado API."
+}

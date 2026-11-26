@@ -1,0 +1,145 @@
+{
+  "evidence": "five original receiver files and sender schedule independently verified",
+  "run_id": 92123,
+  "backend": "pl",
+  "status": "failed zero-drop/latency acceptance; offered load valid",
+  "receiver_raw_sha256": {
+    "environment.txt": "e6df399b5369b9bd38cdec9c4dbaaa50b288eac9e8b4c7fb2f04d73e36e8f367",
+    "counters.txt": "75ca7a8754ce83e930a32cfbdc9e8dc982bf10157880299a734ad117b35cc8bd",
+    "frames.csv": "e766821a7325b2c3b5f373be806fe2706fc63e047e372e81df9168de526a9beb",
+    "detections.csv": "5aa9de2fbfa33a17d23a96e32530bb31111c6f1db330ab3abe427e097409070e",
+    "resources.csv": "b80fabc25fb05d9617fcf540929f12a6c6dbc080c50a0625e4c30d8bc5a9aa65"
+  },
+  "receiver_raw_bytes": 47915,
+  "processed": 123,
+  "expected": 200,
+  "unprocessed": 77,
+  "status_counts": {
+    "processed": 123,
+    "queue_full": 77
+  },
+  "packet_accounting": {
+    "received": 25600,
+    "kernel_drops": 0,
+    "expected": 25600,
+    "unreceived": 0,
+    "not_explained_by_recorded_kernel_counter": 0,
+    "received_plus_kernel_drops_equals_expected": true,
+    "all_received_packets_accounted_in_frame_trace": true
+  },
+  "queue_depth_counts_processed": {
+    "0": 4,
+    "1": 2,
+    "2": 2,
+    "3": 115
+  },
+  "metrics": {
+    "first_kernel_to_output": {
+      "count": 123,
+      "median_ms": 107.496208,
+      "p99_ms": 114.00777688000001,
+      "max_ms": 119.250356
+    },
+    "complete_to_output": {
+      "count": 123,
+      "median_ms": 101.591491,
+      "p99_ms": 107.04353932,
+      "max_ms": 107.259823
+    },
+    "queue_wait": {
+      "count": 123,
+      "median_ms": 79.073491,
+      "p99_ms": 87.13596502,
+      "max_ms": 87.328464
+    },
+    "preparation": {
+      "count": 123,
+      "median_ms": 12.1149,
+      "p99_ms": 13.05534756,
+      "max_ms": 13.28337
+    },
+    "fft_transfer": {
+      "count": 123,
+      "median_ms": 1.265694,
+      "p99_ms": 3.87592068,
+      "max_ms": 3.955962
+    },
+    "power_cfar": {
+      "count": 123,
+      "median_ms": 8.59698,
+      "p99_ms": 9.31100268,
+      "max_ms": 9.340344
+    },
+    "output_flush": {
+      "count": 123,
+      "median_ms": 0.209514,
+      "p99_ms": 2.7582639600000003,
+      "max_ms": 2.881848
+    }
+  },
+  "metric_qualification": "valid offered load and trace; timings cover processed survivors only; all missing frames are processing queue drops",
+  "worker_wall_ms": {
+    "count": 123,
+    "median_ms": 22.209787,
+    "p99_ms": 23.4469795,
+    "max_ms": 23.591796
+  },
+  "active_resources": {
+    "intervals": 14,
+    "process_cpu_pct_one_core_weighted": 135.41041585812874,
+    "system_cpu_pct_weighted": 69.64503195765369,
+    "max_rss_bytes": 5357568,
+    "scope": "duration-weighted whole sample intervals overlapping processed-frame activity; includes boundary margins"
+  },
+  "correctness_processed_only": {
+    "frames": 123,
+    "detections": 492,
+    "expected_peaks_in_order": [
+      [
+        10,
+        10
+      ],
+      [
+        107,
+        20
+      ],
+      [
+        4,
+        37
+      ],
+      [
+        87,
+        53
+      ]
+    ],
+    "hits_per_processed_frame": 4,
+    "false_per_processed_frame": 0,
+    "all_peak_powers_thresholds_match_integer_model_cfar": true,
+    "max_peak_power_relative_error": 0.0,
+    "max_threshold_relative_error": 1.8383232152323593e-16,
+    "record_sha256": "450ffd3c05bf2570773c7fd3bf543a00d66e3ec531a05d07ef2747bb6a688413",
+    "full_fft_bins_exported": false,
+    "missing_frames_not_evaluated": true
+  },
+  "sender": {
+    "period_ms": 12.8,
+    "chirp_gap_us": 0,
+    "max_lateness_ms": 0.041537,
+    "overrun_frames": 0,
+    "drop_frame": 0
+  },
+  "offered_load_valid": true,
+  "clock_errors": 0,
+  "clock_error_cause": "none recorded in this attempt",
+  "runtime_identity": "binary/source and CPU clock captures from this run not collected; reported existing rxfix1 reused; historical identity is not a current capture",
+  "analysis_runtime": {
+    "python": "3.13.13",
+    "numpy": "2.5.0"
+  },
+  "analysis_sources_sha256": {
+    "tools\\detection\\analyze_stream.py": "cb10439a49b3ebb24b117a38aa6d03b8c8c85fba4da5f59482d16db56702b92c",
+    "tools\\detection\\cfar_reference.py": "d46119bd88532791a356c1e2dabf453b9df905fd7893ff1b9b8ec0e75e5e72c7",
+    "build\\verify_s2b_92123.py": "a1a1f746786f4f68185657700262a95e9b8e2f2ae7dbfc3c979165b52ab2de39"
+  },
+  "next": "compare PS and PL valid-spin baselines, then validate float/NEON PS candidate; no final optimized throughput claim"
+}

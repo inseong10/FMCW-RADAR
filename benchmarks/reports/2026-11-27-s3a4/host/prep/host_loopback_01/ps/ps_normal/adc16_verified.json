@@ -1,0 +1,193 @@
+{
+  "experiment": "S2a-int16",
+  "pulses": 256,
+  "samples": 256,
+  "evidence": "PC loopback",
+  "backend": "ps",
+  "hardware": false,
+  "record_sha256": "783fac6ed1087bb03d3acc534d74864da90aa137979aac265ad853af2af66396",
+  "sender_sha256": "bbc24cd70f97050f7d18b41688d5c7de3a7365fd4a326161e58ebb2951c4bd9b",
+  "processed_frames_checked": 20,
+  "accuracy": {
+    "hits": 4,
+    "targets": 4,
+    "false": 0,
+    "peaks": [
+      [
+        21,
+        10
+      ],
+      [
+        215,
+        20
+      ],
+      [
+        8,
+        37
+      ],
+      [
+        174,
+        53
+      ]
+    ],
+    "truth": [
+      {
+        "truth": {
+          "range_m": 15.0,
+          "speed_mps": 5.0
+        },
+        "expected_doppler_bin": 20.537,
+        "expected_range_bin": 10.007,
+        "detected": [
+          21,
+          10
+        ],
+        "range_m": 14.9896229,
+        "speed_mps": 5.112754692372661,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 30.0,
+          "speed_mps": -10.0
+        },
+        "expected_doppler_bin": -41.074,
+        "expected_range_bin": 20.014,
+        "detected": [
+          215,
+          20
+        ],
+        "range_m": 29.9792458,
+        "speed_mps": -9.98204487558472,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 55.0,
+          "speed_mps": 2.0
+        },
+        "expected_doppler_bin": 8.215,
+        "expected_range_bin": 36.692,
+        "detected": [
+          8,
+          37
+        ],
+        "range_m": 55.46160473,
+        "speed_mps": 1.9477160732848233,
+        "hit": true
+      },
+      {
+        "truth": {
+          "range_m": 80.0,
+          "speed_mps": -20.0
+        },
+        "expected_doppler_bin": -82.147,
+        "expected_range_bin": 53.37,
+        "detected": [
+          174,
+          53
+        ],
+        "range_m": 79.44500137,
+        "speed_mps": -19.96408975116944,
+        "hit": true
+      }
+    ],
+    "false_peaks": []
+  },
+  "first_frame_all_bins_checked": true,
+  "trace_valid": true,
+  "zero_drops": true,
+  "offered_load_valid": false,
+  "diagnostic_only": true,
+  "metrics": {
+    "first_kernel_to_output": {
+      "count": 20,
+      "median_ms": 33.608181,
+      "p99_ms": 37.89109949,
+      "max_ms": 38.081485
+    },
+    "complete_to_output": {
+      "count": 20,
+      "median_ms": 2.2562995,
+      "p99_ms": 4.70417945,
+      "max_ms": 4.731681
+    },
+    "queue_wait": {
+      "count": 20,
+      "median_ms": 0.10191800000000001,
+      "p99_ms": 0.2784209499999999,
+      "max_ms": 0.298123
+    },
+    "preparation": {
+      "count": 20,
+      "median_ms": 0.1131205,
+      "p99_ms": 0.39553752999999975,
+      "max_ms": 0.431355
+    },
+    "fft_transfer": {
+      "count": 20,
+      "median_ms": 0.974576,
+      "p99_ms": 2.2001690699999994,
+      "max_ms": 2.257938
+    },
+    "power_cfar": {
+      "count": 20,
+      "median_ms": 0.6322935,
+      "p99_ms": 1.1051780299999998,
+      "max_ms": 1.154058
+    },
+    "output_flush": {
+      "count": 20,
+      "median_ms": 0.3730615,
+      "p99_ms": 2.333333879999998,
+      "max_ms": 2.697896
+    }
+  },
+  "sender": {
+    "period_ms": 25.6,
+    "chirp_gap_us": 100.0,
+    "max_lateness_ms": 132.599758,
+    "overrun_frames": 20,
+    "drop_frame": 0,
+    "chirp_pacing": {
+      "gap_us": 100.0,
+      "late_p99_limit_us": 10.0,
+      "late_max_limit_ms": 2.56,
+      "chirps": 5120,
+      "late_median_ms": 8.23659,
+      "late_p99_ms": 15.030695,
+      "late_p99_9_ms": 15.868062,
+      "late_max_ms": 16.100061,
+      "late_total_max_ms": 147.496621,
+      "chirps_ge_100us": 5059,
+      "frames_with_chirp_ge_100us": 20,
+      "frame_boundary_overruns": 20,
+      "sendto_max_ms": 0.555857,
+      "detail": false,
+      "valid": false,
+      "schedule": "absolute"
+    }
+  },
+  "realtime_criterion": {
+    "definition": "P99(receiver assembly complete of frame N -> frame N CSV flush) < period; equivalently frame N output before frame N+1 assembly completes (user decision 2026-11-26)",
+    "start": "complete_ns = receiver user-space time after the last chirp is assembled (not a kernel timestamp)",
+    "period_ms": 25.6,
+    "sender_pacing": "chirp gap 100us, absolute schedule",
+    "period_basis": "nominal period_ms; a reanchor schedule only lengthens intervals, so this is the stricter bound",
+    "complete_to_output_p99_ms": 4.70417945,
+    "meets": true,
+    "secondary_first_kernel_to_output_p99_ms": 37.89109949,
+    "secondary_first_kernel_meets": false,
+    "note": "200-frame or lossy runs are preliminary; acceptance needs 10,000 frames"
+  },
+  "raw_sha256": {
+    "counters.txt": "92ac9905eab985e76380f2a9965a0f223f266d31592e1918a730fb8c42ee2a27",
+    "detections.csv": "8cb76c84d448efbc2549a54aed31edcf499600702a3c69824d8199f25d1f8f75",
+    "diagnostic_spectrum.csv": "5bd7619c6d05995b518fbe8cddb98b7b353132e0d1fbfa2b9f83227ff163ac07",
+    "environment.txt": "c52559217aec1b7eb614c897b097c6b8e38a38b87a205edea27d62e9cdce86ea",
+    "fftw_plan.txt": "42e10cf7c7ca027bdfa6e3ccd8ede334c2cc40b2933cd15d1f5e42c450311b0c",
+    "frames.csv": "32fd25b5d258148e47da0c0fb32a4aea9a6d0d37e175423a733c8149853204a6",
+    "resources.csv": "5a3593464cadc35e0a5fddfb6a626677a5bb770b68321ff1a4705e0bc1199739"
+  },
+  "acceptance_10000_frames": false
+}

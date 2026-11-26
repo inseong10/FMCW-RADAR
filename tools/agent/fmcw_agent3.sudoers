@@ -1,0 +1,1 @@
+petalinux ALL=(root) NOPASSWD: /opt/fft128/agent_20261126_03/run_pinned3.sh

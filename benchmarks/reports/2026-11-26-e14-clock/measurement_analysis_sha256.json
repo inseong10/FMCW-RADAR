@@ -1,0 +1,8 @@
+{
+  "benchmarks/compare_dma_frame_board.py": "a613c96291390f3368b174aacd14adba60cd326c9db1acb54fa171e4a7f8dfb5",
+  "src/PS/fft128/dma_frame/analyze_profile.py": "4c5a932e46d797e6b0fb9b24b807fe88d4aa11285834111111f5b18b616e6327",
+  "benchmarks/compare_board.py": "667c395f02eae9f3921764a9fd64e30e640e7b314854ba5eb22f2151f5403e08",
+  "benchmarks/ps_precision/prepare_reference.py": "5ad2023a586a86cf42adaa4ecbb76a27d9aa2f2ff4677fe330cbd1ce09aacef5",
+  "src/PS/fft128/receiver.py": "4a08a9d3c08f5b3af68cca2e37eb549d3c71251c68e38b03e15bb3f3892015fe",
+  "measurement_validation_driver.py.txt": "5a8a35157a6ad1a6d7a29160a2df717e9662ffdc90023352c952d7dcc075ad49"
+}

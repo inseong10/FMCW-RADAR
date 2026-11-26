@@ -1,0 +1,5 @@
+S2A_READY backend=model run_id=92429 port=51731
+S2A_LEGACY_PROBE bytes=1080 flags=0 payload_truncated=0 control_truncated=0 capacity=56 controllen=32
+S2A_FIRST_PACKET bytes=1080 flags=0 controllen=32 cmsg=1:35:32;
+S2A_FIRST_VALID run_id=92429 frame_id=1
+S2A_RECORDED processed=20 expected=20

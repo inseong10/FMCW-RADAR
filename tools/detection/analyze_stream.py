@@ -28,6 +28,7 @@ def analyze(out, sender=None):
     env = fields(out/"environment.txt")
     counters = fields(out/"counters.txt")
     expected = int(env["frames"])
+    pulses, samples = int(env.get("pulses", 128)), int(env.get("samples", 128))  # S3a-1 shape
     with (out/"frames.csv").open(newline="") as f:
         rows = list(csv.DictReader(f))
     if [int(r["frame_id"]) for r in rows] != list(range(1, expected+1)):
@@ -42,7 +43,7 @@ def analyze(out, sender=None):
     for r in processed:
         ticks = [int(r[k]) for k in stages]
         kernel = int(r["first_kernel_ns"])
-        if int(r["packets"]) != 128 or min(ticks) <= 0 or ticks != sorted(ticks) or kernel <= 0:
+        if int(r["packets"]) != pulses or min(ticks) <= 0 or ticks != sorted(ticks) or kernel <= 0:
             raise ValueError("Invalid processed-frame timestamps/count")
         if kernel > ticks[0]+1000000 or kernel > ticks[-1]:
             raise ValueError("Kernel clock mapping is inconsistent")
@@ -65,7 +66,7 @@ def analyze(out, sender=None):
             if actual != [(-1, -1)]:
                 raise ValueError("Missing empty-output sentinel")
         elif len(ds) != int(r["peaks"]) or len(set(actual)) != len(actual) or any(
-                not (0 <= d < 128 and 0 <= b < 128) for d, b in actual):
+                not (0 <= d < pulses and 0 <= b < samples) for d, b in actual):
             raise ValueError("Invalid detection count/bins")
     intervals = {
         "first_kernel_to_output": ("first_kernel_ns", "output_done_ns"),
@@ -104,8 +105,39 @@ def analyze(out, sender=None):
         sent = json.loads(sender.read_text(encoding="utf-8"))
         if sent["run_id"] != int(env["run_id"]) or sent["frames"] != expected:
             raise ValueError("Sender/receiver identity mismatch")
+        if env.get('input_format') == 'adc16':
+            if (sent.get('input_format') != 'adc16' or sent.get('protocol_version') != 3 or
+                int(env.get('protocol_version','0')) != 3 or int(env.get('adc_profile','0')) != 1 or
+                sent.get('adc_profile',{}).get('profile') != 1 or
+                int(env.get('queue','0')) != 4 or int(env.get('partial','0')) != 4):
+                raise ValueError('ADC sender/receiver format/profile/queue mismatch')
         result["sender"] = {k: sent[k] for k in ("period_ms", "chirp_gap_us", "max_lateness_ms", "overrun_frames", "drop_frame")}
         result["offered_load_valid"] = not sent["overrun_frames"] and sent["max_lateness_ms"] < sent["period_ms"]*.1
+        if sent.get("chirp_gap_us", 0):
+            pacing = sent.get("chirp_pacing")
+            if not pacing or pacing.get("gap_us") != sent["chirp_gap_us"] or "late_total_max_ms" not in pacing:
+                raise ValueError("Paced sender JSON lacks current per-chirp lateness evidence")
+            result["sender"]["chirp_pacing"] = {k: v for k, v in pacing.items() if k not in ("definition", "rule")}
+            # Paced rule (2026-11-26): frame-boundary overruns are reported, not disqualifying;
+            # jitter P99 and total lateness max (<10% period) decide validity.
+            if pacing.get("schedule") == "reanchor":
+                # Reanchor rule (2026-11-26 user decision): no compressed spacing, stall frames <= 1%;
+                # stall lateness is reported, not disqualifying by itself.
+                need = ("min_chirp_spacing_us", "min_frame_spacing_ms", "stall_frames", "stall_frames_limit")
+                if any(k not in pacing for k in need):
+                    raise ValueError("Reanchor sender JSON lacks spacing/stall evidence")
+                lim = pacing["late_p99_limit_us"]
+                result["offered_load_valid"] = (
+                    pacing["late_p99_ms"]*1e3 < lim and
+                    (pacing["min_chirp_spacing_us"] is None or pacing["min_chirp_spacing_us"] >= sent["chirp_gap_us"]-lim) and
+                    (pacing["min_frame_spacing_ms"] is None or
+                     pacing["min_frame_spacing_ms"] >= sent["period_ms"]-lim/1000) and
+                    pacing["stall_frames"] <= sent["frames"]//100 and bool(pacing["valid"]))
+            else:
+                result["offered_load_valid"] = (sent["max_lateness_ms"] < sent["period_ms"]*.1 and
+                                                pacing["late_p99_ms"]*1e3 < pacing["late_p99_limit_us"] and
+                                                pacing["late_total_max_ms"] < sent["period_ms"]*.1 and
+                                                bool(pacing["valid"]))
     (out/"summary.json").write_text(json.dumps(result, indent=2)+"\n", encoding="utf-8")
     return result
 

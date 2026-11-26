@@ -1,0 +1,2 @@
+S2A_SENT frames=20 run_id=92430 overruns=20 wait=sleep max_late_ms=132.600
+S2A_CHIRP_PACING gap_us=100.0 p99_us=15030.69(<10) total_max_ms=147.4966(<2.56) ge_100us=5059 boundary_overruns=20 valid=False

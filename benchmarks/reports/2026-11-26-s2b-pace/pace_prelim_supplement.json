@@ -1,0 +1,122 @@
+{
+ "evidence": "board raw recovered (diff-identical to share); Windows analysis of frames.csv/resources.csv/sender JSON",
+ "runs": {
+  "ps": {
+   "run_id": 92331,
+   "exit": 2,
+   "status_counts": {
+    "processed": 161,
+    "queue_full": 39
+   },
+   "dropped": [
+    32,
+    40,
+    48,
+    56,
+    64,
+    68,
+    71,
+    75,
+    79,
+    83,
+    87,
+    91,
+    96,
+    100,
+    104,
+    108,
+    112,
+    116,
+    120,
+    124,
+    128,
+    132,
+    136,
+    140,
+    144,
+    148,
+    152,
+    156,
+    159,
+    163,
+    167,
+    171,
+    175,
+    179,
+    183,
+    187,
+    191,
+    195,
+    199
+   ],
+   "frames_complete_to_output_ge_period": 161,
+   "stage_medians_all": {
+    "queue": 59.010415,
+    "prepare": 0.846954,
+    "fft": 8.085702,
+    "cfar": 7.59075,
+    "flush": 0.347058,
+    "complete_to_output": 75.981889,
+    "first_kernel_to_complete": 12.870505
+   },
+   "first_kernel_to_complete_min_max": [
+    12.352867,
+    19.113099
+   ],
+   "pl_segments_medians": null,
+   "sender_sha256": "b20f4861b3c10904433b01d6d2008222e002f69ff8bdb82831f6e2c1d12def96"
+  },
+  "pl": {
+   "run_id": 92332,
+   "exit": 0,
+   "status_counts": {
+    "processed": 200
+   },
+   "dropped": [],
+   "frames_complete_to_output_ge_period": 66,
+   "stage_medians_all": {
+    "queue": 0.180126,
+    "prepare": 2.556246,
+    "fft": 1.430529,
+    "cfar": 6.5419920000000005,
+    "flush": 0.217164,
+    "complete_to_output": 10.94637,
+    "first_kernel_to_complete": 12.875814
+   },
+   "first_kernel_to_complete_min_max": [
+    11.990847,
+    14.137458
+   ],
+   "pl_segments_medians": {
+    "1-15": {
+     "queue": 0.172188,
+     "prepare": 2.52351,
+     "fft": 1.40376,
+     "cfar": 6.450972,
+     "flush": 0.230436,
+     "complete_to_output": 10.748214,
+     "first_kernel_to_complete": 12.833637
+    },
+    "16-83": {
+     "queue": 5.013807,
+     "prepare": 3.107862,
+     "fft": 1.479885,
+     "cfar": 7.985697,
+     "flush": 0.20302199999999998,
+     "complete_to_output": 17.8137575,
+     "first_kernel_to_complete": 12.8906415
+    },
+    "84-200": {
+     "queue": 0.172602,
+     "prepare": 2.537004,
+     "fft": 1.430646,
+     "cfar": 6.48732,
+     "flush": 0.217578,
+     "complete_to_output": 10.835484,
+     "first_kernel_to_complete": 12.875046
+    }
+   },
+   "sender_sha256": "9129c88c8e6dc3e623ab9eb55bcb3069193574e9fd33c09e80135575c40ecdbc"
+  }
+ }
+}

@@ -1,0 +1,9 @@
+(dft-rank>=2/1
+  (dft-vrank>=1-x256/1
+    (dft-ct-dit/8
+      (dftw-direct-8/6 "t2_8")
+      (dft-direct-16-x8 "n1_16")))
+  (dft-vrank>=1-x128/1
+    (dft-ct-dit/16
+      (dftw-direct-16/8 "t2_16")
+      (dft-directbuf/18-16-x16 "n1_16"))))

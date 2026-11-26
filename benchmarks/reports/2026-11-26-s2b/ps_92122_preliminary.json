@@ -1,0 +1,22 @@
+{
+  "run_id": 92122,
+  "backend": "ps",
+  "requested_cpu_mode": "both cores allowed",
+  "processed_frames_user_console": 179,
+  "expected_frames": 200,
+  "receiver_raw_collected": false,
+  "sender_raw_sha256": "beb920754795e7bba8899b832fc881dea2de7778a01faea161306de5d25532d4",
+  "sender_source_matches_current": true,
+  "sender_packet_bytes_consistent": true,
+  "sender_max_lateness_ms": 0.051748,
+  "sender_overrun_frames": 0,
+  "offered_load_valid": true,
+  "first_send_gap_ms": {
+    "min": 12.749686,
+    "median": 12.800001,
+    "max": 12.850493
+  },
+  "sustained_acceptance": false,
+  "receiver_drop_classification": "pending receiver raw",
+  "next": "collect receiver raw and PL92123 same 12.8ms/200 unpinned receiver and spin sender"
+}

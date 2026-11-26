@@ -1,0 +1,8 @@
+CPU_AFFINITY=0
+DMA: E14 complete 128x128 frame; PL transpose/output reorder, 1 reused streaming FFT, 64KiB per direction, 1 ioctl/2 channels; coherent bounce copies retained
+BACKEND=PL_DMA_FRAME implementation=native_C
+BENCHMARK: warmup=2 repeat=20 preallocated buffers; data path=PL_DMA_FRAME
+peak_unshifted=(107,20) fft_and_transfer_seconds=0.001154
+FRAME_PROFILE: one full-frame ioctl, PL Range/transpose/Doppler/reorder; nested PL/kernel times overlap ioctl, do not add to host stages.
+PIPELINE_TIMING backend=PL_DMA_FRAME mean_ms=1.154095 median_ms=1.146114 min_ms=1.130040 max_ms=1.230546 repeats=20
+FRAME_PASS backend=PL_DMA_FRAME bit_exact_bins=16384

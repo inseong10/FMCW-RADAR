@@ -1,0 +1,27 @@
+backend=ps
+hardware=0
+window=hann
+input_format=adc16
+protocol_version=3
+adc_profile=1
+adc_bits=16
+adc_scale=1600000
+run_id=92331
+frames=200
+cpu0=0
+queue=4
+partial=4
+socket_rcvbuf=360448
+warmup=10
+time_t_bytes=4
+timespec_bytes=8
+control_capacity=512
+diagnostic_probe=0
+diagnostic_spectrum=0
+ps_precision=float64
+ps_plan=ESTIMATE
+ps_neon_plan=0
+require_neon=0
+PS=FFTW 2D single worker; PL=E14 ABI8; model=software only
+output=per-frame detections CSV flush (no fsync)
+sender_ns=opaque remote monotonic timestamp; never subtracted

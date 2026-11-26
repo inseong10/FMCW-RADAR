@@ -1,0 +1,1 @@
+ADC16_INDEPENDENT_CHECK_PASS backend=ps frames=200 all_bins=False

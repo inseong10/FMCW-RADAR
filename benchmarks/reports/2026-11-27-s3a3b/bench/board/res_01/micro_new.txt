@@ -1,0 +1,6 @@
+S3A3B_MICRO prepare shape=128x256 median_us=2011.7 min_us=2007.9 n=200
+S3A3B_MICRO old_gather shape=128x256 median_us=600.2 min_us=582.8 n=200
+S3A3B_MICRO old_place_combine shape=128x256 median_us=2019.7 min_us=2008.5 n=200
+S3A3B_MICRO new_gather shape=128x256 median_us=339.7 min_us=332.8 n=200
+S3A3B_MICRO new_place_fused shape=128x256 median_us=1852.5 min_us=1845.6 n=200
+S3A3B_MICRO_DONE checksum=916697188385

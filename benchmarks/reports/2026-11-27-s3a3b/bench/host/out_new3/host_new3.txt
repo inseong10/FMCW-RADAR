@@ -1,0 +1,9 @@
+S3A2B_TRANSFORM shape=256x128 hann=0 median_us=5524.1 p99_us=5930.4 min_us=5378.6 n=3
+S3A2B_TRANSFORM shape=256x128 hann=1 median_us=5446.5 p99_us=5756.2 min_us=5037.6 n=3
+S3A2B_TRANSFORM shape=128x256 hann=0 median_us=5600.3 p99_us=6131.4 min_us=5548.4 n=3
+S3A2B_TRANSFORM shape=128x256 hann=1 median_us=4863.9 p99_us=5379.7 min_us=4859.1 n=3
+S3A2B_TRANSFORM shape=256x256 hann=0 median_us=11110.1 p99_us=11959.8 min_us=11067.1 n=3
+S3A2B_TRANSFORM shape=256x256 hann=1 median_us=10489.0 p99_us=10795.8 min_us=9836.5 n=3
+S3A2B_TRANSFORM shape=512x128 hann=0 median_us=11472.4 p99_us=11732.8 min_us=11007.7 n=3
+S3A2B_TRANSFORM shape=512x128 hann=1 median_us=10224.4 p99_us=10448.0 min_us=10146.2 n=3
+S3A2B_BENCH_DONE

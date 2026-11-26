@@ -1,0 +1,161 @@
+{
+  "status": "E14_100MHZ_BOARD_MEASUREMENTS_INDEPENDENTLY_VALIDATED",
+  "raw_files": 83,
+  "raw_bytes": 9268101,
+  "clock_before": {
+    "boot_id": "87d0bd24-5ffa-435e-8919-fee083d76b6f",
+    "registers": {
+      "0xf8000100": "0x28000",
+      "0xf8000104": "0x20000",
+      "0xf8000108": "0x1e000",
+      "0xf800010c": "0x3f",
+      "0xf8000120": "0x1f000200"
+    },
+    "ps_reference_dt_hz": 33333333,
+    "arm_pll_multiplier": 40,
+    "cpu_divisor": 2,
+    "cpu_configuration_hz": 666666660,
+    "physical_frequency_counter_measurement": false
+  },
+  "clock_after": {
+    "boot_id": "87d0bd24-5ffa-435e-8919-fee083d76b6f",
+    "registers": {
+      "0xf8000100": "0x28000",
+      "0xf8000104": "0x20000",
+      "0xf8000108": "0x1e000",
+      "0xf800010c": "0x3f",
+      "0xf8000120": "0x1f000200"
+    },
+    "ps_reference_dt_hz": 33333333,
+    "arm_pll_multiplier": 40,
+    "cpu_divisor": 2,
+    "cpu_configuration_hz": 666666660,
+    "physical_frequency_counter_measurement": false
+  },
+  "cpu_clock_unchanged": true,
+  "pl_clock_hz": 100000000,
+  "selected_clock_is_maximum_claim": false,
+  "paired_samples_per_variant": {
+    "double": 300,
+    "float_neon": 300,
+    "pl": 300
+  },
+  "paired_median_ms": {
+    "double": 5.631855,
+    "float_neon": 3.563415,
+    "pl": 1.1248170000000002
+  },
+  "double_over_pl": 5.006907790333893,
+  "float_neon_over_pl": 3.1679953272398973,
+  "neon_to_pl_latency_reduction_percent": 68.43429687532885,
+  "paired_dma_irq_delta": {
+    "68": [
+      330,
+      0
+    ],
+    "67": [
+      330,
+      0
+    ]
+  },
+  "profile_dma_irq_delta": {
+    "68": [
+      22,
+      0
+    ],
+    "67": [
+      22,
+      0
+    ]
+  },
+  "profile_mean_ms": {
+    "wall_ms": 1.1540949,
+    "pl_active_ms": 0.5194385,
+    "host_input_copy_ms": 0.11283900000000001,
+    "ioctl_ms": 0.9625857,
+    "host_output_copy_ms": 0.0741303,
+    "gather_ms": 0.0,
+    "scatter_ms": 0.0,
+    "kernel_copy_in_ms": 0.0861939,
+    "kernel_submit_ms": 0.0144924,
+    "kernel_wait_ms": 0.5407824,
+    "kernel_check_ms": 0.0088947,
+    "kernel_copy_out_ms": 0.3015144
+  },
+  "profile_wall_median_ms": 1.146114,
+  "observed_old50_over_new100_pl": 1.473941094418025,
+  "observed_old50_to_new100_pl_reduction_percent": 32.154683536057945,
+  "historical_comparison_limitation": "Different session/boot; historical CPU clock not captured. Not an isolated paired clock-only comparison.",
+  "deployed_bundle_artifact_sha256": {
+    "baseline_artifacts.sha256": "251ccf9f87ada3a415b1312f71fbecaedf7f587b5932e078a9ff00b2b76f5e81",
+    "build_config.json": "800cfd65d92101de54954db5af7a59beb26818146e07d78f6eb7e91d52cd295f",
+    "clock_source.txt": "4ff2388f5d31bc3555904a7217f7a61105cea41ec7026301d191238f3f351abc",
+    "clock_tools.sha256": "a2d150eb6547e6afd90c6919623e779367233d426a515e7f24e9a2ed85040f61",
+    "clock_validation.json": "924274a1649e61f658d77c76f44ae2fddcbcf057d09821f183dee3205edc2a1a",
+    "dma_config.json": "6a0aa8a3aa64b5c65fe9d9a20ed55fe47ea636f204e8735e6ffd022a129e29b5",
+    "dtc.log": "373bb4e0fbe1577d2de09c1a5a70aaa1f7c41da11aafdc4f84e9d3ac4d65811b",
+    "fft128-receiver": "21128056810a6e195ec90f12cdea86f869108adc5f4b960669653cb615becaec",
+    "fft128_dma_frame.ko": "a7a37e11c805a8850e4086b72f13ad472cc458d5758367eefeb96e995a0cb178",
+    "fft128_e14_frame.bin": "f27f47bb4b4f183cfc6dad06a3052de3ea80c6bd2b219b9767c850c22d343f80",
+    "fft128_e14_frame.dtbo": "aa87e9d773f62d9bef1ce4bb8ec0374e21ef1cc504e0ae7ea62b120759eb553c",
+    "fft128_e14_frame.dts": "f015d31c02607c7d1537e671adbd8b599934fa273caf989ebc9ed2ea58e3e848",
+    "fft128_e14_frame.json": "e5a3e214442915be04ae2c1d9e7531fac5bfa22d4d844bd68637b3a7cc9ff94b",
+    "frame.rspb": "aa06ff124034310216693c1398f2f1061c9a6ce32e9ea6f5687675849934c976",
+    "frame_core_check.txt": "11fa1d9134101f151b1b92fd2ab23c65f9236fbbf5992d481d2ff7b9a57f5ce0",
+    "frame_utilization.rpt": "ff64d9c34278a003e1ac935abd0ea75a8509516877aeaa42cd9bcd080798ad1b",
+    "gic_path.txt": "1c6c83c7ef115c7a7d6bd02696ca4f5a64e2ae24beabac820da66ff111b90faa",
+    "gic_phandle.bin": "1bc5d0e3df0ea12c4d0078668d14924f95106bbe173e196de50fe13a900b0937",
+    "host_source.sha256": "18d4cb777c9bd385209fb3275cafeb3542b8ff3946cf4e106d1f16f32d59ed66",
+    "kernelrelease.txt": "b1fc844b1ee87f48cd89d857eb48ae13b9a1e5bd6d366112a8cb8972fc01034d",
+    "load_board.sh": "676eba4d62efd20d582a02cf7da898f448450c667064f978ef9830f0a4e8cbf9",
+    "merged_validation.dtb": "8bd0f605ec064465b9676be4812867c881a53b6afe4610c0b97d59767bd342cb",
+    "module_build_environment.txt": "ae26f86c9f21ced0bebec7a2d7491ac2a7fe3e600a996d6a4d7c0cebd311763b",
+    "module_source.sha256": "11bec81c8a47d5d64d21f199f6fab7862777611bbd9abe10dc7b139265fa6893",
+    "pl_source.sha256": "ed4fbf507f57b8ed3ad8adca034a9bfd3b72da33624adeb70ba2873203a2b979",
+    "profile_board.sh": "0cb981e8067ac426474b5214f8e42e6061f6814cf3e03e2bfc020b8d18e5dd87",
+    "run_board.sh": "1691262eb0f13f71f394a92d1545eca5f7de8f1aaa08c98f1b5513c56d4bcf3a",
+    "test-dma-frame-client": "8dad9451676678862362259f50d22be801db92d68935b6ed92f5e6de50102641",
+    "timing.rpt": "4e40cb0f7bf18b97decc521c4c38a309f76aeea646d7839e15d75108ae7230c5",
+    "utilization.rpt": "cb4d95e59152c23b64c5e36e4e79cde2021f00045021c7fae6fd2bbd298707e8"
+  },
+  "verified_compiled_source_sha256": {
+    "pl": {
+      "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/build_dma_frame.tcl": "385b1185dec427a9fa5ef2c9838dd3b1f2ebed516ab07dfbdd3af2d3a647beb5",
+      "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/build.tcl": "62febe110530628f44335de4efdb825be1a5b0632bd2c1adcb95333fce08168e",
+      "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/reset_dma_frame_tb.v": "2ccfd9b051e3a2952a7cd49fd701c425a9897df200f39545bb4ca723956718a8",
+      "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/reset_sim_sources.tcl": "a823ed935910af4922779d2a7596ef3f072bb7a9e7aba073c57dccc8c09e57e5",
+      "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/zybo_sysclk.xdc": "c889d72c6ab907a373332b77bcdbd10429983104522b69266f520e05e0214457",
+      "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft128_frame_ram.v": "ecdf01459b6311a2223cabf10a967cad93c8bccff6d03078a2f5e0c69f078221",
+      "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft128_dma_frame_ctrl.v": "0c511f9350949671fd6cdf3e65d2a0aa8e4891483ae467a1d179a24b17594524",
+      "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft128_streaming.v": "9d46dc81cffe1775c70df72e9e9ea17f00d16d25239e4ca89ad8a7ba33d80566",
+      "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft128_stream_stage.v": "db94cc98094c455faf5b9b92152a42faa55648840b78c2f6b800cbce9b156c4e",
+      "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft128_twiddle.v": "26c81c3038907f29cffa17a6d066c84613ebdcd22b0e5770765ea4dedb48f874",
+      "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/butterfly_pipeline.v": "8152035a94ef0a7761e463c18a0011def3c7f239572ee9f928c6305287546297",
+      "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/fft_working_ram.v": "5464b1b0a57e663a1cdc58406c0fc73f3d27829f1ecd9f267bcd66a5211d9eb0",
+      "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/address_generator.v": "9757d675e1564a9985a01b08726fae90f6eecd294b7bb10d9e6dd8e55685606d",
+      "/home/user/fmcw_share/FMCW-FFT-test/src/PL/fft128_ps/build_dma_frame_clock.tcl": "3e0501105619122417295ffbdbd9c2066935772007de00bdf05ba1bf57d1f2a5"
+    },
+    "host": {
+      "src/PS/fft128/native_receiver.c": "2ccb90fd6c27965f6695c2db40e7b4e92cf1ffc4365603756cd4622be26bb9a1",
+      "src/PS/fft128/native_core.c": "2c9cc85b4ea90803d5e09678ee6d46dbfbf3d0d07c52c17988a51de7af4f675c",
+      "src/PS/fft128/native_core.h": "a58054f0d251944c5ffd80abbf35726e67102e50eef3944d0fa3cbad673a17d8",
+      "src/PS/fft128/build_native.sh": "8e1d5bdedf018ae727bcd4e5726057e71901293ae98a67883f5691c59711a92a",
+      "src/PS/fft128/dma_frame/dma_frame_backend.c": "9897e06fb1b35c860d66817d13a801a2d40858afb4074028dd3fa00c4f4e715a",
+      "src/PS/fft128/dma_frame/fft128_dma_frame_uapi.h": "e89d334c172f1d6df50738239c2261cc6cb7bd0ca2be43ce10bd92cc081953f3",
+      "src/PS/fft128/dma_frame/test_dma_frame_client.c": "0e62222268e13ccba7c5c27919b9a8b2907ae22315a2de54d97e7d7833f36f51",
+      "src/PS/fft128/dma_frame/make_overlay.py": "b01fbbac8f855c82f3c471223421b2de49de53a386bda3c4a08018785e550d74",
+      "src/PS/fft128/dma/make_overlay.py": "16c8dc163b3b24e4a4e7b271744df21c0442fcc03803e752a917ed1a599aefb7",
+      "src/PS/fft128/dma_frame/frame_process.c": "837b90ccc24c8157a83e71b4671e0254eacb3550ab13149707a63a8e5921e67d",
+      "src/PS/fft128/dma_frame/frame_process.h": "268cd245b1796e0d6ee6fdc63658dfe4782a01d40ccbdc3ccade2f47ace04cb0",
+      "src/PS/fft128/dma_batch/make_overlay.py": "c7a26c18bf2078f5689e73b96ceb75f2798f83b7987d54f064a0de693a161e0d"
+    },
+    "module": {
+      "fft128_dma_frame.c": "0dbcdb5df31b1317cd14683b87af3e3f959cb4a77fdca558de42aff552d29476",
+      "fft128_dma_frame_uapi.h": "e89d334c172f1d6df50738239c2261cc6cb7bd0ca2be43ce10bd92cc081953f3",
+      "Makefile": "d20833e0178776a52e9d9c977e0b2831f0e1d73d969ebf0ef9fec2a4decbfe20"
+    }
+  },
+  "scope": "Q15 input to CPU-available 2D FFT output; required copies, DMA, IRQ wait, transpose and normalization included; IO/planning/validation excluded",
+  "limitation": "Same recorded warm-cache frame, CPU0, one ioctl/full frame, coherent HP0 bounce buffers; one reused seven-stage DIT FFT, in-place 64KiB PL transpose and row-major output drain; no continuous-stream throughput claim",
+  "stream_cfar_100mhz_verified": false
+}

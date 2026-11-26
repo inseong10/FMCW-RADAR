@@ -1,0 +1,584 @@
+[
+ {
+  "run_id": 92348,
+  "store": "nfs",
+  "exit": "2",
+  "kernel_drops": 108,
+  "clock_errors": 0,
+  "received_packets": 1279892,
+  "status_counts": {
+   "partial_evicted": 1,
+   "partial": 3,
+   "processed": 9996
+  },
+  "sender": {
+   "late_p99_ms": 0.004702,
+   "stall_frames": 5,
+   "stall_max_ms": 8.21593,
+   "min_chirp_spacing_us": 90.135,
+   "min_frame_spacing_ms": 12.800246,
+   "effective_period_ms": 12.834858967496748,
+   "valid": true
+  },
+  "sender_stall_frames": [
+   [
+    1523,
+    1.68
+   ],
+   [
+    3010,
+    1.88
+   ],
+   [
+    5451,
+    7.2
+   ],
+   [
+    5455,
+    2.06
+   ],
+   [
+    5457,
+    8.22
+   ]
+  ],
+  "c2o_ms": {
+   "median": 10.934439000000001,
+   "p99": 11.098819199999998,
+   "max": 29.625145,
+   "over_12p8": 22
+  },
+  "cfar_over_8ms": 3,
+  "flush_over_4ms": 3,
+  "flush_max_ms": 16.052125,
+  "assembly_under_12ms_frames": 2,
+  "bad_frames": [
+   {
+    "frame": 4906,
+    "status": "partial_evicted",
+    "packets": 114,
+    "sender_stall_within_10_frames_before": [],
+    "assembly_ms_prev2_prev1": [
+     12.7,
+     29.43
+    ],
+    "cfar_flush_ms_prev2": [
+     14.93,
+     10.1
+    ]
+   },
+   {
+    "frame": 5458,
+    "status": "partial",
+    "packets": 55,
+    "sender_stall_within_10_frames_before": [
+     [
+      5451,
+      7.2
+     ],
+     [
+      5455,
+      2.06
+     ],
+     [
+      5457,
+      8.22
+     ]
+    ],
+    "assembly_ms_prev2_prev1": [
+     7.89,
+     39.1
+    ],
+    "cfar_flush_ms_prev2": [
+     6.08,
+     0.26
+    ]
+   },
+   {
+    "frame": 5459,
+    "status": "partial",
+    "packets": 112,
+    "sender_stall_within_10_frames_before": [
+     [
+      5451,
+      7.2
+     ],
+     [
+      5455,
+      2.06
+     ],
+     [
+      5457,
+      8.22
+     ]
+    ],
+    "assembly_ms_prev2_prev1": [
+     39.1,
+     null
+    ],
+    "cfar_flush_ms_prev2": [
+     6.48,
+     0.22
+    ]
+   },
+   {
+    "frame": 5463,
+    "status": "partial",
+    "packets": 123,
+    "sender_stall_within_10_frames_before": [
+     [
+      5455,
+      2.06
+     ],
+     [
+      5457,
+      8.22
+     ]
+    ],
+    "assembly_ms_prev2_prev1": [
+     18.81,
+     11.05
+    ],
+    "cfar_flush_ms_prev2": [
+     6.51,
+     0.21
+    ]
+   }
+  ]
+ },
+ {
+  "run_id": 92349,
+  "store": "ram",
+  "exit": "2",
+  "kernel_drops": 12,
+  "clock_errors": 0,
+  "received_packets": 1279988,
+  "status_counts": {
+   "partial": 2,
+   "processed": 9998
+  },
+  "sender": {
+   "late_p99_ms": 0.007395,
+   "stall_frames": 17,
+   "stall_max_ms": 26.341899,
+   "min_chirp_spacing_us": 90.153,
+   "min_frame_spacing_ms": 12.800266,
+   "effective_period_ms": 12.862606179217922,
+   "valid": true
+  },
+  "sender_stall_frames": [
+   [
+    988,
+    1.32
+   ],
+   [
+    990,
+    3.1
+   ],
+   [
+    996,
+    1.64
+   ],
+   [
+    1204,
+    3.31
+   ],
+   [
+    3561,
+    1.87
+   ],
+   [
+    3569,
+    1.28
+   ],
+   [
+    5049,
+    26.34
+   ],
+   [
+    5050,
+    4.43
+   ],
+   [
+    5055,
+    1.78
+   ],
+   [
+    5058,
+    1.43
+   ],
+   [
+    5764,
+    1.99
+   ],
+   [
+    5918,
+    1.63
+   ],
+   [
+    6334,
+    1.38
+   ],
+   [
+    6811,
+    1.96
+   ],
+   [
+    8282,
+    5.02
+   ],
+   [
+    8614,
+    1.37
+   ],
+   [
+    9602,
+    2.67
+   ]
+  ],
+  "c2o_ms": {
+   "median": 10.767320999999999,
+   "p99": 10.942703400000001,
+   "max": 15.152412,
+   "over_12p8": 8
+  },
+  "cfar_over_8ms": 0,
+  "flush_over_4ms": 0,
+  "flush_max_ms": 0.313074,
+  "assembly_under_12ms_frames": 7,
+  "bad_frames": [
+   {
+    "frame": 5052,
+    "status": "partial",
+    "packets": 121,
+    "sender_stall_within_10_frames_before": [
+     [
+      5049,
+      26.34
+     ],
+     [
+      5050,
+      4.43
+     ]
+    ],
+    "assembly_ms_prev2_prev1": [
+     13.85,
+     6.71
+    ],
+    "cfar_flush_ms_prev2": [
+     6.15,
+     0.2
+    ]
+   },
+   {
+    "frame": 5054,
+    "status": "partial",
+    "packets": 123,
+    "sender_stall_within_10_frames_before": [
+     [
+      5049,
+      26.34
+     ],
+     [
+      5050,
+      4.43
+     ]
+    ],
+    "assembly_ms_prev2_prev1": [
+     null,
+     22.05
+    ],
+    "cfar_flush_ms_prev2": null
+   }
+  ],
+  "board_counter_delta": {
+   "InDatagrams": 1279997,
+   "NoPorts": 0,
+   "InErrors": 12,
+   "OutDatagrams": 9,
+   "RcvbufErrors": 12,
+   "SndbufErrors": 0,
+   "InCsumErrors": 0,
+   "IgnoredMulti": 0,
+   "MemErrors": 0,
+   "eth0_rx_packets": 1280968,
+   "eth0_rx_drop": 0,
+   "eth0_rx_fifo": 0,
+   "eth0_tx_packets": 1125,
+   "nfs_rpc_calls": 840,
+   "cpu0_softirq": 3807,
+   "cpu0_busy": 9834,
+   "cpu0_total": 12169,
+   "cpu1_softirq": 0,
+   "cpu1_busy": 10322,
+   "cpu1_total": 13235
+  },
+  "ubuntu_nfsd_io_delta_bytes": [
+   0,
+   3332748
+  ]
+ },
+ {
+  "run_id": 92350,
+  "store": "nfs",
+  "exit": "2",
+  "kernel_drops": 20,
+  "clock_errors": 1,
+  "received_packets": 1279980,
+  "status_counts": {
+   "partial": 1,
+   "processed": 9999
+  },
+  "sender": {
+   "late_p99_ms": 0.006274,
+   "stall_frames": 8,
+   "stall_max_ms": 29.592001,
+   "min_chirp_spacing_us": 90.135,
+   "min_frame_spacing_ms": 12.800247,
+   "effective_period_ms": 12.854416972897289,
+   "valid": true
+  },
+  "sender_stall_frames": [
+   [
+    1123,
+    2.22
+   ],
+   [
+    1708,
+    1.65
+   ],
+   [
+    4075,
+    1.68
+   ],
+   [
+    5151,
+    23.95
+   ],
+   [
+    5152,
+    29.59
+   ],
+   [
+    5154,
+    6.74
+   ],
+   [
+    5155,
+    7.45
+   ],
+   [
+    6434,
+    1.93
+   ]
+  ],
+  "c2o_ms": {
+   "median": 10.764768,
+   "p99": 10.94840232,
+   "max": 31.092714,
+   "over_12p8": 21
+  },
+  "cfar_over_8ms": 4,
+  "flush_over_4ms": 1,
+  "flush_max_ms": 13.955688,
+  "assembly_under_12ms_frames": 4,
+  "bad_frames": [
+   {
+    "frame": 4363,
+    "status": "partial",
+    "packets": 108,
+    "sender_stall_within_10_frames_before": [],
+    "assembly_ms_prev2_prev1": [
+     28.56,
+     22.78
+    ],
+    "cfar_flush_ms_prev2": [
+     6.43,
+     0.24
+    ]
+   }
+  ],
+  "board_counter_delta": {
+   "InDatagrams": 1279989,
+   "NoPorts": 0,
+   "InErrors": 20,
+   "OutDatagrams": 9,
+   "RcvbufErrors": 20,
+   "SndbufErrors": 0,
+   "InCsumErrors": 0,
+   "IgnoredMulti": 0,
+   "MemErrors": 0,
+   "eth0_rx_packets": 1282160,
+   "eth0_rx_drop": 0,
+   "eth0_rx_fifo": 0,
+   "eth0_tx_packets": 3856,
+   "nfs_rpc_calls": 1823,
+   "cpu0_softirq": 3736,
+   "cpu0_busy": 9725,
+   "cpu0_total": 12054,
+   "cpu1_softirq": 0,
+   "cpu1_busy": 10351,
+   "cpu1_total": 13260
+  },
+  "ubuntu_nfsd_io_delta_bytes": [
+   0,
+   3369876
+  ]
+ },
+ {
+  "run_id": 92351,
+  "store": "ram",
+  "exit": "2",
+  "kernel_drops": 151,
+  "clock_errors": 0,
+  "received_packets": 1279849,
+  "status_counts": {
+   "partial_evicted": 1,
+   "partial": 3,
+   "processed": 9996
+  },
+  "sender": {
+   "late_p99_ms": 0.005743,
+   "stall_frames": 7,
+   "stall_max_ms": 3.01078,
+   "min_chirp_spacing_us": 90.165,
+   "min_frame_spacing_ms": 12.800272,
+   "effective_period_ms": 12.839392579057906,
+   "valid": true
+  },
+  "sender_stall_frames": [
+   [
+    136,
+    2.64
+   ],
+   [
+    137,
+    3.01
+   ],
+   [
+    4722,
+    2.17
+   ],
+   [
+    5812,
+    2.93
+   ],
+   [
+    7078,
+    1.45
+   ],
+   [
+    7688,
+    2.13
+   ],
+   [
+    8998,
+    1.45
+   ]
+  ],
+  "c2o_ms": {
+   "median": 10.800141,
+   "p99": 10.9597986,
+   "max": 16.398456,
+   "over_12p8": 3
+  },
+  "cfar_over_8ms": 0,
+  "flush_over_4ms": 0,
+  "flush_max_ms": 0.447228,
+  "assembly_under_12ms_frames": 3,
+  "bad_frames": [
+   {
+    "frame": 7689,
+    "status": "partial_evicted",
+    "packets": 103,
+    "sender_stall_within_10_frames_before": [
+     [
+      7688,
+      2.13
+     ]
+    ],
+    "assembly_ms_prev2_prev1": [
+     19.3,
+     27.25
+    ],
+    "cfar_flush_ms_prev2": [
+     6.14,
+     0.2
+    ]
+   },
+   {
+    "frame": 7692,
+    "status": "partial",
+    "packets": 113,
+    "sender_stall_within_10_frames_before": [
+     [
+      7688,
+      2.13
+     ]
+    ],
+    "assembly_ms_prev2_prev1": [
+     27.09,
+     8.04
+    ],
+    "cfar_flush_ms_prev2": [
+     6.14,
+     0.21
+    ]
+   },
+   {
+    "frame": 7700,
+    "status": "partial",
+    "packets": 35,
+    "sender_stall_within_10_frames_before": [],
+    "assembly_ms_prev2_prev1": [
+     39.16,
+     12.22
+    ],
+    "cfar_flush_ms_prev2": [
+     6.61,
+     0.2
+    ]
+   },
+   {
+    "frame": 7701,
+    "status": "partial",
+    "packets": 110,
+    "sender_stall_within_10_frames_before": [],
+    "assembly_ms_prev2_prev1": [
+     12.22,
+     null
+    ],
+    "cfar_flush_ms_prev2": [
+     6.56,
+     0.21
+    ]
+   }
+  ],
+  "board_counter_delta": {
+   "InDatagrams": 1279858,
+   "NoPorts": 0,
+   "InErrors": 151,
+   "OutDatagrams": 9,
+   "RcvbufErrors": 151,
+   "SndbufErrors": 0,
+   "InCsumErrors": 0,
+   "IgnoredMulti": 0,
+   "MemErrors": 0,
+   "eth0_rx_packets": 1281007,
+   "eth0_rx_drop": 0,
+   "eth0_rx_fifo": 0,
+   "eth0_tx_packets": 1215,
+   "nfs_rpc_calls": 854,
+   "cpu0_softirq": 3761,
+   "cpu0_busy": 9830,
+   "cpu0_total": 12218,
+   "cpu1_softirq": 0,
+   "cpu1_busy": 10390,
+   "cpu1_total": 13252
+  },
+  "ubuntu_nfsd_io_delta_bytes": [
+   0,
+   3332348
+  ]
+ }
+]

@@ -1,0 +1,91 @@
+{
+ "experiment": "S2b-int16-prelim",
+ "evidence": "board raw recovered; supplementary analysis by Windows Python from frames.csv/resources.csv/sender JSON",
+ "period_ms": 12.8,
+ "frames": 200,
+ "binary_sha256": "72396cb0c1abcf6f831d5d00a0fc7d75618c2e8333d2ff99402b3163ca8d28f0",
+ "recovery_path": "build/s2a_int16_board_prelim_20261126_adc01",
+ "runs": {
+  "ps": {
+   "run_id": 92311,
+   "receiver_exit": 2,
+   "status_counts": {
+    "processed": 194,
+    "queue_full": 6
+   },
+   "dropped_frames": [
+    69,
+    92,
+    114,
+    133,
+    153,
+    179
+   ],
+   "queue_depth_at_enqueue": {
+    "0": 9,
+    "1": 22,
+    "2": 17,
+    "3": 146
+   },
+   "sender": {
+    "overrun_frames": 1,
+    "max_lateness_ms": 5.041713,
+    "sha256": "4a4547fabed5832aed293d5d1958fcf1aab0132b99bcf7daa71e9e4ead3a0748"
+   },
+   "first_kernel_to_complete_ms": {
+    "median": 4.751295,
+    "p99_nearest": 11.786853,
+    "max": 18.30684
+   },
+   "frames_latency_over_period": 194,
+   "power_cfar_ms_by_overlap_with_later_frame_first_kernel": {
+    "overlap_n": 83,
+    "overlap_median": 7.366836,
+    "no_overlap_n": 111,
+    "no_overlap_median": 5.01429
+   },
+   "resources_active_samples(proc_cpu>5%)": {
+    "n": 14,
+    "process_cpu_pct_one_core_median": 135.96587394114272,
+    "process_cpu_pct_one_core_max": 141.2186120986862,
+    "system_cpu_pct_median": 68.42105263157895,
+    "rss_max_bytes": 5468160
+   }
+  },
+  "pl": {
+   "run_id": 92312,
+   "receiver_exit": 0,
+   "status_counts": {
+    "processed": 200
+   },
+   "dropped_frames": [],
+   "queue_depth_at_enqueue": {
+    "0": 200
+   },
+   "sender": {
+    "overrun_frames": 0,
+    "max_lateness_ms": 0.008012,
+    "sha256": "1bba723d732a2466b1e84715bb8c2bf08e9d2162117803716307108b9256833e"
+   },
+   "first_kernel_to_complete_ms": {
+    "median": 4.7555355,
+    "p99_nearest": 6.863628,
+    "max": 7.063608
+   },
+   "frames_latency_over_period": 200,
+   "power_cfar_ms_by_overlap_with_later_frame_first_kernel": {
+    "overlap_n": 199,
+    "overlap_median": 8.368746,
+    "no_overlap_n": 1,
+    "no_overlap_median": 6.032874
+   },
+   "resources_active_samples(proc_cpu>5%)": {
+    "n": 14,
+    "process_cpu_pct_one_core_median": 126.791321939329,
+    "process_cpu_pct_one_core_max": 130.08983856273935,
+    "system_cpu_pct_median": 65.39473684210526,
+    "rss_max_bytes": 4087808
+   }
+  }
+ }
+}

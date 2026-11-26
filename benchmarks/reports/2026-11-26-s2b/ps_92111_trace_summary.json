@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "backend": "ps",
+  "hardware": false,
+  "diagnostic_probe": false,
+  "expected": 200,
+  "status_counts": {
+    "processed": 91,
+    "partial_evicted": 50,
+    "queue_full": 52,
+    "missing": 4,
+    "partial": 3
+  },
+  "counters": {
+    "invalid": "0",
+    "foreign": "0",
+    "duplicates": "0",
+    "late": "0",
+    "received_packets": "21794",
+    "payload_truncated": "0",
+    "control_truncated": "0",
+    "decode_errors": "0",
+    "metadata_errors": "0",
+    "kernel_drops": "3806",
+    "kernel_missing": "0",
+    "clock_errors": "4",
+    "interrupted": "0",
+    "failed": "0",
+    "error": ""
+  },
+  "trace_valid": false,
+  "invalidating_counters": [
+    "kernel_drops",
+    "clock_errors"
+  ],
+  "zero_drops": false,
+  "metrics": {
+    "first_kernel_to_output": {
+      "count": 91,
+      "median_ms": 142.090342,
+      "p99_ms": 167.2789714,
+      "max_ms": 168.643321
+    },
+    "complete_to_output": {
+      "count": 91,
+      "median_ms": 131.645827,
+      "p99_ms": 149.47630429999998,
+      "max_ms": 150.667826
+    },
+    "queue_wait": {
+      "count": 91,
+      "median_ms": 101.381077,
+      "p99_ms": 117.7805356,
+      "max_ms": 118.727593
+    },
+    "preparation": {
+      "count": 91,
+      "median_ms": 2.38161,
+      "p99_ms": 12.286502399999996,
+      "max_ms": 12.799632
+    },
+    "fft_transfer": {
+      "count": 91,
+      "median_ms": 12.713731,
+      "p99_ms": 19.842955799999967,
+      "max_ms": 25.07109
+    },
+    "power_cfar": {
+      "count": 91,
+      "median_ms": 13.284504,
+      "p99_ms": 25.8785065,
+      "max_ms": 25.943437
+    },
+    "output_flush": {
+      "count": 91,
+      "median_ms": 0.186264,
+      "p99_ms": 0.4302617999999963,
+      "max_ms": 1.011966
+    }
+  },
+  "resource_samples": 56,
+  "active_resource_samples": 13,
+  "max_rss_bytes": 7335936,
+  "scope": "kernel first-packet -> per-frame CSV flush; includes acquisition/queue/preparation; no fsync",
+  "continuous_acceptance": "not evaluated by S2a",
+  "sender": {
+    "period_ms": 12.8,
+    "chirp_gap_us": 0,
+    "max_lateness_ms": 14.697306,
+    "overrun_frames": 32,
+    "drop_frame": 0
+  },
+  "offered_load_valid": false
+}

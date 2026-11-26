@@ -1,0 +1,164 @@
+{
+ "run_id": 92336,
+ "first_slow_frame(cfar>8ms)": 28,
+ "segments": {
+  "1-27": {
+   "n": 27,
+   "prepare": 2.543712,
+   "fft": 1.433466,
+   "cfar": 6.538548,
+   "queue": 0.229122,
+   "complete_to_output": 10.956132
+  },
+  "28-end, started before last frame assembled": {
+   "n": 151,
+   "prepare": 3.494832,
+   "fft": 1.731234,
+   "cfar": 9.051108,
+   "queue": 51.028728,
+   "complete_to_output": 65.636029
+  },
+  "started after last frame assembled (no reception)": {
+   "n": 4,
+   "prepare": 2.423604,
+   "fft": 1.2123059999999999,
+   "cfar": 6.0579725,
+   "queue": 41.735622500000005,
+   "complete_to_output": 51.631246000000004
+  }
+ },
+ "dropped": [
+  60,
+  68,
+  76,
+  84,
+  92,
+  100,
+  108,
+  115,
+  123,
+  131,
+  139,
+  147,
+  155,
+  163,
+  171,
+  179,
+  187,
+  195
+ ],
+ "resources_active": [
+  {
+   "frames": [
+    1,
+    10
+   ],
+   "proc_cpu_pct_one_core": 91.81194467324578,
+   "system_cpu_pct": 56.09756097560976
+  },
+  {
+   "frames": [
+    11,
+    26
+   ],
+   "proc_cpu_pct_one_core": 137.20670297053084,
+   "system_cpu_pct": 83.33333333333334
+  },
+  {
+   "frames": [
+    27,
+    42
+   ],
+   "proc_cpu_pct_one_core": 144.79054662128885,
+   "system_cpu_pct": 79.16666666666666
+  },
+  {
+   "frames": [
+    43,
+    57
+   ],
+   "proc_cpu_pct_one_core": 145.223605854357,
+   "system_cpu_pct": 79.59183673469387
+  },
+  {
+   "frames": [
+    58,
+    73
+   ],
+   "proc_cpu_pct_one_core": 146.74155785469733,
+   "system_cpu_pct": 79.59183673469387
+  },
+  {
+   "frames": [
+    74,
+    89
+   ],
+   "proc_cpu_pct_one_core": 148.9157592618071,
+   "system_cpu_pct": 79.16666666666666
+  },
+  {
+   "frames": [
+    90,
+    104
+   ],
+   "proc_cpu_pct_one_core": 144.1690374670803,
+   "system_cpu_pct": 79.59183673469387
+  },
+  {
+   "frames": [
+    105,
+    120
+   ],
+   "proc_cpu_pct_one_core": 146.88337830783743,
+   "system_cpu_pct": 80.0
+  },
+  {
+   "frames": [
+    121,
+    136
+   ],
+   "proc_cpu_pct_one_core": 149.39925870919197,
+   "system_cpu_pct": 78.0
+  },
+  {
+   "frames": [
+    137,
+    151
+   ],
+   "proc_cpu_pct_one_core": 143.95424920829362,
+   "system_cpu_pct": 79.16666666666666
+  },
+  {
+   "frames": [
+    152,
+    167
+   ],
+   "proc_cpu_pct_one_core": 147.17741140945128,
+   "system_cpu_pct": 79.16666666666666
+  },
+  {
+   "frames": [
+    168,
+    183
+   ],
+   "proc_cpu_pct_one_core": 151.00934425209573,
+   "system_cpu_pct": 80.76923076923077
+  },
+  {
+   "frames": [
+    184,
+    198
+   ],
+   "proc_cpu_pct_one_core": 146.62780530655203,
+   "system_cpu_pct": 79.59183673469387
+  },
+  {
+   "frames": [
+    199,
+    200
+   ],
+   "proc_cpu_pct_one_core": 104.29422107182232,
+   "system_cpu_pct": 53.84615384615385
+  }
+ ]
+}

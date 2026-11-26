@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "tools/detection/check_adc16_stream.py", line 139, in <module>
+    result=check(a.out,a.sender,a.record,allow_loss=a.allow_loss,network_loss_ok=a.network_loss_ok)
+  File "tools/detection/check_adc16_stream.py", line 45, in check
+    raise ValueError('Invalid trace or dropped frames; raw summary retained')
+ValueError: Invalid trace or dropped frames; raw summary retained

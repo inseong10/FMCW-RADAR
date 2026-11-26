@@ -1,0 +1,9 @@
+(dft-rank>=2/1
+  (dft-direct-128-x512 "n1fv_128_avx")
+  (dft-vrank>=1-x128/1
+    (dft-ct-dit/8
+      (dftw-direct-8/28 "t1fuv_8_avx")
+      (dft-ct-dif/8
+        (dftw-directsq-8/28-x8 "q1fv_8_avx")
+        (dft-vrank>=1-x8/1
+          (dft-direct-8-x8 "n1fv_8_avx"))))))

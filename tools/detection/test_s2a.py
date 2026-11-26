@@ -3,6 +3,7 @@ import argparse
 from contextlib import redirect_stdout
 import csv
 import io
+import json
 import os
 from pathlib import Path
 import shutil
@@ -25,10 +26,17 @@ import replay_stream as sender
 CXX = os.environ.get("CXX") or shutil.which("g++")
 CC = os.environ.get("CC") or shutil.which("gcc")
 FFTW = os.environ.get("S2A_FFTW")
+FFTWF = os.environ.get("S2A_FFTWF")
 
 
 class SenderTests(unittest.TestCase):
     def test_local_udp_frame_ids_and_deliberate_packet_loss(self):
+        self.check_local_udp('sleep')
+
+    def test_local_udp_spin_frame_ids_and_deliberate_packet_loss(self):
+        self.check_local_udp('spin')
+
+    def check_local_udp(self, wait_mode):
         received = []
         import socket
         with tempfile.TemporaryDirectory() as temp, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as listener:
@@ -49,8 +57,15 @@ class SenderTests(unittest.TestCase):
                                        ip="127.0.0.1", port=listener.getsockname()[1], frames=3,
                                        run_id=9, period_ms=50, chirp_gap_us=0, drop_frame=2,
                                        out=Path(temp)/"sender.json")
+                if wait_mode == 'spin':
+                    a.wait_mode = 'spin'
                 with redirect_stdout(io.StringIO()):
                     sender.send(a)
+                summary = json.loads(a.out.read_text())
+                self.assertEqual(summary['wait_mode'], wait_mode)
+                self.assertEqual(summary['drop_frame'], 2)
+                self.assertEqual(len(summary['schedule']), 3)
+                self.assertGreaterEqual(summary['process_cpu_pct_one_core'], 0)
             finally:
                 thread.join(timeout=3)
             self.assertFalse(errors, errors)
@@ -77,6 +92,10 @@ class IntegratedPipelineTests(unittest.TestCase):
         subprocess.run([CXX, "-O2", "-std=c++17", "-Wall", "-Wextra", "-Werror",
                         str(ROOT/"src/PS/receiver/tests/stream_driver.cpp"), str(obj),
                         *([] if os.name == "nt" else ["-ldl"]), "-o", str(cls.binary)], check=True, capture_output=True)
+        cls.float_binary = cls.folder/("stream_float.exe" if os.name == "nt" else "stream_float")
+        subprocess.run([CXX, "-O3", "-flto", "-DFFT128_SINGLE=1", "-std=c++17", "-Wall", "-Wextra", "-Werror",
+                        str(ROOT/"src/PS/receiver/tests/stream_driver.cpp"), str(obj),
+                        *([] if os.name == "nt" else ["-ldl"]), "-o", str(cls.float_binary)], check=True, capture_output=True)
         cls.timestamp_binary = cls.folder/("timestamp.exe" if os.name == "nt" else "timestamp")
         subprocess.run([CXX, "-O2", "-std=c++17", "-Wall", "-Wextra", "-Werror",
                         str(ROOT/"src/PS/receiver/tests/timestamp_driver.cpp"), "-o", str(cls.timestamp_binary)],
@@ -86,11 +105,13 @@ class IntegratedPipelineTests(unittest.TestCase):
     def tearDownClass(cls):
         cls.tmp.cleanup()
 
-    def run_wire(self, packets, backend="model", window="hann"):
+    def run_wire(self, packets, backend="model", window="hann", single=False, measure=False, require_neon=False):
         path = self.folder/"wire"
         path.write_bytes(b"".join(packets))
-        return subprocess.run([str(self.binary), str(path), backend, window, FFTW or "",
-                               str(self.folder/"out")], capture_output=True, text=True, timeout=30)
+        extra = (["--measure-plan"] if measure else []) + (["--require-neon"] if require_neon else [])
+        return subprocess.run([str(self.float_binary if single else self.binary), str(path), backend, window,
+                               (FFTWF if single else FFTW) or "", str(self.folder/"out"), *extra],
+                              capture_output=True, text=True, timeout=30)
 
     def load(self, name):
         packets, _ = sender.read_frame(ROOT/"benchmarks/fixtures"/f"radarsimpy_128x128_sim_{name}_noise.rspb")
@@ -103,12 +124,12 @@ class IntegratedPipelineTests(unittest.TestCase):
             wire.append(sender.packet_v2(p, 9, 1, 123456789))
         return frame, wire
 
-    def compare(self, backend):
+    def compare(self, backend, single=False, measure=False):
         for name in ("single", "multi4", "close_weak"):
             frame, wire = self.load(name)
             for window in ("none", "hann"):
                 with self.subTest(name=name, window=window, backend=backend):
-                    run = self.run_wire(wire[::-1]+wire[:1], backend, window)
+                    run = self.run_wire(wire[::-1]+wire[:1], backend, window, single, measure)
                     self.assertEqual(run.returncode, 0, run.stderr)
                     weighted = frame*(np.hanning(128)[:, None]*np.hanning(128)[None, :] if window == "hann" else 1)
                     if backend == "model":
@@ -116,6 +137,8 @@ class IntegratedPipelineTests(unittest.TestCase):
                         q, _ = s1c.quantize(weighted)
                         spectrum = s1c.integer_spectrum(q)
                     else:
+                        if single:
+                            weighted = weighted.astype(np.complex64).astype(complex)
                         spectrum = np.fft.fft2(weighted)/16384
                     expected = spectrum.real**2+spectrum.imag**2
                     bins = np.loadtxt(self.folder/"out.bins.csv", delimiter=",")
@@ -124,6 +147,11 @@ class IntegratedPipelineTests(unittest.TestCase):
                     if backend == "model":
                         np.testing.assert_array_equal(bins, spectrum)
                         np.testing.assert_array_equal(actual, expected)
+                    elif single:
+                        # Global error limits cover all bins without unstable relative tests near zero.
+                        self.assertLess(np.linalg.norm(bins-spectrum)/np.linalg.norm(spectrum), 2e-6)
+                        self.assertLess(np.max(np.abs(bins-spectrum))/np.max(np.abs(spectrum)), 2e-6)
+                        self.assertLess(np.linalg.norm(actual-expected)/np.linalg.norm(expected), 5e-6)
                     else:
                         np.testing.assert_allclose(bins, spectrum, atol=1e-15, rtol=1e-10)
                         np.testing.assert_allclose(actual, expected, atol=1e-18, rtol=1e-10)
@@ -143,6 +171,18 @@ class IntegratedPipelineTests(unittest.TestCase):
     @unittest.skipUnless(FFTW, "Set S2A_FFTW to a double FFTW runtime")
     def test_ps_pipeline_six_cases_reordered_and_duplicate(self):
         self.compare("ps")
+
+    @unittest.skipUnless(FFTWF, "Set S2A_FFTWF to a float FFTW runtime")
+    def test_ps_float_six_cases_estimate_and_measure(self):
+        self.compare("ps", single=True)
+        self.compare("ps", single=True, measure=True)
+
+    @unittest.skipUnless(FFTWF and os.name == 'nt', "Non-ARM float FFTW runtime required")
+    def test_required_neon_rejects_non_neon_plan(self):
+        _, wire = self.load("single")
+        run = self.run_wire(wire, "ps", single=True, require_neon=True)
+        self.assertNotEqual(run.returncode, 0)
+        self.assertIn("Required NEON", run.stderr)
 
     def test_rejects_missing_truncated_nonfinite_and_mixed_metadata(self):
         _, wire = self.load("single")

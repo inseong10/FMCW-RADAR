@@ -4,6 +4,8 @@ set -eu
 here=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 ps=${FFT128_PS01_DIR:-/opt/fft128/ps_precision}
 out=${1:-"$here/results_e14_frame_$(date +%Y%m%d_%H%M%S)"}
+hz=$(sed -n 's/.*"clock_hz":[[:space:]]*\([0-9][0-9]*\).*/\1/p' "$here/dma_config.json")
+test -n "$hz" || { echo 'Missing PL clock in dma_config.json' >&2; exit 1; }
 test ! -e "$out" || { echo 'Use a fresh result directory' >&2; exit 1; }
 test -c /dev/fft128-dma-frame
 mkdir -p "$out"
@@ -19,7 +21,7 @@ cp "$here/dma_config.json" "$here/fft128_e14_frame.json" "$here/pl_source.sha256
 cmp -s "$here/frame.rspb" "$ps/frame.rspb" || { echo 'PS/PL inputs differ' >&2; exit 1; }
 {
     uname -a; cat /proc/sys/kernel/random/boot_id; cat /proc/cpuinfo
-    printf 'E14-frame CPU0 warmup=10 repeats=100 trials=3, coherent HP0, 50MHz 1streaming_core 7dedicated_stages, full-frame ioctl, PL transpose/reorder, inplace_matrix\n'
+    printf 'E14-frame CPU0 warmup=10 repeats=100 trials=3, coherent HP0, PL_CLOCK_HZ=%s 1streaming_core 7dedicated_stages, full-frame ioctl, PL transpose/reorder, inplace_matrix\n' "$hz"
     cat "$here/dma_config.json"
     sha256sum "$here/fft128_e14_frame.bin" "$here/fft128_dma_frame.ko" "$here/fft128-receiver" "$here/frame.rspb"
     for path in /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq; do
