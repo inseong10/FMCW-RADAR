@@ -1,0 +1,5 @@
+run=92441 be=pl shape=128x128 period=12.8 proc_med=5.175 c2o_p99=5.488 over_period=3 clock_errors=0 offset_resampled=7127 offset_unresolved=0  check=ADC16_INDEPENDENT_CHECK_PASS backend=pl frames=9996 all_bins=False
+run=92442 be=ps shape=128x128 period=12.8 proc_med=11.027 c2o_p99=11.377 over_period=44 clock_errors=0 offset_resampled=9634 offset_unresolved=0  check=ADC16_INDEPENDENT_CHECK_PASS backend=ps frames=9999 all_bins=False
+run=92443 be=pl shape=256x128 period=25.6 proc_med=10.127 c2o_p99=10.468 over_period=0 clock_errors=0 offset_resampled=16094 offset_unresolved=0  check=ADC16_INDEPENDENT_CHECK_PASS backend=pl frames=9999 all_bins=False
+run=92444 be=pl shape=128x256 period=12.8 proc_med=10.603 c2o_p99=10.981 over_period=14 clock_errors=0 offset_resampled=18131 offset_unresolved=0  check=ADC16_INDEPENDENT_CHECK_PASS backend=pl frames=9998 all_bins=False
+run=92445 be=pl shape=256x256 period=25.6 proc_med=22.664 c2o_p99=23.149 over_period=15 clock_errors=0 offset_resampled=37621 offset_unresolved=0  check=ADC16_INDEPENDENT_CHECK_PASS backend=pl frames=10000 all_bins=False

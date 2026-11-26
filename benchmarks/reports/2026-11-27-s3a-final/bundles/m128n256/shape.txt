@@ -1,0 +1,2 @@
+pulses=128
+samples=256
